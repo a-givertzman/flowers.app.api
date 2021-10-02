@@ -24,7 +24,9 @@ function prepareValueToSQL(mysqli $mySqli, $value) {
             if ((strcasecmp($value, "null") == 0) || ($value == null)) {
                 $resValue =  'null';
             } else {
+                plog("raw value: $value");
                 $resValue = $mySqli->real_escape_string($value);
+                plog("safe value: $resValue");
                 $resValue = "\'$resValue\'";
             }
             break;
