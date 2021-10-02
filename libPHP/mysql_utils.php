@@ -7,7 +7,7 @@
 
 
 // загружаем настройки и
-require_once 'mysql_settings.php';
+require_once 'mysql_settings.key';
 
 
 
