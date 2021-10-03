@@ -23,23 +23,16 @@ plog("-> getData.php");
 require_once './libPHP/mysql_utils.php';
 
 // получаем название таблицы
-$tableName = $_POST["tableName"];
+$tableName = $_POST["tableName"];           // название таблицы
+$field = json_decode($_POST["field"]);      // массив названий полей таблицы
+plog('field keys:');
+plog($field);
 
 $data_id = 0;
 
 // делаем запрос SELECT в таблицу place_pattern
 $data = selectData($tableName,
-    [
-        'id',
-        'group',
-        'location',
-        'name',
-        'phone',
-        'account',
-        'created',
-        'updated',
-        'deleted'
-    ], 
+    $field, 
     'id', [], '%'
 );
 
