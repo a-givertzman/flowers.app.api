@@ -15,7 +15,7 @@ require_once 'mysql_settings.key';
 // -------------------------------------------------------
 // Функция | Возвращает значение подготовленное для SQL запроса
 //
-function prepareValueToSQL(mysqli $mySqli, $value) {
+function prepareValueToSQL($mySqli, $value) {
     switch (gettype($value)) {
         case 'NULL':
             $resValue = 'null';
