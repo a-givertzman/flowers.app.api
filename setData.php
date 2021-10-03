@@ -36,7 +36,7 @@ plog('field keys:');
 plog($field);
 plog('type of data');
 plog(gettype($data));
-// plog($data);
+plog($data);
 
 if (!empty($data)) {
     $data_id = [];
