@@ -16,6 +16,7 @@ require_once 'mysql_settings.key';
 // Функция | Возвращает значение подготовленное для SQL запроса
 //
 function prepareValueToSQL($mySqli, $value) {
+    plog("-> prepareValueToSQL");
     switch (gettype($value)) {
         case 'NULL':
             $resValue = 'null';
@@ -32,6 +33,7 @@ function prepareValueToSQL($mySqli, $value) {
             $resValue = $value;
     }
     return $resValue;
+    plog("prepareValueToSQL ->");
 }
 
 
@@ -40,6 +42,7 @@ function prepareValueToSQL($mySqli, $value) {
 // Функция | Возвращает ковычку если тип дпнных string
 //
 function quoteByDataType($value) {
+    plog("-> quoteByDataType");
     switch (gettype($value)) {
         case 'string':
             if ((strcasecmp($value, "null") == 0) || ($value == null)) {
@@ -53,6 +56,7 @@ function quoteByDataType($value) {
             $quote = "";
     }
     return $quote;
+    plog("quoteByDataType ->");
 }
 
 
