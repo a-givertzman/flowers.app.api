@@ -22,6 +22,8 @@ plog("-> getData.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
+plog('POST:');
+plog($_POST);
 // получаем название таблицы
 $tableName = $_POST["tableName"];           // название таблицы
 $keys = json_decode($_POST["keys"]);        // массив названий полей таблицы
