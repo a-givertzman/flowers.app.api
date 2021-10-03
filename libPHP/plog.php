@@ -39,20 +39,18 @@ function plog( $data = null ){
 
             for($index = $debug_backtrace_depth - 1; $index >= 0; $index--) {
                 
-                $function = debug_backtrace()[$index]['function'];
+                $function = debug_backtrace()[$index]['function'] ?? '';
                 
                 if ($index == $debug_backtrace_depth - 1) {
 
-                    $caller = basename(debug_backtrace()[$index]['file']);
-
+                    $caller = basename(debug_backtrace()[$index]['file'] ?? '');
                     $caller .= isset($function) ? " -> " .$function : '';
                 } elseif ($index == 0) {
                     
                     // $caller .= " -> " .basename(debug_backtrace()[$index]['file']);
                 } else {
                     
-                    $caller .= " -> " .basename(debug_backtrace()[$index]['file']);
-                    
+                    $caller .= " -> " .basename(debug_backtrace()[$index]['file'] ?? '');
                     $caller .= isset($function) ? " -> " .$function : '';
                 }
             }
