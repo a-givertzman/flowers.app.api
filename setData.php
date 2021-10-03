@@ -33,7 +33,7 @@ $keys = json_decode($_POST["keys"]);      // массив названий по�
 plog('tableName');
 plog($tableName);
 plog('field keys:');
-plog($field);
+plog($keys);
 plog('type of data');
 plog(gettype($data));
 plog($data);
