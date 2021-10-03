@@ -24,16 +24,19 @@ require_once './libPHP/mysql_utils.php';
 
 // получаем название таблицы
 $tableName = $_POST["tableName"];           // название таблицы
-$field = json_decode($_POST["field"]);      // массив названий полей таблицы
+$keys = json_decode($_POST["keys"]);        // массив названий полей таблицы
+$orderBy = json_decode($_POST["orderBy"]);  // название поля сортировки
 plog('field keys:');
-plog($field);
+plog($keys);
+plog('order by:');
+plog($orderBy);
 
 $data_id = 0;
 
 // делаем запрос SELECT в таблицу place_pattern
 $data = selectData($tableName,
-    $field, 
-    'id', [], '%'
+    $keys, 
+    $orderBy, [], '%'
 );
 
 plog($data);

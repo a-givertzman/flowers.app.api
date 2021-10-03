@@ -28,11 +28,16 @@ require_once './libPHP/mysql_utils.php';
 
 $tableName = $_POST['tableName'];
 $data = json_decode($_POST['data']);
+$keys = json_decode($_POST["keys"]);      // массив названий полей таблицы
+
 plog('tableName');
 plog($tableName);
+plog('field keys:');
+plog($field);
 plog('type of data');
 plog(gettype($data));
 // plog($data);
+
 if (!empty($data)) {
     $data_id = [];
     foreach($data as $dataItem) {
