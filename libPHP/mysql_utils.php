@@ -413,7 +413,7 @@ function updateData($tableName, &$data) {
 
             if (strcasecmp($fieldName, "id") != 0) {                        // пропускаем поле id (PK)
                 
-                $value = prepareValueToSQL($value);
+                $value = prepareValueToSQL($mySqli, $value);
     
                 $query .= "\n   `$fieldName` = $value,";
             }
