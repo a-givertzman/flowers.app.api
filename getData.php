@@ -35,12 +35,15 @@ plog($keys);
 plog('order by:');
 plog($orderBy);
 
-$data_id = 0;
-
-// делаем запрос SELECT в таблицу place_pattern
-$data = selectData($tableName,
-    $keys, 
-    $orderBy, [], '%'
+// делаем запрос SELECT в таблицу tableName
+$data = selectData(
+    $tableName,     // string, название таблицы
+    $keys,          // array, запрашиваемые поля
+    $orderBy,       // string, поле по которому сортируем
+    'ASC',          // направление сортировки
+    [],             // array, название полей покоторым делаем поиск
+    '%',            // string, строка которую ищем в полях $searchField
+    0               // максиммальное количество записей в результате, 0 - не ограничено
 );
 
 plog("data selected from $tableName:");

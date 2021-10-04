@@ -115,13 +115,13 @@ function connect() {
 // Функция | Делает один запрос SELECT в таблицу tabeName
 //
 function selectData(
-    $tableName, 
-    $field = [], 
-    $orderField, 
-    $order = 'ASC',
-    $searchField = [], 
-    $searchQuery = "%", 
-    $limit = 0
+    $tableName,             // string, название таблицы
+    $field = [],            // array, запрашиваемые поля
+    $orderField,            // string, поле по которому сортируем
+    $order = 'ASC',         // направление сортировки
+    $searchField = [],      // array, название полей покоторым делаем поиск
+    $searchQuery = "%",     // string, строка которую ищем в полях $searchField
+    $limit = 0              // максиммальное количество записей в результате, 0 - не ограничено
 ) {
     plog("-> selectData");
     

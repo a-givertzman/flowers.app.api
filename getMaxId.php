@@ -29,12 +29,15 @@ $tableName = $_POST["tableName"];           // название таблицы
 plog('tableName:');
 plog($tableName);
 
-$data_id = 0;
-
-// делаем запрос SELECT в таблицу place_pattern
-$data = selectData($tableName,
-    ['id'], 
-    'id', [], '%'
+// делаем запрос SELECT в таблицу tableName
+$data = selectData(
+    $tableName,     // string, название таблицы
+    ['id'],          // array, запрашиваемые поля
+    'id',       // string, поле по которому сортируем
+    'DESC',         // направление сортировки
+    [],             // array, название полей покоторым делаем поиск
+    '%',            // string, строка которую ищем в полях $searchField
+    1               // максиммальное количество записей в результате, 0 - не ограничено
 );
 
 plog($data);
