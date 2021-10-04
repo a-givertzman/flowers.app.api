@@ -51,6 +51,9 @@ $data = selectData(
     $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
+if (gettype($data) == 'object') {
+    $data = (array) $data;
+}
 plog("data selected from $tableName:");
 plog('type of data: ' . gettype($data));
 plog('data length: ' . count($data));
