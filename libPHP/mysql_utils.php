@@ -114,7 +114,15 @@ function connect() {
 // -------------------------------------------------------
 // Функция | Делает один запрос SELECT в таблицу tabeName
 //
-function selectData($tableName, $field = [], $orderField, $searchField = [], $searchQuery = "%") {
+function selectData(
+    $tableName, 
+    $field = [], 
+    $orderField, 
+    $order = 'ASC',
+    $searchField = [], 
+    $searchQuery = "%", 
+    $limit = 0
+) {
     plog("-> selectData");
     
     global $errCount;
@@ -156,8 +164,12 @@ function selectData($tableName, $field = [], $orderField, $searchField = [], $se
         }
     
         // добавляем сортировку к запросу
-        $query .= "\nORDER BY $orderField;";
+        $query .= "\nORDER BY $orderField $order;";
 
+        // добавляем лимит количества записей в результате
+        $query .= ($limit > 0) 
+            ? "\nLIMIT $limit;"
+            : '';
 
         plog("ЗАПРОС:");
         plog($query);

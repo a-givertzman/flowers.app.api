@@ -16,7 +16,7 @@ require_once './libPHP/plog.php';
 
 
 plog("");
-plog("-> getData.php");
+plog("-> getMaxId.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
@@ -26,21 +26,15 @@ plog('POST:');
 plog($_POST);
 // получаем название таблицы
 $tableName = $_POST["tableName"];           // название таблицы
-$keys = json_decode($_POST["keys"]);        // массив названий полей таблицы
-$orderBy = json_decode($_POST["orderBy"]);  // название поля сортировки
 plog('tableName:');
 plog($tableName);
-plog('field keys:');
-plog($keys);
-plog('order by:');
-plog($orderBy);
 
 $data_id = 0;
 
 // делаем запрос SELECT в таблицу place_pattern
 $data = selectData($tableName,
-    $keys, 
-    $orderBy, [], '%'
+    ['id'], 
+    'id', [], '%'
 );
 
 plog($data);
@@ -72,4 +66,4 @@ if ($errCount == 0) {
 echo json_encode($jsonText);                                                // передаем данные
 
 
-plog("getData.php ->");
+plog("getMaxId.php ->");
