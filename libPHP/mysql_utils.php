@@ -138,17 +138,13 @@ function selectData(
         $query = "SELECT";
 
         // добавляем поля
-        if (empty($field)) {
-            $query .= "\n   `*`";
-        } else {
-            foreach($field as $index => $fieldName) {
-                if ($index < count($field) - 1) {
-        
-                    $query .= "\n   `$fieldName`,";
-                } else {
-                    
-                    $query .= "\n   `$fieldName`";
-                }
+        foreach($field as $index => $fieldName) {
+            if ($index < count($field) - 1) {
+    
+                $query .= "\n   `$fieldName`,";
+            } else {
+                
+                $query .= "\n   `$fieldName`";
             }
         }
     
