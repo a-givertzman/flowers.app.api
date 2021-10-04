@@ -43,7 +43,10 @@ $data = selectData($tableName,
     $orderBy, [], '%'
 );
 
-plog($data);
+plog("data selected from $tableName:");
+plog('type of data: ' . gettype($data));
+plog('data length: ' . count($data));
+// plog($data);
 
 
 
