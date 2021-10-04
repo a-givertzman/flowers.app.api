@@ -117,7 +117,7 @@ function connect() {
 function selectData(
     $tableName,             // string, название таблицы
     $field = [],            // array, запрашиваемые поля
-    $orderField,            // string, поле по которому сортируем
+    $orderField = 'id',     // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
     $searchField = [],      // array, название полей покоторым делаем поиск
     $searchQuery = "%",     // string, строка которую ищем в полях $searchField

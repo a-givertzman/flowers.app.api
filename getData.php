@@ -25,9 +25,14 @@ require_once './libPHP/mysql_utils.php';
 plog('POST:');
 plog($_POST);
 // получаем название таблицы
-$tableName = $_POST["tableName"];           // название таблицы
-$keys = json_decode($_POST["keys"]);        // массив названий полей таблицы
-$orderBy = json_decode($_POST["orderBy"]);  // название поля сортировки
+$tableName = json_decode($_POST["tableName"]);      // название таблицы
+$keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
+$orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
+$order = $_POST["orderBy"];                         // направление сортировки
+$searchField = json_decode($_POST["searchField"]);  // array, название полей покоторым делаем поиск
+$searchValue = json_decode($_POST["searchValue"]);  // string, строка которую ищем в полях $searchField
+$limit = $_POST["limit"];                           // максиммальное количество записей в результате, 0 - не ограничено
+
 plog('tableName:');
 plog($tableName);
 plog('field keys:');
@@ -37,13 +42,13 @@ plog($orderBy);
 
 // делаем запрос SELECT в таблицу tableName
 $data = selectData(
-    $tableName,     // string, название таблицы
-    $keys,          // array, запрашиваемые поля
-    $orderBy,       // string, поле по которому сортируем
-    'ASC',          // направление сортировки
-    [],             // array, название полей покоторым делаем поиск
-    '%',            // string, строка которую ищем в полях $searchField
-    0               // максиммальное количество записей в результате, 0 - не ограничено
+    $tableName,         // string, название таблицы
+    $keys,              // array, запрашиваемые поля
+    $orderBy,           // string, поле по которому сортируем
+    $order,             // направление сортировки
+    $searchField,       // array, название полей покоторым делаем поиск
+    $searchValue,       // string, строка которую ищем в полях $searchField
+    $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
 plog("data selected from $tableName:");
