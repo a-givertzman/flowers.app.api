@@ -246,7 +246,7 @@ function selectJoinData(
             $fieldPart = explode('/', $fieldName);
             if (count($fieldPart) > 1) {
                 $joinTableName = $fieldPart[0];
-                $joinFieldName = $fieldPart[1];
+                $joinFieldName = $fieldPart[1] . !empty($fieldPart[2]) ? ('/' . $fieldPart[2]) : '';
                 if (!in_array($joinTableName, $joinTable)) {
 
                     array_push($joinTable, $joinTableName);
@@ -262,7 +262,7 @@ function selectJoinData(
         $query = substr($query, 0, -1);
     
         // добавляем таблицу
-        $query .= "\nFROM $tableName";
+        $query .= "\nFROM `$tableName`";
 
         // добавляем связанные таблицы
         foreach($joinTable as $index => $joinTableName) {
