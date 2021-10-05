@@ -61,7 +61,7 @@ plog($orderBy);
 if (empty($joinField)) {
 
     // делаем запрос SELECT в таблицу tableName
-    $data = selectData(
+    $data = selectJoinData(
         $tableName,         // string, название таблицы
         $keys,              // array, запрашиваемые поля
         $orderBy,           // string, поле по которому сортируем
