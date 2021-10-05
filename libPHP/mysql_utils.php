@@ -266,7 +266,7 @@ function selectJoinData(
 
         // добавляем связанные таблицы
         foreach($joinTable as $index => $joinTableName) {
-            $query .= "\nLEFT JOIN  $joinTableName ON `$tableName`.`$joinTableName/id` = `$joinTableName`.`id`";
+            $query .= "\nLEFT JOIN  `$joinTableName` ON `$tableName`.`$joinTableName/id` = `$joinTableName`.`id`";
         }
 
         // добавляем фильтацию к запросу
