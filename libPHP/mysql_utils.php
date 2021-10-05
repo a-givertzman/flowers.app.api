@@ -216,7 +216,17 @@ function selectData(
 // -------------------------------------------------------
 // Функция | Делает один запрос SELECT JOIN в таблицу tabeName
 //
-function selectJoinData($tableName, $field = [], $joinTableName, $joinField = [], $orderField, $searchField = [], $searchQuery = "%") {
+function selectJoinData(
+    $tableName,             // string, название таблицы
+    $field = [],            // array, запрашиваемые поля
+    $joinTableName,         // string, название таблицы присоединяемых данных
+    $joinField = [],        // array, названия полей в таблице присоединяемых данных
+    $orderField = 'id',     // string, поле по которому сортируем
+    $order = 'ASC',         // направление сортировки
+    $searchField = [],      // array, название полей покоторым делаем поиск
+    $searchQuery = "%",     // string, строка которую ищем в полях $searchField
+    $limit = 0              // максиммальное количество записей в результате, 0 - не ограничено
+) {
     plog("-> selectJoinData");
 
     global $errCount;
@@ -235,10 +245,10 @@ function selectJoinData($tableName, $field = [], $joinTableName, $joinField = []
         foreach($field as $index => $fieldName) {
             if ($index < count($field) - 1) {
     
-                $query .= "\n   $tableName.$fieldName,";
+                $query .= "\n   `$tableName`.`$fieldName`,";
             } else {
                 
-                $query .= "\n   $tableName.$fieldName,";
+                $query .= "\n   `$tableName`.`$fieldName`,";
             }
         }
     
@@ -246,10 +256,10 @@ function selectJoinData($tableName, $field = [], $joinTableName, $joinField = []
         foreach($joinField as $index => $fieldName) {
             if ($index < count($joinField) - 1) {
     
-                $query .= "\n   $joinTableName.$fieldName,";
+                $query .= "\n   `$joinTableName`.`$fieldName`,";
             } else {
                 
-                $query .= "\n   $joinTableName.$fieldName";
+                $query .= "\n   `$joinTableName`.`$fieldName`";
             }
         }
     
@@ -257,7 +267,7 @@ function selectJoinData($tableName, $field = [], $joinTableName, $joinField = []
         $query .= "\nFROM $tableName";
 
         // добавляем таблицу связанную таблицу
-        $query .= "\nLEFT JOIN  $joinTableName ON $tableName.$joinTableName" ."_id = $joinTableName.id";
+        $query .= "\nLEFT JOIN  $joinTableName ON $tableName.$joinTableName" ."/id = $joinTableName.id";
 
         // добавляем фильтацию к запросу
         $searchQuery = $searchQuery == '' ? "%" : $searchQuery;
@@ -272,8 +282,14 @@ function selectJoinData($tableName, $field = [], $joinTableName, $joinField = []
         }
     
         // добавляем сортировку к запросу
-        $query .= "\nORDER BY $orderField;";
+        $query .= "\nORDER BY $orderField $order";
 
+        // добавляем лимит количества записей в результате
+        $query .= ($limit > 0) 
+            ? "\nLIMIT $limit;"
+            : '';
+
+        $query .= ';';
 
         plog("ЗАПРОС:");
         plog($query);

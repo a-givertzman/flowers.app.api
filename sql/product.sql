@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `u1489690_flowers_app`.`product`;
 
 CREATE TABLE IF NOT EXISTS `u1489690_flowers_app`.`product` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `group`  VARCHAR(16) NOT NULL COMMENT 'Признак группировки',
+  `group`  VARCHAR(50) NOT NULL COMMENT 'Признак группировки',
   `name` VARCHAR(255) NOT NULL COMMENT 'Нименование товара',
   `detales` VARCHAR(255) NULL COMMENT 'Комментарий',
   `primary_price` DECIMAL(20,2) UNSIGNED NOT NULL COMMENT 'Цена за единицу в валюте заккупки',

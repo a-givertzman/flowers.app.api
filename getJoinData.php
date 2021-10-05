@@ -16,7 +16,7 @@ require_once './libPHP/plog.php';
 
 
 plog("");
-plog("-> getData.php");
+plog("-> getJoinData.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
@@ -39,22 +39,6 @@ plog('field keys:');
 plog($keys);
 plog('order by:');
 plog($orderBy);
-
-// перебираем запрошенные поля
-// и ищем те, что из другой таблицы
-// если есть, то складываем в массив $joinField[]
-$joinField = [];
-foreach($key as $index => $keys) {
-    $field = explode('/', $key);
-    if (count($field) > 1) {
-        if (empty($joinField[$field[0]])) {
-            $joinField[$field[0]] = [];
-        }
-        $joinField[$field[0]].push($field[1]);
-    }
-}
-plog('joinField:');
-plog($joinField);
 
 // делаем запрос SELECT в таблицу tableName
 $data = selectData(
@@ -102,4 +86,4 @@ if ($errCount == 0) {
 echo json_encode($jsonText);                                                // передаем данные
 
 
-plog("getData.php ->");
+plog("getJoinData.php ->");
