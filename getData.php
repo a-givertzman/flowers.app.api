@@ -15,7 +15,7 @@ require_once './libPHP/plog.php';
 
 
 
-plog("");
+plog_clear();
 plog("-> getData.php");
 
 // загружаем настройки и
@@ -46,6 +46,8 @@ plog($orderBy);
 $joinField = [];
 foreach($key as $index => $keys) {
     $field = explode('/', $key);
+    plog('field:');
+    plog($field);
     if (count($field) > 1) {
         if (empty($joinField[$field[0]])) {
             $joinField[$field[0]] = [];
