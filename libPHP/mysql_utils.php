@@ -243,7 +243,7 @@ function selectJoinData(
         // добавляем поля таблицы $tableName
         $joinTable = [];    // названия связанных таблиц
         foreach($field as $index => $fieldName) {
-            $fieldPart = explode('/', $field);
+            $fieldPart = explode('/', $fieldName);
             if (count($fieldPart) > 1) {
                 $joinTableName = $fieldPart[0];
                 $joinFieldName = $fieldPart[1];
