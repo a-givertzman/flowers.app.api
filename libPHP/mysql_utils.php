@@ -253,17 +253,17 @@ function selectJoinData(
     
         // добавляем поля связанных таблиц из $joinField, если он не пуст
         if (!empty($joinField)) {
-            foreach($joinField as $index => $joinTableName) {
+            foreach($joinField as $joinTableName => $joinFieldName) {
                 plog("join table name: $joinTableName");
-                foreach($joinField as $index => $joinFieldName) {
-                    plog("   join field name: $joinFieldName");
-                    if ($index < count($joinField) - 1) {
+                foreach($joinFieldName as $index => $fieldName) {
+                    plog("   join field name: $fieldName");
+                    // if ($index < count($joinField) - 1) {
             
-                        $query .= "\n   `$joinTableName`.`$joinFieldName`,";
-                    } else {
+                        $query .= "\n   `$joinTableName`.`$fieldName`,";
+                    // } else {
                         
-                        $query .= "\n   `$joinTableName`.`$joinFieldName`";
-                    }
+                        // $query .= "\n   `$joinTableName`.`$fieldName`";
+                    // }
                 }
             }
             $query = substr($query, 0, -1);
