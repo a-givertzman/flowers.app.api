@@ -247,7 +247,10 @@ function selectJoinData(
             if (count($fieldPart) > 1) {
                 $joinTableName = $fieldPart[0];
                 $joinFieldName = $fieldPart[1];
-                array_push($joinTable, $joinTableName);
+                if (!in_array($joinTableName, $joinTable)) {
+
+                    array_push($joinTable, $joinTableName);
+                }
                 $query .= "\n   `$joinTableName`.`$joinFieldName`,";
             } else {
 
