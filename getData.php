@@ -58,16 +58,32 @@ foreach($keys as $index => $key) {
 plog('joinField:');
 plog($joinField);
 
-// делаем запрос SELECT в таблицу tableName
-$data = selectData(
-    $tableName,         // string, название таблицы
-    $keys,              // array, запрашиваемые поля
-    $orderBy,           // string, поле по которому сортируем
-    $order,             // направление сортировки
-    $searchField,       // array, название полей покоторым делаем поиск
-    $searchValue,       // string, строка которую ищем в полях $searchField
-    $limit              // максиммальное количество записей в результате, 0 - не ограничено
-);
+if (empty($joinField)) {
+
+    // делаем запрос SELECT в таблицу tableName
+    $data = selectData(
+        $tableName,         // string, название таблицы
+        $keys,              // array, запрашиваемые поля
+        $orderBy,           // string, поле по которому сортируем
+        $order,             // направление сортировки
+        $searchField,       // array, название полей покоторым делаем поиск
+        $searchValue,       // string, строка которую ищем в полях $searchField
+        $limit              // максиммальное количество записей в результате, 0 - не ограничено
+    );
+} else {
+    
+    // делаем запрос SELECT JOIN в таблицу tableName
+    $data = selectJoinData(
+        $tableName,         // string, название таблицы
+        $keys,              // array, запрашиваемые поля
+        $joinField,         // [joinTableName][joinField], названия полей в таблице присоединяемых данных
+        $orderBy,           // string, поле по которому сортируем
+        $order,             // направление сортировки
+        $searchField,       // array, название полей покоторым делаем поиск
+        $searchValue,       // string, строка которую ищем в полях $searchField
+        $limit              // максиммальное количество записей в результате, 0 - не ограничено
+    );
+}
 
 if (gettype($data) == 'object') {
     $data = (array) $data;

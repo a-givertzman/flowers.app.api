@@ -219,8 +219,7 @@ function selectData(
 function selectJoinData(
     $tableName,             // string, название таблицы
     $field = [],            // array, запрашиваемые поля
-    $joinTableName,         // string, название таблицы присоединяемых данных
-    $joinField = [],        // array, названия полей в таблице присоединяемых данных
+    $joinField = [],        // [joinTableName][joinField], ключи - название таблицы, элементы - названия полей в таблице присоединяемых данных
     $orderField = 'id',     // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
     $searchField = [],      // array, название полей покоторым делаем поиск
@@ -252,21 +251,28 @@ function selectJoinData(
             }
         }
     
-        // добавляем поля таблицы $joinTableName
-        foreach($joinField as $index => $fieldName) {
-            if ($index < count($joinField) - 1) {
-    
-                $query .= "\n   `$joinTableName`.`$fieldName`,";
-            } else {
-                
-                $query .= "\n   `$joinTableName`.`$fieldName`";
+        // добавляем поля связанных таблиц из $joinField, если он не пуст
+        if (!empty($joinField)) {
+            foreach($joinField as $index => $joinTableName) {
+                plog("join table name: $joinTableName");
+                foreach($joinField as $index => $joinFieldName) {
+                    plog("   join field name: $joinFieldName");
+                    if ($index < count($joinField) - 1) {
+            
+                        $query .= "\n   `$joinTableName`.`$joinFieldName`,";
+                    } else {
+                        
+                        $query .= "\n   `$joinTableName`.`$joinFieldName`";
+                    }
+                }
             }
+            $query = substr($query, 0, -1);
         }
     
         // добавляем таблицу
         $query .= "\nFROM $tableName";
 
-        // добавляем таблицу связанную таблицу
+        // добавляем связанную таблицу
         $query .= "\nLEFT JOIN  $joinTableName ON $tableName.$joinTableName" ."/id = $joinTableName.id";
 
         // добавляем фильтацию к запросу
