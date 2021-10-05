@@ -52,7 +52,7 @@ foreach($keys as $index => $key) {
         if (empty($joinField[$field[0]])) {
             $joinField[$field[0]] = [];
         }
-        $joinField[$field[0]].push($field[1]);
+        array_push($joinField[$field[0]], $field[1]);
     }
 }
 plog('joinField:');
