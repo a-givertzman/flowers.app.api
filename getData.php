@@ -44,7 +44,7 @@ plog($orderBy);
 // и ищем те, что из другой таблицы
 // если есть, то складываем в массив $joinField[]
 $joinField = [];
-foreach($key as $index => $keys) {
+foreach($keys as $index => $key) {
     $field = explode('/', $key);
     plog('field:');
     plog($field);
