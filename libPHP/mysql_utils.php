@@ -251,7 +251,7 @@ function selectJoinData(
 
                     array_push($joinTable, $joinTableName);
                 }
-                $query .= "\n   `$joinTableName`.`$joinFieldName`,";
+                $query .= "\n   `$joinTableName`.`$joinFieldName` as $joinTableName/$joinFieldName,";
             } else {
 
                 $query .= "\n   `$tableName`.`$fieldName`,";
