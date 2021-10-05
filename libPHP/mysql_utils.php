@@ -219,7 +219,7 @@ function selectData(
 function selectJoinData(
     $tableName,             // string, название таблицы
     $field = [],            // array, запрашиваемые поля
-    $joinField = [],        // [joinTableName][joinField], ключи - название таблицы, элементы - названия полей в таблице присоединяемых данных
+    // $joinField = [],        // [joinTableName][joinField], ключи - название таблицы, элементы - названия полей в таблице присоединяемых данных
     $orderField = 'id',     // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
     $searchField = [],      // array, название полей покоторым делаем поиск
@@ -241,39 +241,30 @@ function selectJoinData(
         $query = "SELECT";
 
         // добавляем поля таблицы $tableName
+        $joinTable = [];    // названия связанных таблиц
         foreach($field as $index => $fieldName) {
-            if ($index < count($field) - 1) {
-    
-                $query .= "\n   `$tableName`.`$fieldName`,";
+            $fieldPart = explode('/', $field);
+            if (count($fieldPart) > 1) {
+                $joinTableName = $fieldPart[0];
+                $joinFieldName = $fieldPart[1];
+                array_push($joinTable, $joinTableName);
+                $query .= "\n   `$joinTableName`.`$joinFieldName`,";
             } else {
-                
+
                 $query .= "\n   `$tableName`.`$fieldName`,";
             }
         }
     
-        // добавляем поля связанных таблиц из $joinField, если он не пуст
-        if (!empty($joinField)) {
-            foreach($joinField as $joinTableName => $joinFieldName) {
-                plog("join table name: $joinTableName");
-                foreach($joinFieldName as $index => $fieldName) {
-                    plog("   join field name: $fieldName");
-                    // if ($index < count($joinField) - 1) {
-            
-                        $query .= "\n   `$joinTableName`.`$fieldName`,";
-                    // } else {
-                        
-                        // $query .= "\n   `$joinTableName`.`$fieldName`";
-                    // }
-                }
-            }
-            $query = substr($query, 0, -1);
-        }
+        // убираем последнюю запятаю
+        $query = substr($query, 0, -1);
     
         // добавляем таблицу
         $query .= "\nFROM $tableName";
 
-        // добавляем связанную таблицу
-        $query .= "\nLEFT JOIN  $joinTableName ON $tableName.$joinTableName" ."/id = $joinTableName.id";
+        // добавляем связанные таблицы
+        foreach($joinTable as $joinTableName) {
+            $query .= "\nLEFT JOIN  $joinTableName ON `$tableName`.`$joinTableName/id` = `$joinTableName`.`id`";
+        }
 
         // добавляем фильтацию к запросу
         $searchQuery = $searchQuery == '' ? "%" : $searchQuery;

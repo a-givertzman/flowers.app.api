@@ -43,20 +43,20 @@ plog($orderBy);
 // перебираем запрошенные поля
 // и ищем те, что из другой таблицы
 // если есть, то складываем в массив $joinField[]
-$joinField = [];
-foreach($keys as $index => $key) {
-    $field = explode('/', $key);
-    plog('field:');
-    plog($field);
-    if (count($field) > 1) {
-        if (empty($joinField[$field[0]])) {
-            $joinField[$field[0]] = [];
-        }
-        array_push($joinField[$field[0]], $field[1]);
-    }
-}
-plog('joinField:');
-plog($joinField);
+// $joinField = [];
+// foreach($keys as $index => $key) {
+//     $field = explode('/', $key);
+//     plog('field:');
+//     plog($field);
+//     if (count($field) > 1) {
+//         if (empty($joinField[$field[0]])) {
+//             $joinField[$field[0]] = [];
+//         }
+//         array_push($joinField[$field[0]], $field[1]);
+//     }
+// }
+// plog('joinField:');
+// plog($joinField);
 
 if (empty($joinField)) {
 
@@ -76,7 +76,7 @@ if (empty($joinField)) {
     $data = selectJoinData(
         $tableName,         // string, название таблицы
         $keys,              // array, запрашиваемые поля
-        $joinField,         // [joinTableName][joinField], названия полей в таблице присоединяемых данных
+        // $joinField,         // [joinTableName][joinField], названия полей в таблице присоединяемых данных
         $orderBy,           // string, поле по которому сортируем
         $order,             // направление сортировки
         $searchField,       // array, название полей покоторым делаем поиск
