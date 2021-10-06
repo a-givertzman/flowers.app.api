@@ -16,7 +16,7 @@ require_once './libPHP/plog.php';
 
 
 plog_clear();
-plog("-> getData.php");
+plog("-> getJoinData.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
@@ -41,7 +41,7 @@ plog('order by:');
 plog($orderBy);
 
 // делаем запрос SELECT JOIN в таблицу tableName
-$data = selectData(
+$data = selectJoinData(
     $tableName,         // string, название таблицы
     $keys,              // array, запрашиваемые поля
     $orderBy,           // string, поле по которому сортируем
@@ -57,7 +57,7 @@ if (gettype($data) == 'object') {
 plog("data selected from $tableName:");
 plog('type of data: ' . gettype($data));
 plog('data length: ' . count($data));
-// plog($data);
+plog($data);
 
 
 
@@ -86,4 +86,4 @@ if ($errCount == 0) {
 echo json_encode($jsonText);                                                // передаем данные
 
 
-plog("getData.php ->");
+plog("getJoinData.php ->");

@@ -156,15 +156,15 @@ function selectData(
         foreach($searchField as $index => $field) {
             if ($index == 0) {
     
-                $query .= "\nWHERE $field LIKE '$searchQuery'";
+                $query .= "\nWHERE `$field` LIKE '$searchQuery'";
             } else {
                 
-                $query .= "\nOR $field LIKE '$searchQuery'";
+                $query .= "\nOR `$field` LIKE '$searchQuery'";
             }
         }
     
         // добавляем сортировку к запросу
-        $query .= "\nORDER BY $orderField $order";
+        $query .= "\nORDER BY `$orderField` $order";
 
         // добавляем лимит количества записей в результате
         $query .= ($limit > 0) 
