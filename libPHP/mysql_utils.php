@@ -274,10 +274,10 @@ function selectJoinData(
         foreach($searchField as $index => $field) {
             if ($index == 0) {
     
-                $query .= "\nWHERE `$tableNmae`.`$field` LIKE '$searchQuery'";
+                $query .= "\nWHERE `$tableName`.`$field` LIKE '$searchQuery'";
             } else {
                 
-                $query .= "\nOR `$tableNmae`.`$field` LIKE '$searchQuery'";
+                $query .= "\nOR `$tableName`.`$field` LIKE '$searchQuery'";
             }
         }
     
