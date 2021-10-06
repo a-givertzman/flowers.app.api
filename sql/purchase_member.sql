@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS `u1489690_flowers_app`.`purchase_member` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `purchase/id` INT UNSIGNED NOT NULL COMMENT 'Идентификактор закупки из purchase',
   `client/id` INT UNSIGNED NOT NULL COMMENT 'Идентификактор клиента из client',
-  `product/id` INT UNSIGNED NOT NULL COMMENT 'Идентификактор товара из product',
+  `purchase_content/id` INT UNSIGNED NOT NULL COMMENT 'Идентификактор позиции из purchase_content',
+  #`product/id` INT UNSIGNED NOT NULL COMMENT 'Идентификактор товара из product',
   `count` INT UNSIGNED NOT NULL COMMENT 'Количество заказал участник',
   `distributed` INT UNSIGNED NOT NULL COMMENT 'Количество получил участник',
   `cost` DECIMAL(20,2) UNSIGNED NOT NULL COMMENT 'Отпускная стоимость заказа',
@@ -19,3 +20,7 @@ CREATE TABLE IF NOT EXISTS `u1489690_flowers_app`.`purchase_member` (
   ENGINE=InnoDB
   COMMENT='Участники закупки'
   DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+  
+  ALTER TABLE `u1489690_flowers_app`.`purchase_member`
+  ADD `purchase_content/id` INT UNSIGNED NOT NULL COMMENT 'Идентификактор позиции из purchase_content'
+    AFTER contact_id;
