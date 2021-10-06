@@ -284,7 +284,7 @@ function selectJoinData(
         }
     
         // добавляем сортировку к запросу
-        $query .= "\nORDER BY `$tableName`.`$orderField` $order";
+        $query .= "\nORDER BY `$orderField` $order";
 
         // добавляем лимит количества записей в результате
         $query .= ($limit > 0) 
