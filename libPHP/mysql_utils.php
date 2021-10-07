@@ -499,6 +499,8 @@ function updateData($tableName, &$data) {
 //
 function insertOdkuData($tableName, $data) {
     plog(" -> insertOdkuData");
+    plog("data:");
+    plog($data);
     
     global $errCount;
     global $errDump;
