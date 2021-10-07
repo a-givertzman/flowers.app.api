@@ -169,9 +169,9 @@ function selectData(
         // добавляем лимит количества записей в результате
         $query .= ($limit > 0) 
             ? "\nLIMIT $limit;"
-            : '';
+            : ';';
 
-        $query .= ';';
+        // $query .= ';';
 
         plog("ЗАПРОС:");
         plog($query);
@@ -289,9 +289,9 @@ function selectJoinData(
         // добавляем лимит количества записей в результате
         $query .= ($limit > 0) 
             ? "\nLIMIT $limit;"
-            : '';
+            : ';';
 
-        $query .= ';';
+        // $query .= ';';
 
         plog("ЗАПРОС:");
         plog($query);
