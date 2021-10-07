@@ -515,7 +515,7 @@ function insertOdkuData($tableName, $data) {
         $id = $data['id'];
         
         plog("select to $tableName where id=$id");
-        // делаем запрос для проверки существует ли запись с таким же id
+        // делаем запрос для проверки существует ли запись с указанным id
         $query = "SELECT EXISTS(SELECT 1 FROM `$tableName` WHERE `id` = $id LIMIT 1)";
 
         if ($result = $mySqli->query($query)) {
