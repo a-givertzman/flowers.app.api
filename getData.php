@@ -25,6 +25,9 @@ plog("-> getData.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
+plog('php://input:');
+plog(file_get_contents( 'php://input' ));
+
 plog('_REQUEST:');
 plog($_REQUEST);
 
