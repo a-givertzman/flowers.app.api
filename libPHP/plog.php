@@ -36,7 +36,6 @@ function plog( $data = null ){
     // if (!is_writable($logFilePath)) {
 
         try {
-
             for($index = $debug_backtrace_depth - 1; $index >= 0; $index--) {
                 
                 $function = debug_backtrace()[$index]['function'] ?? '';
@@ -54,7 +53,12 @@ function plog( $data = null ){
                     $caller .= isset($function) ? " -> " .$function : '';
                 }
             }
+        } catch(Exception $e) {
+            
+            error_log(date("[Y-m-d H:i:s]") ."\t[" .basename(__FILE__) ."]\t" .$e->getMessage(), 0);
+        }
 
+        try {
             file_put_contents($logFilePath, "\n", FILE_APPEND);
             file_put_contents($logFilePath, date("[Y-m-d H:i:s]") ."\t[" .$caller ."]\t" .print_r($data, true), FILE_APPEND);
 
