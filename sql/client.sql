@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `u1489690_flowers_app`.`client` (
   `location` VARCHAR(255) NOT NULL DEFAULT '-' COMMENT 'Город или адрес',
   `name` VARCHAR(255) NOT NULL COMMENT 'ФИО Участника',
   `phone` VARCHAR(255) NOT NULL COMMENT 'Номер телефона клиента',
-  `account` DECIMAL(20,2) UNSIGNED NOT NULL COMMENT 'Остаток денег на балансе пользователя',
+  `account` DECIMAL(20,2) SIGNED NOT NULL COMMENT 'Остаток денег на балансе пользователя',
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted` TIMESTAMP NULL DEFAULT NULL,
