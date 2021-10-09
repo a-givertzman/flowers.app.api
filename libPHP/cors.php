@@ -29,5 +29,6 @@ function cors() {
         exit(0);
     }
     
+    plog("____________ You have CORS");
     echo "<br>You have CORS!";
 }
