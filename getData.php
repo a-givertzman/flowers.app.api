@@ -12,6 +12,9 @@ $errDump = " | ";
 error_reporting(E_ALL & ~E_NOTICE);
 
 require_once './libPHP/plog.php';
+require_once './libPHP/cors.php';
+
+cors();
 
 
 
