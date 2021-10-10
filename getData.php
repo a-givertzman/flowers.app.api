@@ -32,7 +32,7 @@ plog('_REQUEST:');
 plog($_REQUEST);
 
 plog('_POST:');
-$data = json_decode($_POST);
+$data = ($_POST);
 plog($data);
 // получаем название таблицы
 $tableName = json_decode($_POST["tableName"]);      // название таблицы
