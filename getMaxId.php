@@ -42,7 +42,7 @@ $data = selectData(
 
 plog($data);
 
-if empty($data) {
+if (empty($data)) {
     $data = 0;
 } else {
     if (gettype($data) == 'object') {
