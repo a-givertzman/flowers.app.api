@@ -597,9 +597,9 @@ function callProcedure($procedureName, $params) {
         
         // делаем запрос в БД
         // и если запрос выполнен успешно
-        if ($mySqli->query($query)) {
+        if ($result = $mySqli->query($query)) {
 
-            $result = $result->fetch_row()[0];                              // результат выполнения процедуры
+            // $result = $result->fetch_row()[0];                              // результат выполнения процедуры
 
             plog("Procedure called with result:");
             plog($result);
