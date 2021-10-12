@@ -41,7 +41,7 @@ begin
     begin
 		get diagnostics condition 1
 		@errorMessage = message_text;
-		select errorMessage;
+		select @errorMessage;
 		rollback;
     end;
     start transaction;

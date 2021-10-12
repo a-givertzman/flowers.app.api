@@ -79,7 +79,7 @@ if ($errCount == 0) {
     // если все прошло без критичных ошибок
     
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => (object) 'ok',
+        'data' => $result,
         'errCount' => $errCount,
         'errDump' => $errDump
     );
