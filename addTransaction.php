@@ -38,14 +38,14 @@ if (gettype($data) == 'object') {
     $data = (array) $data;
 }
 plog($data);
-// получаем переданные параметры
-$account_owner = json_decode($data["account_owner"]);      // Идентификатор счета организатора
-$value = json_decode($data["value"]);                // Сумма транзакции
-$purchase_member_id = isset($data["purchase_member/id"]) 
-    ? json_decode($data["purchase_member/id"])
+// получаем переданные параметры account_owner
+$account_owner = $data['account_owner'];      // Идентификатор счета организатора
+$value = $data['value'];                // Сумма транзакции
+$purchase_member_id = isset($data['purchase_member/id']) 
+    ? $data['purchase_member/id']
     : null;  // Идентификатор записи таблицы Участники закупки
-$description = $data["description"];                           // Комментарий к транзакции
-$client_id = json_decode($data["client/id"]);  // array, название полей покоторым делаем поиск
+$description = $data['description'];                           // Комментарий к транзакции
+$client_id = $data['client/id'];  // array, название полей покоторым делаем поиск
 
 plog('Recived and extracted parameters:');
 plog("account_owner: $account_owner");
