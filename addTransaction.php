@@ -38,10 +38,11 @@ plog($data);
 // получаем переданные параметры
 $account_owner = json_decode($data["account_owner"]);      // Идентификатор счета организатора
 $value = json_decode($data["value"]);                // Сумма транзакции
-$purchase_member_id = json_decode($data["purchase_member/id"]);  // Идентификатор записи таблицы Участники закупки
+$purchase_member_id = $data["purchase_member/id"] 
+    ? json_decode($data["purchase_member/id"])
+    : null;  // Идентификатор записи таблицы Участники закупки
 $description = $data["description"];                           // Комментарий к транзакции
 $client_id = json_decode($data["client/id"]);  // array, название полей покоторым делаем поиск
-$client_account = json_decode($data["client_account"]);  // Баланс участниа после операции
 
 plog('Recived and extracted parameters:');
 plog("account_owner: $account_owner");
@@ -49,7 +50,6 @@ plog("value: $value");
 plog("purchase_member_id: $purchase_member_id");
 plog("description: $description");
 plog("client_id: $client_id");
-plog("client_account: $client_account");
 
 // Делаем вызов хранимой процедуры
 callProcedure('addTransaction', [
@@ -58,7 +58,6 @@ callProcedure('addTransaction', [
     $purchase_member_id,    // Идентификатор записи таблицы Участники закупки
     $description,           // Комментарий к транзакции
     $client_id,             // array, название полей покоторым делаем поиск
-    $client_account,        // Баланс участниа после операции    
 ]);
 
 
