@@ -55,7 +55,7 @@ plog("description: $description");
 plog("client_id: $client_id");
 
 // Делаем вызов хранимой процедуры
-callProcedure('addTransaction', [
+$result = callProcedure('addTransaction', [
     $account_owner,         // Идентификатор счета организатора
     $value,                 // Сумма транзакции
     $purchase_member_id,    // Идентификатор записи таблицы Участники закупки
@@ -63,6 +63,14 @@ callProcedure('addTransaction', [
     $client_id,             // array, название полей покоторым делаем поиск
 ]);
 
+plog('callProcedure result:');
+plog($result);
+
+if ($result != 0) {
+    $errCount++;
+    $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
+    plog("Server reply error: $errDump \nIn query: $query");
+}
 
 // проверяем были ли ошибки и передаем данные вызвывающей форме
 $jsonText = [];                                                             // массив для передачи данных фронтенду

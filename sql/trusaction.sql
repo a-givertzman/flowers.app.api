@@ -35,30 +35,39 @@ create procedure addTransaction(
 begin
 	declare oldClientAccount DECIMAL(20,2); # Значение баланса клиента до операции
 	declare newClientAccount DECIMAL(20,2); # Значение баланса клиента после операции
-    
-    set oldClientAccount = (select `account` from `client` where `client`.`id` = client_id);
-    set newClientAccount = oldClientAccount + transactionValue;
-    
-    update `client`
-		set `client`.`account` = newClientAccount
-        where `client`.`id` = client_id;
-	
-    insert into `transaction`
-		(
-			`account_owner`,
-            `value`,
-            `purchase_member/id`,
-            `description`,
-            `client/id`,
-            `client_account`
-        )
-        values (
-			accountOwner,
-            transactionValue,
-            purchase_member_id,
-            description,
-            client_id,
-            newClientAccount
-        );
+
+    declare exit handler for sqlexception
+    begin
+		select 'Error Message' as ErrorMsg;
+		rollback;
+    end;
+    start transaction;
+
+		set oldClientAccount = (select `account` from `client` where `client`.`id` = client_id);
+		set newClientAccount = oldClientAccount + transactionValue;
+		
+		update `client`
+			set `client`.`account` = newClientAccount
+			where `client`.`id` = client_id;
+		
+		insert into `transaction`
+			(
+				`account_owner`,
+				`value`,
+				`purchase_member/id`,
+				`description`,
+				`client/id`,
+				`client_account`
+			)
+			values (
+				accountOwner,
+				transactionValue,
+				purchase_member_id,
+				description,
+				client_id,
+				newClientAccount
+			);
+		commit;
+        select 0;
 end$$
 DELIMITER ;
