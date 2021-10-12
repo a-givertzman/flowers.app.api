@@ -42,6 +42,14 @@ $data = selectData(
 
 plog($data);
 
+if empty($data) {
+    $data = 0;
+} else {
+    if (gettype($data) == 'object') {
+        $data = (array) $data;
+    }
+    $data = array_values($data)[0];
+}
 
 
 // проверяем были ли ошибки и передаем данные вызвывающей форме
