@@ -48,7 +48,7 @@ if (empty($data)) {
     if (gettype($data) == 'object') {
         $data = (array) $data;
     }
-    $data = array_values($data)[0];
+    $data = array_values($data)[0]['id'];
 }
 
 
