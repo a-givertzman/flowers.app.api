@@ -601,7 +601,7 @@ function callProcedure($procedureName, $params) {
         // и если запрос выполнен успешно
         if ($result = $mySqli->query($query)) {
 
-            $data = $result->fetch_row();                              // результат выполнения процедуры
+            $data = $result->fetch_row()[0];                              // результат выполнения процедуры
 
             plog("Procedure called with result:");
             plog($data);

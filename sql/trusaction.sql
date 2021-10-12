@@ -35,10 +35,13 @@ create procedure addTransaction(
 begin
 	declare oldClientAccount DECIMAL(20,2); # Значение баланса клиента до операции
 	declare newClientAccount DECIMAL(20,2); # Значение баланса клиента после операции
+	#declare errorMessage varchar(255);
 
     declare exit handler for sqlexception
     begin
-		select 'Error Message' as ErrorMsg;
+		get diagnostics condition 1
+		@errorMessage = message_text;
+		select errorMessage;
 		rollback;
     end;
     start transaction;
