@@ -32,15 +32,16 @@ plog('_REQUEST:');
 plog($_REQUEST);
 
 plog('_POST:');
-$data = ($_POST);
+plog($_POST);
+$data = ($_POST['data']);
 plog($data);
 // получаем переданные параметры
-$account_owner = json_decode($_POST["account_owner"]);      // Идентификатор счета организатора
-$value = json_decode($_POST["value"]);                // Сумма транзакции
-$purchase_member_id = json_decode($_POST["purchase_member/id"]);  // Идентификатор записи таблицы Участники закупки
-$description = $_POST["description"];                           // Комментарий к транзакции
-$client_id = json_decode($_POST["client/id"]);  // array, название полей покоторым делаем поиск
-$client_account = json_decode($_POST["client_account"]);  // Баланс участниа после операции
+$account_owner = json_decode($data["account_owner"]);      // Идентификатор счета организатора
+$value = json_decode($data["value"]);                // Сумма транзакции
+$purchase_member_id = json_decode($data["purchase_member/id"]);  // Идентификатор записи таблицы Участники закупки
+$description = $data["description"];                           // Комментарий к транзакции
+$client_id = json_decode($data["client/id"]);  // array, название полей покоторым делаем поиск
+$client_account = json_decode($data["client_account"]);  // Баланс участниа после операции
 
 plog('Recived and extracted parameters:');
 plog("account_owner: $account_owner");
