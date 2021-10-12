@@ -34,6 +34,9 @@ plog($_REQUEST);
 plog('_POST:');
 plog($_POST);
 $data = json_decode($_POST['data']);
+if (gettype($data) == 'object') {
+    $data = (array) $data;
+}
 plog($data);
 // получаем переданные параметры
 $account_owner = json_decode($data["account_owner"]);      // Идентификатор счета организатора
