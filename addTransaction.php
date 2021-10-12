@@ -68,6 +68,7 @@ plog($result);
 
 if ($result != 0) {
     $errCount++;
+    $errDump .= preg_replace("/[\r\n\']/m", "", $result) . " | ";
     $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
     plog("Server reply error: $errDump \nIn query: $query");
 }

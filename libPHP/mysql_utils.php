@@ -569,8 +569,8 @@ function callProcedure($procedureName, $params) {
     global $errCount;
     global $errDump;
 
-    $result = null;
-    
+    $data = null;
+
     // подключаемся к БД
     $mySqli = connect();
 
@@ -601,14 +601,14 @@ function callProcedure($procedureName, $params) {
         // и если запрос выполнен успешно
         if ($result = $mySqli->query($query)) {
 
-            // $result = $result->fetch_row()[0];                              // результат выполнения процедуры
+            $data = $result->fetch_row();                              // результат выполнения процедуры
 
             plog("Procedure called with result:");
-            plog($result);
+            plog($data);
         } else {
             // если были ошибки
             $errCount++;
-            $errDump .= preg_replace("/[\r\n\']/m", "", $result) . " | ";
+            $errDump .= preg_replace("/[\r\n\']/m", "", $data) . " | ";
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump \nIn query: $query");
         }
@@ -620,10 +620,10 @@ function callProcedure($procedureName, $params) {
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
         
-        $result = 'MySQL connection erroe';
+        $data = 'MySQL connection erroe';
     }
     plog("callProcedure ->");
-    return $result;
+    return $data;
 }
 
 
