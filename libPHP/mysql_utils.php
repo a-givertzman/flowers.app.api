@@ -560,6 +560,68 @@ function insertOdkuData($tableName, $data) {
 
 
 
+// -------------------------------------------------------
+// Функция | Делает вызов хранимой процедуры
+//
+function callProcedure($procedureName, $params) {
+    plog("-> callProcedure");
+
+    global $errCount;
+    global $errDump;
+
+    // подключаемся к БД
+    $mySqli = connect();
+
+    // если подключение успешно
+    if ($mySqli->connect_errno == 0) {
+        $timerStart = microtime(true);
+
+        // готовим запрос
+        $query = "call $procedureName(";
+        
+        // добавляем параметры
+        $index = 0;
+        foreach($params as $paramName => $value) {
+                
+            $value = prepareValueToSQL($mySqli, $value);
+
+            $query .= "\n   '$value',";
+        }
+
+        $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
+        
+        $query .= "\n;";
+        
+        plog("ЗАПРОС:");
+        plog($query);
+        
+        // делаем запрос в БД
+        // и если запрос выполнен успешно
+        if ($mySqli->query($query)) {
+            
+            plog("Procedure called");
+        } else {
+            // если были ошибки
+            $errCount++;
+            $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
+            plog("Server reply error: $errDump \nIn query: $query");
+        }
+        
+        // закрываем подключение
+        $mySqli->close();
+
+        $timerEnd = microtime(true);
+        plog('time elapsed: ' . ($timerEnd - $timerStart));
+    // } else {
+        
+        // $data_id = false;
+    }
+    plog("callProcedure ->");
+    // return $data_id;
+}
+
+
+
 // plog("|                     mysql_utils.php                            |");
 // plog("|----------------------------------------------------------------|");
 
