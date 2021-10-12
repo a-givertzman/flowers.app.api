@@ -598,8 +598,11 @@ function callProcedure($procedureName, $params) {
         // делаем запрос в БД
         // и если запрос выполнен успешно
         if ($mySqli->query($query)) {
-            
-            plog("Procedure called");
+
+            $result = $result->fetch_row()[0];                              // результат выполнения процедуры
+
+            plog("Procedure called with result:");
+            plog($result);
         } else {
             // если были ошибки
             $errCount++;
@@ -612,12 +615,12 @@ function callProcedure($procedureName, $params) {
 
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
-    // } else {
+    } else {
         
-        // $data_id = false;
+        $result = 'MySQL connection erroe';
     }
     plog("callProcedure ->");
-    // return $data_id;
+    return $result;
 }
 
 
