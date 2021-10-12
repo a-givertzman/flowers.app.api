@@ -585,7 +585,7 @@ function callProcedure($procedureName, $params) {
                 
             $value = prepareValueToSQL($mySqli, $value);
 
-            $query .= "\n   '$value',";
+            $query .= "\n   $value,";
         }
 
         $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
