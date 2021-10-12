@@ -569,6 +569,8 @@ function callProcedure($procedureName, $params) {
     global $errCount;
     global $errDump;
 
+    $result = null;
+    
     // подключаемся к БД
     $mySqli = connect();
 
@@ -606,6 +608,7 @@ function callProcedure($procedureName, $params) {
         } else {
             // если были ошибки
             $errCount++;
+            $errDump .= preg_replace("/[\r\n\']/m", "", $result) . " | ";
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump \nIn query: $query");
         }
