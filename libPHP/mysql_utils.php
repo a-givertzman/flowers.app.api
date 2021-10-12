@@ -590,7 +590,7 @@ function callProcedure($procedureName, $params) {
 
         $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
         
-        $query .= "\n;";
+        $query .= "\n);";
         
         plog("ЗАПРОС:");
         plog($query);
