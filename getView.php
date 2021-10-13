@@ -16,64 +16,72 @@ require_once './libPHP/plog.php';
 
 // cors();
 
+
+
 plog_clear();
-plog("-> getData.php");
+plog("-> getView.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('php://input: ', file_get_contents( 'php://input' ));
-plog('_REQUEST: ', $_REQUEST);
-
-$data = ($_POST);
-plog('_POST: ', $data);
-// получаем название таблицы
-$tableName = json_decode($_POST["tableName"]);      // название таблицы
+plog('_POST:');
+plog($_POST);
+// получаем переданные параметры в формате json
+$params = ($_POST['params']);                       // параметры в формате json
+$viewName = json_decode($_POST["viewName"]);        // название view
 $keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
 $orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
 $order = $_POST["order"];                           // направление сортировки
-$where = json_decode($_POST["where"]);              // array, название полей покоторым делаем поиск
+$searchField = json_decode($_POST["searchField"]);  // array, название полей покоторым делаем поиск
+$searchValue = json_decode($_POST["searchValue"]);  // string, строка которую ищем в полях $searchField
 $limit = $_POST["limit"];                           // максиммальное количество записей в результате, 0 - не ограничено
 
-plog('tableName:', $tableName);
+plog('Recived and extracted parameters:');
+plog('Params: ', $params);
+plog('viewName: ', $tableName);
 plog('field keys: ', $keys);
 plog('rder by: ', $orderBy);
 plog('order: ', $order);
-plog('where: ', $where);
+plog('searchField: ', $searchField);
+plog('searchValue:', $searchValue);
 plog('limit: ', $limit);
 
-// делаем запрос SELECT JOIN в таблицу tableName
-$data = selectData(
-    $tableName,         // string, название таблицы
+// Делаем вызов хранимой процедуры
+$result = selectView(
+    $viewName,          // string, название view
+    $params,            // параметры в формате json
     $keys,              // array, запрашиваемые поля
     $orderBy,           // string, поле по которому сортируем
     $order,             // направление сортировки
-    $where,             // array of {operator: 'where'/'or'/'and', field: 'fieldNmae', cond: '=', value: value}
+    $searchField,       // array, название полей покоторым делаем поиск
+    $searchValue,       // string, строка которую ищем в полях $searchField
     $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
-if (gettype($data) == 'object') {
-    $data = (array) $data;
-}
-plog("data selected from $tableName:");
-plog('type of data: ', gettype($data));
-plog('data length: ', count($data));
-// plog('data: ', $data);
+plog('selectView result:');
+plog($result);
 
+if (gettype($result) == 'object') {
+    $result = (array) $result;
+}
 
 // проверяем были ли ошибки и передаем данные вызвывающей форме
 $jsonText = [];                                                             // массив для передачи данных фронтенду
 if ($errCount == 0) {
-    // если все прошло ok
+    // если все прошло без критичных ошибок
+    
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => $data,
+        'data' => $result,
         'errCount' => $errCount,
         'errDump' => $errDump
     );
+
 } else {
     // если были критичные ошибки
+
     plog("Server reply error: $errDump");
+
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
         'errCount' => $errCount,
         'errDump' => $errDump
@@ -82,4 +90,5 @@ if ($errCount == 0) {
 
 echo json_encode($jsonText);                                                // передаем данные
 
-plog("getData.php ->");
+
+plog("getView.php ->");

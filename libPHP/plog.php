@@ -21,9 +21,9 @@ ini_set('log_errors_max_len', 16384); // Logging file size
 
 
 // -------------------------------------------------------
-// Функция | Дописывает в конец файла лога данные из $data
+// Функция | Дописывает в конец файла лога данные из $args
 //
-function plog( $data = null ){
+function plog( ...$args ){
     // ob_start();                    // start buffer capture
     // var_dump( $object );           // dump the values
     // $contents = ob_get_contents(); // put the buffer into a variable
@@ -59,9 +59,9 @@ function plog( $data = null ){
         }
 
         try {
-            file_put_contents($logFilePath, "\n", FILE_APPEND);
-            file_put_contents($logFilePath, date("[Y-m-d H:i:s]") ."\t[" .$caller ."]\t" .print_r($data, true), FILE_APPEND);
-
+            foreach ($args as $arg) {
+                file_put_contents($logFilePath, date("[Y-m-d H:i:s]") ."\t[" .$caller ."]\t" .print_r($arg, true), FILE_APPEND);
+            }
         } catch(Exception $e) {
             
             error_log(date("[Y-m-d H:i:s]") ."\t[" .basename(__FILE__) ."]\t" .$e->getMessage(), 0);

@@ -110,6 +110,52 @@ function connect() {
 }
 
 
+// -------------------------------------------------------
+// Функция | Возвращает where выражение для view,
+//           формируется из массива параметров на входе:
+//           [{ 
+//             operator: 'where'/'or'/'and', 
+//             field: 'fieldNmae',
+//             cond: '=' / 'like' / '<' / '>'...etc,
+//             value: eny value,
+//           },...]
+//
+function viewWhereExpression($where) {
+    $query = '';
+    foreach ($where as $index => $clauese) {
+        $operator = $clauese['operator'];
+        $field = $clauese['field'];
+        $cond = $clauese['cond'];
+        $value = $clauese['value'];
+        $query .= "\n$operator `$field` $cond JSON_EXTRACT(viewParams(), '$.\"$field\"')";
+    }
+    return $query;
+}
+
+
+// -------------------------------------------------------
+// Функция | Возвращает where выражение для select,
+//           формируется из массива параметров на входе:
+//           [{ 
+//             operator: 'where'/'or'/'and', 
+//             field: 'fieldNmae',
+//             cond: '=' / 'like' / '<' / '>'...etc,
+//             value: eny value,
+//           },...]
+//
+function selectWhereExpression($where) {
+    $query = '';
+    foreach ($where as $index => $clauese) {
+        $operator = $clauese['operator'];
+        $table = isset($clauese['table']) ? ("`".$clauese['table']."`.") : '';
+        $field = $clauese['field'];
+        $cond = $clauese['cond'];
+        $value = $clauese['value'];
+        $query .= "\n$operator $table`$field` $cond '$value')";
+    }
+    return $query;
+}
+
 
 // -------------------------------------------------------
 // Функция | Делает один запрос SELECT в таблицу tabeName
@@ -119,12 +165,10 @@ function selectData(
     $field = [],            // array, запрашиваемые поля
     $orderField = 'id',     // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
-    $searchField = [],      // array, название полей покоторым делаем поиск
-    $searchQuery = "%",     // string, строка которую ищем в полях $searchField
+    $where = [],            // array of {operator: 'where'/'or'/'and', field: 'fieldNmae', cond: '=', value: value}
     $limit = 0              // максиммальное количество записей в результате, 0 - не ограничено
 ) {
     plog("-> selectData");
-    
     global $errCount;
     global $errDump;
     
@@ -139,29 +183,15 @@ function selectData(
 
         // добавляем поля
         foreach($field as $index => $fieldName) {
-            if ($index < count($field) - 1) {
-    
-                $query .= "\n   `$fieldName`,";
-            } else {
-                
-                $query .= "\n   `$fieldName`";
-            }
+            $query .= "\n   `$fieldName`,";
         }
-    
+        $query = substr($query, 0, -1);        // убираем последнюю запятаю
+
         // добавляем таблицу
         $query .= "\nFROM `$tableName`";
-
+        
         // добавляем фильтацию к запросу
-        $searchQuery = $searchQuery == '' ? "%" : $searchQuery;
-        foreach($searchField as $index => $field) {
-            if ($index == 0) {
-    
-                $query .= "\nWHERE `$field` LIKE '$searchQuery'";
-            } else {
-                
-                $query .= "\nOR `$field` LIKE '$searchQuery'";
-            }
-        }
+        $query .= selectWhereExpression($where);
     
         // добавляем сортировку к запросу
         $query .= "\nORDER BY `$orderField` $order";
@@ -171,26 +201,19 @@ function selectData(
             ? "\nLIMIT $limit;"
             : ';';
 
-        // $query .= ';';
-
-        plog("ЗАПРОС:");
-        plog($query);
+        plog("ЗАПРОС: ", $query);
 
         $data = [];
 
         // делаем запрос в БД
-        // и запрос выполнен если успешно
         if ($rows = $mySqli->query($query)) {
-
+            // и если запрос выполнен успешно, то перебираем записи
             while($row = $rows->fetch_array(MYSQLI_ASSOC)){
-
-                // и каждый кладем в массив
+                // и кладем каждую в массив
                 $data[$row['id']] = $row;
             }
             $rows->close();
-
             plog(count($data) ."records successfully selected");
-
         } else {
             // если были ошибки
             $errCount++;
@@ -198,15 +221,13 @@ function selectData(
             plog("Server reply error: $errDump");
         }
 
-        // закрываем подключение
-        $mySqli->close();
-
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        
         $data = false;
     }
+    // закрываем подключение
+    $mySqli->close();
     plog("selectData ->");
     return $data;
 }
@@ -222,8 +243,7 @@ function selectJoinData(
     // $joinField = [],        // [joinTableName][joinField], ключи - название таблицы, элементы - названия полей в таблице присоединяемых данных
     $orderField = 'id',     // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
-    $searchField = [],      // array, название полей покоторым делаем поиск
-    $searchQuery = "%",     // string, строка которую ищем в полях $searchField
+    $where = [],            // array of {operator: 'where'/'or'/'and', field: 'fieldNmae', cond: '=', value: value}
     $limit = 0              // максиммальное количество записей в результате, 0 - не ограничено
 ) {
     plog("-> selectJoinData");
@@ -258,8 +278,7 @@ function selectJoinData(
             }
         }
     
-        // убираем последнюю запятаю
-        $query = substr($query, 0, -1);
+        $query = substr($query, 0, -1);        // убираем последнюю запятаю
     
         // добавляем таблицу
         $query .= "\nFROM `$tableName`";
@@ -272,16 +291,7 @@ function selectJoinData(
         }
 
         // добавляем фильтацию к запросу
-        $searchQuery = $searchQuery == '' ? "%" : $searchQuery;
-        foreach($searchField as $index => $field) {
-            if ($index == 0) {
-    
-                $query .= "\nWHERE `$tableName`.`$field` LIKE '$searchQuery'";
-            } else {
-                
-                $query .= "\nOR `$tableName`.`$field` LIKE '$searchQuery'";
-            }
-        }
+        $query .= selectWhereExpression($where);
     
         // добавляем сортировку к запросу
         $query .= "\nORDER BY `$orderField` $order";
@@ -291,10 +301,7 @@ function selectJoinData(
             ? "\nLIMIT $limit;"
             : ';';
 
-        // $query .= ';';
-
-        plog("ЗАПРОС:");
-        plog($query);
+        plog("ЗАПРОС: ", $query);
 
         $data = [];
 
@@ -317,16 +324,14 @@ function selectJoinData(
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump");
         }
-
-        // закрываем подключение
-        $mySqli->close();
-
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
         
         $data = false;
     }
+    // закрываем подключение
+    $mySqli->close();
     plog("selectJoinData ->");
     return $data;
 }
@@ -382,8 +387,7 @@ function insertData($tableName, &$data) {
 
         $query .= "\n);";
         
-        plog("ЗАПРОС:");
-        plog($query);
+        plog("ЗАПРОС: ", $query);
         
         // делаем запрос в БД
         // и если запрос выполнен успешно
@@ -401,17 +405,13 @@ function insertData($tableName, &$data) {
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump \nIn query: $query");
         }
-        
-        // закрываем подключение
-        $mySqli->close();
-
-
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        
         $data_id = false;
     }
+    // закрываем подключение
+    $mySqli->close();
     plog("insertData ->");
     return $data_id;
 }
@@ -459,8 +459,7 @@ function updateData($tableName, &$data) {
 
         // $query .= "\n;";
         
-        plog("ЗАПРОС:");
-        plog($query);
+        plog("ЗАПРОС: ", $query);
         
         // делаем запрос в БД
         // и если запрос выполнен успешно
@@ -478,16 +477,13 @@ function updateData($tableName, &$data) {
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump \nIn query: $query");
         }
-        
-        // закрываем подключение
-        $mySqli->close();
-
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        
         $data_id = false;
     }
+    // закрываем подключение
+    $mySqli->close();
     plog("updateData ->");
     return $data_id;
 }
@@ -499,9 +495,7 @@ function updateData($tableName, &$data) {
 //
 function insertOdkuData($tableName, $data) {
     plog(" -> insertOdkuData");
-    plog("data:");
-    plog($data);
-    
+    plog("data: ", $data);
     global $errCount;
     global $errDump;
     
@@ -541,19 +535,16 @@ function insertOdkuData($tableName, $data) {
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump");
         }
-        
-        // закрываем подключение
-        $mySqli->close();
-
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else { 
-
         $data_id = false;
         $errCount++;
         $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
         plog("Server reply error: $errDump");
     }
+    // закрываем подключение
+    $mySqli->close();
     plog("insertOdkuData ->");
     return $data_id;
 }
@@ -594,8 +585,7 @@ function callProcedure($procedureName, $params) {
         
         $query .= "\n);";
         
-        plog("ЗАПРОС:");
-        plog($query);
+        plog("ЗАПРОС: ", $query);
         
         // делаем запрос в БД
         // и если запрос выполнен успешно
@@ -603,8 +593,7 @@ function callProcedure($procedureName, $params) {
 
             $data = $result->fetch_row()[0];                              // результат выполнения процедуры
 
-            plog("Procedure called with result:");
-            plog($data);
+            plog("Procedure called with result: ", $data);
         } else {
             // если были ошибки
             $errCount++;
@@ -612,17 +601,105 @@ function callProcedure($procedureName, $params) {
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump \nIn query: $query");
         }
-        
-        // закрываем подключение
-        $mySqli->close();
+        $timerEnd = microtime(true);
+        plog('time elapsed: ' . ($timerEnd - $timerStart));
+    } else {
+        $data = 'MySQL connection erroe';
+    }
+    // закрываем подключение
+    $mySqli->close();
+    plog("callProcedure ->");
+    return $data;
+}
 
+
+
+// -------------------------------------------------------
+// Функция | Делает один запрос SELECT в таблицу tabeName
+//
+function selectView(
+    $viewName,              // string, название view
+    $params,                // параметры в формате json
+    $field = [],            // array, запрашиваемые поля
+    $orderField = 'id',     // string, поле по которому сортируем
+    $order = 'ASC',         // направление сортировки
+    $where = [],            // array, название полей покоторым делаем поиск
+    $limit = 0              // максиммальное количество записей в результате, 0 - не ограничено
+) {
+    plog("-> selectView");
+    global $errCount;
+    global $errDump;
+    
+    // подключаемся к БД
+    $mySqli = connect();
+    
+    // если подключение успешно
+        if ($mySqli->connect_errno == 0) {
+            $timerStart = microtime(true);
+
+        // передаем параметры для view в формате json
+        $query = `set @viewParams = $params;`;
+
+        if ($result = $mySqli->query($query)) {
+
+            $query = "SELECT";
+
+            // добавляем поля
+            foreach($field as $index => $fieldName) {
+                $query .= "\n   `$fieldName`,";
+            }
+            $query = substr($query, 0, -1);        // убираем последнюю запятаю
+        
+            // добавляем таблицу
+            $query .= "\nFROM `$viewName`";
+    
+            // добавляем фильтацию к запросу
+            $query .= viewWhereExpression($where);
+
+            // добавляем сортировку к запросу
+            $query .= "\nORDER BY `$orderField` $order";
+    
+            // добавляем лимит количества записей в результате
+            $query .= ($limit > 0) 
+                ? "\nLIMIT $limit;"
+                : ';';
+    
+            plog("ЗАПРОС: ", $query);
+    
+            $data = [];
+    
+            // делаем запрос в БД
+            if ($rows = $mySqli->query($query)) {
+                // и запрос выполнен если успешно, перебираем записи
+                while($row = $rows->fetch_array(MYSQLI_ASSOC)){
+                    // и кладем каждую в массив
+                    $data[$row['id']] = $row;
+                }
+                $rows->close();
+    
+                plog(count($data) ." records successfully selected");
+            } else {
+                // если были ошибки
+                $errCount++;
+                $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
+                plog("Server reply error: $errDump");
+            }
+        } else {
+            // если были ошибки
+            $errCount++;
+            $errDump .= preg_replace("/[\r\n\']/m", "", $result) . " | ";
+            $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
+            plog("Server reply error: $errDump \nIn query: $query");
+        }
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
         
-        $data = 'MySQL connection erroe';
+        $data = false;
     }
-    plog("callProcedure ->");
+    // закрываем подключение
+    $mySqli->close();
+    plog("selectView ->");
     return $data;
 }
 

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `u1489690_flowers_app`.`transaction`;
+-- DROP TABLE IF EXISTS `u1489690_flowers_app`.`transaction`;
 
 CREATE TABLE IF NOT EXISTS `u1489690_flowers_app`.`transaction` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -74,3 +74,65 @@ begin
         select 0;
 end$$
 DELIMITER ;
+
+
+#function to pass the parameter to view clientTransactions
+create function viewParams() 
+	returns json
+	return @viewParams;
+  
+create or replace
+	view clientTransactionsView (
+		`id`,
+        `date`,
+        `account_owner`,
+        `value`,
+        `purchase_member/id`,
+        `purchase_content/id`,
+        `product/id`,
+        `product/name`,
+        `description`,
+        `client/id`,
+        `client_account`
+	) as 
+		select 
+		`transaction`.`id`,
+        `transaction`.`date`,
+        `transaction`.`account_owner`,
+        `transaction`.`value`,
+        `transaction`.`description`,
+        `transaction`.`client/id`,
+        `transaction`.`client_account`,
+        `transaction`.`purchase_member/id`,
+        `purchase_member`.`purchase_content/id` as `purchase_content/id`,
+        `purchase_member`.`product/id`,
+        `product`.`name` as `product/name`
+        from `transaction`
+		left join `purchase_member` ON `transaction`.`purchase_member/id` = `purchase_member`.`id`
+		left join `purchase_content` ON `purchase_member`.`purchase_content/id` = `purchase_content`.`id`
+		left join `product` ON `purchase_content`.`product/id` = `product`.`id`
+        where `transaction`.`client/id` = JSON_EXTRACT(viewParams(), '$."client/id"')
+        order by `transaction`.`date`;        
+        
+        select JSON_EXTRACT(viewParams(), '$."client/id"');
+set @viewParams = '{"client/id", 4}';
+select * from clientTransactionsView;
+
+		select 
+		`transaction`.`id`,
+        `transaction`.`date`,
+        `transaction`.`account_owner`,
+        `transaction`.`value`,
+        `transaction`.`description`,
+        `transaction`.`client/id`,
+        `transaction`.`client_account`,
+        `transaction`.`purchase_member/id`,
+        `purchase_member`.`purchase_content/id` as `purchase_content/id`,
+        `purchase_member`.`product/id`,
+        `product`.`name` as `product/name`
+        from `transaction`
+		left join `purchase_member` ON `transaction`.`purchase_member/id` = `purchase_member`.`id`
+		left join `purchase_content` ON `purchase_member`.`purchase_content/id` = `purchase_content`.`id`
+		left join `product` ON `purchase_content`.`product/id` = `product`.`id`
+        where `transaction`.`client/id` = 4
+        order by `transaction`.`date`;

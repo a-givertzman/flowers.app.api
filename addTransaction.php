@@ -25,11 +25,11 @@ plog("-> addTransaction.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('php://input:');
-plog(file_get_contents( 'php://input' ));
+// plog('php://input:');
+// plog(file_get_contents( 'php://input' ));
 
-plog('_REQUEST:');
-plog($_REQUEST);
+// plog('_REQUEST:');
+// plog($_REQUEST);
 
 plog('_POST:');
 plog($_POST);
@@ -48,11 +48,11 @@ $description = $data['description'];                           // Коммент
 $client_id = $data['client/id'];  // array, название полей покоторым делаем поиск
 
 plog('Recived and extracted parameters:');
-plog("account_owner: $account_owner");
-plog("value: $value");
-plog("purchase_member_id: $purchase_member_id");
-plog("description: $description");
-plog("client_id: $client_id");
+plog("account_owner: ", $account_owner);
+plog("value: ", $value);
+plog("purchase_member_id: ", $purchase_member_id);
+plog("description: ", $description);
+plog("client_id: ", $client_id);
 
 // Делаем вызов хранимой процедуры
 $result = callProcedure('addTransaction', [
