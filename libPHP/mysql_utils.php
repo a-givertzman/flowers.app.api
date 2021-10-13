@@ -123,11 +123,10 @@ function connect() {
 function viewWhereExpression($where) {
     $query = '';
     foreach ($where as $index => $clauese) {
-        $clause = (array) $clause;
-        $operator = $clauese['operator'];
-        $field = $clauese['field'];
-        $cond = $clauese['cond'];
-        $value = $clauese['value'];
+        $operator = $clauese->operator;
+        $field = $clauese->field;
+        $cond = $clauese->cond;
+        $value = $clauese->value;
         $query .= "\n$operator `$field` $cond JSON_EXTRACT(viewParams(), '$.\"$field\"')";
     }
     return $query;
@@ -147,13 +146,12 @@ function viewWhereExpression($where) {
 function selectWhereExpression($where) {
     $query = '';
     foreach ($where as $index => $clauese) {
-        $clause = (array) $clause;
         plog('clause: ', $clauese);
-        $operator = $clauese['operator'];
-        $table = isset($clauese['table']) ? ("`".$clauese['table']."`.") : '';
-        $field = $clauese['field'];
-        $cond = $clauese['cond'];
-        $value = $clauese['value'];
+        $operator = $clauese->operator;
+        $table = isset($clauese->table) ? ("`" . $clauese->table . "`.") : '';
+        $field = $clauese->field;
+        $cond = $clauese->cond;
+        $value = $clauese->value;
         $query .= "\n$operator $table`$field` $cond '$value')";
     }
     return $query;
