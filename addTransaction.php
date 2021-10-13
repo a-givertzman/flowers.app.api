@@ -16,8 +16,6 @@ require_once './libPHP/plog.php';
 
 // cors();
 
-
-
 plog_clear();
 plog("-> addTransaction.php");
 
@@ -31,8 +29,7 @@ require_once './libPHP/mysql_utils.php';
 // plog('_REQUEST:');
 // plog($_REQUEST);
 
-plog('_POST:');
-plog($_POST);
+plog('_POST: ', $_POST);
 $data = json_decode($_POST['data']);
 if (gettype($data) == 'object') {
     $data = (array) $data;

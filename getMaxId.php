@@ -14,7 +14,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 require_once './libPHP/plog.php';
 
 
-
 plog("");
 plog("-> getMaxId.php");
 
@@ -22,25 +21,22 @@ plog("-> getMaxId.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('POST:');
-plog($_POST);
+plog('POST: ', $_POST);
 // получаем название таблицы
-$tableName = $_POST["tableName"];           // название таблицы
-plog('tableName:');
-plog($tableName);
+$tableName = $_POST["tableName"];
+plog('tableName: ', $tableName);
 
 // делаем запрос SELECT в таблицу tableName
 $data = selectData(
     $tableName,     // string, название таблицы
-    ['id'],          // array, запрашиваемые поля
-    'id',       // string, поле по которому сортируем
+    ['id'],         // array, запрашиваемые поля
+    'id',           // string, поле по которому сортируем
     'DESC',         // направление сортировки
     [],             // array, название полей покоторым делаем поиск
-    '%',            // string, строка которую ищем в полях $searchField
     1               // максиммальное количество записей в результате, 0 - не ограничено
 );
 
-plog($data);
+plog('data: ', $data);
 
 if (empty($data)) {
     $data = 0;
@@ -56,18 +52,14 @@ if (empty($data)) {
 $jsonText = [];                                                             // массив для передачи данных фронтенду
 if ($errCount == 0) {
     // если все прошло без критичных ошибок
-    
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
         'data' => $data,
         'errCount' => $errCount,
         'errDump' => $errDump
     );
-
 } else {
     // если были критичные ошибки
-
     plog("Server reply error: $errDump");
-
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
         'errCount' => $errCount,
         'errDump' => $errDump
@@ -75,6 +67,5 @@ if ($errCount == 0) {
 }
 
 echo json_encode($jsonText);                                                // передаем данные
-
 
 plog("getMaxId.php ->");
