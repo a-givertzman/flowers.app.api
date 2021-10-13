@@ -123,6 +123,7 @@ function connect() {
 function viewWhereExpression($where) {
     $query = '';
     foreach ($where as $index => $clauese) {
+        $clause = (array) $clause;
         $operator = $clauese['operator'];
         $field = $clauese['field'];
         $cond = $clauese['cond'];
@@ -146,6 +147,7 @@ function viewWhereExpression($where) {
 function selectWhereExpression($where) {
     $query = '';
     foreach ($where as $index => $clauese) {
+        $clause = (array) $clause;
         plog('clause: ', $clauese);
         $operator = $clauese['operator'];
         $table = isset($clauese['table']) ? ("`".$clauese['table']."`.") : '';
