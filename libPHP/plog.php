@@ -57,13 +57,11 @@ function plog( ...$args ){
             
             error_log(date("[Y-m-d H:i:s]") ."\t[" .basename(__FILE__) ."]\t" .$e->getMessage(), 0);
         }
-
         try {
             foreach ($args as $arg) {
-                file_put_contents($logFilePath, date("[Y-m-d H:i:s]") ."\t[" .$caller ."]\t" .print_r($arg, true), FILE_APPEND);
+                file_put_contents($logFilePath, "\n" .date("[Y-m-d H:i:s]") ."\t[" .$caller ."]\t" .print_r($arg, true), FILE_APPEND);
             }
-        } catch(Exception $e) {
-            
+        } catch(Exception $e) {   
             error_log(date("[Y-m-d H:i:s]") ."\t[" .basename(__FILE__) ."]\t" .$e->getMessage(), 0);
         }
     // }
