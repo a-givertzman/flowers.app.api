@@ -622,7 +622,7 @@ function selectView(
     $viewName,              // string, название view
     $params = '',           // параметры в формате json
     $field = [],            // array, запрашиваемые поля
-    $orderField = 'id',     // string, поле по которому сортируем
+    $orderBy = 'id',     // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
     $where = [],            // array, название полей покоторым делаем поиск
     $limit = 0              // максиммальное количество записей в результате, 0 - не ограничено
@@ -659,7 +659,7 @@ function selectView(
             $query .= viewWhereExpression($where);
 
             // добавляем сортировку к запросу
-            $query .= "\nORDER BY `$orderField` $order";
+            $query .= "\nORDER BY `$orderBy` $order";
     
             // добавляем лимит количества записей в результате
             $query .= ($limit > 0) 
