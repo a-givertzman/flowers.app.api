@@ -38,13 +38,12 @@ $searchValue = json_decode($_POST["searchValue"]);  // string, строка ко
 $limit = $_POST["limit"];                           // максиммальное количество записей в результате, 0 - не ограничено
 
 plog('Recived and extracted parameters:');
-plog('Params: ', $params);
+plog('params: ', $params);
 plog('viewName: ', $tableName);
 plog('field keys: ', $keys);
-plog('rder by: ', $orderBy);
+plog('order by: ', $orderBy);
 plog('order: ', $order);
-plog('searchField: ', $searchField);
-plog('searchValue:', $searchValue);
+plog('where: ', $where);
 plog('limit: ', $limit);
 
 // Делаем вызов хранимой процедуры
@@ -54,8 +53,7 @@ $result = selectView(
     $keys,              // array, запрашиваемые поля
     $orderBy,           // string, поле по которому сортируем
     $order,             // направление сортировки
-    $searchField,       // array, название полей покоторым делаем поиск
-    $searchValue,       // string, строка которую ищем в полях $searchField
+    $where,             // array, название полей покоторым делаем поиск
     $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
