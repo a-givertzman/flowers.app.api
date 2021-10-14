@@ -23,64 +23,48 @@ CREATE TABLE IF NOT EXISTS `u1489690_flowers_app`.`purchase_content` (
 --   as (getRemains(`count`, `purchase/id`, `id`))
 --   COMMENT 'Остаток единиц товара';
 
+create or replace
+	view purchaseContentView as 
+		select 
+			`purchase_content`.`purchase/id`,
+			`purchase_content`.`id`,
+			`purchase_content`.`sale_price`,
+			`purchase_content`.`sale_currency`,
+			`purchase_content`.`shipping`,
+			`purchase_content`.`count`,
+			`product`.`id` as `product/id`,
+			`product`.`group` as `product/group`,
+			`product`.`name` as `product/name`,
+			`product`.`detales` as `product/detales`,
+			`product`.`primary_price` as `product/primary_price`,
+			`product`.`primary_currency` as `product/primary_currency`,
+			`product`.`primary_order_quantity` as `product/primary_order_quantity`,
+			`product`.`order_quantity` as `product/order_quantity`,
+			getRemains(`purchase_content`.`purchase/id`, `purchase_content`.`id`, `purchase_content`.`count`) as `remains`
+        from `purchase_content`
+		left join `product` ON `purchase_content`.`product/id` = `product`.`id`
+        order by `purchase_content`.`id`;
 
-DROP FUNCTION IF EXISTS getRemains;
+select * from purchaseContentView where `purchase/id` = 1;
+select getRemains(1, 28, 51);
+
+
+drop function if exists getRemains;
 DELIMITER $$
-CREATE FUNCTION getRemains(pCount INT, purchase_id INT, purchase_content_id INT)
-RETURNS INT deterministic
-begin
-	return (pCount - (select sum(`count`)
-	from `purchase_member`
-	where `purchase/id` = purchase_id
-	and `purchase_content/id` = purchase_content_id));
+create function getRemains(
+	purchase_id int,
+	purchase_content_id int,
+    purchase_content_count int
+)
+returns int
+begin      
+	declare purchase_member_count int;
+    set purchase_member_count = ifnull((
+		select sum(`count`)
+			from `purchase_member`
+			where `purchase/id` = purchase_id
+			and `purchase_content/id` = purchase_content_id
+	), 0);
+	return purchase_content_count - purchase_member_count;
 end$$
-DELIMITER ;
-
-drop procedure if exists updateRemains;
-DELIMITER $$
-create procedure updateRemains(in purchase_id int, in purchase_content_id int)
-begin
-	declare pCount int;	#purchase_content.count
-	declare newRemains int;	#purchase_member.remains
-    
-    select `count` 
-		into pCount 
-        from `purchase_content` 
-        where `purchase_content`.`id` = purchase_content_id;
-    
-	set newRemains = (pCount - (select sum(`count`)
-	from `purchase_member`
-	where `purchase_member`.`purchase/id` = purchase_id
-	and `purchase_content/id` = purchase_content_id));
-    
-    update `purchase_content`
-		set `purchase_content`.remains = newRemains
-        where `purchase_content`.`id` = purchase_content_id;
-end$$
-DELIMITER ;
-
-drop trigger if exists onUpdatePurchaseMemberCount;
-DELIMITER //
-create trigger onUpdatePurchaseMemberCount after update on `purchase_member`
-for each row
-begin
-   -- if !(new.`count` <=> old.`count`) then
-      call updateRemains(new.`purchase/id`, old.`purchase_content/id`);
-      call updateRemains(new.`purchase/id`, new.`purchase_content/id`);
-   -- end if;
-end;//
-DELIMITER ;
-
-drop trigger if exists onUpdatePurchaseContentCount;
-DELIMITER //
-create trigger onUpdatePurchaseContentCount before update on `purchase_content`
-for each row
-begin
-   -- if !(new.`count` <=> old.`count`) then
-	set new.`remains` = (new.`count` - ifnull((select sum(`count`)
-	from `purchase_member`
-	where `purchase_member`.`purchase/id` = new.`purchase/id`
-	and `purchase_member`.`purchase_content/id` = new.`id`), 0));
-   -- end if;
-end;//
 DELIMITER ;

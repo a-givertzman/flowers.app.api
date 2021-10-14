@@ -115,7 +115,7 @@ create or replace
         order by `transaction`.`date`;        
         
         select JSON_EXTRACT(viewParams(), '$."client/id"');
-set @viewParams = '{"client/id", 4}';
+set @viewParams = '{"client/id": 9}';
 select * from clientTransactionsView;
 
 		select 

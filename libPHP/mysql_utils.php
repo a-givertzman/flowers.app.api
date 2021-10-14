@@ -620,7 +620,7 @@ function callProcedure($procedureName, $params) {
 //
 function selectView(
     $viewName,              // string, название view
-    $params,                // параметры в формате json
+    $params = '',           // параметры в формате json
     $field = [],            // array, запрашиваемые поля
     $orderField = 'id',     // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
@@ -635,8 +635,8 @@ function selectView(
     $mySqli = connect();
     
     // если подключение успешно
-        if ($mySqli->connect_errno == 0) {
-            $timerStart = microtime(true);
+    if ($mySqli->connect_errno == 0) {
+        $timerStart = microtime(true);
 
         // передаем параметры для view в формате json
         $query = `set @viewParams = $params;`;
