@@ -622,7 +622,7 @@ function selectView(
     $viewName,              // string, название view
     $params = '',           // параметры в формате json
     $field = [],            // array, запрашиваемые поля
-    $orderBy = 'id',     // string, поле по которому сортируем
+    $orderBy = 'id',        // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
     $where = [],            // array, название полей покоторым делаем поиск
     $limit = 0              // максиммальное количество записей в результате, 0 - не ограничено
@@ -639,6 +639,7 @@ function selectView(
         $timerStart = microtime(true);
 
         // передаем параметры для view в формате json
+        plog("params: ", $params);
         $query = `set @viewParams = $params;`;
         plog("ЗАПРОС: ", $query);
 
