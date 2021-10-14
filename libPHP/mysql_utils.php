@@ -640,7 +640,7 @@ function selectView(
 
         // передаем параметры для view в формате json
         plog("params: ", $params);
-        $query = `set @viewParams = $params;`;
+        $query = "set @viewParams = " . $params . ";";
         plog("ЗАПРОС: ", $query);
 
         if ($result = $mySqli->query($query)) {
