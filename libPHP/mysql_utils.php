@@ -642,7 +642,6 @@ function selectView(
         $query = `set @viewParams = $params;`;
 
         if ($result = $mySqli->query($query)) {
-            $rows->close();
 
             $query = "SELECT";
 
@@ -696,7 +695,6 @@ function selectView(
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        
         $data = false;
     }
     // закрываем подключение

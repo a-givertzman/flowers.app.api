@@ -38,7 +38,7 @@ $limit = $_POST["limit"];                           // максиммально�
 
 plog('Recived and extracted parameters:');
 plog('params: ', $params);
-plog('viewName: ', $tableName);
+plog('viewName: ', $viewName);
 plog('field keys: ', $keys);
 plog('order by: ', $orderBy);
 plog('order: ', $order);
