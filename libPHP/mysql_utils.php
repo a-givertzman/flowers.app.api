@@ -642,6 +642,7 @@ function selectView(
         $query = `set @viewParams = $params;`;
 
         if ($result = $mySqli->query($query)) {
+            $rows->close();
 
             $query = "SELECT";
 
