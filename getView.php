@@ -33,8 +33,7 @@ $viewName = json_decode($_POST["viewName"]);        // название view
 $keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
 $orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
 $order = $_POST["order"];                           // направление сортировки
-$searchField = json_decode($_POST["searchField"]);  // array, название полей покоторым делаем поиск
-$searchValue = json_decode($_POST["searchValue"]);  // string, строка которую ищем в полях $searchField
+$where = json_decode($_POST["where"]);              // array, название полей покоторым делаем поиск
 $limit = $_POST["limit"];                           // максиммальное количество записей в результате, 0 - не ограничено
 
 plog('Recived and extracted parameters:');
