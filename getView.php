@@ -25,11 +25,10 @@ plog("-> getView.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('_POST:');
-plog($_POST);
+plog('_POST:', $_POST);
 // получаем переданные параметры в формате json
 $params = ($_POST['params']);                       // параметры в формате json
-$viewName = json_decode($_POST["viewName"]);        // название view
+$viewName = json_decode($_POST["tableName"]);        // название view
 $keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
 $orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
 $order = $_POST["order"];                           // направление сортировки
