@@ -27,7 +27,7 @@ require_once './libPHP/mysql_utils.php';
 
 plog('_POST:', $_POST);
 // получаем переданные параметры в формате json
-$params = ($_POST['params']);                       // параметры в формате json
+$params = $_POST['params'];                       // параметры в формате json
 $viewName = json_decode($_POST["tableName"]);        // название view
 $keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
 $orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
