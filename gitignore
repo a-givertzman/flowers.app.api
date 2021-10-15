@@ -1,7 +1,7 @@
 __MACOSX/
 log/
 logs/
-web/
+./web/
 
 # ignore all files starting with . or ~
 .*
