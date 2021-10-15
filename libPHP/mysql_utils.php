@@ -661,11 +661,11 @@ function selectView(
             $query .= "\nFROM `$viewName`";
     
             // добавляем фильтацию к запросу
-            if ($params) {
-                $query .= viewWhereExpression($where);
-            } else {
+            // if ($params) {
+                // $query .= viewWhereExpression($where);
+            // } else {
                 $query .= selectWhereExpression($where);
-            }
+            // }
 
             // добавляем сортировку к запросу
             $query .= "\nORDER BY `$orderBy` $order";
