@@ -22,7 +22,8 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ public/index.html [L]
 #RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^/ public/index.html [L]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.php -f
+RewriteRule \.php$ public/%{REQUEST_URI}.php [L]
 
 # Prevent direct access to the "public" folder - redirect to root
 # RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/
