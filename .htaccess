@@ -5,7 +5,7 @@
  #Options -Indexes
 
  # Открывать файлы без указания расширения
- #Options +Multyview
+ Options +Multyview
 
  # Переопределение индексного файла
  # DirectiryIndex index.php
