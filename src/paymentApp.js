@@ -250,7 +250,7 @@ function onPurchaseListChanged(purchaseMemberData,
                 // console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
                 if (purchaseMemberTableRow?.checked) {
                     let subCost = Number(purchaseMemberDataRow['cost']);
-                    totalCost += !isNan(subCost) ? subCost : 0;
+                    totalCost += !isNaN(subCost) ? subCost : 0;
                 }
             }
         }
