@@ -47,7 +47,8 @@
                     },
                     set(value) {
                         if(needsToBeBlacklisted(value, scriptElt.type)) {
-                            originalSetAttribute('type', 'javascript/blocked')
+                            originalSetAttribute('type', 'javascript/blocked');
+                            return false;
                         }
                         originalSetAttribute('src', value)
                         return true
