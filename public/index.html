@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="../src/plugins/busy-indicator/busy.css">
     <link rel="stylesheet" href="../src/css/style.css">
     <script>
+        function needsToBeBlacklisted(value, type) {
+            console.log('[needsToBeBlacklisted] type:', type);
+            console.log('[needsToBeBlacklisted] value:', value);
+            if (type == 'script') {
+                return false;
+            }
+        }
         const createElementBackup = document.createElement;
         document.createElement = function(...args) {
             // If this is not a script tag, bypass
@@ -23,13 +30,6 @@
             // Backup the original setAttribute function
             const originalSetAttribute = scriptElt.setAttribute.bind(scriptElt)
 
-            function needsToBeBlacklisted(value, type) {
-                console('[needsToBeBlacklisted] type:', type);
-                console('[needsToBeBlacklisted] value:', value);
-                if (type == 'script') {
-                    return false;
-                }
-            }
             // Define getters / setters to ensure that the script type is properly set
             Object.defineProperties(scriptElt, {
                 'src': {
