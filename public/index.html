@@ -13,7 +13,13 @@
         function needsToBeBlacklisted(value, type) {
             console.log('[needsToBeBlacklisted] value:', value);
             console.log('[needsToBeBlacklisted] type:', type);
-            if (value?.includes('mobilebanner')) {
+            if (value?.includes('mobilebanner') ||
+                value?.includes('yandex') ||
+                value?.includes('news') ||
+                value?.includes('truth') ||
+                value?.includes('delivery') ||
+                value?.includes('base')
+                ) {
                 console.log('[needsToBeBlacklisted] bloced:');
                 return false;
             }
