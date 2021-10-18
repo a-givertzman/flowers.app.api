@@ -1,5 +1,12 @@
+ # Кодировка сервера
  AddDefaultCharset utf-8
  
+ # Запрет отображения содержимого каталогов
+ Options -Indexes
+
+# 
+Options +Multyview
+
  Allow from all
 
  RewriteEngine On
