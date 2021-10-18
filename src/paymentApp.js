@@ -159,26 +159,26 @@ window.addEventListener(                                            // ON LOAD W
                 // выбираем клиентов
                 clientData = objectRemoveDuplicated(responseData, 'client/id');
                 console.log('purchaseData:', purchaseData);
-                // if (Object.keys(purchaseData).length > 0) {
-                //     // добавляем в таблицу заголовок
-                //     var newPurchase = renderPurchaseHeader({});
-                //     table.append(newPurchase.thead);
-                //     table.append(newPurchase.tbody);
-                //     tableBody = newPurchase.tbody;
+                if (Object.keys(purchaseData).length > 0) {
+                    // добавляем в таблицу заголовок
+                    var newPurchase = renderPurchaseHeader({});
+                    table.append(newPurchase.thead);
+                    table.append(newPurchase.tbody);
+                    tableBody = newPurchase.tbody;
 
-                //     // for (var key in purchaseData) {
-                //     //     var rowData = purchaseData[key];
-                //     //     var row = renderPurchaseRow(rowData);
-                //     //     tableBody.append(row);
-                //     //     row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
-                //     //         // onPurchaseListChanged(
-                //     //         //     purchaseMemberData,
-                //     //         //     clientData, purchaseData, 
-                //     //         //     'table.purchase-items', '.purchase-row-checkbox'
-                //     //         // );
-                //     //     });                
-                //     // }
-                // }
+                    for (var key in purchaseData) {
+                        var rowData = purchaseData[key];
+                        var row = renderPurchaseRow(rowData);
+                        tableBody.append(row);
+                        row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
+                            // onPurchaseListChanged(
+                            //     purchaseMemberData,
+                            //     clientData, purchaseData, 
+                            //     'table.purchase-items', '.purchase-row-checkbox'
+                            // );
+                        });                
+                    }
+                }
 
                 busyIndicator.hide();
             }).catch(e => {
