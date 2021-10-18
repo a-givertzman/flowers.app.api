@@ -14,7 +14,7 @@
 // import header_logo_img from '@img/header-logo.png';
 // import { User } from './user';
 
-const domainPath = '../';//'../../'; http://u1489690.isp.regruhosting.ru/
+const domainPath = '../../';//'../../'; http://u1489690.isp.regruhosting.ru/
 
 var data = null;
 var busyIndicator;
