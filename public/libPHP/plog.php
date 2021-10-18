@@ -4,7 +4,7 @@
 $debug_backtrace_depth = 2;
 
 $logFile = 'php.log';
-$logFilePath = __DIR__ ."/../logs/" .$logFile;
+$logFilePath = __DIR__ ."/../../logs/" .$logFile;
 error_log("\t [plog.php]\tphp log file:\t" .$logFilePath, 0);
 // error_log(date("[Y-m-d H:i:s]") ."\t [plog.php]\tphp log file:\t" .$logFilePath, 0);
 
