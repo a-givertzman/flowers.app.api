@@ -20,7 +20,7 @@
 RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^$ public/ [L]
+RewriteRule ^/$ /public/ [L]
 #RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.php -f
 RewriteRule \.php$ public/%{REQUEST_URI}.php [L]
