@@ -17,7 +17,7 @@ function getView(args) {
     return apiRequest(args);
 }
 
-export {getData, getJoinData, getView};
+// export {getData, getJoinData, getView};
 
 async function apiRequest(args) {
     console.log('[mysql.apiRequest]');

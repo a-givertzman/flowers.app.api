@@ -1,19 +1,19 @@
 "use strict";
 // import { clearCookie, getCookie, setCookie } from './cookie';
-import { getView, getData, getJoinData } from './mysql';
-import { renderPurchaseHeader, renderPurchaseRow } from './renderPaymentPurchaseReport';
-import { renderTransactionHeader, renderTransactionRow } from './renderPaymentPurchaseReport';
+// import { getView, getData, getJoinData } from './mysql';
+// import { renderPurchaseHeader, renderPurchaseRow } from './renderPaymentPurchaseReport';
+// import { renderTransactionHeader, renderTransactionRow } from './renderPaymentPurchaseReport';
 
-import {BusyIndicator} from '@plugins/busy-indicator/busy.js'
+// import {BusyIndicator} from '@plugins/busy-indicator/busy.js'
 
 // import '@plugins/jquery-form-styler/jquery.formstyler.css';
 // import '@plugins/jquery-form-styler/jquery.formstyler.theme.css';
-import './css/style.css';
-import './css/media.css';
+// import './css/style.css';
+// import './css/media.css';
 // import slider_1_background_img from '@img/slider-background.png';
 // import header_logo_img from '@img/header-logo.png';
-import { User } from './user';
-import { cli } from 'webpack';
+// import { User } from './user';
+// import { cli } from 'webpack';
 
 var data = null;
 var purchaseMemberData = {};

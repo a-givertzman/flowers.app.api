@@ -1,6 +1,6 @@
 "use strict";
 // рендерит заголовок закупки
-export function renderPurchaseHeader(row) {
+function renderPurchaseHeader(row) {
     var theadHtml = `
         <thead>
             <tr class="purchase-row-header">
@@ -33,7 +33,7 @@ export function renderPurchaseHeader(row) {
 }
 
 // рендерит одну позицию из таблицы purchase_member
-export function renderPurchaseRow(row) {
+function renderPurchaseRow(row) {
     var rowHtml = `
         <tr class="purchase-row">
             <th><input class="purchase-row-checkbox" type="checkbox" name="${row['id']}" id="chbx${row['id']}" checked></th>
@@ -61,7 +61,7 @@ export function renderPurchaseRow(row) {
 }
 
 // рендерит заголовок транзакций
-export function renderTransactionHeader(row) {
+function renderTransactionHeader(row) {
     var theadHtml = `
         <thead>
             <tr class="transaction-row-header">
@@ -92,7 +92,7 @@ export function renderTransactionHeader(row) {
 }
 
 // рендерит одну запись из таблицы transaction
-export function renderTransactionRow(row) {
+function renderTransactionRow(row) {
     let purchaseMemberId = row['purchase_member/id'] ? row['purchase_member/id'] : '';
     let purchaseName = row['purchase/name'] ? row['purchase/name'] : '-';
     let productName = row['product/name'] ? row['product/name'] : '-';
