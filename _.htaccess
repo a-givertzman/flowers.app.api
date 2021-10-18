@@ -4,10 +4,18 @@
  # Запрет отображения содержимого каталогов
  Options -Indexes
 
-# 
-Options +Multyview
+ # Открывать файлы без указания расширения
+ Options +Multyview
 
+ # Переопределение индексного файла
+ # DirectiryIndex index.php
+
+ # Скрывает файлы из листинга
+ # IndexIgnire *.rar *.zip 
+
+ # Order Allow,Deny
  Allow from all
+ Deny yandex.ru megafon.ru digitaltarget.ru rt.ru mobilebanner.ru
 
  RewriteEngine On
  #RewriteBase /
