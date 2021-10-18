@@ -19,7 +19,7 @@
 
  RewriteEngine On
  RewriteBase /
- RewriteRule ^/(.*) public/$1
+ RewriteRule ^.+/.$ public/$1 [NC]
 
 # Prevent direct access to the "public" folder - redirect to root
 # RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/
