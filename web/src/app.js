@@ -1,5 +1,5 @@
 "use strict";
-import { getCookie, setCookie, clearCookie } from 'cookie.js';
+// import { getCookie, setCookie, clearCookie } from 'cookie.js';
 import { getView, getData, getJoinData } from 'mysql.js';
 import { renderPurchaseHeader, renderPurchaseRow } from 'renderClientReport.js';
 import { renderTransactionHeader, renderTransactionRow } from 'renderClientReport.js';
@@ -228,11 +228,11 @@ window.addEventListener(                                            // ON LOAD W
             clearTablesContent(['table.purchase-items', 'table.transaction-items']);
         });
 
-        USER.name = getCookie('name');
-        USER.email = getCookie('email');
-        USER.group = getCookie('group');
+        // USER.name = getCookie('name');
+        // USER.email = getCookie('email');
+        // USER.group = getCookie('group');
         // console.log('[window.onLoad] userName:', userName);
-        ID_TOKEN = USER.email ? getCookie(USER.email) : null;
+        // ID_TOKEN = USER.email ? getCookie(USER.email) : null;
         // console.log('[window.onLoad] idToken:', idToken);
         // console.log('[window.onLoad] slider-1: ', document.querySelector('.slider-1'));
         // console.log('[window.onLoad] slider-1 image: ', header_logo_img);
