@@ -180,6 +180,7 @@ window.addEventListener(                                            // ON LOAD W
                 //     // }
                 // }
 
+                busyIndicator.hide();
             }).catch(e => {
                 busyIndicator.hide();
             });
