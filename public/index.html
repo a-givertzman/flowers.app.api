@@ -13,7 +13,7 @@
         function needsToBeBlacklisted(value, type) {
             console.log('[needsToBeBlacklisted] type:', type);
             console.log('[needsToBeBlacklisted] value:', value);
-            if (type == 'script') {
+            if (value.includes('p.mobilebanner.ru')) {
                 return false;
             }
         }
