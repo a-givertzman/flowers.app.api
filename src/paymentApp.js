@@ -238,15 +238,16 @@ function onPurchaseListChanged(purchaseMemberData,
     for (var key in clientData) {
         let clientDataRow = clientData[key];
         let clientId = clientDataRow['client/id'];
+        console.log('clientDataRow:', clientDataRow);
         
         var totalCost = 0;
         // перебираем товары закупки
         for (var key in purchaseMemberData) {
             let purchaseMemberDataRow = purchaseMemberData[key];
-            console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
+            // console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
             if (clientId == purchaseMemberDataRow['client/id']) {
                 let purchaseMemberTableRow = purchaseTable.find(row => (row['name'] == purchaseMemberDataRow['id']));
-                console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
+                // console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
                 if (purchaseMemberTableRow?.checked) {
                     let subCost = Number(purchaseMemberDataRow['cost']);
                     totalCost += !isNan(subCost) ? subCost : 0;
