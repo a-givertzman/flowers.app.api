@@ -7,7 +7,7 @@ function renderPurchaseHeader(row) {
                 <th colspan="100">Закупка [${row['purchase/id']}] ${row['purchase/name']}</th>
             </tr>
             <tr class="purchase-row">
-                <th><span>Выбор</span><input type="checkbox" name="" id="" checked></th>
+                <th><span>Выбор</span></th>
                 <th>PrID</th>
                 <th>Группа</th>
                 <th>Нименование</th>
