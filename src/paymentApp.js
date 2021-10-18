@@ -171,11 +171,11 @@ window.addEventListener(                                            // ON LOAD W
                         var row = renderPurchaseRow(rowData);
                         tableBody.append(row);
                         row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
-                            // onPurchaseListChanged(
-                            //     purchaseMemberData,
-                            //     clientData, purchaseData, 
-                            //     'table.purchase-items', '.purchase-row-checkbox'
-                            // );
+                            onPurchaseListChanged(
+                                purchaseMemberData,
+                                clientData, purchaseData, 
+                                'table.purchase-items', '.purchase-row-checkbox'
+                            );
                         });                
                     }
                 }
