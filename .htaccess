@@ -17,9 +17,11 @@
  Allow from all
  # Deny yandex.ru megafon.ru digitaltarget.ru rt.ru mobilebanner.ru
 
- RewriteEngine On
- RewriteBase /
- RewriteRule ^.+/.$ public/$1 [NC]
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ public/ [L]
 
 # Prevent direct access to the "public" folder - redirect to root
 # RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/
