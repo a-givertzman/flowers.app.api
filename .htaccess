@@ -21,13 +21,14 @@ RewriteEngine On
 #RewriteBase /
 #RewriteCond %{REQUEST_URI} !^/public/
 
+RewriteRule ^(.*).php$ /public/$1 [L]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.+)$ /public/index.php?url=$1 [QSA,L]
 
 #RewriteRule ^(.*)$ /public/$1 [L]
 
-#RewriteRule ^/payment/(.*)$ /public/$1 [L]
 
 # Prevent direct access to the "public" folder - redirect to root
 # RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/
