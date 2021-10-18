@@ -43,16 +43,16 @@ function matchCustom(params, data) {
     return null;
 }
 
-// $(function() {
-//     $('.search-purchase-select').select2({
-//         placeholder: 'ID / ФИО / номер телефона',
-//         width: '100%', // need to override the changed default
-//         multiple: false,
-//         placeholder: "Найди себя",
-//         allowClear: true,
-//         matcher: matchCustom
-//     });
-// });
+$(function() {
+    $('.search-purchase-select').select2({
+        placeholder: 'ID / ФИО / номер телефона',
+        width: '100%', // need to override the changed default
+        multiple: false,
+        placeholder: "Найди себя",
+        allowClear: true,
+        matcher: matchCustom
+    });
+});
 
 
 const app_form = document.querySelector('#booking-form');
