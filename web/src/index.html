@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет по закупкам участника</title>
+    <link rel="icon" href="./img/favicon.ico">
+    <!-- <link rel="stylesheet" href="./plugins/select2-4.1.0-rc.0/dist/css/select2.min.css"> -->
+    <link rel="stylesheet" href="./plugins/busy-indicator/busy.css">
+    <!-- css/style.css -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- <script src="./plugins/jquery-3.6.0.js"></script> -->
+    <!-- <script src="plugins/busy-indicator/busy.js"></script> -->
+    <!-- <script src="./plugins/select2-4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+    <script src="app.js" type="module"></script>
+</head>
+<body>
+    <div class="busy-indicator busy-indicator-hide">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-contacts">
+                    <a class="header-phone" href="tel:+7 (555) 555 55 55">+7 (555) 555 55 55</a>
+                    <a class="header-email" href="#">our_email@gmail.com</a>
+                    <!-- <a class="header-btn" href="#">Бесплатная консультация</a> -->
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="purchase-selector">
+        <div class="container">
+            <div class="purchase-selector-top">
+                <div class="purchase-selector-title-box">
+                    <div class="purchase-selector-title">
+                        Отчет по закупкам участника
+                        <span id="client-account"></span>
+                    </div>
+                    <div class="purchase-selector-search">
+                        <select class="search-purchase-select" name="purchase-selector">
+                            <option></option>
+                        </select>                    
+                    </div>
+                </div>
+            </div>
+            <div class="purchase-item">
+                <span> Список закупок </span>
+            </div>
+            <table class="purchase-items">
+            </table>
+            <table class="transaction-items">
+            </table>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-box">
+                <div class="footer-box-about">
+                    <div class="footer-box-title">
+                        Кратко о нас
+                    </div>
+                    <div class="footer-box-text">
+                        Краткая инфа о нас и чем мы полезны
+                    </div>
+                    <!-- <a class="footer-box-btn" href="#">Бесплатная консультация</a> -->
+                    <ul class="footer-box-contacts">
+                        <li><a class="footer-box-phone" href="tel:+7 (555) 555 55 55">+7 (555) 555 55 55</a></li>
+                        <li><a class="footer-box-email" href="#">our_email@gmail.com</a></li>
+                        <li><a class="footer-box-address" href="#">Казань, ул. Гороховая, 111</a></li>
+                    </ul>
+                </div>
+                <div class="footer-box-info">
+                    <div class="footer-box-info-map">
+                        <div style="position:relative;overflow:hidden;">
+                            </iframe>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyrights">
+            ® 2021 Created by Anton Lobanov. All rights reserved
+        </div>
+    </footer>
+</body>
+</html>

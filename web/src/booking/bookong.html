@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.muicss.com/mui-latest/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.muicss.com/mui-latest/js/mui.min.js"></script>
+    <title>Бронирование</title>
+  </head>
+  <body>
+    <button class="mui-btn mui-btn--raised floating-btn mui-btn--raised" id="auth-btn">Авторизация</button>
+    <div id="sidebar">
+      <div class="mui--text-white mui--text-display1 mui--align-vertical">
+        БРОНЬ
+        <br>
+        <small class="executor">Анна</small>
+      </div>
+      <div id="calendar">
+        <div class="mui--text-white mui--text-Headline mui--align-vertical">КАЛЕНДАРЬ</div>
+      </div>
+      <ul class="mui--text-subhead user-navigator" id="user-navigator-top">
+        <li class="user-navigator-item" id="show-all-btn"><a href="#">Все бронирования</a></li>
+      </ul>
+      <ul class="mui--text-subhead user-navigator" id="user-navigator">
+      </ul>
+    </div>
+    <div id="content" class="mui-container-fluid">
+      <div class="mui-row">
+        <div class="mui-col-sm-10 mui-col-sm-offset-1">
+        
+          <div class="mui-row">
+            <form class="mui-form" id="booking-form">
+              <legend>Новое бронирование</legend>
+              <div class="mui-textfield">
+                <label for="date-input">Дата</label>
+                <input type="date" placeholder="На какую дату бронируете?" id="date-input" required>
+              </div>
+              <div class="mui-textfield">
+                <label for="time-input">Время</label>
+                <input type="time" min="07:00" max="20:00" value="07:00" 
+                  placeholder="На какое время бронируете?" id="time-input" required>
+              </div>
+              <div class="mui-textfield mui-textfield--float-label">
+                <input type="number" min="1" max="8" id="dauration-input">
+                <label for="dauration-input">Количество часов (от 1 до 8)</label>
+                <!-- placeholder="На сколько часов хотите забронировать?"  -->
+              </div>
+              <div class="mui-textfield mui-textfield--float-label">
+                <input type="text" id="address-input">
+                <label for="address-input">Адрес</label>
+                <!-- placeholder="Укажите точный адрес проведения работ"  -->
+              </div>
+              <div class="mui-textfield mui-textfield--float-label">
+                <textarea minlength="5" maxlength="1000" id="work-description-input"></textarea>
+                <label for="description-input">Описание работ</label>
+                <!-- placeholder="Перечислите виды работ которые нужно сделать" -->
+              </div>
+              <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary" id="submit-btn">
+                Забронировать
+              </button>
+            </form>
+          </div>
+          
+          <br>
+          <br>
+          <div class="mui--text-black-54 mui--text-body2">РАСПИСАНИЕ</div>
+          <div class="mui-divider"></div>
+          <br>
+          <div id="booking-list"></div>
+        </div>
+    
+      </div>
+    </div>
+  </body>
+</html>
+
