@@ -1,22 +1,23 @@
 "use strict";
-export async function getData(args) {
+function getData(args) {
     console.log('[mysql.getData]');
     args.url = args.url ? args.url : domainPath + 'getData.php';
     return apiRequest(args);
 }
 
-export async function getJoinData(args) {
+function getJoinData(args) {
   console.log('[musql.getJoinData]');
   args.url = args.url ? args.url : domainPath + 'getJoinData.php';
   return apiRequest(args);
 }
 
-export async function getView(args) {
+function getView(args) {
     console.log('[mysql.getView]');
     args.url = args.url ? args.url : domainPath + 'getView.php';
     return apiRequest(args);
 }
 
+export {getData, getJoinData, getView};
 
 async function apiRequest(args) {
     console.log('[mysql.apiRequest]');
