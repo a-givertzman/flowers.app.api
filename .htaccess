@@ -19,11 +19,11 @@
 
 RewriteEngine On
 RewriteBase /
+RewriteCond %{REQUEST_URI} !^/public/
 #RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^$ /public/ [L]
+#RewriteRule ^$ /public/ [L]
 #RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.php -f
-RewriteRule \.php$ public/%{REQUEST_URI}.php [L]
+RewriteRule ^(.*)$ /public/$1 [L]
 
 # Prevent direct access to the "public" folder - redirect to root
 # RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/
