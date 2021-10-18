@@ -149,6 +149,7 @@ window.addEventListener(                                            // ON LOAD W
 
                 // console.log('responseData:', responseData);
                 var table = document.querySelector('table.purchase-items');
+                console.log('table: ', table);
                 var tableBody;
                 var purchase_id = -1;
                 for (var key in responseData) {
