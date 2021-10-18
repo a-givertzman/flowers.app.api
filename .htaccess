@@ -18,7 +18,7 @@
  # Deny yandex.ru megafon.ru digitaltarget.ru rt.ru mobilebanner.ru
 
 RewriteEngine On
-RewriteBase /
+#RewriteBase /
 RewriteCond %{REQUEST_URI} !^/public/
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteRule ^$ /public/ [L]
