@@ -1,9 +1,9 @@
 <?php
 
-if ($GET('url') == 'payment') {
+if ($_GET('url') == 'payment') {
     require_once './payment.php';
 }
 
-if ($GET('url') == '') {
+if ($_GET('url') == '') {
     require_once './clientOverview.php';
 }
