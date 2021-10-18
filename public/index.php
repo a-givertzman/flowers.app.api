@@ -1,6 +1,6 @@
 <?php
 
-if (empty($_GET('url')) || $_GET('url') == '') {
+if (empty($_GET) || $_GET('url') == '') {
     require_once './clientOverview.php';
     exit;
 }
