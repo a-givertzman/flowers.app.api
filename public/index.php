@@ -2,12 +2,14 @@
 var_dump($_GET);
 
 if (empty($_GET) || $_GET['url'] == '') {
-    require_once './clientOverview.php';
+    $html = require_once './clientOverview.php';
+    echo $html;
     exit;
 }
 
 if ($_GET['url'] == 'payment') {
-    require_once './payment.php';
+    $html = require_once './payment.php';
+    echo $html;
     exit;
 }
 
