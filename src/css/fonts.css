@@ -55,8 +55,8 @@
 
 @font-face {
   font-family: 'Roboto';
-  src:  url('fonts/Roboto-Regular.ttf') format('truetype'),
-    url('fonts/Roboto-Bold.ttf') format('truetype');
+  src:  url('./fonts/Roboto-Regular.ttf') format('truetype'),
+    url('./fonts/Roboto-Bold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -64,8 +64,8 @@
 
 @font-face {
   font-family: 'Rubik';
-  src:  url('fonts/Rubik-Regular.ttf') format('truetype'),
-    url('fonts/Rubik-Bold.ttf') format('truetype');
+  src:  url('./fonts/Rubik-Regular.ttf') format('truetype'),
+    url('./fonts/Rubik-Bold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;
