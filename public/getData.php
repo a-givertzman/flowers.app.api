@@ -11,7 +11,7 @@ $errDump = " | ";
 // Добавлять в отчет все ошибки PHP
 error_reporting(E_ALL & ~E_NOTICE);
 
-require_once './libPHP/plog.php';
+require_once './public/libPHP/plog.php';
 // require_once './libPHP/cors.php';
 
 // cors();
@@ -21,7 +21,7 @@ plog("-> getData.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
-require_once './libPHP/mysql_utils.php';
+require_once './public/libPHP/mysql_utils.php';
 
 plog('php://input: ', file_get_contents( 'php://input' ));
 plog('_REQUEST: ', $_REQUEST);
