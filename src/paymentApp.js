@@ -248,7 +248,8 @@ function onPurchaseListChanged(purchaseMemberData,
                 let purchaseMemberTableRow = purchaseTable.find(row => (row['name'] == purchaseMemberDataRow['id']));
                 console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
                 if (purchaseMemberTableRow?.checked) {
-                    totalCost += purchaseMemberDataRow['cost'];
+                    let subCost = Number(purchaseMemberDataRow['cost']);
+                    totalCost += !isNan(subCost) ? subCost : 0;
                 }
             }
         }
