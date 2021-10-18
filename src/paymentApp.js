@@ -233,6 +233,7 @@ function onPurchaseListChanged(purchaseMemberData,
     clientData, purchaseData, tableSelector, checkBoxSelector
 ) {
     var purchaseTable = document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector);
+    console.log('purchaseTable: ', purchaseTable);
     // перебираем клиентов
     for (var key in clientData) {
         let clientDataRow = clientData[key];
