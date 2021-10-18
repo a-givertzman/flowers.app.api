@@ -90,7 +90,7 @@
     <script src="../src/app.js"></script>
 </head>
 <body>
-    <p><?php echo $_SERVER['PHP_SELF'] ?></p>
+    <p><?php echo $_GET['url'] ?></p>
     <div class="busy-indicator busy-indicator-hide">
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
