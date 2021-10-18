@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="../src/css/style.css">
     <script>
         function needsToBeBlacklisted(value, type) {
-            console.log('[needsToBeBlacklisted] type:', type);
             console.log('[needsToBeBlacklisted] value:', value);
+            console.log('[needsToBeBlacklisted] type:', type);
             if (value?.includes('mobilebanner')) {
+                console.log('[needsToBeBlacklisted] bloced:');
                 return false;
             }
         }
