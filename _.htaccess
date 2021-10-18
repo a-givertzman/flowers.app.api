@@ -15,10 +15,10 @@
 
  # Order Allow,Deny
  Allow from all
- Deny yandex.ru megafon.ru digitaltarget.ru rt.ru mobilebanner.ru
+ # Deny yandex.ru megafon.ru digitaltarget.ru rt.ru mobilebanner.ru
 
  RewriteEngine On
- #RewriteBase /
+ RewriteBase /
 # Prevent direct access to the "public" folder - redirect to root
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /public/
 RewriteRule ^public/(.*) /$1 [R=302,L]
