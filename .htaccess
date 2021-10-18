@@ -25,4 +25,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
 
-RewriteRule ^base.js$ - [F]
+# RewriteRule ^base.js$ - [F]
