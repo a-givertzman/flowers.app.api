@@ -2,10 +2,10 @@
  AddDefaultCharset utf-8
  
  # Запрет отображения содержимого каталогов
- Options -Indexes
+ #Options -Indexes
 
  # Открывать файлы без указания расширения
- Options +Multyview
+ #Options +Multyview
 
  # Переопределение индексного файла
  # DirectiryIndex index.php
@@ -14,7 +14,7 @@
  # IndexIgnire *.rar *.zip 
 
  # Order Allow,Deny
- Allow from all
+ #Allow from all
  # Deny yandex.ru megafon.ru digitaltarget.ru rt.ru mobilebanner.ru
 
 RewriteEngine On
