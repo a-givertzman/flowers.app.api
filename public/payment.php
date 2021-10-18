@@ -91,7 +91,6 @@
 
 </head>
 <body>
-    <p><?php echo $_SERVER['PHP_SELF'] ?></p>
     <div class="busy-indicator busy-indicator-hide">
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>

@@ -15,6 +15,8 @@
 // import { User } from './user';
 // import { cli } from 'webpack';
 
+const domainPath = '';//'../../'; http://u1489690.isp.regruhosting.ru/
+
 var data = null;
 var purchaseMemberData = {};
 var clientData = {};
@@ -126,66 +128,66 @@ window.addEventListener(                                            // ON LOAD W
         });
 
         // загружаем информацию по выбранной закупке
-        // $('.search-purchase-select').on('select2:select', e => {
-        //     clearTablesContent(['table.purchase-items', 'table.transaction-items']);
+        $('.search-purchase-select').on('select2:select', e => {
+            clearTablesContent(['table.purchase-items', 'table.transaction-items']);
             
-        //     var selectedId = e.params.data.id;
+            var selectedId = e.params.data.id;
 
-        //     // баланс клиента
-        //     var clientAccount = data[selectedId].account;
-        //     document.querySelector('#client-account').innerHTML = `Баланс: ${clientAccount} RUB`;
+            // баланс клиента
+            var clientAccount = data[selectedId].account;
+            document.querySelector('#client-account').innerHTML = `Баланс: ${clientAccount} RUB`;
             
-        //     // закупки клиента
-        //     // busyIndicator.show();
-        //     // var where = [{operator: 'where', field: 'purchase/id', cond: '=', value: selectedId}];
-        //     // getView({
-        //     //     tableName: 'purchaseMemberView', 
-        //     //     params: '0', 
-        //     //     keys: ['*'],
-        //     //     orderBy: 'purchase/id', 
-        //     //     order: 'ASC', 
-        //     //     where: where, 
-        //     //     limit: 0,
-        //     // }).then(responseData => {
-        //     //     purchaseMemberData = responseData;
-        //     //     // console.log('responseData:', responseData);
-        //     //     var table = document.querySelector('table.purchase-items');
-        //     //     var tableBody;
+            // закупки клиента
+            busyIndicator.show();
+            var where = [{operator: 'where', field: 'purchase/id', cond: '=', value: selectedId}];
+            getView({
+                tableName: 'purchaseMemberView', 
+                params: '0', 
+                keys: ['*'],
+                orderBy: 'purchase/id', 
+                order: 'ASC', 
+                where: where, 
+                limit: 0,
+            }).then(responseData => {
+                purchaseMemberData = responseData;
+                // console.log('responseData:', responseData);
+                var table = document.querySelector('table.purchase-items');
+                var tableBody;
 
-        //     //     // выбираем закупки
-        //     //     purchaseData = objectRemoveDuplicated(responseData, 'product/id');
-        //     //     // выбираем клиентов
-        //     //     clientData = objectRemoveDuplicated(responseData, 'client/id');
-        //     //     console.log('purchaseData:', purchaseData);
-        //     //     // if (Object.keys(purchaseData).length > 0) {
-        //     //     //     // добавляем в таблицу заголовок
-        //     //     //     var newPurchase = renderPurchaseHeader({});
-        //     //     //     table.append(newPurchase.thead);
-        //     //     //     table.append(newPurchase.tbody);
-        //     //     //     tableBody = newPurchase.tbody;
+                // выбираем закупки
+                purchaseData = objectRemoveDuplicated(responseData, 'product/id');
+                // выбираем клиентов
+                clientData = objectRemoveDuplicated(responseData, 'client/id');
+                console.log('purchaseData:', purchaseData);
+                // if (Object.keys(purchaseData).length > 0) {
+                //     // добавляем в таблицу заголовок
+                //     var newPurchase = renderPurchaseHeader({});
+                //     table.append(newPurchase.thead);
+                //     table.append(newPurchase.tbody);
+                //     tableBody = newPurchase.tbody;
 
-        //     //     //     // for (var key in purchaseData) {
-        //     //     //     //     var rowData = purchaseData[key];
-        //     //     //     //     var row = renderPurchaseRow(rowData);
-        //     //     //     //     tableBody.append(row);
-        //     //     //     //     row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
-        //     //     //     //         // onPurchaseListChanged(
-        //     //     //     //         //     purchaseMemberData,
-        //     //     //     //         //     clientData, purchaseData, 
-        //     //     //     //         //     'table.purchase-items', '.purchase-row-checkbox'
-        //     //     //     //         // );
-        //     //     //     //     });                
-        //     //     //     // }
-        //     //     // }
+                //     // for (var key in purchaseData) {
+                //     //     var rowData = purchaseData[key];
+                //     //     var row = renderPurchaseRow(rowData);
+                //     //     tableBody.append(row);
+                //     //     row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
+                //     //         // onPurchaseListChanged(
+                //     //         //     purchaseMemberData,
+                //     //         //     clientData, purchaseData, 
+                //     //         //     'table.purchase-items', '.purchase-row-checkbox'
+                //     //         // );
+                //     //     });                
+                //     // }
+                // }
 
-        //     // }).catch(e => {
-        //     //     busyIndicator.hide();
-        //     // });
-        // });
+            }).catch(e => {
+                busyIndicator.hide();
+            });
+        });
         
-        // $('.search-purchase-select').on('select2:unselect', e => {
-        //     clearTablesContent(['table.purchase-items', 'table.transaction-items']);
-        // });
+        $('.search-purchase-select').on('select2:unselect', e => {
+            clearTablesContent(['table.purchase-items', 'table.transaction-items']);
+        });
 
         // USER.name = getCookie('name');
         // USER.email = getCookie('email');
@@ -204,52 +206,52 @@ window.addEventListener(                                            // ON LOAD W
 });
 
 
-// function clearTablesContent(selectors) {
-//     let table;
-//     selectors.forEach(tableSelector => {
-//         table = document.querySelector(tableSelector);
-//         table.innerHTML = '';
-//     });
-// }
+function clearTablesContent(selectors) {
+    let table;
+    selectors.forEach(tableSelector => {
+        table = document.querySelector(tableSelector);
+        table.innerHTML = '';
+    });
+}
 
 
-// function objectRemoveDuplicated(data, keyField) {
-//     const resultData = {};
-//     const keySet = new Set();
-//     for (var key in data) {
-//         const row = data[key];
-//         if (!keySet.has(Number(row[keyField]))) {
-//             resultData[key] = row;
-//         }
-//         keySet.add(Number(row[keyField]));
-//     }
-//     return resultData;
-// }
+function objectRemoveDuplicated(data, keyField) {
+    const resultData = {};
+    const keySet = new Set();
+    for (var key in data) {
+        const row = data[key];
+        if (!keySet.has(Number(row[keyField]))) {
+            resultData[key] = row;
+        }
+        keySet.add(Number(row[keyField]));
+    }
+    return resultData;
+}
 
-// function onPurchaseListChanged(purchaseMemberData, 
-//     clientData, purchaseData, tableSelector, checkBoxSelector
-// ) {
-//     var purchaseTable = document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector);
-//     // перебираем клиентов
-//     for (var key in clientData) {
-//         let clientDataRow = clientData[key];
-//         let clientId = clientDataRow['client/id'];
+function onPurchaseListChanged(purchaseMemberData, 
+    clientData, purchaseData, tableSelector, checkBoxSelector
+) {
+    var purchaseTable = document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector);
+    // перебираем клиентов
+    for (var key in clientData) {
+        let clientDataRow = clientData[key];
+        let clientId = clientDataRow['client/id'];
         
-//         var totalCost = 0;
-//         // перебираем товары закупки
-//         for (var key in purchaseMemberData) {
-//             let purchaseMemberDataRow = purchaseMemberData[key];
-//             console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
-//             if (clientId == purchaseMemberDataRow['client/id']) {
-//                 purchaseMemberTableRow = purchaseTable.field(row => (row['name'] == purchaseMemberDataRow['id']));
-//                 console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
-//                 if (purchaseMemberTableRow.checked) {
-//                     totalCost += purchaseMemberDataRow['cost'];
-//                 }
-//             }
-//         }
-//         console.log('totalCost: ', totalCost);
-//     }
+        var totalCost = 0;
+        // перебираем товары закупки
+        for (var key in purchaseMemberData) {
+            let purchaseMemberDataRow = purchaseMemberData[key];
+            console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
+            if (clientId == purchaseMemberDataRow['client/id']) {
+                purchaseMemberTableRow = purchaseTable.field(row => (row['name'] == purchaseMemberDataRow['id']));
+                console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
+                if (purchaseMemberTableRow.checked) {
+                    totalCost += purchaseMemberDataRow['cost'];
+                }
+            }
+        }
+        console.log('totalCost: ', totalCost);
+    }
     // const tablePurchase = document.querySelector(tableSelector);
     // console.log('tablePurchase:', tablePurchase);
     // const tablePurchaseRows = tablePurchase.querySelectorAll(checkBoxSelector);
@@ -258,4 +260,4 @@ window.addEventListener(                                            // ON LOAD W
     //     console.log('tableRow:', tableRow);
     //     console.log('tableRow id:', tableRow.name);
     // });
-// }
+}
