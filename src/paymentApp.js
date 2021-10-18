@@ -245,7 +245,7 @@ function onPurchaseListChanged(purchaseMemberData,
             let purchaseMemberDataRow = purchaseMemberData[key];
             console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
             if (clientId == purchaseMemberDataRow['client/id']) {
-                purchaseMemberTableRow = purchaseTable.find(row => (row['name'] == purchaseMemberDataRow['id']));
+                let purchaseMemberTableRow = purchaseTable.find(row => (row['name'] == purchaseMemberDataRow['id']));
                 console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
                 if (purchaseMemberTableRow.checked) {
                     totalCost += purchaseMemberDataRow['cost'];
