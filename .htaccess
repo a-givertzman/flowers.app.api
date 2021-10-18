@@ -25,7 +25,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} \.php$
 RewriteRule ^(.*)$ /public/$1 [L]
 
-RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ /public/index.php?url=$1 [QSA,L]
 
