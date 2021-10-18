@@ -1,4 +1,5 @@
 <?php
+var_dump($_GET);
 
 if (empty($_GET) || $_GET('url') == '') {
     require_once './clientOverview.php';
