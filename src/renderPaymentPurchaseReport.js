@@ -89,14 +89,14 @@ function renderClientHeader(row) {
 
 // рендерит одну запись из таблицы transaction
 function renderClientRow(row) {
-    let clientId = row['client_total'] ? row['client_total'] : '';
+    let clientTotal = row['client_total'] ? row['client_total'] : 0;
     var rowHtml = `
         <tr class="transaction-row">
             <td>${row['client/id']}</td>
             <td>${row['client/name']}</td>
             <td>${row['client/phone']}</td>
             <td>${row['client/account']} RUB</td>
-            <td>${row['client_total']} RUB</td>
+            <td>${clientTotal} RUB</td>
         </tr>
     `;
     var newRow = document.createElement('tr');
