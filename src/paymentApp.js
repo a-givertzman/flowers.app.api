@@ -171,8 +171,6 @@ window.addEventListener(                                            // ON LOAD W
                         tableBody.append(row);
                         console.log('clientDataRow:', row);
                     }        
-
-                    
                 }
                 busyIndicator.hide();
             }).catch(e => {
@@ -212,8 +210,8 @@ function objectRemoveDuplicated(data, keyField) {
 function onPurchaseListChanged(purchaseMemberData, 
     clientData, clientTableSelector, tableSelector, checkBoxSelector
 ) {
-    var purchaseTable = [...document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector)];
-    console.log('purchaseTable: ', purchaseTable);
+    // var purchaseTable = [...document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector)];
+    // console.log('purchaseTable: ', purchaseTable);
 
     // перебираем клиентов
     for (var key in clientData) {
@@ -227,9 +225,10 @@ function onPurchaseListChanged(purchaseMemberData,
             let purchaseMemberDataRow = purchaseMemberData[key];
             // console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
             if (clientId == purchaseMemberDataRow['client/id']) {
-                let purchaseMemberTableRow = purchaseTable.find(row => (row['name'] == purchaseMemberDataRow['id']));
+                // let purchaseMemberRowCheckBox = purchaseTable.find(row => (row['name'] == purchaseMemberDataRow['id']));
+                let purchaseMemberRowCheckBox = document.querySelector(tableSelector + ' ' + checkBoxSelector);
                 // console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
-                if (purchaseMemberTableRow?.checked) {
+                if (purchaseMemberRowCheckBox?.checked) {
                     let subCost = Number(purchaseMemberDataRow['cost']);
                     totalCost += !isNaN(subCost) ? subCost : 0;
                 }
