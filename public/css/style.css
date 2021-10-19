@@ -200,11 +200,19 @@ header{
     right: -12px;
     color: #fff;
 }
+.default-btn-black.disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: var(--light-grey-color);
+    color: var(--night-rider-color);
+    border-color: var(--night-rider-color);
+}
 .default-btn-black:disabled{
     pointer-events: none;
     cursor: not-allowed;
     background-color: var(--light-grey-color);
     color: var(--night-rider-color);
+    border-color: var(--night-rider-color);
 }
 
 .default-btn-white:active{
