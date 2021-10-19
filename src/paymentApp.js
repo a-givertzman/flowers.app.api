@@ -113,7 +113,6 @@ window.addEventListener(                                            // ON LOAD W
             clearTablesContent(['table.purchase-items', 'table.purchase-clients']);
             
             var selectedId = e.params.data.id;
-            purchaseMemberId = selectedId;
             
             // закупки клиента
             busyIndicator.show();
