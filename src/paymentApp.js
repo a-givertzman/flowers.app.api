@@ -149,7 +149,7 @@ window.addEventListener(                                            // ON LOAD W
                         row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
                             onPurchaseListChanged(
                                 purchaseMemberData,
-                                clientData, purchaseData, 
+                                clientData, 
                                 'table.purchase-clients',   // селектор таблицы клиентов
                                 'table.purchase-items',     // селектор таблицы товаров
                                 '.purchase-row-checkbox'
