@@ -223,10 +223,11 @@ function onPurchaseListChanged(purchaseMemberData,
         // перебираем товары закупки
         for (var key in purchaseMemberData) {
             let purchaseMemberDataRow = purchaseMemberData[key];
+            let id = purchaseMemberDataRow['id'];
             // console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
             if (clientId == purchaseMemberDataRow['client/id']) {
                 // let purchaseMemberRowCheckBox = purchaseTable.find(row => (row['name'] == purchaseMemberDataRow['id']));
-                let purchaseMemberRowCheckBox = document.querySelector(tableSelector + ' ' + checkBoxSelector);
+                let purchaseMemberRowCheckBox = document.querySelector(tableSelector + ' ' + checkBoxSelector + '#chbx' + id);
                 // console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
                 if (purchaseMemberRowCheckBox?.checked) {
                     let subCost = Number(purchaseMemberDataRow['cost']);
