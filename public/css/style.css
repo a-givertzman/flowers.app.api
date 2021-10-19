@@ -230,8 +230,7 @@ header{
     transform: translateY(-50%);
     right: -12px;
 }
-.default-btn-black:disabled,
-.default-btn-white:disabled{
+.default-btn-black:disabled{
     pointer-events: none;
     cursor: not-allowed;
     background-color: var(--light-grey-color);
