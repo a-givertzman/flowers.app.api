@@ -174,7 +174,7 @@ window.addEventListener(                                            // ON LOAD W
                     }   
                     
                     // обновляем сумму оплаты по всем позициям закупки для всех клиентов
-                    updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector);
+                    updateClientTotalCost(clientData, purchaseMemberData, 'table.purchase-clients');
                 }
                 busyIndicator.hide();
             }).catch(e => {
