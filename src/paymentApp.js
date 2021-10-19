@@ -109,7 +109,7 @@ window.addEventListener(                                            // ON LOAD W
 
         // загружаем информацию по выбранной закупке
         $('.search-purchase-select').on('select2:select', e => {
-            clearTablesContent(['table.purchase-items', 'table.transaction-items']);
+            clearTablesContent(['table.purchase-items', 'table.purchase-clients']);
             
             var selectedId = e.params.data.id;
 
