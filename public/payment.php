@@ -123,6 +123,9 @@
             </table>
             <table class="purchase-clients">
             </table>
+            <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary" id="submit-btn">
+                Провести оплату
+            </button>
         </div>
     </section>
     <footer class="footer">
