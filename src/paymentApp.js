@@ -237,7 +237,7 @@ function onPurchaseListChanged(purchaseMemberData,
         }
         console.log('totalCost: ', totalCost);
         let totalValueSelector = `${clientTableSelector} #client-id-${clientId}`;
-        console.log()
+        console.log('totalValueSelector:', totalValueSelector);
         let totalValueElement = document.querySelector(totalValueSelector);
         if (totalValueElement) totalValueElement.innerHTML = totalCost;
 
