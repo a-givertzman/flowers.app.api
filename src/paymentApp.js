@@ -217,8 +217,27 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
             purchaseMemberData[key]['notused'] = !purchaseMemberRowCheckBox.checked;
         }
     }
-    console.log('purchaseMemberData:', purchaseMemberData);
 
+    // обновляем сумму оплаты по всем позициям закупки для всех клиентов
+    updateClientTotalCost(clientData, purchaseMemberData);
+
+    // // перебираем клиентов
+    // for (var key in clientData) {
+    //     let clientDataRow = clientData[key];
+    //     let clientId = clientDataRow['client/id'];
+        
+    //     // получаем сумму оплаты по всем позициям закупки для данного клиента
+    //     var totalCost = getPurchaseMemberClientTotalCost(clientId, purchaseMemberData);
+
+    //     let totalValueSelector = `${clientTableSelector} #client-id-${clientId}`;
+    //     let totalValueElement = document.querySelector(totalValueSelector);
+    //     if (totalValueElement) totalValueElement.innerHTML = totalCost;
+
+    // }
+}
+
+// обновляет сумму оплаты по всем позициям закупки для всех клиентов
+function updateClientTotalCost(clientData, purchaseMemberData) {
     // перебираем клиентов
     for (var key in clientData) {
         let clientDataRow = clientData[key];
@@ -234,6 +253,7 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
     }
 }
 
+// получаем сумму оплаты по всем позициям закупки для данного клиента
 function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
     var totalCost = 0;
     for (let key in purchaseMemberData) {
