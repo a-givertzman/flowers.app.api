@@ -69,6 +69,7 @@ async function apiRequest(args) {
     console.log('[mysql.apiRequest]');
     console.log('args:', args);
 
+    var procedureName = args.procedureName ? args.procedureName : '';
     var tableName = args.tableName ? args.tableName : '';
     var params = args.params ? args.params : '0';
     var keys = args.keys ? args.keys : ['*'];
@@ -79,6 +80,7 @@ async function apiRequest(args) {
     var url = args.url ? args.url : '';
 
     var body = new FormData();
+    body.append( "procedureName", JSON.stringify(procedureName) );
     body.append( "tableName", JSON.stringify(tableName) );
     body.append( "params", JSON.stringify(params) );
     body.append( "keys", JSON.stringify(keys) );
