@@ -176,7 +176,8 @@ window.addEventListener(                                            // ON LOAD W
                     // обновляем сумму оплаты по всем позициям закупки для всех клиентов
                     updateClientTotalCost(clientData, purchaseMemberData, 'table.purchase-clients');
 
-                    document.querySelector('#purchase-selector-btn').addEventListener(e => {
+                    document.querySelector('#purchase-selector-btn').addEventListener('click', e => {
+                        e.event.preventDefault();
                         onSubmitPaymentClicked(e, purchaseMemberData);
                     });
                 }
