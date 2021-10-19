@@ -119,9 +119,9 @@
                     </div>
                 </div>
             </div>
-            <div class="purchase-item">
+            <!-- <div class="purchase-item">
                 <span> Список закупок </span>
-            </div>
+            </div> -->
             <table class="purchase-items">
             </table>
             <table class="transaction-items">
