@@ -179,7 +179,7 @@ window.addEventListener(                                            // ON LOAD W
                     let submitPaymentBtn = document.querySelector('#purchase-selector-btn');
                     submitPaymentBtn.classList.remove('disabled');
                     submitPaymentBtn.addEventListener('click', e => {
-                        e.event.preventDefault();
+                        e.preventDefault();
                         onSubmitPaymentClicked(e, purchaseMemberData);
                     });
                 }
