@@ -42,10 +42,10 @@ plog("procedureName: ", $procedureName);
 plog("params: ", $params);
 
 // Делаем вызов хранимой процедуры
-$result = callProcedure('addTransaction', [
+$result = callProcedure( 
     $procedureName,         // Идентификатор счета организатора
     $params,                // массив параметров
-]);
+);
 
 plog('callProcedure result:', $result);
 
