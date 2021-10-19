@@ -61,7 +61,7 @@ function renderPurchaseRow(row) {
 }
 
 // рендерит заголовок транзакций
-function renderTransactionHeader(row) {
+function renderClientHeader(row) {
     var theadHtml = `
         <thead>
             <tr class="transaction-row-header">

@@ -125,7 +125,7 @@
             </div>
             <table class="purchase-items">
             </table>
-            <table class="transaction-items">
+            <table class="purchase-clients">
             </table>
         </div>
     </section>

@@ -74,32 +74,12 @@ var ID_TOKEN;
 var signInWindow;
 
 //
-// Date.prototype.toDateInputValue = (function() {
-//     var local = new Date(this);
-//     local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-//     return local.toJSON().slice(0,10);
-// });
-
-//
 var isValid = false;
 // submitBtn.disabled = true;
 let date = new Date();
 // dateInput.value = date;
 // timeInput.value = `${date.getHours()}:${date.getMinutes()}`;
 
-
-// click on menu icon
-// if (showMenuBtn) {
-//     showMenuBtn.addEventListener('click',(event) => {
-//         let menu = document.querySelector('.menu ul');
-//         let menuStyle = window.getComputedStyle(menu);
-//         if (menuStyle.display == 'none') {
-//             menu.style.display = 'block'
-//         } else {
-//             menu.style.display = 'none';
-//         }
-//     });
-// }
 
 window.addEventListener(                                            // ON LOAD WINDOW
     'load', (event) => {
@@ -166,9 +146,10 @@ window.addEventListener(                                            // ON LOAD W
                     table.append(newPurchase.tbody);
                     tableBody = newPurchase.tbody;
 
-                    for (var key in purchaseData) {
-                        var rowData = purchaseData[key];
-                        var row = renderPurchaseRow(rowData);
+                    // перебираем позиции закупки
+                    for (let key in purchaseData) {
+                        let rowData = purchaseData[key];
+                        let row = renderPurchaseRow(rowData);
                         tableBody.append(row);
                         row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
                             onPurchaseListChanged(
@@ -178,8 +159,22 @@ window.addEventListener(                                            // ON LOAD W
                             );
                         });                
                     }
-                }
 
+                    // добавляем в таблицу заголовок спика клиентов
+                    var newClient = renderClientHeader({});
+                    table.append(newClient.thead);
+                    table.append(newClient.tbody);
+                    tableBody = newClient.tbody;
+
+                    // перебираем клиентов
+                    for (let key in clientData) {
+                        let row = clientData[key];
+                        tableBody.append(row);
+                        console.log('clientDataRow:', row);
+                    }        
+
+                    
+                }
                 busyIndicator.hide();
             }).catch(e => {
                 busyIndicator.hide();
@@ -189,21 +184,6 @@ window.addEventListener(                                            // ON LOAD W
         $('.search-purchase-select').on('select2:unselect', e => {
             clearTablesContent(['table.purchase-items', 'table.transaction-items']);
         });
-
-        // USER.name = getCookie('name');
-        // USER.email = getCookie('email');
-        // USER.group = getCookie('group');
-        // console.log('[window.onLoad] userName:', userName);
-        // ID_TOKEN = USER.email ? getCookie(USER.email) : null;
-        // console.log('[window.onLoad] idToken:', idToken);
-        // console.log('[window.onLoad] slider-1: ', document.querySelector('.slider-1'));
-        // console.log('[window.onLoad] slider-1 image: ', header_logo_img);
-        // let img = document.createElement('img');
-        // img.src = slider_1_background_img;
-        // document.querySelector('.slider-1').appendChild(img);
-        // document.querySelector('.header__logo_image').src = header_logo_img;
-        // document.querySelector('.slider-1').style.backgroundImage = slider_1_background_img;
-        // setFormState(USER);
 });
 
 
@@ -229,11 +209,21 @@ function objectRemoveDuplicated(data, keyField) {
     return resultData;
 }
 
+
 function onPurchaseListChanged(purchaseMemberData, 
     clientData, purchaseData, tableSelector, checkBoxSelector
 ) {
     var purchaseTable = [...document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector)];
     console.log('purchaseTable: ', purchaseTable);
+
+    var clientTable = document.querySelector('table.purchase-clients');
+    var clientTableBody;
+    var newPurchase = renderPurchaseHeader({});
+    table.append(newPurchase.thead);
+    table.append(newPurchase.tbody);
+    tableBody = newPurchase.tbody;
+
+
     // перебираем клиентов
     for (var key in clientData) {
         let clientDataRow = clientData[key];
@@ -255,6 +245,7 @@ function onPurchaseListChanged(purchaseMemberData,
             }
         }
         console.log('totalCost: ', totalCost);
+
     }
     // const tablePurchase = document.querySelector(tableSelector);
     // console.log('tablePurchase:', tablePurchase);
