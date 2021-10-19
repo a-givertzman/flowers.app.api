@@ -96,7 +96,7 @@ function renderClientRow(row) {
             <td>${row['client/name']}</td>
             <td>${row['client/phone']}</td>
             <td>${row['client/account']} RUB</td>
-            <td><p id="client-id-${['client/id']}">${clientTotal}</p> RUB</td>
+            <td><p id="client-id-${row['client/id']}">${clientTotal}</p> RUB</td>
         </tr>
     `;
     var newRow = document.createElement('tr');
