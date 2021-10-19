@@ -239,7 +239,7 @@ header{
 .purchase-selector-top{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 .purchase-selector-title-box{
@@ -320,13 +320,13 @@ table{
     width: 100%;
     border: none; 
     border-collapse: collapse;
+    margin-top: 20px;
 }
 table tr{
     border-top: solid #5e5e5e  0.1px;
     border-bottom: solid #5e5e5e  0.1px;
 }
 .purchase-row-header{
-    margin-top: 30px;
     background-color: var(--akcent-color);
 }
 .purchase-row-header th{
