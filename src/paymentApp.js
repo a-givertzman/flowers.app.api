@@ -217,6 +217,7 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
             purchaseMemberData[key]['notused'] = !purchaseMemberRowCheckBox.checked;
         }
     }
+    console.log('purchaseMemberData:', purchaseMemberData);
 
     // перебираем клиентов
     for (var key in clientData) {
