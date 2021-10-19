@@ -168,7 +168,8 @@ window.addEventListener(                                            // ON LOAD W
 
                     // перебираем клиентов
                     for (let key in clientData) {
-                        let row = clientData[key];
+                        let rowData = clientData[key];
+                        let row = renderClientRow(rowData);
                         tableBody.append(row);
                         console.log('clientDataRow:', row);
                     }        

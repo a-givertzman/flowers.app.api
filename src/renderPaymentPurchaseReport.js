@@ -69,14 +69,10 @@ function renderClientHeader(row) {
             </tr>
             <tr class="transaction-row">
                 <th>id</th>
-                <th>Дата</th>
-                <th>Организатор</th>
-                <th><span>Сумма</span></th>
-                <th>PuM/id</th>
-                <th>Закупка</th>
-                <th>Товар</th>
-                <th>Комментарий</th>
-                <th><span>Баланс после операции</span></th>
+                <th>ФИО</th>
+                <th>Контакт</th>
+                <th>Баланс</th>
+                <th><span>Сумма заказа</span></th>
             </tr>
         </thead>
     `;
@@ -92,21 +88,15 @@ function renderClientHeader(row) {
 }
 
 // рендерит одну запись из таблицы transaction
-function renderTransactionRow(row) {
-    let purchaseMemberId = row['purchase_member/id'] ? row['purchase_member/id'] : '';
-    let purchaseName = row['purchase/name'] ? row['purchase/name'] : '-';
-    let productName = row['product/name'] ? row['product/name'] : '-';
+function renderClientRow(row) {
+    let clientId = row['client_total'] ? row['client_total'] : '';
     var rowHtml = `
         <tr class="transaction-row">
-            <td>${row['id']}</td>
-            <td>${row['date']}</td>
-            <td>${row['account_owner']}</td>
-            <td>${row['value']} RUB</td>
-            <td>${purchaseMemberId}</td>
-            <td>${purchaseName}</td>
-            <td>${productName}</td>
-            <td>${row['description']}</td>
-            <td>${row['client_account']} RUB</td>
+            <td>${row['client/id']}</td>
+            <td>${row['client/name']}</td>
+            <td>${row['client/phone']}</td>
+            <td>${row['client/account']} RUB</td>
+            <td>${row['client_total']} RUB</td>
         </tr>
     `;
     var newRow = document.createElement('tr');
