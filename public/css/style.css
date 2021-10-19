@@ -200,6 +200,12 @@ header{
     right: -12px;
     color: #fff;
 }
+.default-btn-black:disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: var(--light-grey-color);
+    color: var(--night-rider-color);
+}
 
 .default-btn-white:active{
     transition: all 0.1s;
@@ -229,12 +235,6 @@ header{
     top: 50%;
     transform: translateY(-50%);
     right: -12px;
-}
-.default-btn-black:disabled{
-    pointer-events: none;
-    cursor: not-allowed;
-    background-color: var(--light-grey-color);
-    color: var(--night-rider-color);
 }
 
 /* purchase-selector */
