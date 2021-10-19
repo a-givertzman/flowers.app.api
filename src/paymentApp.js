@@ -165,13 +165,16 @@ window.addEventListener(                                            // ON LOAD W
                     table.append(newClient.tbody);
                     tableBody = newClient.tbody;
 
-                    // перебираем клиентов
+                    // выводим данные клиентов в таблицу
                     for (let key in clientData) {
                         let rowData = clientData[key];
                         let row = renderClientRow(rowData);
                         tableBody.append(row);
                         console.log('clientDataRow:', row);
-                    }        
+                    }   
+                    
+                    // обновляем сумму оплаты по всем позициям закупки для всех клиентов
+                    updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector);
                 }
                 busyIndicator.hide();
             }).catch(e => {
@@ -220,20 +223,6 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
 
     // обновляем сумму оплаты по всем позициям закупки для всех клиентов
     updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector);
-
-    // // перебираем клиентов
-    // for (var key in clientData) {
-    //     let clientDataRow = clientData[key];
-    //     let clientId = clientDataRow['client/id'];
-        
-    //     // получаем сумму оплаты по всем позициям закупки для данного клиента
-    //     var totalCost = getPurchaseMemberClientTotalCost(clientId, purchaseMemberData);
-
-    //     let totalValueSelector = `${clientTableSelector} #client-id-${clientId}`;
-    //     let totalValueElement = document.querySelector(totalValueSelector);
-    //     if (totalValueElement) totalValueElement.innerHTML = totalCost;
-
-    // }
 }
 
 // обновляет сумму оплаты по всем позициям закупки для всех клиентов
