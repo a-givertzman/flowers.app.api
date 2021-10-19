@@ -123,9 +123,10 @@
             </table>
             <table class="purchase-clients">
             </table>
-            <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary" id="submit-btn">
+
+             <a href="./cleaning-calc.html" class="slider-btn default-btn-white">
                 Провести оплату
-            </button>
+            </a>
         </div>
     </section>
     <footer class="footer">
