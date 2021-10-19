@@ -211,34 +211,22 @@ function objectRemoveDuplicated(data, keyField) {
 function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData, 
     clientData, clientTableSelector, tableSelector, checkBoxSelector
 ) {
-    // var purchaseTable = [...document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector)];
-    // console.log('purchaseTable: ', purchaseTable);
-    
-    purchaseMemberData[purchaseMemberRowCheckBox.name]['notused'] = !purchaseMemberRowCheckBox.checked;
+    // в purchaseMemberData помечаем неспользуемые записи
+    for (let key in purchaseMemberData) {
+        if (purchaseMemberData[key]['purchase_content/id'] == purchaseMemberRowCheckBox.name) {
+            purchaseMemberData[key]['notused'] = !purchaseMemberRowCheckBox.checked;
+        }
+    }
 
     // перебираем клиентов
     for (var key in clientData) {
         let clientDataRow = clientData[key];
         let clientId = clientDataRow['client/id'];
         
+        // получаем сумму оплаты по всем позициям закупки для данного клиента
         var totalCost = getPurchaseMemberClientTotalCost(clientId, purchaseMemberData);
-        // перебираем товары закупки
-        // for (var key in purchaseMemberData) {
-        //     let purchaseMemberDataRow = purchaseMemberData[key];
-        //     let id = purchaseMemberDataRow['id'];
-        //     // console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
-        //     if (clientId == purchaseMemberDataRow['client/id']) {
-        //         let purchaseMemberRowCheckBox = document.querySelector(tableSelector + ' ' + checkBoxSelector + '#chbx' + id);
-        //         // console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
-        //         if (purchaseMemberRowCheckBox?.checked) {
-        //             let subCost = Number(purchaseMemberDataRow['cost']);
-        //             totalCost += !isNaN(subCost) ? subCost : 0;
-        //         }
-        //     }
-        // }
-        console.log('totalCost: ', totalCost);
+
         let totalValueSelector = `${clientTableSelector} #client-id-${clientId}`;
-        console.log('totalValueSelector:', totalValueSelector);
         let totalValueElement = document.querySelector(totalValueSelector);
         if (totalValueElement) totalValueElement.innerHTML = totalCost;
 
@@ -247,13 +235,13 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
 
 function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
     var totalCost = 0;
-    for (var key in purchaseMemberData) {
+    for (let key in purchaseMemberData) {
         let purchaseMemberDataRow = purchaseMemberData[key];
         // console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
         if (clientId == purchaseMemberDataRow['client/id']) {
             // console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
             if (!purchaseMemberDataRow['notused']) {
-                let subCost = Number(purchaseMemberDataRow['cost']);
+                let subCost = Number(purchaseMemberDataRow['cost']) - Number(purchaseMemberDataRow['paid']);
                 totalCost += !isNaN(subCost) ? subCost : 0;
             }
         }

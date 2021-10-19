@@ -14,7 +14,6 @@ function renderPurchaseHeader(row) {
                 <th>Цена закупки</th>
                 <th>Цена</th>
                 <th><span>Транспортные расходы</span></th>
-                <th><span>Стоимость</span></th>
             </tr>
         </thead>
         `;
@@ -31,9 +30,10 @@ function renderPurchaseHeader(row) {
 
 // рендерит одну позицию из таблицы purchase_member
 function renderPurchaseRow(row) {
+    let purchase_content_id = row['purchase_content/id'];
     var rowHtml = `
         <tr class="purchase-row">
-            <th><input class="purchase-row-checkbox" type="checkbox" name="${row['id']}" id="chbx${row['id']}" checked></th>
+            <th><input class="purchase-row-checkbox" type="checkbox" name="${purchase_content_id}" id="chbx${purchase_content_id}" checked></th>
             <td>${row['product/id']}</td>
             <td>${row['product/group']}</td>
             <td>${row['product/name']}</td>
@@ -46,7 +46,6 @@ function renderPurchaseRow(row) {
                 ${row['purchase_content/sale_currency']}
             </td>
             <td>${row['purchase_content/shipping']}</td>
-            <td>${row['cost']}</td>
         </tr>
     `;
     var newRow = document.createElement('tr');
