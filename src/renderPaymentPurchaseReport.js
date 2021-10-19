@@ -11,13 +11,10 @@ function renderPurchaseHeader(row) {
                 <th>PrID</th>
                 <th>Группа</th>
                 <th>Нименование</th>
-                <th><span>Заказал</span></th>
-                <th><span>Получил</span></th>
                 <th>Цена закупки</th>
                 <th>Цена</th>
                 <th><span>Транспортные расходы</span></th>
                 <th><span>Стоимость</span></th>
-                <th><span>Оплатил</span></th>
             </tr>
         </thead>
         `;
@@ -40,8 +37,6 @@ function renderPurchaseRow(row) {
             <td>${row['product/id']}</td>
             <td>${row['product/group']}</td>
             <td>${row['product/name']}</td>
-            <td>${row['count']}</td>
-            <td>${row['distributed']}</td>
             <td>
                 ${row['product/primary_price']}
                 ${row['product/primary_currency']}
@@ -52,7 +47,6 @@ function renderPurchaseRow(row) {
             </td>
             <td>${row['purchase_content/shipping']}</td>
             <td>${row['cost']}</td>
-            <td class="paid">${row['paid']}</td>
         </tr>
     `;
     var newRow = document.createElement('tr');
