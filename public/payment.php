@@ -123,10 +123,14 @@
             </table>
             <table class="purchase-clients">
             </table>
+            <div class="services-item-btn-cover">
+                <a href="#" class="services-item-link">Подробнее</a>
+                <a href="#" class="services-item-btn default-btn-black">Провести оплату</a>
+            </div>
 
-             <a href="./cleaning-calc.html" class="slider-btn default-btn-white">
-                Провести оплату
-            </a>
+            <!--  <a href="./cleaning-calc.html" class="slider-btn default-btn-white">
+                
+            </a> -->
         </div>
     </section>
     <footer class="footer">
