@@ -150,8 +150,8 @@ window.addEventListener(                                            // ON LOAD W
                             onPurchaseListChanged(
                                 purchaseMemberData,
                                 clientData, purchaseData, 
-                                '.table.purchase-clients',   // селектор таблицы клиентов
-                                '.table.purchase-items',     // селектор таблицы товаров
+                                'table.purchase-clients',   // селектор таблицы клиентов
+                                'table.purchase-items',     // селектор таблицы товаров
                                 '.purchase-row-checkbox'
                             );
                         });                
