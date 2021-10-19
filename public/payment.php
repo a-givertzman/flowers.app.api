@@ -124,10 +124,8 @@
             <table class="purchase-clients">
             </table>
             <div class="purchase-selector-btn-cover">
-                <a href="#" class="services-item-link">Подробнее</a>
-                <a href="#" class="services-item-btn default-btn-black">Провести оплату</a>
+                <a id="purchase-selector-btn" href="#" class="default-btn-black">Провести оплату</a>
             </div>
-
         </div>
     </section>
     <footer class="footer">

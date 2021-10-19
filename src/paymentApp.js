@@ -175,6 +175,10 @@ window.addEventListener(                                            // ON LOAD W
                     
                     // обновляем сумму оплаты по всем позициям закупки для всех клиентов
                     updateClientTotalCost(clientData, purchaseMemberData, 'table.purchase-clients');
+
+                    document.querySelector('#purchase-selector-btn').addEventListener(e => {
+                        onSubmitPaymentClicked(e, purchaseMemberData);
+                    });
                 }
                 busyIndicator.hide();
             }).catch(e => {
@@ -257,4 +261,8 @@ function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
         }
     }
     return totalCost;
+}
+
+function onSubmitPaymentClicked(e, purchaseMemberData) {
+    console.log('payment submited with data:', purchaseMemberData);
 }
