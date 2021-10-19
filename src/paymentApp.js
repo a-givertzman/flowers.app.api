@@ -276,7 +276,7 @@ function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
     busyIndicator.show();
     console.log('payment submited with data:', purchaseMemberData);
 
-    var purchaseMemberId = purchaseMemberData.map(row => {
+    var purchaseMemberId = Array.from(purchaseMemberData).map(row => {
         if (!row['notused']) return row['purchase_content/id'];
     })
     console.log('purchaseMemberId:', purchaseMemberId);
