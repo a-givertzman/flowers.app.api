@@ -230,6 +230,13 @@ header{
     transform: translateY(-50%);
     right: -12px;
 }
+.default-btn-black:disabled,
+.default-btn-white:disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: var(--light-grey-color);
+    color: var(--night-rider-color);
+}
 
 /* purchase-selector */
 .purchase-selector{
