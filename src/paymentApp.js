@@ -146,7 +146,7 @@ window.addEventListener(                                            // ON LOAD W
                         let rowData = purchaseData[key];
                         let row = renderPurchaseRow(rowData);
                         tableBody.append(row);
-                        row.querySelector(`#chbx${rowData['id']}`)?.addEventListener('change', (e) => {
+                        row.querySelector(`#chbx${rowData['purchase_content/id']}`)?.addEventListener('change', (e) => {
                             onPurchaseListChanged(
                                 e.target,                   // чекбокс в позиции списка товаров закупки
                                 purchaseMemberData,
