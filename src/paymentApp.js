@@ -221,7 +221,7 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
         let clientDataRow = clientData[key];
         let clientId = clientDataRow['client/id'];
         
-        var totalCost = getPurchaseMemberClientTotalCost(purchaseMemberData);
+        var totalCost = getPurchaseMemberClientTotalCost(clientId, purchaseMemberData);
         // перебираем товары закупки
         // for (var key in purchaseMemberData) {
         //     let purchaseMemberDataRow = purchaseMemberData[key];
@@ -245,7 +245,7 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
     }
 }
 
-function getPurchaseMemberClientTotalCost(purchaseMemberData) {
+function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
     var totalCost = 0;
     for (var key in purchaseMemberData) {
         let purchaseMemberDataRow = purchaseMemberData[key];
