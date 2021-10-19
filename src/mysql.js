@@ -1,4 +1,19 @@
 "use strict";
+
+/**
+ * select в базу данных
+ * с параметрами в одном объекте:
+ * @param Object 
+ * {
+ *     tableName: 'tableName', 
+ *     keys: ['*'], 
+ *     orderBy: 'id', 
+ *     order: 'ASC', 
+ *     where: [], 
+ *     limit: 0,
+ * }
+ * @returns Promise<Response>
+ */
 function getData(args) {
     console.log('[mysql.getData]');
     args.url = args.url ? args.url : domainPath + 'getData.php';
@@ -11,9 +26,40 @@ function getJoinData(args) {
   return apiRequest(args);
 }
 
+/**
+ * select из view
+ * с параметрами в одном объекте:
+ * @param Object 
+ * {
+ *     tableName: 'tableName', 
+ *     params: '0', 
+ *     keys: ['*'],
+ *     orderBy: 'fieldName', 
+ *     order: 'ASC', 
+ *     where: [{operator: 'where', field: 'fieldName', cond: '=', value: fieldValue}], 
+ *     limit: 0,
+ * }
+ * @returns Promise<Response>
+ */
 function getView(args) {
     console.log('[mysql.getView]');
     args.url = args.url ? args.url : domainPath + 'getView.php';
+    return apiRequest(args);
+}
+
+/**
+ * Вызов хранимой процедуры 
+ * с параметрами, передаваемыми:
+ * @param Object 
+ * {
+ *     procedureName: 'procedureName', 
+ *     params: [param1, param2,...], 
+ * }
+ * @returns Promise<Response>
+ */
+function callProcedure(args) {
+    console.log('[mysql.callProcedure]');
+    args.url = args.url ? args.url : domainPath + 'callProcedure.php';
     return apiRequest(args);
 }
 
@@ -48,7 +94,7 @@ async function apiRequest(args) {
     // credentials: 'same-origin', // include, *same-origin, omit
     headers: {
     //   'Content-Type': 'application/json'
-    // //   'Content-Type': 'application/x-www-form-urlencoded',
+    //   'Content-Type': 'application/x-www-form-urlencoded',
         // 'Access-Control-Allow-Origin' : '*',
     },
     // redirect: 'follow', // manual, *follow, error

@@ -55,8 +55,7 @@ $result = selectView(
     $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
-plog('selectView result:');
-plog($result);
+plog('selectView result:', $result);
 
 if (gettype($result) == 'object') {
     $result = (array) $result;

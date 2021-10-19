@@ -46,6 +46,7 @@ function matchCustom(params, data) {
 }
 
 $(function() {
+    console.log("[paymentApp.$('.search-purchase-select').select2]");
     $('.search-purchase-select').select2({
         placeholder: "Выбери закупку",
         width: '100%', // need to override the changed default
@@ -82,6 +83,7 @@ let date = new Date();
 
 window.addEventListener(                                            // ON LOAD WINDOW
     'load', (event) => {
+        console.log('[paymentApp.window.addEventListener]');
         busyIndicator = new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
         
         // загружаем список закупок
@@ -93,7 +95,7 @@ window.addEventListener(                                            // ON LOAD W
             order: 'ASC', 
             where: [], 
             limit: 0,
-        }).then(responseData => {
+        }).then( responseData => {
             data = responseData;
             for(var key in data) {
                 let item = data[key];
@@ -102,7 +104,7 @@ window.addEventListener(                                            // ON LOAD W
                     .trigger('change');
             }
             busyIndicator.hide();
-        }).catch(e => {
+        }).catch( e => {
             busyIndicator.hide();
         });
 
@@ -111,6 +113,7 @@ window.addEventListener(                                            // ON LOAD W
             clearTablesContent(['table.purchase-items', 'table.purchase-clients']);
             
             var selectedId = e.params.data.id;
+            purchaseMemberId = selectedId;
             
             // закупки клиента
             busyIndicator.show();
@@ -123,7 +126,7 @@ window.addEventListener(                                            // ON LOAD W
                 order: 'ASC', 
                 where: where, 
                 limit: 0,
-            }).then(responseData => {
+            }).then( responseData => {
                 purchaseMemberData = responseData;
                 // console.log('responseData:', responseData);
                 var table = document.querySelector('table.purchase-items');
@@ -151,9 +154,7 @@ window.addEventListener(                                            // ON LOAD W
                                 e.target,                   // чекбокс в позиции списка товаров закупки
                                 purchaseMemberData,
                                 clientData, 
-                                'table.purchase-clients',   // селектор таблицы клиентов
-                                'table.purchase-items',     // селектор таблицы товаров
-                                '.purchase-row-checkbox'
+                                'table.purchase-clients'    // селектор таблицы клиентов
                             );
                         });                
                     }
@@ -180,7 +181,7 @@ window.addEventListener(                                            // ON LOAD W
                     submitPaymentBtn.classList.remove('disabled');
                     submitPaymentBtn.addEventListener('click', e => {
                         e.preventDefault();
-                        onSubmitPaymentClicked(e, purchaseMemberData);
+                        onSubmitPaymentClicked(e, selectedId, purchaseMemberData);
                     });
                 }
                 busyIndicator.hide();
@@ -196,6 +197,7 @@ window.addEventListener(                                            // ON LOAD W
 
 
 function clearTablesContent(selectors) {
+    console.log('[paymentApp.clearTablesContent]');
     let table;
     selectors.forEach(tableSelector => {
         table = document.querySelector(tableSelector);
@@ -205,6 +207,7 @@ function clearTablesContent(selectors) {
 
 
 function objectRemoveDuplicated(data, keyField) {
+    console.log('[paymentApp.objectRemoveDuplicated]');
     const resultData = {};
     const keySet = new Set();
     for (var key in data) {
@@ -219,8 +222,9 @@ function objectRemoveDuplicated(data, keyField) {
 
 
 function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData, 
-    clientData, clientTableSelector, tableSelector, checkBoxSelector
+    clientData, clientTableSelector
 ) {
+    console.log('[paymentApp.onPurchaseListChanged]');
     // в purchaseMemberData помечаем неспользуемые записи
     for (let key in purchaseMemberData) {
         if (purchaseMemberData[key]['purchase_content/id'] == purchaseMemberRowCheckBox.name) {
@@ -234,6 +238,7 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
 
 // обновляет сумму оплаты по всем позициям закупки для всех клиентов
 function updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector) {
+    console.log('[paymentApp.updateClientTotalCost]');
     // перебираем клиентов
     for (var key in clientData) {
         let clientDataRow = clientData[key];
@@ -251,6 +256,7 @@ function updateClientTotalCost(clientData, purchaseMemberData, clientTableSelect
 
 // получаем сумму оплаты по всем позициям закупки для данного клиента
 function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
+    console.log('[paymentApp.getPurchaseMemberClientTotalCost]');
     var totalCost = 0;
     for (let key in purchaseMemberData) {
         let purchaseMemberDataRow = purchaseMemberData[key];
@@ -266,6 +272,30 @@ function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
     return totalCost;
 }
 
-function onSubmitPaymentClicked(e, purchaseMemberData) {
+function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
+    console.log('[paymentApp.onSubmitPaymentClicked]');
+    busyIndicator.show();
     console.log('payment submited with data:', purchaseMemberData);
+
+    var purchaseMemberId = purchaseMemberData.map(row => {
+        if (!row['notused']) return row['purchase_content/id'];
+    })
+    console.log('purchaseMemberId:', purchaseMemberId);
+
+    callProcedure({
+        procedureName: 'transferPurchaseMemberPayment',
+        params: [
+            purchaseId,         // id закупки, для которой проводим оплату
+            purchaseMemberId,   // [] массив id позиций в purchase_member, подлежащих оплате
+        ]
+    })
+        .then( responseData => {
+            if (responseData == 0) {
+                alert('Выполнено успешно');
+            }
+            busyIndicator.hide();
+        }).catch(e => {
+            alert('Операция отменена');
+            busyIndicator.hide();
+        });
 }
