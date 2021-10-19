@@ -4,7 +4,7 @@ function renderPurchaseHeader(row) {
     var theadHtml = `
         <thead>
             <tr class="purchase-row-header">
-                <th colspan="100">Товары закупки [${row['purchase/id']}] ${row['purchase/name']}</th>
+                <th colspan="100">Товары закупки</th>
             </tr>
             <tr class="purchase-row">
                 <th><span>Выбор</span></th>
@@ -65,7 +65,7 @@ function renderClientHeader(row) {
     var theadHtml = `
         <thead>
             <tr class="transaction-row-header">
-                <th colspan="100">Участники заккупки [${row['client/id']}] ${row['client/name']}</th>
+                <th colspan="100">Участники заккупки</th>
             </tr>
             <tr class="transaction-row">
                 <th>id</th>
