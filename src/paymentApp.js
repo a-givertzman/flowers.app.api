@@ -193,7 +193,9 @@ function clearTablesContent(selectors) {
     let table;
     selectors.forEach(tableSelector => {
         table = document.querySelector(tableSelector);
-        table?.innerHTML = '';
+        if (table) {
+            table.innerHTML = '';
+        }
     });
 }
 
