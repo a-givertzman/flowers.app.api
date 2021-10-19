@@ -219,7 +219,7 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
     }
 
     // обновляем сумму оплаты по всем позициям закупки для всех клиентов
-    updateClientTotalCost(clientData, purchaseMemberData);
+    updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector);
 
     // // перебираем клиентов
     // for (var key in clientData) {
@@ -237,7 +237,7 @@ function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData,
 }
 
 // обновляет сумму оплаты по всем позициям закупки для всех клиентов
-function updateClientTotalCost(clientData, purchaseMemberData) {
+function updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector) {
     // перебираем клиентов
     for (var key in clientData) {
         let clientDataRow = clientData[key];
