@@ -95,7 +95,7 @@ function renderClientRow(row) {
             <td>${row['client/id']}</td>
             <td>${row['client/name']}</td>
             <td>${row['client/phone']}</td>
-            <td>${row['client/account']} RUB</td>
+            <td><p id="client-id-${['client/id']}">${row['client/account']}</p> RUB</td>
             <td>${clientTotal} RUB</td>
         </tr>
     `;

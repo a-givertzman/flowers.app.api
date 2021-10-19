@@ -47,10 +47,9 @@ function matchCustom(params, data) {
 
 $(function() {
     $('.search-purchase-select').select2({
-        placeholder: 'ID / ФИО / номер телефона',
+        placeholder: "Выбери закупку",
         width: '100%', // need to override the changed default
         multiple: false,
-        placeholder: "Найди себя",
         allowClear: true,
         matcher: matchCustom
     });
@@ -112,10 +111,6 @@ window.addEventListener(                                            // ON LOAD W
             clearTablesContent(['table.purchase-items', 'table.purchase-clients']);
             
             var selectedId = e.params.data.id;
-
-            // баланс клиента
-            var clientAccount = data[selectedId].account;
-            document.querySelector('#client-account').innerHTML = `Баланс: ${clientAccount} RUB`;
             
             // закупки клиента
             busyIndicator.show();
@@ -155,7 +150,9 @@ window.addEventListener(                                            // ON LOAD W
                             onPurchaseListChanged(
                                 purchaseMemberData,
                                 clientData, purchaseData, 
-                                'table.purchase-items', '.purchase-row-checkbox'
+                                'table.purchase-clients',   // селектор таблицы клиентов
+                                'table.purchase-items',     // селектор таблицы товаров
+                                '.purchase-row-checkbox'
                             );
                         });                
                     }
@@ -193,9 +190,7 @@ function clearTablesContent(selectors) {
     let table;
     selectors.forEach(tableSelector => {
         table = document.querySelector(tableSelector);
-        if (table) {
-            table.innerHTML = '';
-        }
+        if (table) table.innerHTML = '';
     });
 }
 
@@ -215,18 +210,10 @@ function objectRemoveDuplicated(data, keyField) {
 
 
 function onPurchaseListChanged(purchaseMemberData, 
-    clientData, purchaseData, tableSelector, checkBoxSelector
+    clientData, clientTableSelector, tableSelector, checkBoxSelector
 ) {
     var purchaseTable = [...document.querySelector(tableSelector)?.querySelectorAll(checkBoxSelector)];
     console.log('purchaseTable: ', purchaseTable);
-
-    var clientTable = document.querySelector('table.purchase-clients');
-    var clientTableBody;
-    var newPurchase = renderPurchaseHeader({});
-    table.append(newPurchase.thead);
-    table.append(newPurchase.tbody);
-    tableBody = newPurchase.tbody;
-
 
     // перебираем клиентов
     for (var key in clientData) {
@@ -249,6 +236,9 @@ function onPurchaseListChanged(purchaseMemberData,
             }
         }
         console.log('totalCost: ', totalCost);
+        let totalValueSelector = clientTableSelector + ' #client-id-' + clientId;
+        let totalValueElement = document.querySelector(totalValueSelector);
+        if (totalValueElement) totalValueElement.innerHTML = totalCost;
 
     }
     // const tablePurchase = document.querySelector(tableSelector);

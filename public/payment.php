@@ -110,8 +110,7 @@
             <div class="purchase-selector-top">
                 <div class="purchase-selector-title-box">
                     <div class="purchase-selector-title">
-                        Выбери закупку
-                        <span id="client-account"></span>
+                        Проведение оплаты по закупке
                     </div>
                     <div class="purchase-selector-search">
                         <select multiple="multiple" class="search-purchase-select" name="purchase-selector">
@@ -119,9 +118,6 @@
                         </select>                    
                     </div>
                 </div>
-            </div>
-            <div class="purchase-item">
-                <span> Проведение оплаты по закупке </span>
             </div>
             <table class="purchase-items">
             </table>

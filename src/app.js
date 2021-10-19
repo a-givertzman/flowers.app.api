@@ -43,10 +43,9 @@ function matchCustom(params, data) {
 
 $(function() {
     $('.search-purchase-select').select2({
-        placeholder: 'ID / ФИО / номер телефона',
+        placeholder: "Найди себя",
         width: '100%', // need to override the changed default
         multiple: false,
-        placeholder: "Найди себя",
         allowClear: true,
         matcher: matchCustom
     });
