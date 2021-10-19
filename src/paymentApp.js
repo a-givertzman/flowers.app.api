@@ -177,7 +177,7 @@ window.addEventListener(                                            // ON LOAD W
                     updateClientTotalCost(clientData, purchaseMemberData, 'table.purchase-clients');
 
                     let submitPaymentBtn = document.querySelector('#purchase-selector-btn');
-                    submitPaymentBtn.removeAttribute('disabled');
+                    submitPaymentBtn.classList.remove('disabled');
                     submitPaymentBtn.addEventListener('click', e => {
                         e.event.preventDefault();
                         onSubmitPaymentClicked(e, purchaseMemberData);

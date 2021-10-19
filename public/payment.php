@@ -124,7 +124,7 @@
             <table class="purchase-clients">
             </table>
             <div class="purchase-selector-btn-cover">
-                <a id="purchase-selector-btn" href="#" class="default-btn-black" disabled>Провести оплату</a>
+                <a id="purchase-selector-btn" href="#" class="default-btn-black disabled">Провести оплату</a>
             </div>
         </div>
     </section>

@@ -205,7 +205,7 @@ header{
     cursor: not-allowed;
     background-color: var(--light-grey-color);
     color: var(--night-rider-color);
-    border-color: var(--night-rider-color);
+    border-color: var(--granite-gray);
 }
 .default-btn-black:disabled{
     pointer-events: none;
