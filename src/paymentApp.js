@@ -161,6 +161,7 @@ window.addEventListener(                                            // ON LOAD W
                     }
 
                     // добавляем в таблицу заголовок спика клиентов
+                    var table = document.querySelector('table.purchase-clients');
                     var newClient = renderClientHeader({});
                     table.append(newClient.thead);
                     table.append(newClient.tbody);
@@ -183,7 +184,7 @@ window.addEventListener(                                            // ON LOAD W
         });
         
         $('.search-purchase-select').on('select2:unselect', e => {
-            clearTablesContent(['table.purchase-items', 'table.transaction-items']);
+            clearTablesContent(['table.purchase-items', 'table.purchase-clients']);
         });
 });
 
