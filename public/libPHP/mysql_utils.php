@@ -168,7 +168,7 @@ function selectWhereExpression($where) {
 //
 function addFields($query, $fields, $delimiter = ',') {
     // добавляем поля
-    foreach($field as $index => $fieldName) {
+    foreach($fields as $index => $fieldName) {
         $quote = ($fieldName == '*') ? '\'' : '`';
         $query .= "\n   " . $quote . $fieldName . $quote . $delimiter;
     }
