@@ -390,7 +390,7 @@ function insertData($tableName, &$data) {
 
             $query .= "\n   $value,";
         }
-        $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
+        $query = preg_replace('/,$/', '', $query);                        // удаляем запятую после последнего value
 
         $query .= "\n);";
         
@@ -455,7 +455,7 @@ function updateData($tableName, &$data) {
                 $query .= "\n   `$fieldName` = $value,";
             }
         }
-        $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
+        $query = preg_replace('/,$/', '', $query);                        // удаляем запятую после последнего value
         
         $query .= "\nWHERE id = " .$data['id'] .";";
 
@@ -579,7 +579,7 @@ function callProcedure($procedureName, $params) {
 
             $query .= "\n   $value,";
         }
-        $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
+        $query = preg_replace('/,$/', '', $query);                        // удаляем запятую после последнего value
         
         $query .= "\n);";
         
