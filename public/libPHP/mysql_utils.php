@@ -167,16 +167,12 @@ function selectWhereExpression($where) {
 // Функция | Добавляет поля через разделитель
 //
 function addFields($query, $fields, $delimiter = ',') {
-    // если $fields - объект, то преобразуем в массив
-    if (is_object($fields)) {
-        $fields = (array) $fields;
-    }
     // добавляем поля
     foreach($field as $index => $fieldName) {
         $quote = ($fieldName == '*') ? '\'' : '`';
         $query .= "\n   $quote$fieldName$quote$delimiter";
     }
-    $query = substr($query, 0, -1);        // убираем последнюю запятаю
+    $query = preg_replace('/,$/', '', $query);        // убираем последнюю запятаю
     return $query;
 }
 
@@ -300,7 +296,7 @@ function selectJoinData(
             }
         }
     
-        $query = substr($query, 0, -1);        // убираем последнюю запятаю
+        $query = preg_replace('/,$/', '', $query);        // убираем последнюю запятаю
     
         // добавляем таблицу
         $query .= "\nFROM `$tableName`";
@@ -383,7 +379,7 @@ function insertData($tableName, &$data) {
         foreach($data as $fieldName => $value) {
             $query .= "\n   `$fieldName`,";
         }
-        $query = substr($query, 0, -1);        // убираем последнюю запятаю
+        $query = preg_replace('/,$/', '', $query);        // убираем последнюю запятаю
 
         $query .= ")\nVALUES (";
 
