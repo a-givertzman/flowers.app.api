@@ -280,7 +280,7 @@ function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
     for (let key in purchaseMemberData) {
         let row = purchaseMemberData[key];
         console.log('row:', row, 'notused', row['notused']);
-        if (!row['notused']) purchaseMemberId.push(row['purchase_content/id']);
+        if (!row['notused']) purchaseMemberId.push(Number(row['purchase_content/id']));
     }
     console.log('purchaseMemberId:', purchaseMemberId);
 
@@ -289,7 +289,7 @@ function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
             procedureName: 'transferPurchaseMemberPayment',
             params: [
                 purchaseId,         // id закупки, для которой проводим оплату
-                purchaseMemberId,   // [] массив id позиций в purchase_member, подлежащих оплате
+                JSON.stringify(purchaseMemberId),   // [] массив id позиций в purchase_member, подлежащих оплате
             ]
         })
             .then( responseData => {
