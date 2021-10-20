@@ -277,7 +277,8 @@ function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
     console.log('payment submited with data:', purchaseMemberData);
     
     var purchaseMemberId = [];
-    for (let row in purchaseMemberData) {
+    for (let key in purchaseMemberData) {
+        let row = purchaseMemberData[key];
         console.log('row:', row, 'notused', row['notused']);
         if (!row['notused']) purchaseMemberId.push(row['purchase_content/id']);
     }
