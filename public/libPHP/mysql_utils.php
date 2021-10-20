@@ -162,6 +162,26 @@ function selectWhereExpression($where) {
 }
 
 
+
+// -------------------------------------------------------
+// Функция | Добавляет поля через разделитель
+//
+function addFields($query, $fields, $delimiter = ',') {
+    // если $fields - объект, то преобразуем в массив
+    if (is_object($fields)) {
+        $fields = (array) $fields;
+    }
+    // добавляем поля
+    foreach($field as $index => $fieldName) {
+        $quote = ($fieldName == '*') ? '\'' : '`';
+        $query .= "\n   $quote$fieldName$quote$delimiter";
+    }
+    $query = substr($query, 0, -1);        // убираем последнюю запятаю
+    return $query;
+}
+
+
+
 // -------------------------------------------------------
 // Функция | Делает один запрос SELECT в таблицу tabeName
 //
@@ -187,10 +207,7 @@ function selectData(
         $query = "SELECT";
 
         // добавляем поля
-        foreach($field as $index => $fieldName) {
-            $query .= "\n   `$fieldName`,";
-        }
-        $query = substr($query, 0, -1);        // убираем последнюю запятаю
+        $query = addFields($query, $field);
 
         // добавляем таблицу
         $query .= "\nFROM `$tableName`";
@@ -363,31 +380,20 @@ function insertData($tableName, &$data) {
         $query = "INSERT INTO $tableName (";
         
         // добавляем поля
-        $index = 0;
         foreach($data as $fieldName => $value) {
-            if ($index < count($data) - 1) {
-    
-                $query .= "\n   `$fieldName`,";
-            } else {
-                
-                $query .= "\n   `$fieldName`";
-            }
-            $index++;
+            $query .= "\n   `$fieldName`,";
         }
+        $query = substr($query, 0, -1);        // убираем последнюю запятаю
 
         $query .= ")\nVALUES (";
 
         // добавляем значения
-        $index = 0;
         foreach($data as $fieldName => $value) {
 
             $value = prepareValueToSQL($mySqli, $value);
 
             $query .= "\n   $value,";
-
-            $index++;
         }
-
         $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
 
         $query .= "\n);";

@@ -97,13 +97,9 @@ create procedure transferPurchaseMemberPayment(
     in purchase_content_id json	-- массив id, по которым проводим оплату
 )
 begin
-
-# 	declare i int default 0;
-# 	declare currentPuConId int;
-# 	declare pumContIdCount int unsigned default json_length(purchase_content_id);
-    
-    declare pmId, clientId int;
-    declare clientAccount, cost, paid, toPay, paymentValue DECIMAL(20,2);
+    declare pmId, clientId, pcId int;
+    declare pmCount int;
+    declare clientAccount, pmCost, pmPaid, toPay, paymentValue DECIMAL(20,2); 
     declare done int default false;
 
     # получаем все записи из purchase_member, которые содержат purchase_content_id
@@ -112,10 +108,12 @@ begin
 		select
 			`id`,
 			`client/id`,
-			`cost`,
+            `purchase_content/id`,
+			`count`,
 			`paid`
 		from `purchase_member`
-		where json_contains(purchase_content_id, concat(`purchase_content/id`));
+        where `purchase_member`.`purchase/id` = purchase_id
+		and json_contains(purchase_content_id, concat(`purchase_content/id`));
 
     declare continue handler for not found set done = true;
 
@@ -128,24 +126,36 @@ begin
 		end;
     
 	start transaction;
-
+		call debug_msg('start transaction');
 		open cursorPurchaseMember;
+			call debug_msg('cursorPurchaseMember opened');
 			loop_purchase_member_rows: loop
-				fetch cursorPurchaseMember into pmId, clientId, cost, paid;
+				call debug_msg('try to fetch cursorPurchaseMember');
+				fetch cursorPurchaseMember into pmId, clientId, pcId, pmCount, pmPaid;
 				if done then
 					leave loop_purchase_member_rows;
 				end if;
-				if cost > paid then
-					set toPay = cost - paid;
+                call debug_msg(concat('cursorPurchaseMember pmId: ', pmId));
+                call debug_msg(concat('cursorPurchaseMember clientId: ', clientId));
+                call debug_msg(concat('cursorPurchaseMember count: ', pmCount));
+                call debug_msg(concat('cursorPurchaseMember paid: ', pmPaid));
+
+                set pmCost = (select getPurchaseMemberCost(purchase_id, pcId, pmCount));
+                call debug_msg(concat('cursorPurchaseMember cost: ', pmCost));
+
+				if pmCost > pmPaid then
+					set toPay = pmCost - pmPaid;
+                    call debug_msg(concat('toPya: ', toPay));
                     
                     # проверяем баланс клиента
                     set clientAccount = (select `account` from `client` where `client`.`id` = clientId);
+                    call debug_msg(concat('clientAccount: ', clientAccount));
                     
                     if clientAccount > 0 then
 						if clientAccount < toPay then
-							set paymentValue = toPay;
-						else 
 							set paymentValue = clientAccount;
+						else 
+							set paymentValue = toPay;
                         end if;
 
 						# делаем оплату
@@ -156,21 +166,49 @@ begin
 						# обновляем баланс клиента после оплаты
 						update `client`
 							set `client`.`account` = (`client`.`account` - toPay)
-							where `client`.`id` = client_id;
+							where `client`.`id` = clientId;
+						
+                        # добавляем транзакцию
+						insert into `transaction` (
+								`account_owner`,
+								`value`,
+								`purchase_member/id`,
+								`description`,
+								`client/id`,
+								`client_account`
+							)
+							values (
+								'',
+								paymentValue,
+								pmId,
+								concat(						# description
+									'Закупка: ',
+                                    (select concat('[', `id`, '] ', `name`) from `purchase` where `purchase`.`id` = purchase_id),
+                                    '; Товар: ',
+                                    (select concat('[', `product/id`, '] ', `product/name`, ' (', `cost`, 'x', `count`, ')') from `purchaseMemberView` where `id` = pmId)
+								),			
+								clientId,
+								(select `account` from `client` where `client`.`id` = clientId)
+							);
 
 					end if;
 				end if;
-			end loop;
+			end loop loop_purchase_member_rows;
+            call debug_msg('loop finished');
 		close cursorPurchaseMember;
-    
+		call debug_msg('cursor closed');
+        
 	commit;
 	select 0;
+	call debug_msg('transaction commited');
 end$$
 DELIMITER ;
 
+select getPurchaseMemberCost(1, 25, 7);
 
 select json_extract('["operator","where","field","purchase/id","cond","=","value","1"]', concat('$[',2,']'));
 
 select json_extract('["operator","where","field","purchase/id","cond","=","value","1"]', '');
 
-select * from `purchase_member` where json_contains('[24,25]', concat(`purchase_content/id`));
+select * from `purchase_member` where json_contains("[24,25]", concat(`purchase_content/id`));
+

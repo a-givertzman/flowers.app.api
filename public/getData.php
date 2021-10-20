@@ -53,7 +53,7 @@ $data = selectData(
     $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
-if (gettype($data) == 'object') {
+if (is_object($data)) {
     $data = (array) $data;
 }
 plog("data selected from $tableName:");
