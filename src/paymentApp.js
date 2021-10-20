@@ -276,28 +276,31 @@ function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
     busyIndicator.show();
     console.log('payment submited with data:', purchaseMemberData);
     
-    var purchaseMemberId = Array.from(purchaseMemberData).map(row => {
+    var purchaseMemberId = []
+    for (let row in purchaseMemberData) {
         console.log('row:', row, 'notused', row['notused']);
-        return (!row['notused']) ? 
-            row['purchase_content/id']
-            : -1;
-    })
+        if (!row['notused']) purchaseMemberId.push(row['purchase_content/id']);
+    }
     console.log('purchaseMemberId:', purchaseMemberId);
 
-    callProcedure({
-        procedureName: 'transferPurchaseMemberPayment',
-        params: [
-            purchaseId,         // id закупки, для которой проводим оплату
-            purchaseMemberId,   // [] массив id позиций в purchase_member, подлежащих оплате
-        ]
-    })
-        .then( responseData => {
-            if (responseData == 0) {
-                alert('Выполнено успешно');
-            }
-            busyIndicator.hide();
-        }).catch(e => {
-            alert('Операция отменена');
-            busyIndicator.hide();
-        });
+    if (purchaseMemberId.length > 0) {
+        callProcedure({
+            procedureName: 'transferPurchaseMemberPayment',
+            params: [
+                purchaseId,         // id закупки, для которой проводим оплату
+                purchaseMemberId,   // [] массив id позиций в purchase_member, подлежащих оплате
+            ]
+        })
+            .then( responseData => {
+                if (responseData == 0) {
+                    alert('Выполнено успешно');
+                }
+                busyIndicator.hide();
+            }).catch(e => {
+                alert('Операция отменена');
+                busyIndicator.hide();
+            });
+    } else {
+        alert('Для проведения оплаты не выбрана ни одна позиция');
+    }
 }
