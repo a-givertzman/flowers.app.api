@@ -275,9 +275,12 @@ function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
     console.log('[paymentApp.onSubmitPaymentClicked]');
     busyIndicator.show();
     console.log('payment submited with data:', purchaseMemberData);
-
+    
     var purchaseMemberId = Array.from(purchaseMemberData).map(row => {
-        if (!row['notused']) return row['purchase_content/id'];
+        console.log('row:', row, 'notused', row['notused']);
+        return (!row['notused']) ? 
+            row['purchase_content/id']
+            : -1;
     })
     console.log('purchaseMemberId:', purchaseMemberId);
 

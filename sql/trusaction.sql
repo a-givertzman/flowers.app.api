@@ -70,8 +70,8 @@ begin
 				client_id,
 				newClientAccount
 			);
-		commit;
-        select 0;
+	commit;
+	select 0;
 end$$
 DELIMITER ;
 
@@ -113,8 +113,9 @@ create or replace
 		left join `product` ON `purchase_content`.`product/id` = `product`.`id`
         where `transaction`.`client/id` = JSON_EXTRACT(viewParams(), '$."client/id"')
         order by `transaction`.`date`;        
+
         
-        select JSON_EXTRACT(viewParams(), '$."client/id"');
+select JSON_EXTRACT(viewParams(), '$."client/id"');
 set @viewParams = '{"client/id": 9}';
 select * from clientTransactionsView;
 

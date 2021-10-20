@@ -64,8 +64,8 @@ create or replace
 		#where `purchase_member`.`purchase/id` like '1'
 		ORDER BY `purchase_member`.`id` ASC;
 
-select * from purchaseMemberView where `purchase/id` = 1;
-select getPurchaseMemberCost(1, 24, 11);
+select * from purchaseMemberView where `purchase/id` like '1';
+select getPurchaseMemberCost(1, 25, 4);
 
 
 
@@ -84,6 +84,93 @@ begin
     set purchase_content_price = (select `purchase_content`.`sale_price` from `purchase_content` where `purchase_content`.`id` = purchase_content_id);
     set purchase_content_shipping = (select `purchase_content`.`shipping` from `purchase_content` where `purchase_content`.`id` = purchase_content_id);
 	set cost = count * (purchase_content_price + purchase_content_shipping);
-	return coast;
+	return cost;
 end$$
 DELIMITER ;
+
+
+
+drop procedure if exists transferPurchaseMemberPayment;
+DELIMITER $$
+create procedure transferPurchaseMemberPayment(
+	in purchase_id int,
+    in purchase_content_id json	-- массив id, по которым проводим оплату
+)
+begin
+
+# 	declare i int default 0;
+# 	declare currentPuConId int;
+# 	declare pumContIdCount int unsigned default json_length(purchase_content_id);
+    
+    declare pmId, clientId int;
+    declare clientAccount, cost, paid, toPay, paymentValue DECIMAL(20,2);
+    declare done int default false;
+
+    # получаем все записи из purchase_member, которые содержат purchase_content_id
+    # для них проводим оплату
+    declare cursorPurchaseMember cursor for
+		select
+			`id`,
+			`client/id`,
+			`cost`,
+			`paid`
+		from `purchase_member`
+		where json_contains(purchase_content_id, concat(`purchase_content/id`));
+
+    declare continue handler for not found set done = true;
+
+    declare exit handler for sqlexception
+		begin
+			get diagnostics condition 1
+			@errorMessage = message_text;
+			select @errorMessage;
+			rollback;
+		end;
+    
+	start transaction;
+
+		open cursorPurchaseMember;
+			loop_purchase_member_rows: loop
+				fetch cursorPurchaseMember into pmId, clientId, cost, paid;
+				if done then
+					leave loop_purchase_member_rows;
+				end if;
+				if cost > paid then
+					set toPay = cost - paid;
+                    
+                    # проверяем баланс клиента
+                    set clientAccount = (select `account` from `client` where `client`.`id` = clientId);
+                    
+                    if clientAccount > 0 then
+						if clientAccount < toPay then
+							set paymentValue = toPay;
+						else 
+							set paymentValue = clientAccount;
+                        end if;
+
+						# делаем оплату
+						update `purchase_member`
+							set `purchase_member`.`paid` = (`purchase_member`.`paid` + paymentValue)
+							where `purchase_member`.`id` = pmId;
+						
+						# обновляем баланс клиента после оплаты
+						update `client`
+							set `client`.`account` = (`client`.`account` - toPay)
+							where `client`.`id` = client_id;
+
+					end if;
+				end if;
+			end loop;
+		close cursorPurchaseMember;
+    
+	commit;
+	select 0;
+end$$
+DELIMITER ;
+
+
+select json_extract('["operator","where","field","purchase/id","cond","=","value","1"]', concat('$[',2,']'));
+
+select json_extract('["operator","where","field","purchase/id","cond","=","value","1"]', '');
+
+select * from `purchase_member` where json_contains('[24,25]', concat(`purchase_content/id`));
