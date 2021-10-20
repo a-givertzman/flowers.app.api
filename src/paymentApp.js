@@ -276,7 +276,7 @@ function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
     busyIndicator.show();
     console.log('payment submited with data:', purchaseMemberData);
     
-    var purchaseMemberId = []
+    var purchaseMemberId = [];
     for (let row in purchaseMemberData) {
         console.log('row:', row, 'notused', row['notused']);
         if (!row['notused']) purchaseMemberId.push(row['purchase_content/id']);
