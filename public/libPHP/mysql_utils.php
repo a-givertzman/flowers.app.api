@@ -169,7 +169,7 @@ function selectWhereExpression($where) {
 function addFields($query, $fields, $delimiter = ',') {
     // добавляем поля
     foreach($fields as $index => $fieldName) {
-        $quote = ($fieldName == '*') ? '\'' : '`';
+        $quote = ($fieldName == '*') ? '' : '`';
         $query .= "\n   " . $quote . $fieldName . $quote . $delimiter;
     }
     $query = preg_replace('/,$/', '', $query);        // убираем последнюю запятаю
