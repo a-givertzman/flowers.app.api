@@ -408,7 +408,6 @@ function insertData($tableName, &$data) {
             $data_id = $mySqli->insert_id;
             
             plog("Record inserted successfully, id: " .$data_id);
-            
         } else {
             // если были ошибки
             $data_id = false;
@@ -451,7 +450,6 @@ function updateData($tableName, &$data) {
         $query .= "\nSET ";
 
         // добавляем поле = значение
-        $index = 0;
         foreach($data as $fieldName => $value) {
 
             if (strcasecmp($fieldName, "id") != 0) {                        // пропускаем поле id (PK)
@@ -460,16 +458,11 @@ function updateData($tableName, &$data) {
     
                 $query .= "\n   `$fieldName` = $value,";
             }
-            
-            $index++;
         }
-
         $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
         
         $query .= "\nWHERE id = " .$data['id'] .";";
 
-        // $query .= "\n;";
-        
         plog("ЗАПРОС: ", $query);
         
         // делаем запрос в БД
@@ -584,14 +577,12 @@ function callProcedure($procedureName, $params) {
         $query = "call $procedureName(";
         
         // добавляем параметры
-        $index = 0;
         foreach($params as $paramName => $value) {
                 
             $value = prepareValueToSQL($mySqli, $value);
 
             $query .= "\n   $value,";
         }
-
         $query = substr_replace($query, '', - 1, 1);                        // удаляем запятую после последнего value
         
         $query .= "\n);";
@@ -658,10 +649,7 @@ function selectView(
             $query = "SELECT";
 
             // добавляем поля
-            foreach($field as $index => $fieldName) {
-                $query .= "\n   `$fieldName`,";
-            }
-            $query = substr($query, 0, -1);        // убираем последнюю запятаю
+            $query = addFields($query, $field);
         
             // добавляем таблицу
             $query .= "\nFROM `$viewName`";
