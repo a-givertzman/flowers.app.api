@@ -170,7 +170,7 @@ function addFields($query, $fields, $delimiter = ',') {
     // добавляем поля
     foreach($field as $index => $fieldName) {
         $quote = ($fieldName == '*') ? '\'' : '`';
-        $query .= "\n   $quote$fieldName$quote$delimiter";
+        $query .= "\n   $quote" . $fieldName . $quote . $delimiter;
     }
     $query = preg_replace('/,$/', '', $query);        // убираем последнюю запятаю
     return $query;
