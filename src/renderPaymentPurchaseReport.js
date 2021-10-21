@@ -65,7 +65,7 @@ function renderClientHeader(row) {
                 <th>ФИО</th>
                 <th>Контакт</th>
                 <th>Баланс</th>
-                <th><span>Сумма заказа</span></th>
+                <th><span>Сумма к оплате</span></th>
             </tr>
         </thead>
     `;

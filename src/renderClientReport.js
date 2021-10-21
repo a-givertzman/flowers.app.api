@@ -15,7 +15,7 @@ function renderPurchaseHeader(row) {
                 <th>Цена закупки</th>
                 <th>Цена</th>
                 <th><span>Транспортные расходы</span></th>
-                <th><span>Стоимость</span></th>
+                <th><span>Сумма к оплате</span></th>
                 <th><span>Оплатил</span></th>
                 <th><span>Сумма к возврату</span></th>
                 <th><span>Возвращено</span></th>
