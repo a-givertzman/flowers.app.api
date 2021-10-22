@@ -212,3 +212,101 @@ select json_extract('["operator","where","field","purchase/id","cond","=","value
 
 select * from `purchase_member` where json_contains("[24,25]", concat(`purchase_content/id`));
 
+
+drop procedure if exists transferPurchaseMemberRefound;
+DELIMITER $$
+CREATE PROCEDURE transferPurchaseMemberRefound(
+	in purchase_id int,
+    in purchase_content_id json	-- массив id, по которым проводим оплату
+)
+BEGIN
+    declare pmId, clientId, pcId int;
+    declare clientAccount, pmToRefound, pmRefounded, refoundValue DECIMAL(20,2); 
+    declare done int default false;
+
+    # получаем все записи из purchase_member, которые содержат purchase_content_id
+    # для них проводим оплату
+    declare cursorPurchaseMember cursor for
+		select
+			`id`,
+			`client/id`,
+            `purchase_content/id`,
+			`torefound`,
+			`refounded`
+		from `purchase_member`
+        where `purchase_member`.`purchase/id` = purchase_id;
+		#and json_contains(purchase_content_id, concat(`purchase_content/id`));
+
+    declare continue handler for not found set done = true;
+
+    declare exit handler for sqlexception
+		begin
+			get diagnostics condition 1
+			@errorMessage = message_text;
+			select @errorMessage;
+			rollback;
+		end;
+    
+	start transaction;
+		# call debug_msg('start transaction');
+		open cursorPurchaseMember;
+			# call debug_msg('cursorPurchaseMember opened');
+			loop_purchase_member_rows: loop
+				# call debug_msg('try to fetch cursorPurchaseMember');
+				fetch cursorPurchaseMember into pmId, clientId, pcId, pmToRefound, pmRefounded;
+				if done then
+					leave loop_purchase_member_rows;
+				end if;
+
+				# смотрим есть ли сумма к возврату
+				if pmToRefound > pmRefounded then
+					set refoundValue = pmToRefound - pmRefounded;
+                    # call debug_msg(concat('refoundValue: ', refoundValue));
+                    
+                    # проверяем баланс клиента
+                    set clientAccount = (select `account` from `client` where `client`.`id` = clientId);
+                    # call debug_msg(concat('clientAccount: ', clientAccount));
+                    
+					# делаем оплату
+					update `purchase_member`
+						set `purchase_member`.`refounded` = (`purchase_member`.`refounded` + refoundValue)
+						where `purchase_member`.`id` = pmId;
+					
+					# обновляем баланс клиента после оплаты
+					update `client`
+						set `client`.`account` = (`client`.`account` + refoundValue)
+						where `client`.`id` = clientId;
+					
+					# добавляем транзакцию
+					insert into `transaction` (
+							`account_owner`,
+							`value`,
+							`purchase_member/id`,
+							`description`,
+							`client/id`,
+							`client_account`
+						)
+						values (
+							'',
+							refoundValue,
+							pmId,
+							concat(						# description
+								'ВОЗВРАТ. Закупка: ',
+								(select concat('[', `id`, '] ', `name`) from `purchase` where `purchase`.`id` = purchase_id),
+								'; Товар: ',
+								(select concat('[', `product/id`, '] ', `product/name`, ' (', `cost`, 'x', `count`, ')') from `purchaseMemberView` where `id` = pmId)
+							),			
+							clientId,
+							(select `account` from `client` where `client`.`id` = clientId)
+						);
+				end if;
+			end loop loop_purchase_member_rows;
+            # call debug_msg('loop finished');
+		close cursorPurchaseMember;
+		# call debug_msg('cursor closed');
+        
+	commit;
+	select 0;
+	# call debug_msg('transaction commited');
+end$$
+DELIMITER ;

@@ -101,12 +101,13 @@ window.addEventListener(                                            // ON LOAD W
         busyIndicator = new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
         // загружаем список клиентов
         busyIndicator.show();
+        var where = [{operator: 'where', field: 'deleted', cond: 'is not', value: 'null'}];
         getData({
             tableName: 'client', 
             keys: ['*'], 
             orderBy: 'id', 
             order: 'ASC', 
-            where: [], 
+            where: where, 
             limit: 0,
             url: domainPath + 'getData.php',
         }).then(responseData => {
