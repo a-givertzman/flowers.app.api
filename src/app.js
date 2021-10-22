@@ -223,11 +223,6 @@ window.addEventListener(                                            // ON LOAD W
             }).catch(e => {
                 busyIndicator.hide();
             });
-
-            // getData('purchase_member', ['*'], 'id', 'ASC', ['client/id'], selectedId, 0).then(responseData => {
-                
-            //     console.log('responseData:', responseData);
-            // });
         });
         
         $('.search-purchase-select').on('select2:unselect', e => {

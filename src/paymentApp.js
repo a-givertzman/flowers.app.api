@@ -88,12 +88,13 @@ window.addEventListener(                                            // ON LOAD W
         
         // загружаем список закупок
         busyIndicator.show();
+        var where = [{operator: 'where', field: 'deleted', cond: 'is null', value: null},];
         getData({
             tableName: 'purchase', 
             keys: ['*'], 
             orderBy: 'id', 
             order: 'ASC', 
-            where: [], 
+            where: where, 
             limit: 0,
         }).then( responseData => {
             data = responseData;
@@ -116,7 +117,10 @@ window.addEventListener(                                            // ON LOAD W
             
             // закупки клиента
             busyIndicator.show();
-            var where = [{operator: 'where', field: 'purchase/id', cond: '=', value: selectedId}];
+            var where = [
+                {operator: 'where', field: 'purchase/id', cond: '=', value: selectedId},
+                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            ];
             getView({
                 tableName: 'purchaseMemberView', 
                 params: '0', 
