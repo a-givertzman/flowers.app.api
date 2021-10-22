@@ -115,7 +115,7 @@ window.addEventListener(                                            // ON LOAD W
             for(var key in data) {
                 let item = data[key];
                 $('.search-purchase-select')
-                    .append(new Option(item.id + ' | ' + item.name + ' | ' + item.phone , item.id, false))
+                    .append(new Option(item.id + ' | ' + item.name, item.id, false))
                     .trigger('change');
             }
             busyIndicator.hide();
