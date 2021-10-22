@@ -179,7 +179,10 @@ window.addEventListener(                                            // ON LOAD W
             });
             // транзакции клиента
             busyIndicator.show();
-            var where = [{operator: 'where', field: 'client/id', cond: '=', value: selectedId}];
+            var where = [
+                {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
+                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            ];
             getView({
                 tableName: 'clientTransactionView', 
                 params: '0', 
