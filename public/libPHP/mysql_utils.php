@@ -155,7 +155,8 @@ function selectWhereExpression($where) {
         $field = $clauese->field;
         $cond = $clauese->cond;
         $value = $clauese->value;
-        $query .= "\n$operator $table`$field` $cond '$value'";
+        $query .= "\n$operator $table`$field` $cond";
+        $query .= isset($value) ? " '$value'" : '';
     }
     plog("selectWhereExpression ->");
     return $query;
