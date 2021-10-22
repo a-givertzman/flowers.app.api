@@ -47,7 +47,14 @@ $(function() {
         width: '100%', // need to override the changed default
         multiple: false,
         allowClear: true,
-        matcher: matchCustom
+        matcher: matchCustom,
+        sorter: function(results) {
+            var query = $('.select2-search__field').val().toLowerCase();
+            return results.sort(function(a, b) {
+              return a.text.toLowerCase().indexOf(query) -
+                b.text.toLowerCase().indexOf(query);
+            });
+        }
     });
 });
 
