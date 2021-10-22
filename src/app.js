@@ -101,7 +101,7 @@ window.addEventListener(                                            // ON LOAD W
         busyIndicator = new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
         // загружаем список клиентов
         busyIndicator.show();
-        var where = [{operator: 'where', field: 'deleted', cond: 'is not', value: 'null'}];
+        var where = [{operator: 'where', field: 'deleted', cond: 'is not null', value: null}];
         getData({
             tableName: 'client', 
             keys: ['*'], 
