@@ -6,7 +6,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         {operator: 'and', field: 'deleted', cond: 'is null', value: null},
     ];
     const mySqlParamsForOrders = {
-        url: 'getViewq.php',
+        url: 'getView.php',
         tableName: 'purchaseMemberView', 
         params: '0', 
         keys: ['*'],
