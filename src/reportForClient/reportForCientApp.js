@@ -18,7 +18,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     const reportForClientContainerElem = document.querySelector('.purchase-selector .container');
     const reportForClientElem = document.createElement('div');
     reportForClientContainerElem.appendChild(reportForClientElem);
-    new ReportForClient(
+    const reportForClient = new ReportForClient(
         reportForClientElem,
         new Selector(
             '.search-purchase-select',
@@ -44,8 +44,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         //     }),
         //     new BodyForTransactions()
         // )
-    )
-
+    );
+    reportForClient.render();
 });
 
 
