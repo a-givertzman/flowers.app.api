@@ -332,7 +332,7 @@ class ApiRequest {
         console.log('body:', body);
         console.log('options:', options);
         const url = args.url ? args.url : '';
-        fetch(url, options)
+        return fetch(url, options)
             .then(response => {
                 console.log('response:', response);
                 this.parseResponse(response)
