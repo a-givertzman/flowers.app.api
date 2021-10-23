@@ -148,7 +148,7 @@ class ReportForClient {
     render() {
         console.log('[ReportForClient.render]');
         const selectorElem = this.selector?.render();
-        const ordersElem = this.orders?.render();
+        const ordersElem = await this.orders?.render();
         const transactionsElem = this.transactions?.render();
         // this.containerElem.appendChild(selectorElem);
         this.containerElem.appendChild(ordersElem);
@@ -183,7 +183,7 @@ class HtmlTable {
         this.header = header;
         this.body = body;
     }
-    render() {
+    async render() {
         console.log('[HtmlTable.render]');
         const thead = this.header.render();
         const tbody = await this.body.render();
