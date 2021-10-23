@@ -334,12 +334,12 @@ class ApiRequest {
         const responseCode = response.status;
         
         const jsonData = await response.json();
-        // console.log('json data:', jsonData);
+        console.log('json data:', jsonData);
         
         const parsedData = (typeof(jsonData) == 'object') ? jsonData : JSON.parse(jsonData);
         
         const errCount = parsedData.errCount;
-        // console.log('errCount: ', errCount);
+        console.log('errCount: ', errCount);
     
         if (errCount > 0) {
             const errDump = parsedData.errDump;
@@ -349,7 +349,7 @@ class ApiRequest {
         }
         if (responseCode == 200) {
             var data = parsedData.data;
-            // console.log('data: ', data);
+            console.log('data: ', data);
             return data;
         } else {
             const responseText = response.statusText;
