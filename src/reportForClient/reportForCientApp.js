@@ -51,9 +51,11 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
 
 class HeaderForTransactions {
     constructor(row) {
+        console.log('[HeaderForTransactions.constructor]');
         this.row = row;
     }
     render() {
+        console.log('[HeaderForTransactions.render]');
         let row = this.row;
         let theadHtml = `
             <thead>
@@ -81,9 +83,11 @@ class HeaderForTransactions {
 
 class BodyForTransactions {
     constructor(ordersData) {
+        console.log('[BodyForTransactions.constructor]');
         this.ordersData = ordersData;
     }
     render() {
+        console.log('[BodyForTransactions.render]');
         let row = this.row;
         var tbodyHtml = `
             <tbody>
@@ -97,9 +101,11 @@ class BodyForTransactions {
 
 class RowForTransactions {
     constructor(row) {
+        console.log('[RowForTransactions.constructor]');
         this.row = row;
     }
     render() {
+        console.log('[RowForTransactions.render]');
         let row = this.row;
         let rowHtml = `
         <tr class="purchase-row">
@@ -132,12 +138,14 @@ class RowForTransactions {
 
 class ReportForClient {
     constructor(containerElem, selector, orders, transactions) {
+        console.log('[ReportForClient.constructor]');
         this.containerElem = containerElem;
         this.selector = selector;
         this.orders = orders;
         this.transactions = transactions;
     }
     render() {
+        console.log('[ReportForClient.render]');
         const selectorElem = this.selector.render();
         const ordersElem = this.orders.render();
         const transactionsElem = this.transactions.render();
@@ -170,10 +178,12 @@ class Selector {
 
 class HtmlTable {
     constructor(header, body) {
+        console.log('[HtmlTable.constructor]');
         this.header = header;
         this.body = body;
     }
     render() {
+        console.log('[HtmlTable.render]');
         const thead = this.header.render();
         const tbody = this.body.render();
         const elem = document.createElement('table');
@@ -185,9 +195,11 @@ class HtmlTable {
 
 class HeaderForOrders {
     constructor(row) {
+        console.log('[HeaderForOrders.constructor]');
         this.row = row;
     }
     render() {
+        console.log('[HeaderForOrders.render]');
         let row = this.row;
         let theadHtml = `
             <thead>
@@ -218,9 +230,11 @@ class HeaderForOrders {
 
 class BodyForOrders {
     constructor(ordersData) {
+        console.log('[BodyForOrders.constructor]');
         this.ordersData = ordersData;
     }
     render() {
+        console.log('[BodyForOrders.render]');
         var tbodyHtml = `
             <tbody>
             </tbody>
@@ -239,9 +253,11 @@ class BodyForOrders {
 
 class RowForOrders {
     constructor(row) {
+        console.log('[RowForOrders.constructor]');
         this.row = row;
     }
     render() {
+        console.log('[RowForOrders.render]');
         let row = this.row;
         let rowHtml = `
         <tr class="purchase-row">
@@ -273,18 +289,22 @@ class RowForOrders {
 
 class OrdersData {
     constructor(sqlQuery) {
+        console.log('[OrdersData.constructor]');
         this.sqlQuery = sqlQuery;
     }
     getRows() {
+        console.log('[OrdersData.getRows]');
         return this.sqlQuery.exequte();
     }
 }
 
 class SqlQuery {
     constructor(apiRquest) {
+        console.log('[SqlQuery.constructor]');
         this.apiRquest = apiRquest;
     }
     exequte() {
+        console.log('[SqlQuery.exequte]');
         return this.apiRquest.fetch();
     }
 }
