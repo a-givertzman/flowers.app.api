@@ -330,8 +330,9 @@ class ApiRequest {
         return data;
     }
 
-    parseResponse(response) {
+    async parseResponse(response) {
         console.log('[ApiRequest.parseResponse]');
+        console.log('response.status:', response.status);
         const responseCode = response.status;
         
         const jsonData = await response.json();
