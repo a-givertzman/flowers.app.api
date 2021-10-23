@@ -244,9 +244,10 @@ class BodyForOrders {
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
         return this.ordersData.getRows().then(data => {
+            console.log('[BodyForOrders.render] data:', data);
             for(var key in data) {
-                const row = data[key];
-                const trow = new RowForOrders(row).render();
+                var row = data[key];
+                var trow = new RowForOrders(row).render();
                 tbody.appendChild(trow);
             }
             return tbody;
