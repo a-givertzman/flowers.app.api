@@ -336,9 +336,9 @@ class ApiRequest {
         return fetch(url, options)
             .then(response => {
                 // console.log('response:', response);
-                this.parseResponse(response)
+                return this.parseResponse(response)
                     .then(data => {
-                        // console.log('data: ', data);
+                        console.log('data: ', data);
                         return data;
                     })
                     .catch(error => {
@@ -358,7 +358,7 @@ class ApiRequest {
         const responseCode = response.status;
         
         const jsonData = await response.json();
-        console.log('json data:', jsonData);
+        // console.log('json data:', jsonData);
         
         const parsedData = (typeof(jsonData) == 'object') ? jsonData : JSON.parse(jsonData);
         
