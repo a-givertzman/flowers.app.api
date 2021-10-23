@@ -146,9 +146,9 @@ class ReportForClient {
     }
     render() {
         console.log('[ReportForClient.render]');
-        const selectorElem = this.selector.render();
-        const ordersElem = this.orders.render();
-        const transactionsElem = this.transactions.render();
+        const selectorElem = this.selector?.render();
+        const ordersElem = this.orders?.render();
+        const transactionsElem = this.transactions?.render();
         this.containerElem.appendChild(selectorElem);
         this.containerElem.appendChild(ordersElem);
         this.containerElem.appendChild(transactionsElem);
