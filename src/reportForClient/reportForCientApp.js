@@ -186,7 +186,7 @@ class HtmlTable {
     render() {
         console.log('[HtmlTable.render]');
         const thead = this.header.render();
-        const tbody = this.body.render();
+        const tbody = await this.body.render();
         const elem = document.createElement('table');
         elem.appendChild(thead);
         elem.appendChild(tbody);
@@ -242,13 +242,14 @@ class BodyForOrders {
         `;
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        const ordersDataRows = this.ordersData.getRows();
-        for(var key in ordersDataRows) {
-            const row = ordersDataRows[key];
-            const trow = new RowForOrders(row).render();
-            tbody.appendChild(trow);
-        }
-        return tbody;
+        this.ordersData.getRows().then(data => {
+            for(var key in data) {
+                const row = data[key];
+                const trow = new RowForOrders(row).render();
+                tbody.appendChild(trow);
+            }
+            return tbody;
+        });
     }
 }
 
@@ -295,7 +296,9 @@ class OrdersData {
     }
     getRows() {
         console.log('[OrdersData.getRows]');
-        return this.sqlQuery.exequte();
+        this.sqlQuery.exequte().then(data => {
+            return data
+        });
     }
 }
 
