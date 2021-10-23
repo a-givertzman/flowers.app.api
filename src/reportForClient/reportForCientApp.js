@@ -16,7 +16,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     }
 
     const reportForClientContainerElem = document.querySelector('.purchase-selector.container');
-    reportForClientElem = document.createElement('div');
+    const reportForClientElem = document.createElement('div');
     reportForClientContainerElem.appendChild(reportForClientElem);
     new ReportForClient(
         reportForClientElem,
