@@ -243,7 +243,7 @@ class BodyForOrders {
         `;
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        this.ordersData.getRows().then(data => {
+        return this.ordersData.getRows().then(data => {
             for(var key in data) {
                 const row = data[key];
                 const trow = new RowForOrders(row).render();
@@ -297,9 +297,9 @@ class OrdersData {
     }
     getRows() {
         console.log('[OrdersData.getRows]');
-        this.sqlQuery.exequte().then(data => {
-            return data
-        });
+        return this.sqlQuery.exequte();//.then(data => {
+            // return data
+        // });
     }
 }
 
@@ -310,10 +310,10 @@ class SqlQuery {
     }
     exequte() {
         console.log('[SqlQuery.exequte]');
-        const data = this.apiRquest.fetchData(); //.then(data => {
+        return this.apiRquest.fetchData()//.then(data => {
             // });
-            console.log('data: ', data);
-            return data;
+            // console.log('data: ', data);
+            // return data;
     }
 }
 
