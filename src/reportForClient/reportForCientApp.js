@@ -326,7 +326,7 @@ class ApiRequest {
         const url = args.url ? args.url : '';
         const response = await fetch(url, options);
         console.log('response:', response);
-        return this.parseResponse(response);
+        return await this.parseResponse(response);
     }
 
     async parseResponse(response) {
