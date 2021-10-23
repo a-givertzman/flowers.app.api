@@ -151,7 +151,7 @@ class ReportForClient {
         const transactionsElem = this.transactions?.render();
         this.containerElem.appendChild(selectorElem);
         this.containerElem.appendChild(ordersElem);
-        this.containerElem.appendChild(transactionsElem);
+        // this.containerElem.appendChild(transactionsElem);
         return 0;
     }
 }
