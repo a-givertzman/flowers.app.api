@@ -15,7 +15,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         limit: 0,
     }
 
-    const reportForClientContainerElem = document.querySelector('.purchase-selector.container');
+    const reportForClientContainerElem = document.querySelector('.purchase-selector .container');
     const reportForClientElem = document.createElement('div');
     reportForClientContainerElem.appendChild(reportForClientElem);
     new ReportForClient(
