@@ -322,7 +322,7 @@ class ApiRequest {
         this.mySqlParams = mySqlParams;
     }
 
-    async fetchData() {
+    fetchData() {
         console.log('[ApiRequest.fetch]');
         const args = this.mySqlParams;
         console.log('args:', args);
@@ -331,11 +331,21 @@ class ApiRequest {
         console.log('body:', body);
         console.log('options:', options);
         const url = args.url ? args.url : '';
-        const response = await fetch(url, options);
-        console.log('response:', response);
-        const data = await this.parseResponse(response);
-        console.log('data: ', data);
-        return data;
+        fetch(url, options)
+            .then(response => {
+                console.log('response:', response);
+                this.parseResponse(response)
+                    .then(data => {
+                        console.log('data: ', data);
+                        return data;
+                    })
+                    .catch(error => {
+                        console.log('error:', error);
+                    });
+            })
+            .catch(error => {
+                console.log('error:', error);
+            });
     }
 
     async parseResponse(response) {
