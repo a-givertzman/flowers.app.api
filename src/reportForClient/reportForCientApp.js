@@ -306,7 +306,7 @@ class SqlQuery {
     }
     exequte() {
         console.log('[SqlQuery.exequte]');
-        return this.apiRquest.fetchData();
+        return await this.apiRquest.fetchData();
     }
 }
 
