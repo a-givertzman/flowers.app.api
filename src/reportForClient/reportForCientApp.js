@@ -31,11 +31,12 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 'purchase/name': 'Пока нет названия закупки'
             }),
             new BodyForOrders(
-                new OrdersData(
-                    new SqlQuery(
-                        new ApiRequest(mySqlParamsForOrders)
-                    )
-                )
+                new ApiRequest(mySqlParamsForOrders)
+                // new OrdersData(
+                    // new SqlQuery(
+                        // new ApiRequest(mySqlParamsForOrders)
+                    // )
+                // )
             )
         ),
         // new HtmlTable(
@@ -243,7 +244,8 @@ class BodyForOrders {
         `;
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        return this.ordersData.getRows().then(data => {
+        // return this.ordersData.getRows().then(data => {
+        return this.ordersData.fetchData().then(data => {
             console.log('[BodyForOrders.render] data:', data);
             for(var key in data) {
                 var row = data[key];
