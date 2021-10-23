@@ -2,7 +2,7 @@
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     const where = [
-        {operator: 'where', field: 'client/id', cond: '=', value: 2},
+        {operator: 'where', field: 'client/id', cond: '=', value: 7},
         {operator: 'and', field: 'deleted', cond: 'is null', value: null},
     ];
     const mySqlParamsForOrders = {
