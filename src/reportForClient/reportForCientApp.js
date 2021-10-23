@@ -329,23 +329,23 @@ class ApiRequest {
         console.log('args:', args);
         const body = this.prepareFormData(args);
         const options = this.prepareFetchOptions(body);
-        console.log('body:', body);
-        console.log('options:', options);
         const url = args.url ? args.url : '';
         return fetch(url, options)
             .then(response => {
-                console.log('response:', response);
+                // console.log('response:', response);
                 this.parseResponse(response)
                     .then(data => {
-                        console.log('data: ', data);
+                        // console.log('data: ', data);
                         return data;
                     })
                     .catch(error => {
                         console.log('error:', error);
+                        return {}
                     });
             })
             .catch(error => {
                 console.log('error:', error);
+                return {};
             });
     }
 
