@@ -148,7 +148,7 @@ class ReportForClient {
     async render() {
         console.log('[ReportForClient.render]');
         const selectorElem = this.selector?.render();
-        const ordersElem = await this.orders?.render();
+        const ordersElem = await (this.orders).render();
         const transactionsElem = this.transactions?.render();
         // this.containerElem.appendChild(selectorElem);
         this.containerElem.appendChild(ordersElem);
