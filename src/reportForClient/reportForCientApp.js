@@ -162,8 +162,8 @@ class Selector {
         this.placeholder = placeholder;
     }
     render() {
-        $(function() {
-            $(htmlSelector).select2({
+        // $(function() {
+            return $(htmlSelector).select2({
                 placeholder: this.placeholder,
                 width: '100%', // need to override the changed default
                 multiple: false,
@@ -171,7 +171,7 @@ class Selector {
                 matcher: select2match,
                 sorter: select2sort,
             });
-        });
+        // });
         return 0;
     }
 }
