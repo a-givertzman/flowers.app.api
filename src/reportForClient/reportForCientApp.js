@@ -235,12 +235,12 @@ class BodyForOrders {
     }
     render() {
         console.log('[BodyForOrders.render]');
-        var tbodyHtml = `
+        const tbodyHtml = `
             <tbody>
             </tbody>
         `;
+        const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        var tbody = document.createElement('tbody');
         const ordersDataRows = this.ordersData.getRows();
         for(var key in ordersDataRows) {
             const row = ordersDataRows[key];
