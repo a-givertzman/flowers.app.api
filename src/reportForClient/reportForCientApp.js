@@ -315,7 +315,7 @@ class ApiRequest {
         this.mySqlParams = mySqlParams;
     }
 
-    async fetch() {
+    async fetchData() {
         console.log('[ApiRequest.fetch]');
         const args = this.mySqlParams;
         console.log('args:', args);
