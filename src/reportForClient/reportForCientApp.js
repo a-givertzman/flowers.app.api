@@ -6,7 +6,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         {operator: 'and', field: 'deleted', cond: 'is null', value: null},
     ];
     const mySqlParamsForOrders = {
-        url: 'getView.php',
+        url: 'getViewq.php',
         tableName: 'purchaseMemberView', 
         params: '0', 
         keys: ['*'],
@@ -19,6 +19,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     const reportForClientContainerElem = document.querySelector('.purchase-selector .container');
     const reportForClientElem = document.createElement('div');
     reportForClientContainerElem.appendChild(reportForClientElem);
+
     const reportForClient = new ReportForClient(
         reportForClientElem,
         new Selector(
@@ -32,11 +33,6 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             }),
             new BodyForOrders(
                 new ApiRequest(mySqlParamsForOrders)
-                // new OrdersData(
-                    // new SqlQuery(
-                        // new ApiRequest(mySqlParamsForOrders)
-                    // )
-                // )
             )
         ),
         // new HtmlTable(
