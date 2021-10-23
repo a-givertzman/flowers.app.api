@@ -328,6 +328,7 @@ class ApiRequest {
         const response = await fetch(url, options);
         console.log('response:', response);
         const data = this.parseResponse(response);
+        console.log('data: ', data);
         return data;
     }
 
@@ -352,7 +353,6 @@ class ApiRequest {
         }
         if (responseCode == 200) {
             var data = parsedData.data;
-            console.log('data: ', data);
             return data;
         } else {
             const responseText = response.statusText;
