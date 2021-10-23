@@ -143,7 +143,7 @@ window.addEventListener(                                            // ON LOAD W
             
             // закупки клиента
             busyIndicator.show();
-            var where = [
+            const where = [
                 {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];

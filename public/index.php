@@ -12,3 +12,9 @@ if ($_GET['url'] == 'payment') {
     exit;
 }
 
+if ($_GET['url'] == 'client-report') {
+    $html = require_once './reportForClient.php';
+    echo $html;
+    exit;
+}
+
