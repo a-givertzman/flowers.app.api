@@ -163,7 +163,7 @@ class Selector {
     }
     render() {
         // $(function() {
-            return $(htmlSelector).select2({
+            return $(this.htmlSelector).select2({
                 placeholder: this.placeholder,
                 width: '100%', // need to override the changed default
                 multiple: false,
