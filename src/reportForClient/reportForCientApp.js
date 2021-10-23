@@ -145,13 +145,14 @@ class ReportForClient {
         this.orders = orders;
         this.transactions = transactions;
     }
-    async render() {
+    render() {
         console.log('[ReportForClient.render]');
         const selectorElem = this.selector?.render();
-        const ordersElem = await (this.orders).render();
+        this.orders.render().then(elem => {
+            this.containerElem.appendChild(ordersElem);
+        });
         const transactionsElem = this.transactions?.render();
         // this.containerElem.appendChild(selectorElem);
-        this.containerElem.appendChild(ordersElem);
         // this.containerElem.appendChild(transactionsElem);
         return 0;
     }
