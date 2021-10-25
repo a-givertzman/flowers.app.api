@@ -129,7 +129,7 @@ class HtmlTable {
         const thead = this.header.render();
         const tbody = await this.body.render();
         const elem = this.parentSelector 
-            ? document.querySelector(parentSelector)
+            ? document.querySelector(this.parentSelector)
             : document.createElement('table');
         elem.appendChild(thead);
         elem.appendChild(tbody);
