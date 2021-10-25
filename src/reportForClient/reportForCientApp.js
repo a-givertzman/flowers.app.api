@@ -67,7 +67,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         // ),
     ]);
     
-    cntentOfPagecntentOfPage.clientBalans.render();
+    cntentOfPage.clientBalans.render();
 
     $('.search-purchase-select').on('select2:select', e => {
         console.log('selection id:', e.params.data);
