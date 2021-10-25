@@ -7,6 +7,8 @@ class BusyIndicator {
         this.busyIndicator = document.createElement('div');
         this.busyIndicator.innerHTML = this.html;
         this.busyIndicator.classList.add(selector);
+        this.busyIndicator.classList.add(hiddenClassName);
+        document.body.appendChild(this.busyIndicator);
     }
     show() {
         this.busyIndicator.classList.remove(this.hiddenClassName);
