@@ -8,10 +8,10 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         orderBy: 'id', 
         order: 'ASC', 
         where: [
-            {operator: 'where', field: 'client/id', cond: '=', value: 7},
+            {operator: 'where', field: 'id', cond: '=', value: 7},
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ], 
-        limit: 1,
+        limit: 0,
     };
     const mySqlParamsForOrders = {
         url: 'getView.php',
