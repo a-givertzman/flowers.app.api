@@ -21,9 +21,7 @@ class BusyIndicator {
     }
     html() {
         return `
-            <div class="">
                 <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            </div>
         `;
     }
 }
