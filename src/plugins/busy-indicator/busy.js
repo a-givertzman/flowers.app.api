@@ -5,7 +5,7 @@ class BusyIndicator {
         this.hiddenClassName = hiddenClassName;
         // this.busyIndicator = document.querySelector(selector);
         this.busyIndicator = document.createElement('div');
-        this.busyIndicator.innerHTML = this.html;
+        this.busyIndicator.innerHTML = this.html();
         this.busyIndicator.classList.add(selector);
         this.busyIndicator.classList.add(hiddenClassName);
         document.body.appendChild(this.busyIndicator);
