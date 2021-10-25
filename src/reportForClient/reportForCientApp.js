@@ -94,7 +94,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 }),
                 new BodyForTransactions(
                     new ApiRequest(mySqlParamsForTransactions)
-                )
+                ),
+                new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
             )
         },
     ]);
