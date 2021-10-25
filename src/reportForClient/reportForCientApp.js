@@ -197,6 +197,9 @@ class Selector {
             this.element,
             {
                 placeholder: 'Найди себя',//this.params.placeholder,
+                valueField: 'id',
+                labelField: 'title',
+                searchField: ['id', 'title'],
                 // multiple: false,
                 // width: '100%', // need to override the changed default
                 // searchable: true,
