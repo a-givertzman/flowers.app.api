@@ -104,13 +104,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     cntentOfPage.clientSelector.render();
     
     cntentOfPage.clientSelector.selectr.on('selectr.select', option => {
-    // document.querySelector(htmlSelectorOfClientSelect).on('select2:select', e => {
-    // $(htmlSelectorOfClientSelect).on('select2:select', e => {
-        // console.log('selection id:', e.params.data);
         console.log('selection option:', option);
-        
         const selectedId = option.value;
-        
         cntentOfPage.clientBalans.render({id: selectedId});
         cntentOfPage.clientOrders.render({id: selectedId});
         cntentOfPage.clientTransactions.render({id: selectedId});
@@ -204,16 +199,9 @@ class Selector {
                 placeholder: this.params.placeholder,
                 multiple: false,
                 width: '100%', // need to override the changed default
+                searchable: true,
             }
         );
-        // $(this.htmlSelector).select2({
-        //     placeholder: this.params.placeholder,
-        //     width: '100%', // need to override the changed default
-        //     multiple: false,
-        //     allowClear: true,
-        //     matcher: select2match,
-        //     sorter: select2sort,
-        // });
     }
     render() {
         this.dataSource.fetchData().then(data => {
@@ -225,9 +213,6 @@ class Selector {
                     value: item.id,
                     text: item.id + ' | ' + item.name
                 });
-                // $(this.htmlSelector)
-                //     .append(new Option(item.id + ' | ' + item.name, item.id, false))
-                //     .trigger('change');
             }
         });
         return 0;
