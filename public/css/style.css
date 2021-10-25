@@ -279,19 +279,18 @@ header{
 
 .purchase-selector-search{
     /* letter-spacing: 0.1px; */
-    margin: 0 40px 0 0;
-}
-.search-purchase-select{
-    width: 100%;
-    padding-top: 12px;
-    font-family: 'Rubik', serif;
+    margin: 0;
     line-height: 24px;
     letter-spacing: 0.25px;
-    padding: 5px 38px;
+    width: 100%;
+    font-family: 'Rubik', serif;
+    padding: 12px 38px;
     white-space: nowrap;
     outline: none;
-    /* height: 24; */
     border: solid 3px var(--whisper-color);
+}
+.search-purchase-select{
+    /* height: 24; */
 }
 .search-purchase-select *:focus{
     outline: none;
