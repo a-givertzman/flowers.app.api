@@ -103,11 +103,13 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.clientSelector.render();
     
-    document.querySelector(htmlSelectorOfClientSelect).on('select2:select', e => {
+    cntentOfPage.clientSelector.selectr.on('selectr.select', option => {
+    // document.querySelector(htmlSelectorOfClientSelect).on('select2:select', e => {
     // $(htmlSelectorOfClientSelect).on('select2:select', e => {
-        console.log('selection id:', e.params.data);
+        // console.log('selection id:', e.params.data);
+        console.log('selection option:', option);
         
-        const selectedId = e.params.data.id;
+        const selectedId = option.id;
         
         cntentOfPage.clientBalans.render({id: selectedId});
         cntentOfPage.clientOrders.render({id: selectedId});
