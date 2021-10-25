@@ -104,7 +104,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     cntentOfPage.clientSelector.render();
     
     cntentOfPage.clientSelector.selectr.on('change', id => {
-        console.log('selection option:', id);
+        console.log('selected id:', id);
         const selectedId = id;
         cntentOfPage.clientBalans.render({id: selectedId});
         cntentOfPage.clientOrders.render({id: selectedId});
@@ -177,7 +177,12 @@ class ClientBalas {
         ];
         this.dataSource.fetchData({where: where}).then(data => {
             console.log('[ClientBalas.render] data:', data);
-            let clientAccount = Object.values(data)[0]['account'];
+            let clientAccount
+            try {
+                clientAccount = Object.values(data)[0]['account'];
+            } catch (error) {
+                clientAccount = '-.--';
+            }
             this.elem.innerHTML = `Баланс: ${clientAccount} RUB`;
         });
     }
