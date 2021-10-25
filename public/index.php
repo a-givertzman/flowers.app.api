@@ -1,5 +1,8 @@
 <?php
 
+require_once './libPHP/plog.php';
+plog("-> router.php");
+
 if (empty($_GET) || $_GET['url'] == '') {
     $html = require_once './clientOverview.php';
     echo $html;
@@ -24,3 +27,4 @@ if ($_GET['url'] == 'get-data') {
     exit;
 }
 
+plog("-> router.php");
