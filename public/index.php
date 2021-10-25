@@ -25,8 +25,18 @@ if ($_GET['url'] == 'client-report') {
     exit;
 }
 
-if ($_GET['url'] == 'get-data') {
+if ($_SERVER['REQUEST_URI'] == 'get-data') {
     $html = require_once './getData.php';
+    echo $html;
+    exit;
+}
+if ($_SERVER['REQUEST_URI'] == 'get-join-data') {
+    $html = require_once './getJoinData.php';
+    echo $html;
+    exit;
+}
+if ($_SERVER['REQUEST_URI'] == 'get-view') {
+    $html = require_once './getView.php';
     echo $html;
     exit;
 }
