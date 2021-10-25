@@ -100,7 +100,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.clientSelector.render();
     
-    document.querySelector(htmlSelectorOfClientSelect).addEventListener('select2:select', e => {
+    document.querySelector(htmlSelectorOfClientSelect).on('select2:select', e => {
     // $(htmlSelectorOfClientSelect).on('select2:select', e => {
         console.log('selection id:', e.params.data);
         
