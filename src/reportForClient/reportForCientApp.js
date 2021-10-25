@@ -33,13 +33,13 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     // reportForClientContainerElem.appendChild(reportForClientElem);
 
     const cntentOfPage = new ContentOfPage([
-        new HtmlSection(
+        // new HtmlSection(
             'clientBalans',
             new ClientBalas(
                 '#client-account',
                 new ApiRequest(mySqlParamsForClientBalans)
             ), 
-        ),
+        // ),
         new HtmlSection(
             'clientSelector',
             new Selector(
@@ -108,14 +108,14 @@ class ContentOfPage {
     }
 }
 
-class HtmlSection {
-    constructor(name, element, htmlSelector = '', ParentElementSelector = '') {
-        this.name = name;
-        this.ParentElementSelector = ParentElementSelector;
-        this.htmlSelector = htmlSelector;
-        this.element = element;
-    }
-}
+// class HtmlSection {
+//     constructor(name, element, htmlSelector = '', ParentElementSelector = '') {
+//         this.name = name;
+//         this.ParentElementSelector = ParentElementSelector;
+//         this.htmlSelector = htmlSelector;
+//         this.element = element;
+//     }
+// }
 
 class HtmlTable {
     constructor(header, body) {
