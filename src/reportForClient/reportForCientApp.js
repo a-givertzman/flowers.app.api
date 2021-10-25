@@ -166,8 +166,7 @@ class ClientBalas {
         const where = [
             {operator: 'where', field: 'id', cond: '=', value: id},
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ], 
-    
+        ];
         this.dataSource.fetchData({where: where}).then(data => {
             console.log('[ClientBalas.render] data:', data);
             let clientAccount = Object.values(data)[0]['account'];
