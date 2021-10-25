@@ -381,29 +381,6 @@ table th:last-child { border-right: solid #5e5e5e  0.1px; }
 /* table td:first-child { border-left: solid #5e5e5e  0.1px; } */
 table td:last-child { border-right: solid #5e5e5e  0.1px; }
 
-/* .id{width: 20px;}
-.client-id{width: 10px;}
-.client-group{width: 10px;}
-.client-name{width: 10px;}
-.client-phone{width: 10px;}
-.client-account{width: 10px;}
-.purchase_content-id{width: 10px;}
-.product-id{width: 10px;}
-.product-group{width: 10px;}
-.product-name{width: 10px;}
-.product-order_quantity{width: 10px;}
-.count{width: 10px;}
-.distributed{width: 10px;}
-.product-primary_price{width: 10px;}
-.product-primary_currency{width: 10px;}
-.purchase_content-sale_price{width: 10px;}
-.purchase_content-sale_currency{width: 10px;}
-.purchase_content-shipping{width: 10px;}
-.cost{width: 10px;}
-.paid{width: 10px;}
-.torefound{width: 10px;}
-.refounded{width: 10px;} */
-
 .purchase-item-title{
     color: var(--dusty-grey-color);
     line-height: 24px;
