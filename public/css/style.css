@@ -288,13 +288,13 @@ header{
     /* width: 100%; */
     font-family: 'Rubik', serif;
     /* padding: 12px 38px; */
-    white-space: nowrap;
+    /* white-space: nowrap; */
     /* border: solid 3px var(--whisper-color); */
     outline: none;
 }
-.search-purchase-select *:focus{
+/* .search-purchase-select *:focus{
     outline: none;
-}
+} */
 .search_term_hilite{
     background-color: #ffc222;
 }
