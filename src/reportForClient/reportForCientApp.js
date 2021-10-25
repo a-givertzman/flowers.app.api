@@ -129,6 +129,26 @@ class HtmlTable {
     }
 }
 
+class ClientBalas {
+    constructor(htmlSelector, dataSource) {
+        console.log('[ClientBalas.constructor]');
+        this.htmlSelector = htmlSelector;
+        this.dataSource = dataSource;
+    }
+    render() {
+        console.log('[ClientBalas.render]');
+        const tbody = document.createElement('tbody');
+        tbody.innerHTML = tbodyHtml.trim();
+        // return this.ordersData.getRows().then(data => {
+        let elem = document.querySelector(htmlSelector);
+        this.dataSource.fetchData().then(data => {
+            console.log('[ClientBalas.render] data:', data);
+            clientAccount = data['account'];
+            elem.innerHTML = `Баланс: ${clientAccount} RUB`;
+        });
+    }
+}
+
 class Selector {
     constructor(htmlSelector, params, dataSource) {
         console.log('[Selector.constructor]');
