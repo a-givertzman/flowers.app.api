@@ -111,7 +111,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         cntentOfPage.clientTransactions.render({id: selectedId});
     });
 
-    $(htmlSelectorOfClientSelect).on('select2:unselect', e => {
+    cntentOfPage.clientSelector.selectr.on('clear', e => {
         cntentOfPage.clientBalans.clear();
         cntentOfPage.clientOrders.clear();
         cntentOfPage.clientTransactions.clear();
