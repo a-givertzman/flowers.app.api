@@ -120,6 +120,7 @@ class ContentOfPage {
 class HtmlTable {
     constructor(parentSelector, header, body) {
         console.log('[HtmlTable.constructor]');
+        this.parentSelector = parentSelector;
         this.header = header;
         this.body = body;
     }
@@ -127,11 +128,9 @@ class HtmlTable {
         console.log('[HtmlTable.render]');
         const thead = this.header.render();
         const tbody = await this.body.render();
-        if (parentSelector) {
-            const elem = document.querySelector(parentSelector);
-        } else {
-            const elem = document.createElement('table');
-        }
+        const elem = this.parentSelector 
+            ? document.querySelector(parentSelector)
+            : document.createElement('table');
         elem.appendChild(thead);
         elem.appendChild(tbody);
         return elem;
