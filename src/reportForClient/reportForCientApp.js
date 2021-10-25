@@ -404,9 +404,9 @@ class HeaderForOrders {
                     <th>Цена закупки</th>
                     <th>Цена</th>
                     <th><span>Транспортные расходы</span></th>
-                    <th><span>Сумма к оплате</span></th>
+                    <th><span>Сумма к<br>оплате</span></th>
                     <th><span>Оплатил</span></th>
-                    <th><span>Сумма к возврату</span></th>
+                    <th><span>Сумма к<br>возврату</span></th>
                     <th><span>Возвращено</span></th>
                 </tr>
             </thead>
