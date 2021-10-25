@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../src/plugins/select2-4.1.0-rc.0/dist/css/select2.min.css">
     <link rel="stylesheet" href="../src/plugins/busy-indicator/busy.css">
     <link rel="stylesheet" href="../src/plugins/selectr/selectr.css">
+    <link rel="stylesheet" href="../src/plugins/tom-select/tom-select.min.css">
     <link rel="stylesheet" href="../public/css/style.css">
     <script>
         function needsToBeBlacklisted(src, type) {
@@ -87,6 +88,7 @@
     <!-- <script src="../src/renderClientReport.js"></script> -->
     <script src="../src/plugins/jquery/jquery-3.6.0.js"></script>
     <script src="../src/plugins/selectr/selectr.js"></script>
+    <script src="../src/plugins/tom-select/tom-select.complete.js"></script>
     <script src="../src/plugins/busy-indicator/busy.js"></script>
     <script src="../src/plugins/select2-4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="../src/reportForClient/reportForCientApp.js"></script>

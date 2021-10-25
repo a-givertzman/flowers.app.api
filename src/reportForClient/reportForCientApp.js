@@ -193,15 +193,14 @@ class Selector {
         this.params = params;
         this.dataSource = dataSource;
         this.element = document.querySelector(this.htmlSelector);
-        this.selectr = new Selectr(
+        this.selectr = new TomSelect(
             this.element,
             {
                 placeholder: 'Найди себя',//this.params.placeholder,
-                multiple: false,
-                width: '100%', // need to override the changed default
-                searchable: true,
-                customClass: 'purchase-selector-search-selectr',
-                nativeDropdown: true,
+                // multiple: false,
+                // width: '100%', // need to override the changed default
+                // searchable: true,
+                // customClass: 'purchase-selector-search-selectr',
             }
         );
     }
@@ -211,9 +210,9 @@ class Selector {
             $(this.htmlSelector).val(null).trigger('change');
             for(var key in data) {
                 let item = data[key];
-                this.selectr.add({
-                    value: item.id,
-                    text: item.id + ' | ' + item.name
+                this.selectr.addItem({
+                    id: item.id,
+                    title: item.id + ' | ' + item.name
                 });
             }
         });
