@@ -34,25 +34,23 @@ const mySqlParamsForOrders = {
     limit: 0,
 }
 
+const htmlSelectorOfClientBalans = '#client-account';
+const htmlSelectorOfClientSelect = 'select.search-purchase-select';
+
+
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-
-
-    // const reportForClientContainerElem = document.querySelector('.purchase-selector .container');
-    // const reportForClientElem = document.createElement('div');
-    // reportForClientContainerElem.appendChild(reportForClientElem);
-
     const cntentOfPage = new ContentOfPage([
         {
             name: 'clientBalans',
             obj: new ClientBalas(
-                '#client-account',
+                htmlSelectorOfClientBalans,
                 new ApiRequest(mySqlParamsForClientBalans)
             ), 
         },
         {
             name: 'clientSelector',
             obj: new Selector(
-                'select.search-purchase-select',
+                htmlSelectorOfClientSelect,
                 {placeholder: "Найди себя"},
                 new ApiRequest(mySqlParamsForClientList)
             )
@@ -95,7 +93,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         // баланс клиента
         // var clientAccount = data[selectedId].account;
         // document.querySelector('#client-account').innerHTML = `Баланс: ${clientAccount} RUB`;
-        reportForClient.render();
+        cntentOfPage.clientOrders.render();
     });
 
     $('.search-purchase-select').on('select2:unselect', e => {
