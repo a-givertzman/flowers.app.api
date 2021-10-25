@@ -104,7 +104,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     $(htmlSelectorOfClientSelect).on('select2:select', e => {
         console.log('selection id:', e.params.data);
         
-        var selectedId = e.params.data.id;
+        const selectedId = e.params.data.id;
         
         cntentOfPage.clientBalans.render({id: selectedId});
         cntentOfPage.clientOrders.render({id: selectedId});
@@ -143,7 +143,7 @@ class HtmlTable {
     async render(params = {}) {
         console.log('[HtmlTable.render]');
         const thead = this.header.render();
-        const tbody = await this.body.render();
+        const tbody = await this.body.render(params);
         const elem = this.parentSelector 
             ? document.querySelector(this.parentSelector)
             : document.createElement('table');
