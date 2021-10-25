@@ -11,6 +11,15 @@ const mySqlParamsForClientBalans = {
     ], 
     limit: 0,
 };
+const mySqlParamsForClientList = {
+    url: domainPath + 'getData.php',
+    tableName: 'client', 
+    keys: ['*'], 
+    orderBy: 'id', 
+    order: 'ASC', 
+    where: [{operator: 'where', field: 'deleted', cond: 'is null', value: null},], 
+    limit: 0,
+}
 const mySqlParamsForOrders = {
     url: 'getView.php',
     tableName: 'purchaseMemberView', 
@@ -44,7 +53,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             name: 'clientSelector',
             obj: new Selector(
                 'select.search-purchase-select',
-                {placeholder: "Найди себя"}
+                {placeholder: "Найди себя"},
+                new ApiRequest(mySqlParamsForClientList)
             )
         },
         {
