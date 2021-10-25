@@ -374,6 +374,7 @@ table td{
     text-align: center;
     vertical-align: middle;
     border-left: solid #5e5e5e  0.1px;
+    padding: 1px 3px;
 }
 /* table th:first-child { border-left: solid #5e5e5e  0.1px; } */
 table th:last-child { border-right: solid #5e5e5e  0.1px; }

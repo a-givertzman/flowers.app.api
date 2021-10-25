@@ -311,7 +311,7 @@ class HeaderForTransactions {
                     <th>Закупка</th>
                     <th>Товар</th>
                     <th>Комментарий</th>
-                    <th><span>Баланс после операции</span></th>
+                    <th><span>Баланс после<br>операции</span></th>
                 </tr>
             </thead>
         `;
