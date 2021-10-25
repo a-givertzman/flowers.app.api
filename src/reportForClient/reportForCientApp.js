@@ -138,9 +138,6 @@ class ClientBalas {
     }
     render() {
         console.log('[ClientBalas.render]');
-        const tbody = document.createElement('tbody');
-        tbody.innerHTML = tbodyHtml.trim();
-        // return this.ordersData.getRows().then(data => {
         let elem = document.querySelector(htmlSelector);
         this.dataSource.fetchData().then(data => {
             console.log('[ClientBalas.render] data:', data);
