@@ -18,3 +18,9 @@ if ($_GET['url'] == 'client-report') {
     exit;
 }
 
+if ($_GET['url'] == 'get-data') {
+    $html = require_once './getData.php';
+    echo $html;
+    exit;
+}
+
