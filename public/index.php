@@ -7,7 +7,7 @@ plog('_SERVER: ', $_SERVER);
 plog("url:", $_GET['url']);
 plog("url:", $_POST['url']);
 
-$query = trim($_SERVER['QUERY_STRING'], '/');
+$query = trim($_SERVER['REQUEST_URI'], '/');
 plog('query:', $query);
 
 if (empty($_GET) || $_GET['url'] == '') {
@@ -44,4 +44,4 @@ if ($query == 'get-view') {
     exit;
 }
 
-plog("-> router.php");
+plog("router.php ->");
