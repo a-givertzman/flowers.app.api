@@ -86,7 +86,6 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
 
     $('.search-purchase-select').on('select2:select', e => {
         console.log('selection id:', e.params.data);
-        clearTablesContent(['table.purchase-items', 'table.transaction-items']);
         
         var selectedId = e.params.data.id;
         
