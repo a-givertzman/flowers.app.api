@@ -1,5 +1,6 @@
 "use strict";
 
+// константы для доступа к API
 const mySqlParamsForClientBalans = {
     url: 'getData.php',
     tableName: 'client', 
@@ -47,11 +48,14 @@ const mySqlParamsForTransactions = {
     ], 
     limit: 0,
 }
-
+// Константы для поиска элементов в DOM
 const htmlSelectorOfClientBalans = '#client-account';
 const htmlSelectorOfClientSelect = 'select.client-select';
 const htmlSelectorOfClientOrders = 'table.purchase-items';
 const htmlSelectorOfClientTransactions = 'table.transaction-items';
+
+
+
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     const cntentOfPage = new ContentOfPage([
@@ -125,7 +129,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
 
 
 
-
+// Классы
 class ContentOfPage {
     constructor(arrayOfHmlSections = []) {
         console.log('[ContentOfPage.constructor]');
