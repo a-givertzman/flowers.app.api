@@ -196,11 +196,12 @@ class Selector {
         this.selectr = new Selectr(
             this.element,
             {
-                placeholder: this.params.placeholder,
+                placeholder: 'Найди себя',//this.params.placeholder,
                 multiple: false,
                 width: '100%', // need to override the changed default
                 searchable: true,
                 customClass: 'purchase-selector-search-selectr',
+                nativeDropdown: true,
             }
         );
     }
@@ -467,7 +468,7 @@ class ApiRequest {
             alert('Ошибка сервера', errDump);
             return {};
         }
-        if (responseCode == 200) {
+        if (responseCode >= 200 && responseCode < 400) {
             var data = parsedData.data;
             return data;
         } else {

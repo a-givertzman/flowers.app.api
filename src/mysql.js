@@ -124,7 +124,7 @@ async function apiRequest(args) {
         return {};
     }
     
-    if (responseCode == 200) {
+    if (responseCode >= 200 && responseCode < 400) {
         var data = parsedData.data;
         // console.log('data: ', data);
         return data;
