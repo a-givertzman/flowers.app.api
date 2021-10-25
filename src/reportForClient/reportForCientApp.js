@@ -2,7 +2,7 @@
 
 // константы для доступа к API
 const mySqlParamsForClientBalans = {
-    url: 'getData.php',
+    url: 'getData',
     tableName: 'client', 
     keys: ['*'], 
     orderBy: 'id', 
@@ -14,7 +14,7 @@ const mySqlParamsForClientBalans = {
     limit: 0,
 };
 const mySqlParamsForClientSelect = {
-    url: 'getData.php',
+    url: 'getData',
     tableName: 'client', 
     keys: ['*'], 
     orderBy: 'id', 
@@ -23,7 +23,7 @@ const mySqlParamsForClientSelect = {
     limit: 0,
 }
 const mySqlParamsForOrders = {
-    url: 'getView.php',
+    url: 'getView',
     tableName: 'purchaseMemberView', 
     params: '0', 
     keys: ['*'],
@@ -36,7 +36,7 @@ const mySqlParamsForOrders = {
     limit: 0,
 }
 const mySqlParamsForTransactions = {
-    url: 'getView.php',
+    url: 'getView',
     tableName: 'clientTransactionView', 
     params: '0', 
     keys: ['*'],
