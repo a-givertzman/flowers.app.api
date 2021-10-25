@@ -36,7 +36,8 @@ const mySqlParamsForOrders = {
 
 const htmlSelectorOfClientBalans = '#client-account';
 const htmlSelectorOfClientSelect = 'select.search-purchase-select';
-
+const htmlSelectorOfClientOrders = 'table.purchase-items';
+const htmlSelectorOfClientTransactions = 'table.transaction-items';
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     const cntentOfPage = new ContentOfPage([
@@ -58,6 +59,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         {
             name: 'clientOrders',
             obj: new HtmlTable(
+                htmlSelectorOfClientOrders,
                 new HeaderForOrders({
                     'purchase/id': '???',
                     'purchase/name': 'Пока нет названия закупки'
@@ -70,6 +72,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         // {
             // 'clientsTransactions',
             // new HtmlTable(
+            //     htmlSelectorOfClientTransactions,
             //     new HeaderForTransactions({
             //         'client/id': '???',
             //         'client/name': 'Пока нет имени клиента'
@@ -84,18 +87,15 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     cntentOfPage.clientSelector.render();
 
 
-    $('.search-purchase-select').on('select2:select', e => {
+    $(htmlSelectorOfClientSelect).on('select2:select', e => {
         console.log('selection id:', e.params.data);
         
         var selectedId = e.params.data.id;
         
-        // баланс клиента
-        // var clientAccount = data[selectedId].account;
-        // document.querySelector('#client-account').innerHTML = `Баланс: ${clientAccount} RUB`;
         cntentOfPage.clientOrders.render();
     });
 
-    $('.search-purchase-select').on('select2:unselect', e => {
+    $(htmlSelectorOfClientSelect).on('select2:unselect', e => {
         clearTablesContent(['table.purchase-items', 'table.transaction-items']);
     });
 
@@ -118,7 +118,7 @@ class ContentOfPage {
 }
 
 class HtmlTable {
-    constructor(header, body) {
+    constructor(parentSelector, header, body) {
         console.log('[HtmlTable.constructor]');
         this.header = header;
         this.body = body;
@@ -127,7 +127,11 @@ class HtmlTable {
         console.log('[HtmlTable.render]');
         const thead = this.header.render();
         const tbody = await this.body.render();
-        const elem = document.createElement('table');
+        if (parentSelector) {
+            const elem = document.querySelector(parentSelector);
+        } else {
+            const elem = document.createElement('table');
+        }
         elem.appendChild(thead);
         elem.appendChild(tbody);
         return elem;
