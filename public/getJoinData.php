@@ -13,8 +13,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 require_once './libPHP/plog.php';
 
-
-plog_clear();
+// plog_clear();
+plog("====================================");
 plog("-> getJoinData.php");
 
 // загружаем настройки и

@@ -15,7 +15,8 @@ require_once './libPHP/plog.php';
 
 
 
-plog_clear();
+// plog_clear();
+plog("====================================");
 plog("-> setData.php");
 
 // загружаем настройки и

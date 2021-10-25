@@ -18,7 +18,8 @@ require_once './libPHP/plog.php';
 
 
 
-plog_clear();
+// plog_clear();
+plog("====================================");
 plog("-> getView.php");
 
 // загружаем настройки и

@@ -13,8 +13,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 require_once './libPHP/plog.php';
 
-
-plog("");
+// plog_clear();
+plog("====================================");
 plog("-> getMaxId.php");
 
 // загружаем настройки и

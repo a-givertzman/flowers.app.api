@@ -16,7 +16,8 @@ require_once './libPHP/plog.php';
 
 // cors();
 
-plog_clear();
+// plog_clear();
+plog("====================================");
 plog("-> getData.php");
 
 // загружаем настройки и
