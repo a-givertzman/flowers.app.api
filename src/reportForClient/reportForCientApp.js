@@ -34,6 +34,7 @@ const mySqlParamsForOrders = {
     limit: 0,
 }
 const mySqlParamsForTransactions = {
+    url: 'getView.php',
     tableName: 'purchaseMemberView', 
     params: '0', 
     keys: ['*'],
