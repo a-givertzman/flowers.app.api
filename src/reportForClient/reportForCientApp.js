@@ -300,8 +300,7 @@ class BodyForTransactions {
     }
     render() {
         console.log('[BodyForTransactions.render]');
-        let row = this.row;
-        var tbodyHtml = `
+        const tbodyHtml = `
             <tbody>
             </tbody>
         `;
