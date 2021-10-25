@@ -43,7 +43,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         {
             name: 'clientSelector',
             obj: new Selector(
-                'select .search-purchase-select',
+                'select.search-purchase-select',
                 {placeholder: "Найди себя"}
             )
         },
@@ -72,7 +72,9 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     ]);
     
     console.log('cntentOfPage', cntentOfPage);
-    cntentOfPage['clientBalans'].render();
+    cntentOfPage.clientBalans.render();
+    cntentOfPage.clientSelector.render();
+
 
     $('.search-purchase-select').on('select2:select', e => {
         console.log('selection id:', e.params.data);
@@ -161,10 +163,10 @@ class Selector {
     render() {
         this.dataSource.fetchData().then(data => {
             console.log('[Selector.render] data:', data);
-            $('.search-purchase-select').val(null).trigger('change');
+            $(this.htmlSelector).val(null).trigger('change');
             for(var key in data) {
                 let item = data[key];
-                $('.search-purchase-select')
+                $(this.htmlSelector)
                     .append(new Option(item.id + ' | ' + item.name, item.id, false))
                     .trigger('change');
             }
