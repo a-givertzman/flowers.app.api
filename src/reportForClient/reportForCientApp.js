@@ -146,7 +146,7 @@ class ClientBalas {
         console.log('[ClientBalas.render]');
         this.dataSource.fetchData().then(data => {
             console.log('[ClientBalas.render] data:', data);
-            let clientAccount = [...data][0]['account'];
+            let clientAccount = Object.values(data)[0]['account'];
             this.elem.innerHTML = `Баланс: ${clientAccount} RUB`;
         });
     }
