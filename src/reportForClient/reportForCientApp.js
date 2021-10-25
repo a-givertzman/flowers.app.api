@@ -1,4 +1,7 @@
 "use strict";
+
+const selectr = require("../plugins/selectr/selectr");
+
 const mySqlParamsForClientBalans = {
     url: 'getData.php',
     tableName: 'client', 
@@ -192,14 +195,23 @@ class Selector {
         this.htmlSelector = htmlSelector;
         this.params = params;
         this.dataSource = dataSource;
-        $(this.htmlSelector).select2({
-            placeholder: this.params.placeholder,
-            width: '100%', // need to override the changed default
-            multiple: false,
-            allowClear: true,
-            matcher: select2match,
-            sorter: select2sort,
-        });
+        this.element = document.querySelector(this.htmlSelector);
+        this.selectr = new Selectr(
+            this.element,
+            {
+                placeholder: this.params.placeholder,
+                multiple: false,
+                width: '100%', // need to override the changed default
+            }
+        );
+        // $(this.htmlSelector).select2({
+        //     placeholder: this.params.placeholder,
+        //     width: '100%', // need to override the changed default
+        //     multiple: false,
+        //     allowClear: true,
+        //     matcher: select2match,
+        //     sorter: select2sort,
+        // });
     }
     render() {
         this.dataSource.fetchData().then(data => {
@@ -207,9 +219,13 @@ class Selector {
             $(this.htmlSelector).val(null).trigger('change');
             for(var key in data) {
                 let item = data[key];
-                $(this.htmlSelector)
-                    .append(new Option(item.id + ' | ' + item.name, item.id, false))
-                    .trigger('change');
+                this.selectr.add({
+                    value: item.id,
+                    text: item.id + ' | ' + item.name
+                });
+                // $(this.htmlSelector)
+                //     .append(new Option(item.id + ' | ' + item.name, item.id, false))
+                //     .trigger('change');
             }
         });
         return 0;
