@@ -156,7 +156,7 @@ class HtmlTable {
     }
     clear() {
         const elem = document.querySelector(this.parentSelector);
-        elem?.innerHTML = '';
+        if (elem) elem.innerHTML = '';
     }
 }
 
