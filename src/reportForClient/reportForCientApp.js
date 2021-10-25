@@ -1,35 +1,36 @@
 "use strict";
+const mySqlParamsForClientBalans = {
+    url: 'getData.php',
+    tableName: 'client', 
+    keys: ['*'], 
+    orderBy: 'id', 
+    order: 'ASC', 
+    where: [
+        {operator: 'where', field: 'id', cond: '=', value: 7},
+        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+    ], 
+    limit: 0,
+};
+const mySqlParamsForOrders = {
+    url: 'getView.php',
+    tableName: 'purchaseMemberView', 
+    params: '0', 
+    keys: ['*'],
+    orderBy: 'purchase/id', 
+    order: 'ASC', 
+    where: [
+        {operator: 'where', field: 'client/id', cond: '=', value: 7},
+        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+    ], 
+    limit: 0,
+}
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-    const mySqlParamsForClientBalans = {
-        url: 'getData.php',
-        tableName: 'client', 
-        keys: ['*'], 
-        orderBy: 'id', 
-        order: 'ASC', 
-        where: [
-            {operator: 'where', field: 'id', cond: '=', value: 7},
-            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ], 
-        limit: 0,
-    };
-    const mySqlParamsForOrders = {
-        url: 'getView.php',
-        tableName: 'purchaseMemberView', 
-        params: '0', 
-        keys: ['*'],
-        orderBy: 'purchase/id', 
-        order: 'ASC', 
-        where: [
-            {operator: 'where', field: 'client/id', cond: '=', value: 7},
-            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ], 
-        limit: 0,
-    }
 
-    const reportForClientContainerElem = document.querySelector('.purchase-selector .container');
-    const reportForClientElem = document.createElement('div');
-    reportForClientContainerElem.appendChild(reportForClientElem);
+
+    // const reportForClientContainerElem = document.querySelector('.purchase-selector .container');
+    // const reportForClientElem = document.createElement('div');
+    // reportForClientContainerElem.appendChild(reportForClientElem);
 
     const cntentOfPage = new ContentOfPage([
         new HtmlSection(
