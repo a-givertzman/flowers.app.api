@@ -327,12 +327,13 @@ header{
 
 /* PUTCHASE_TABLE */
 table{
+    display: block;
+    overflow-x: auto;
     table-layout: auto;
     width: 100%;
     border: none; 
     border-collapse: collapse;
     margin-top: 20px;
-    overflow-x: auto;
 }
 table tr{
     border-top: solid #5e5e5e  0.1px;
