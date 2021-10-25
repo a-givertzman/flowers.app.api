@@ -277,10 +277,11 @@ header{
     font-size: 16px;    
 }
 
-/* .purchase-selector-search{ */
+.client-select-cover{
     /* letter-spacing: 0.1px; */
-/* } */
-.search-purchase-select{
+    border: none;
+}
+.client-select{
     /* height: 24; */
     margin: 0;
     line-height: 18px;
@@ -292,7 +293,7 @@ header{
     /* border: solid 3px var(--whisper-color); */
     outline: none;
 }
-/* .search-purchase-select *:focus{
+/* .client-select:focus{
     outline: none;
 } */
 .search_term_hilite{

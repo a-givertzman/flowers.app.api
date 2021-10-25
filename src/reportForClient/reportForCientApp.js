@@ -49,7 +49,7 @@ const mySqlParamsForTransactions = {
 }
 
 const htmlSelectorOfClientBalans = '#client-account';
-const htmlSelectorOfClientSelect = 'select.search-purchase-select';
+const htmlSelectorOfClientSelect = 'select.client-select';
 const htmlSelectorOfClientOrders = 'table.purchase-items';
 const htmlSelectorOfClientTransactions = 'table.transaction-items';
 
@@ -117,7 +117,6 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         cntentOfPage.clientOrders.clear();
         cntentOfPage.clientTransactions.clear();
     });
-
 });
 
 class ContentOfPage {
@@ -206,10 +205,6 @@ class Selector {
                 valueField: 'id',
                 labelField: 'title',
                 searchField: ['id', 'title'],
-                // multiple: false,
-                // width: '100%', // need to override the changed default
-                // searchable: true,
-                // customClass: 'purchase-selector-search-selectr',
             }
         );
     }
