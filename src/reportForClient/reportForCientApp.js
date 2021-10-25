@@ -33,23 +33,23 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     // reportForClientContainerElem.appendChild(reportForClientElem);
 
     const cntentOfPage = new ContentOfPage([
-        // new HtmlSection(
-            'clientBalans',
-            new ClientBalas(
+        {
+            name: 'clientBalans',
+            obj: new ClientBalas(
                 '#client-account',
                 new ApiRequest(mySqlParamsForClientBalans)
             ), 
-        // ),
-        new HtmlSection(
-            'clientSelector',
-            new Selector(
+        },
+        {
+            name: 'clientSelector',
+            obj: new Selector(
                 'select .search-purchase-select',
                 {placeholder: "Найди себя"}
             )
-        ),
-        new HtmlSection(
-            'clientOrders',
-            new HtmlTable(
+        },
+        {
+            name: 'clientOrders',
+            obj: new HtmlTable(
                 new HeaderForOrders({
                     'purchase/id': '???',
                     'purchase/name': 'Пока нет названия закупки'
@@ -58,8 +58,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                     new ApiRequest(mySqlParamsForOrders)
                 )
             ),
-        ),
-        // new HtmlSection(
+        },
+        // {
             // 'clientsTransactions',
             // new HtmlTable(
             //     new HeaderForTransactions({
@@ -68,11 +68,11 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             //     }),
             //     new BodyForTransactions()
             // )
-        // ),
+        // },
     ]);
     
     console.log('cntentOfPage', cntentOfPage);
-    // cntentOfPage['clientBalans'].element.render();
+    cntentOfPage['clientBalans'].render();
 
     $('.search-purchase-select').on('select2:select', e => {
         console.log('selection id:', e.params.data);
@@ -94,28 +94,19 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
 
 class ContentOfPage {
     constructor(arrayOfHmlSections = []) {
-        console.log('[BodyOfPage.constructor]');
+        console.log('[ContentOfPage.constructor]');
         arrayOfHmlSections.forEach(htmlSection => {
-            this[htmlSection.name] = htmlSection;
+            this[htmlSection.name] = htmlSection.obj;
         });
     }
     render() {
-        console.log('[BodyOfPage.render]');
+        console.log('[ContentOfPage.render]');
         this.arrayOfHmlSections.forEach(htmlSection => {
             htmlSection.render();
         });
         return 0;
     }
 }
-
-// class HtmlSection {
-//     constructor(name, element, htmlSelector = '', ParentElementSelector = '') {
-//         this.name = name;
-//         this.ParentElementSelector = ParentElementSelector;
-//         this.htmlSelector = htmlSelector;
-//         this.element = element;
-//     }
-// }
 
 class HtmlTable {
     constructor(header, body) {
