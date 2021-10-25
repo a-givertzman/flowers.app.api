@@ -112,7 +112,9 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     });
 
     $(htmlSelectorOfClientSelect).on('select2:unselect', e => {
-        clearTablesContent(['table.purchase-items', 'table.transaction-items']);
+        cntentOfPage.clientBalans.clear();
+        cntentOfPage.clientOrders.clear();
+        cntentOfPage.clientTransactions.clear();
     });
 
 });
@@ -152,6 +154,10 @@ class HtmlTable {
         elem.appendChild(tbody);
         return elem;
     }
+    clear() {
+        const elem = document.querySelector(this.parentSelector);
+        elem?.innerHTML = '';
+    }
 }
 
 class ClientBalas {
@@ -160,7 +166,7 @@ class ClientBalas {
         this.htmlSelector = htmlSelector;
         this.dataSource = dataSource;
         this.elem = document.querySelector(this.htmlSelector);
-        this.elem.innerHTML = `Баланс: -.-- RUB`;
+        if (this.elem) this.elem.innerHTML = `Баланс: -.-- RUB`;
     }
     render(params) {
         console.log('[ClientBalas.render]');
@@ -173,6 +179,10 @@ class ClientBalas {
             let clientAccount = Object.values(data)[0]['account'];
             this.elem.innerHTML = `Баланс: ${clientAccount} RUB`;
         });
+    }
+    clear() {
+        this.elem = document.querySelector(this.htmlSelector);
+        if (this.elem) this.elem.innerHTML = `Баланс: -.-- RUB`;
     }
 }
 
