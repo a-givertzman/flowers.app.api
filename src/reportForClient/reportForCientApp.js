@@ -106,9 +106,9 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         
         var selectedId = e.params.data.id;
         
-        cntentOfPage.clientBalans.render(selectedId);
-        cntentOfPage.clientOrders.render(selectedId);
-        cntentOfPage.clientTransactions.render(selectedId);
+        cntentOfPage.clientBalans.render({id: selectedId});
+        cntentOfPage.clientOrders.render({id: selectedId});
+        cntentOfPage.clientTransactions.render({id: selectedId});
     });
 
     $(htmlSelectorOfClientSelect).on('select2:unselect', e => {
