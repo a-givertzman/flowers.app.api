@@ -98,17 +98,17 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     ]);
     
     console.log('cntentOfPage', cntentOfPage);
-    cntentOfPage.clientBalans.render();
     cntentOfPage.clientSelector.render();
-
-
+    
+    
     $(htmlSelectorOfClientSelect).on('select2:select', e => {
         console.log('selection id:', e.params.data);
         
         var selectedId = e.params.data.id;
         
-        cntentOfPage.clientOrders.render();
-        cntentOfPage.clientTransactions.render();
+        cntentOfPage.clientBalans.render(selectedId);
+        cntentOfPage.clientOrders.render(selectedId);
+        cntentOfPage.clientTransactions.render(selectedId);
     });
 
     $(htmlSelectorOfClientSelect).on('select2:unselect', e => {
@@ -161,9 +161,14 @@ class ClientBalas {
         this.elem = document.querySelector(this.htmlSelector);
         this.elem.innerHTML = `Баланс: -.-- RUB`;
     }
-    render() {
+    render(id) {
         console.log('[ClientBalas.render]');
-        this.dataSource.fetchData().then(data => {
+        const where = [
+            {operator: 'where', field: 'id', cond: '=', value: id},
+            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+        ], 
+    
+        this.dataSource.fetchData({where: where}).then(data => {
             console.log('[ClientBalas.render] data:', data);
             let clientAccount = Object.values(data)[0]['account'];
             this.elem.innerHTML = `Баланс: ${clientAccount} RUB`;
@@ -392,9 +397,12 @@ class ApiRequest {
         this.mySqlParams = mySqlParams;
     }
 
-    fetchData() {
+    fetchData(newParams) {
         console.log('[ApiRequest.fetch]');
         const args = this.mySqlParams;
+        newParams.forEach((param, name) => {
+            args[name] = param[name];
+        })
         console.log('args:', args);
         const body = this.prepareFormData(args);
         const options = this.prepareFetchOptions(body);
@@ -520,32 +528,3 @@ function select2match(params, data) {
     // Return `null` if the term should not be displayed
     return null;
 }
-
-
-
-// class OrdersData {
-//     constructor(sqlQuery) {
-//         console.log('[OrdersData.constructor]');
-//         this.sqlQuery = sqlQuery;
-//     }
-//     getRows() {
-//         console.log('[OrdersData.getRows]');
-//         return this.sqlQuery.exequte();//.then(data => {
-//             // return data
-//         // });
-//     }
-// }
-
-// class SqlQuery {
-//     constructor(apiRquest) {
-//         console.log('[SqlQuery.constructor]');
-//         this.apiRquest = apiRquest;
-//     }
-//     exequte() {
-//         console.log('[SqlQuery.exequte]');
-//         return this.apiRquest.fetchData()//.then(data => {
-//             // });
-//             // console.log('data: ', data);
-//             // return data;
-//     }
-// }
