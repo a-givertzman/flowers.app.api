@@ -396,12 +396,12 @@ class ApiRequest {
         this.mySqlParams = mySqlParams;
     }
 
-    fetchData(newParams) {
+    fetchData(newParams = {}) {
         console.log('[ApiRequest.fetch]');
         const args = this.mySqlParams;
-        newParams.forEach((param, name) => {
-            args[name] = param[name];
-        })
+        for (var key in newParams) {
+            args[key] = newParams[key];
+        }
         console.log('args:', args);
         const body = this.prepareFormData(args);
         const options = this.prepareFetchOptions(body);
