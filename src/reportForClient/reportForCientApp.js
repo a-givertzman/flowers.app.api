@@ -147,6 +147,7 @@ class HtmlTable {
         const elem = this.parentSelector 
             ? document.querySelector(this.parentSelector)
             : document.createElement('table');
+        elem.innerHTML = '';
         elem.appendChild(thead);
         elem.appendChild(tbody);
         return elem;
