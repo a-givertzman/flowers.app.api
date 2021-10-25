@@ -35,10 +35,10 @@ const mySqlParamsForOrders = {
 }
 const mySqlParamsForTransactions = {
     url: 'getView.php',
-    tableName: 'purchaseMemberView', 
+    tableName: 'clientTransactionView', 
     params: '0', 
     keys: ['*'],
-    orderBy: 'purchase/id', 
+    orderBy: 'date', 
     order: 'ASC', 
     where: [
         {operator: 'where', field: 'client/id', cond: '=', value: 7},
