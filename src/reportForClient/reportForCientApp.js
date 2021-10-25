@@ -103,9 +103,9 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.clientSelector.render();
     
-    cntentOfPage.clientSelector.selectr.on('change', option => {
-        console.log('selection option:', option);
-        const selectedId = option.value;
+    cntentOfPage.clientSelector.selectr.on('change', id => {
+        console.log('selection option:', id);
+        const selectedId = id;
         cntentOfPage.clientBalans.render({id: selectedId});
         cntentOfPage.clientOrders.render({id: selectedId});
         cntentOfPage.clientTransactions.render({id: selectedId});
