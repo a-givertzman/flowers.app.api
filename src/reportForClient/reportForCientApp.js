@@ -200,6 +200,7 @@ class Selector {
                 multiple: false,
                 width: '100%', // need to override the changed default
                 searchable: true,
+                customClass: 'purchase-selector-search-selectr',
             }
         );
     }
