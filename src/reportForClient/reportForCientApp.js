@@ -36,7 +36,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         new HtmlSection(
             'clientBalans',
             new ClientBalas(
-                '.client-account',
+                '#client-account',
                 new ApiRequest(mySqlParamsForClientBalans)
             ), 
         ),
