@@ -413,12 +413,12 @@ class ApiRequest {
                         return data;
                     })
                     .catch(error => {
-                        console.log('error:', error);
+                        console.error('error:', error);
                         return {}
                     });
             })
             .catch(error => {
-                console.log('error:', error);
+                console.error('error:', error);
                 return {};
             });
     }
