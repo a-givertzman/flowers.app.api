@@ -156,7 +156,7 @@ class HtmlTable {
     }
     async render(params = {}) {
         console.log('[HtmlTable.render]');
-        this.busy?.show();
+        this.busy.show();
         const thead = this.header.render();
         const tbody = await this.body.render(params);
         const elem = this.parentSelector 
@@ -165,7 +165,7 @@ class HtmlTable {
         elem.innerHTML = '';
         elem.appendChild(thead);
         elem.appendChild(tbody);
-        this.busy?.hide();
+        this.busy.hide();
         return elem;
     }
     clear() {
