@@ -119,6 +119,11 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     });
 });
 
+
+
+
+
+
 class ContentOfPage {
     constructor(arrayOfHmlSections = []) {
         console.log('[ContentOfPage.constructor]');
@@ -205,6 +210,7 @@ class Selector {
                 valueField: 'id',
                 labelField: 'title',
                 searchField: ['id', 'title'],
+                maxOptions: 1000,
             }
         );
     }
