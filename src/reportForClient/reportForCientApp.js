@@ -68,7 +68,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             name: 'clientSelector',
             obj: new Selector(
                 htmlSelectorOfClientSelect,
-                {placeholder: "Найди себя"},
+                {placeholder: 'Найди себя'},
                 new ApiRequest(mySqlParamsForClientSelect)
             )
         },
