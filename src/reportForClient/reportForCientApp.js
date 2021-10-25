@@ -1,6 +1,16 @@
 "use strict";
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
+    const where = [{operator: 'where', field: 'deleted', cond: 'is null', value: null},];
+    const mySqlParamsForClientBalans = {
+        tableName: 'client', 
+        keys: ['*'], 
+        orderBy: 'id', 
+        order: 'ASC', 
+        where: where, 
+        limit: 0,
+        url: domainPath + 'getData.php',
+    };
     const where = [
         {operator: 'where', field: 'client/id', cond: '=', value: 7},
         {operator: 'and', field: 'deleted', cond: 'is null', value: null},
@@ -20,32 +30,225 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     const reportForClientElem = document.createElement('div');
     reportForClientContainerElem.appendChild(reportForClientElem);
 
-    const reportForClient = new ReportForClient(
-        reportForClientElem,
-        new Selector(
-            '.search-purchase-select',
-            "Найди себя"
+    const cntentOfPage = new ContentOfPage([
+        new HtmlSection(
+            'clientBalans',
+            new ClientBalas(
+                '.client-account',
+                new ApiRequest(mySqlParamsForClientBalans)
+            ), 
         ),
-        new HtmlTable(
-            new HeaderForOrders({
-                'purchase/id': '???',
-                'purchase/name': 'Пока нет названия закупки'
-            }),
-            new BodyForOrders(
-                new ApiRequest(mySqlParamsForOrders)
+        new HtmlSection(
+            'clientSelector',
+            new Selector(
+                'select .search-purchase-select',
+                {placeholder: "Найди себя"}
             )
         ),
-        // new HtmlTable(
-        //     new HeaderForTransactions({
-        //         'client/id': '???',
-        //         'client/name': 'Пока нет имени клиента'
-        //     }),
-        //     new BodyForTransactions()
-        // )
-    );
-    reportForClient.render();
+        new HtmlSection(
+            'clientOrders',
+            new HtmlTable(
+                new HeaderForOrders({
+                    'purchase/id': '???',
+                    'purchase/name': 'Пока нет названия закупки'
+                }),
+                new BodyForOrders(
+                    new ApiRequest(mySqlParamsForOrders)
+                )
+            ),
+        ),
+        // new HtmlSection(
+            // 'clientsTransactions',
+            // new HtmlTable(
+            //     new HeaderForTransactions({
+            //         'client/id': '???',
+            //         'client/name': 'Пока нет имени клиента'
+            //     }),
+            //     new BodyForTransactions()
+            // )
+        // ),
+    ]);
+    
+    cntentOfPagecntentOfPage.clientBalans.render();
+
+    $('.search-purchase-select').on('select2:select', e => {
+        console.log('selection id:', e.params.data);
+        clearTablesContent(['table.purchase-items', 'table.transaction-items']);
+        
+        var selectedId = e.params.data.id;
+        
+        // баланс клиента
+        // var clientAccount = data[selectedId].account;
+        // document.querySelector('#client-account').innerHTML = `Баланс: ${clientAccount} RUB`;
+        reportForClient.render();
+    });
+
+    $('.search-purchase-select').on('select2:unselect', e => {
+        clearTablesContent(['table.purchase-items', 'table.transaction-items']);
+    });
+
 });
 
+class ContentOfPage {
+    constructor(arrayOfHmlSections = []) {
+        console.log('[BodyOfPage.constructor]');
+        arrayOfHmlSections.forEach(htmlSection => {
+            this[htmlSection.name] = htmlSection;
+        });
+    }
+    render() {
+        console.log('[BodyOfPage.render]');
+        this.arrayOfHmlSections.forEach(htmlSection => {
+            htmlSection.render();
+        });
+        return 0;
+    }
+}
+
+class HtmlSection {
+    constructor(name, element, htmlSelector = '', ParentElementSelector = '') {
+        this.name = name;
+        this.ParentElementSelector = ParentElementSelector;
+        this.htmlSelector = htmlSelector;
+        this.element = element;
+    }
+}
+
+class HtmlTable {
+    constructor(header, body) {
+        console.log('[HtmlTable.constructor]');
+        this.header = header;
+        this.body = body;
+    }
+    async render() {
+        console.log('[HtmlTable.render]');
+        const thead = this.header.render();
+        const tbody = await this.body.render();
+        const elem = document.createElement('table');
+        elem.appendChild(thead);
+        elem.appendChild(tbody);
+        return elem;
+    }
+}
+
+class Selector {
+    constructor(htmlSelector, params, dataSource) {
+        console.log('[Selector.constructor]');
+        this.htmlSelector = htmlSelector;
+        this.params = params;
+        this.dataSource = dataSource;
+        $(this.htmlSelector).select2({
+            placeholder: this.params.placeholder,
+            width: '100%', // need to override the changed default
+            multiple: false,
+            allowClear: true,
+            matcher: select2match,
+            sorter: select2sort,
+        });
+    }
+    render() {
+        this.dataSource.fetchData().then(data => {
+            console.log('[Selector.render] data:', data);
+            $('.search-purchase-select').val(null).trigger('change');
+            for(var key in data) {
+                let item = data[key];
+                $('.search-purchase-select')
+                    .append(new Option(item.id + ' | ' + item.name, item.id, false))
+                    .trigger('change');
+            }
+        });
+        return 0;
+    }
+}
+
+class BodyForOrders {
+    constructor(dataSource) {
+        console.log('[BodyForOrders.constructor]');
+        this.dataSource = dataSource;
+    }
+    render() {
+        console.log('[BodyForOrders.render]');
+        const tbodyHtml = `
+            <tbody>
+            </tbody>
+        `;
+        const tbody = document.createElement('tbody');
+        tbody.innerHTML = tbodyHtml.trim();
+        // return this.ordersData.getRows().then(data => {
+        return this.dataSource.fetchData().then(data => {
+            console.log('[BodyForOrders.render] data:', data);
+            for(var key in data) {
+                var row = data[key];
+                var trow = new RowForOrders(row).render();
+                tbody.appendChild(trow);
+            }
+            return tbody;
+        });
+    }
+}
+
+class RowForOrders {
+    constructor(row) {
+        console.log('[RowForOrders.constructor]');
+        this.row = row;
+    }
+    render() {
+        console.log('[RowForOrders.render]');
+        let row = this.row;
+        let rowHtml = `
+        <tr class="purchase-row">
+            <td>${row['product/id']}</td>
+            <td>${row['product/group']}</td>
+            <td>${row['product/name']}</td>
+            <td>${row['count']}</td>
+            <td>${row['distributed']}</td>
+            <td>
+                ${row['product/primary_price']}
+                ${row['product/primary_currency']}
+            </td>
+            <td>
+                ${row['purchase_content/sale_price']}
+                ${row['purchase_content/sale_currency']}
+            </td>
+            <td>${row['purchase_content/shipping']}</td>
+            <td>${row['cost']}</td>
+            <td class="paid">${row['paid']}</td>
+            <td class="torefound">${row['torefound']}</td>
+            <td class="refounded">${row['refounded']}</td>
+        </tr>
+        `;
+        let newRow = document.createElement('tr');
+        newRow.innerHTML = rowHtml.trim();
+        return newRow;        
+    }
+}
+
+class OrdersData {
+    constructor(sqlQuery) {
+        console.log('[OrdersData.constructor]');
+        this.sqlQuery = sqlQuery;
+    }
+    getRows() {
+        console.log('[OrdersData.getRows]');
+        return this.sqlQuery.exequte();//.then(data => {
+            // return data
+        // });
+    }
+}
+
+class SqlQuery {
+    constructor(apiRquest) {
+        console.log('[SqlQuery.constructor]');
+        this.apiRquest = apiRquest;
+    }
+    exequte() {
+        console.log('[SqlQuery.exequte]');
+        return this.apiRquest.fetchData()//.then(data => {
+            // });
+            // console.log('data: ', data);
+            // return data;
+    }
+}
 
 class HeaderForTransactions {
     constructor(row) {
@@ -134,64 +337,6 @@ class RowForTransactions {
 }
 
 
-class ReportForClient {
-    constructor(containerElem, selector, orders, transactions) {
-        console.log('[ReportForClient.constructor]');
-        this.containerElem = containerElem;
-        this.selector = selector;
-        this.orders = orders;
-        this.transactions = transactions;
-    }
-    render() {
-        console.log('[ReportForClient.render]');
-        const selectorElem = this.selector?.render();
-        this.orders.render().then(elem => {
-            this.containerElem.appendChild(elem);
-        });
-        const transactionsElem = this.transactions?.render();
-        // this.containerElem.appendChild(selectorElem);
-        // this.containerElem.appendChild(transactionsElem);
-        return 0;
-    }
-}
-
-class Selector {
-    constructor(htmlSelector, placeholder) {
-        this.htmlSelector = htmlSelector;
-        this.placeholder = placeholder;
-    }
-    render() {
-        // $(function() {
-            return $(this.htmlSelector).select2({
-                placeholder: this.placeholder,
-                width: '100%', // need to override the changed default
-                multiple: false,
-                allowClear: true,
-                matcher: select2match,
-                sorter: select2sort,
-            });
-        // });
-        return 0;
-    }
-}
-
-class HtmlTable {
-    constructor(header, body) {
-        console.log('[HtmlTable.constructor]');
-        this.header = header;
-        this.body = body;
-    }
-    async render() {
-        console.log('[HtmlTable.render]');
-        const thead = this.header.render();
-        const tbody = await this.body.render();
-        const elem = document.createElement('table');
-        elem.appendChild(thead);
-        elem.appendChild(tbody);
-        return elem;
-    }
-}
-
 class HeaderForOrders {
     constructor(row) {
         console.log('[HeaderForOrders.constructor]');
@@ -224,95 +369,6 @@ class HeaderForOrders {
         var thead = document.createElement('thead');
         thead.innerHTML = theadHtml.trim();
         return thead;
-    }
-}
-
-class BodyForOrders {
-    constructor(ordersData) {
-        console.log('[BodyForOrders.constructor]');
-        this.ordersData = ordersData;
-    }
-    render() {
-        console.log('[BodyForOrders.render]');
-        const tbodyHtml = `
-            <tbody>
-            </tbody>
-        `;
-        const tbody = document.createElement('tbody');
-        tbody.innerHTML = tbodyHtml.trim();
-        // return this.ordersData.getRows().then(data => {
-        return this.ordersData.fetchData().then(data => {
-            console.log('[BodyForOrders.render] data:', data);
-            for(var key in data) {
-                var row = data[key];
-                var trow = new RowForOrders(row).render();
-                tbody.appendChild(trow);
-            }
-            return tbody;
-        });
-    }
-}
-
-class RowForOrders {
-    constructor(row) {
-        console.log('[RowForOrders.constructor]');
-        this.row = row;
-    }
-    render() {
-        console.log('[RowForOrders.render]');
-        let row = this.row;
-        let rowHtml = `
-        <tr class="purchase-row">
-            <td>${row['product/id']}</td>
-            <td>${row['product/group']}</td>
-            <td>${row['product/name']}</td>
-            <td>${row['count']}</td>
-            <td>${row['distributed']}</td>
-            <td>
-                ${row['product/primary_price']}
-                ${row['product/primary_currency']}
-            </td>
-            <td>
-                ${row['purchase_content/sale_price']}
-                ${row['purchase_content/sale_currency']}
-            </td>
-            <td>${row['purchase_content/shipping']}</td>
-            <td>${row['cost']}</td>
-            <td class="paid">${row['paid']}</td>
-            <td class="torefound">${row['torefound']}</td>
-            <td class="refounded">${row['refounded']}</td>
-        </tr>
-        `;
-        let newRow = document.createElement('tr');
-        newRow.innerHTML = rowHtml.trim();
-        return newRow;        
-    }
-}
-
-class OrdersData {
-    constructor(sqlQuery) {
-        console.log('[OrdersData.constructor]');
-        this.sqlQuery = sqlQuery;
-    }
-    getRows() {
-        console.log('[OrdersData.getRows]');
-        return this.sqlQuery.exequte();//.then(data => {
-            // return data
-        // });
-    }
-}
-
-class SqlQuery {
-    constructor(apiRquest) {
-        console.log('[SqlQuery.constructor]');
-        this.apiRquest = apiRquest;
-    }
-    exequte() {
-        console.log('[SqlQuery.exequte]');
-        return this.apiRquest.fetchData()//.then(data => {
-            // });
-            // console.log('data: ', data);
-            // return data;
     }
 }
 
