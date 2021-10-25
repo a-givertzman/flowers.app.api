@@ -162,10 +162,10 @@ class ClientBalas {
         this.elem = document.querySelector(this.htmlSelector);
         this.elem.innerHTML = `Баланс: -.-- RUB`;
     }
-    render(id) {
+    render(params) {
         console.log('[ClientBalas.render]');
         const where = [
-            {operator: 'where', field: 'id', cond: '=', value: id},
+            {operator: 'where', field: 'id', cond: '=', value: params.id},
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ];
         this.dataSource.fetchData({where: where}).then(data => {
