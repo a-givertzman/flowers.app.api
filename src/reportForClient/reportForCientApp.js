@@ -12,7 +12,7 @@ const mySqlParamsForClientBalans = {
     limit: 0,
 };
 const mySqlParamsForClientList = {
-    url: domainPath + 'getData.php',
+    url: 'getData.php',
     tableName: 'client', 
     keys: ['*'], 
     orderBy: 'id', 
