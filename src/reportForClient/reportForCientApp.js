@@ -269,8 +269,8 @@ class HeaderForTransactions {
     }
     render() {
         console.log('[HeaderForTransactions.render]');
-        let row = this.row;
-        let theadHtml = `
+        const row = this.row;
+        const theadHtml = `
             <thead>
                 <tr class="transaction-row-header">
                     <th colspan="100">Ваши транзакции [${row['client/id']}] ${row['client/name']}</th>
@@ -288,7 +288,7 @@ class HeaderForTransactions {
                 </tr>
             </thead>
         `;
-        var thead = document.createElement('thead');
+        const thead = document.createElement('thead');
         thead.innerHTML = theadHtml.trim();
         return thead;
     }
@@ -326,30 +326,25 @@ class RowForTransactions {
     }
     render() {
         console.log('[RowForTransactions.render]');
-        let row = this.row;
-        let rowHtml = `
-        <tr class="purchase-row">
-            <td>${row['product/id']}</td>
-            <td>${row['product/group']}</td>
-            <td>${row['product/name']}</td>
-            <td>${row['count']}</td>
-            <td>${row['distributed']}</td>
-            <td>
-                ${row['product/primary_price']}
-                ${row['product/primary_currency']}
-            </td>
-            <td>
-                ${row['purchase_content/sale_price']}
-                ${row['purchase_content/sale_currency']}
-            </td>
-            <td>${row['purchase_content/shipping']}</td>
-            <td>${row['cost']}</td>
-            <td class="paid">${row['paid']}</td>
-            <td class="torefound">${row['torefound']}</td>
-            <td class="refounded">${row['refounded']}</td>
-        </tr>
+        const row = this.row;
+        const purchaseMemberId = row['purchase_member/id'] ? row['purchase_member/id'] : '';
+        const purchaseName = row['purchase/name'] ? row['purchase/name'] : '-';
+        const productName = row['product/name'] ? row['product/name'] : '-';
+        const rowHtml = `
+            <tr class="transaction-row">
+                <td>${row['id']}</td>
+                <td>${row['date']}</td>
+                <td>${row['account_owner']}</td>
+                <td>${row['value']} RUB</td>
+                <td>${purchaseMemberId}</td>
+                <td>${purchaseName}</td>
+                <td>${productName}</td>
+                <td>${row['description']}</td>
+                <td>${row['client_account']} RUB</td>
+            </tr>
         `;
-        let newRow = document.createElement('tr');
+    
+        const newRow = document.createElement('tr');
         newRow.innerHTML = rowHtml.trim();
         return newRow;        
     }
@@ -363,8 +358,8 @@ class HeaderForOrders {
     }
     render() {
         console.log('[HeaderForOrders.render]');
-        let row = this.row;
-        let theadHtml = `
+        const row = this.row;
+        const theadHtml = `
             <thead>
                 <tr class="purchase-row-header">
                     <th colspan="100">Закупка [${row['purchase/id']}] ${row['purchase/name']}</th>
@@ -385,7 +380,7 @@ class HeaderForOrders {
                 </tr>
             </thead>
         `;
-        var thead = document.createElement('thead');
+        const thead = document.createElement('thead');
         thead.innerHTML = theadHtml.trim();
         return thead;
     }
