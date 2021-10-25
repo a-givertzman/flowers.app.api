@@ -261,33 +261,6 @@ class RowForOrders {
     }
 }
 
-class OrdersData {
-    constructor(sqlQuery) {
-        console.log('[OrdersData.constructor]');
-        this.sqlQuery = sqlQuery;
-    }
-    getRows() {
-        console.log('[OrdersData.getRows]');
-        return this.sqlQuery.exequte();//.then(data => {
-            // return data
-        // });
-    }
-}
-
-class SqlQuery {
-    constructor(apiRquest) {
-        console.log('[SqlQuery.constructor]');
-        this.apiRquest = apiRquest;
-    }
-    exequte() {
-        console.log('[SqlQuery.exequte]');
-        return this.apiRquest.fetchData()//.then(data => {
-            // });
-            // console.log('data: ', data);
-            // return data;
-    }
-}
-
 class HeaderForTransactions {
     constructor(row) {
         console.log('[HeaderForTransactions.constructor]');
@@ -321,9 +294,9 @@ class HeaderForTransactions {
 }
 
 class BodyForTransactions {
-    constructor(ordersData) {
+    constructor(dataSource) {
         console.log('[BodyForTransactions.constructor]');
-        this.ordersData = ordersData;
+        this.dataSource = dataSource;
     }
     render() {
         console.log('[BodyForTransactions.render]');
@@ -335,7 +308,7 @@ class BodyForTransactions {
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
         return this.dataSource.fetchData().then(data => {
-            console.log('[BodyForOrders.render] data:', data);
+            console.log('[BodyForTransactions.render] data:', data);
             for(var key in data) {
                 var row = data[key];
                 var trow = new RowForTransactions(row).render();
@@ -343,9 +316,6 @@ class BodyForTransactions {
             }
             return tbody;
         });
-
-
-        return tbody;
     }
 }
 
@@ -555,3 +525,32 @@ function select2match(params, data) {
     // Return `null` if the term should not be displayed
     return null;
 }
+
+
+
+// class OrdersData {
+//     constructor(sqlQuery) {
+//         console.log('[OrdersData.constructor]');
+//         this.sqlQuery = sqlQuery;
+//     }
+//     getRows() {
+//         console.log('[OrdersData.getRows]');
+//         return this.sqlQuery.exequte();//.then(data => {
+//             // return data
+//         // });
+//     }
+// }
+
+// class SqlQuery {
+//     constructor(apiRquest) {
+//         console.log('[SqlQuery.constructor]');
+//         this.apiRquest = apiRquest;
+//     }
+//     exequte() {
+//         console.log('[SqlQuery.exequte]');
+//         return this.apiRquest.fetchData()//.then(data => {
+//             // });
+//             // console.log('data: ', data);
+//             // return data;
+//     }
+// }
