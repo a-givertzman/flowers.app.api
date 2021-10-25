@@ -3,7 +3,10 @@ class BusyIndicator {
     constructor(selector, hiddenClassName) {
         this.selector = selector;
         this.hiddenClassName = hiddenClassName;
-        this.busyIndicator = document.querySelector(selector);
+        // this.busyIndicator = document.querySelector(selector);
+        this.busyIndicator = document.createElement('div');
+        this.busyIndicator.innerHTML = this.html;
+        this.busyIndicator.classList.add(selector);
     }
     show() {
         this.busyIndicator.classList.remove(this.hiddenClassName);
@@ -13,5 +16,12 @@ class BusyIndicator {
     }
     toggle() {
         this.busyIndicator.classList.toggle(this.hiddenClassName)
+    }
+    html() {
+        return `
+            <div class="busy-indicator busy-indicator-hide">
+                <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+        `;
     }
 }

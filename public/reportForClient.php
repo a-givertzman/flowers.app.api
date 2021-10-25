@@ -87,9 +87,6 @@
     <script src="../src/reportForClient/reportForCientApp.js"></script>
 </head>
 <body>
-    <div class="busy-indicator busy-indicator-hide">
-        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-    </div>
     <header class="header">
         <div class="header-top">
             <div class="container">
