@@ -101,11 +101,11 @@
             </div>
         </div>
     </header>
-    <section class="purchase-selector">
+    <section class="client-selector">
         <div class="container">
-            <div class="purchase-selector-top">
-                <div class="purchase-selector-title-box">
-                    <div class="purchase-selector-title">
+            <div class="client-selector-top">
+                <div class="client-selector-title-box">
+                    <div class="client-selector-title">
                         Отчет по закупкам участника
                         <span id="client-account"></span>
                     </div>

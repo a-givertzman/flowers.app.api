@@ -2,7 +2,7 @@
 @import 'fonts.css';
 
 :root{
-    --purchase-selector-item-shadow-color: rgba(91, 89, 89, 0.14);
+    --shadow-color: rgba(91, 89, 89, 0.14);
     --akcent-color: #ffc222;
     --akcent1-color: #61B5FF;
     --granite-gray: #5e5e5e;
@@ -245,25 +245,25 @@ header{
     right: -12px;
 }
 
-/* purchase-selector */
-.purchase-selector{
+/* client-selector */
+.client-selector{
     padding: 10px 0 30px;
 }
 
-.purchase-selector-top{
+.client-selector-top{
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.purchase-selector-title-box{
+.client-selector-title-box{
     position: relative;
     /* max-width: 700px; */
     width: 100%;
     /* padding-left: 140px; */
 }
 
-.purchase-selector-title{
+.client-selector-title{
     font-size: 18px;
     font-weight: 500;
     font-family: 'Rubik', serif;
@@ -271,7 +271,7 @@ header{
     color: var(--nero-color);
     margin-bottom: 10px;
 }
-.purchase-selector-title span{
+.client-selector-title span{
     float: right;
     margin-right: 40px;
     font-size: 16px;    
@@ -300,10 +300,10 @@ header{
     background-color: #ffc222;
 }
 
-.purchase-selector-btn-cover{
+.client-selector-btn-cover{
     margin-top: 30px;
 }
-.purchase-selector-btn{
+.client-selector-btn{
     font-family: 'Rubik', serif;
     line-height: 24px;
     letter-spacing: 0.25px;
@@ -313,19 +313,19 @@ header{
     border: solid 3px var(--whisper-color);
 }
 
-.purchase-selector-items{
+.client-selector-items{
     display: flex;
     justify-content: space-between;
 }
 
-.purchase-selector-item{
+.client-selector-item{
     position: relative;
     max-width: 360px;
     min-height: 375px;
     text-align: center;
     padding: 30px 0 80px;
     background-color: #f9f9f9;
-    box-shadow: 0px 7px 24px 3px var(--purchase-selector-item-shadow-color);
+    box-shadow: 0px 7px 24px 3px var(--shadow-color);
 }
 
 /* PUTCHASE_TABLE */
@@ -412,18 +412,18 @@ table td:last-child { border-right: solid #5e5e5e  0.1px; }
     padding: 24px 40px;
 }
 
-.purchase-selector-item-text{
+.client-selector-item-text{
     letter-spacing: 0.1px;
     padding: 0px 40px 30px;
 }
 
-.purchase-selector-item-cover{
+.client-selector-item-cover{
     position: absolute;
     bottom: 40px;
     margin: 0 auto;
 }
 
-.purchase-selector-item-link{
+.client-selector-item-link{
     color: var(--black-color);
     font-family: 'Rubik', serif;
     border-bottom: solid 1px var(--black-color);
