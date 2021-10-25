@@ -277,8 +277,11 @@ header{
     font-size: 16px;    
 }
 
-.purchase-selector-search-selectr{
+/* .purchase-selector-search{ */
     /* letter-spacing: 0.1px; */
+/* } */
+.search-purchase-select{
+    /* height: 24; */
     margin: 0;
     line-height: 18px;
     letter-spacing: 0.25px;
@@ -288,9 +291,6 @@ header{
     white-space: nowrap;
     /* border: solid 3px var(--whisper-color); */
     outline: none;
-}
-.search-purchase-select{
-    /* height: 24; */
 }
 .search-purchase-select *:focus{
     outline: none;
