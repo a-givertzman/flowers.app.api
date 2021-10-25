@@ -210,7 +210,7 @@ class Selector {
             $(this.htmlSelector).val(null).trigger('change');
             for(var key in data) {
                 let item = data[key];
-                this.selectr.addItem({
+                this.selectr.addOption({
                     id: item.id,
                     title: item.id + ' | ' + item.name
                 });
