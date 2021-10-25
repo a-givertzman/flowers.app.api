@@ -70,7 +70,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             ),
         },
         {
-            name: 'clientsTransactions',
+            name: 'clientTransactions',
             obj: new HtmlTable(
                 htmlSelectorOfClientTransactions,
                 new HeaderForTransactions({
@@ -93,6 +93,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         var selectedId = e.params.data.id;
         
         cntentOfPage.clientOrders.render();
+        cntentOfPage.clientTransactions.render();
     });
 
     $(htmlSelectorOfClientSelect).on('select2:unselect', e => {
