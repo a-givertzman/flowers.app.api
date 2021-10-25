@@ -7,6 +7,9 @@ plog('_SERVER: ', $_SERVER);
 plog("url:", $_GET['url']);
 plog("url:", $_POST['url']);
 
+$query = trim($_SERVER['QUERY_STRING'], '/');
+plog('query:', $query);
+
 if (empty($_GET) || $_GET['url'] == '') {
     $html = require_once './clientOverview.php';
     echo $html;
@@ -25,17 +28,17 @@ if ($_GET['url'] == 'client-report') {
     exit;
 }
 
-if ($_SERVER['REQUEST_URI'] == 'get-data') {
+if ($query == 'get-data') {
     $html = require_once './getData.php';
     echo $html;
     exit;
 }
-if ($_SERVER['REQUEST_URI'] == 'get-join-data') {
+if ($query == 'get-join-data') {
     $html = require_once './getJoinData.php';
     echo $html;
     exit;
 }
-if ($_SERVER['REQUEST_URI'] == 'get-view') {
+if ($query == 'get-view') {
     $html = require_once './getView.php';
     echo $html;
     exit;
