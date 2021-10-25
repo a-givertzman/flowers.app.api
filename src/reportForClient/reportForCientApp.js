@@ -80,7 +80,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 }),
                 new BodyForOrders(
                     new ApiRequest(mySqlParamsForOrders)
-                )
+                ),
+                new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
             ),
         },
         {
@@ -141,14 +142,16 @@ class ContentOfPage {
 }
 
 class HtmlTable {
-    constructor(parentSelector, header, body) {
+    constructor(parentSelector, header, body, busy) {
         console.log('[HtmlTable.constructor]');
         this.parentSelector = parentSelector;
         this.header = header;
         this.body = body;
+        this.busy = busy;
     }
     async render(params = {}) {
         console.log('[HtmlTable.render]');
+        this.busy.show();
         const thead = this.header.render();
         const tbody = await this.body.render(params);
         const elem = this.parentSelector 
@@ -157,6 +160,7 @@ class HtmlTable {
         elem.innerHTML = '';
         elem.appendChild(thead);
         elem.appendChild(tbody);
+        this.busy.hide();
         return elem;
     }
     clear() {
