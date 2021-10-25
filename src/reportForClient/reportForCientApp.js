@@ -105,10 +105,12 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     
     cntentOfPage.clientSelector.selectr.on('change', id => {
         console.log('selected id:', id);
-        const selectedId = id;
-        cntentOfPage.clientBalans.render({id: selectedId});
-        cntentOfPage.clientOrders.render({id: selectedId});
-        cntentOfPage.clientTransactions.render({id: selectedId});
+        const selectedId = Number(id);
+        if (!isNaN(selectedId)) {
+            cntentOfPage.clientBalans.render({id: selectedId});
+            cntentOfPage.clientOrders.render({id: selectedId});
+            cntentOfPage.clientTransactions.render({id: selectedId});
+        }
     });
     
     cntentOfPage.clientSelector.selectr.on('clear', e => {
