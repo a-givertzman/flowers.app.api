@@ -140,7 +140,7 @@ class HtmlTable {
         this.header = header;
         this.body = body;
     }
-    async render() {
+    async render(params = {}) {
         console.log('[HtmlTable.render]');
         const thead = this.header.render();
         const tbody = await this.body.render();
@@ -211,7 +211,7 @@ class BodyForOrders {
         console.log('[BodyForOrders.constructor]');
         this.dataSource = dataSource;
     }
-    render() {
+    render(params = {}) {
         console.log('[BodyForOrders.render]');
         const tbodyHtml = `
             <tbody>
@@ -219,7 +219,11 @@ class BodyForOrders {
         `;
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        return this.dataSource.fetchData().then(data => {
+        const where = [
+            {operator: 'where', field: 'client/id', cond: '=', value: params.id},
+            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+        ];
+        return this.dataSource.fetchData({where: where}).then(data => {
             console.log('[BodyForOrders.render] data:', data);
             for(var key in data) {
                 var row = data[key];
@@ -304,7 +308,7 @@ class BodyForTransactions {
         console.log('[BodyForTransactions.constructor]');
         this.dataSource = dataSource;
     }
-    render() {
+    render(params) {
         console.log('[BodyForTransactions.render]');
         const tbodyHtml = `
             <tbody>
@@ -312,7 +316,11 @@ class BodyForTransactions {
         `;
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        return this.dataSource.fetchData().then(data => {
+        const where = [
+            {operator: 'where', field: 'client/id', cond: '=', value: params.id},
+            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+        ];
+        return this.dataSource.fetchData({where: where}).then(data => {
             console.log('[BodyForTransactions.render] data:', data);
             for(var key in data) {
                 var row = data[key];
