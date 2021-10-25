@@ -2,13 +2,13 @@
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     const mySqlParamsForClientBalans = {
+        url: 'getData.php',
         tableName: 'client', 
         keys: ['*'], 
         orderBy: 'id', 
         order: 'ASC', 
         where: [{operator: 'where', field: 'deleted', cond: 'is null', value: null},], 
         limit: 0,
-        url: domainPath + 'getData.php',
     };
     const mySqlParamsForOrders = {
         url: 'getView.php',
