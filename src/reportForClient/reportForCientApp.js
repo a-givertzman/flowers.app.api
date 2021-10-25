@@ -138,7 +138,7 @@ class ClientBalas {
     }
     render() {
         console.log('[ClientBalas.render]');
-        let elem = document.querySelector(htmlSelector);
+        let elem = document.querySelector(this.htmlSelector);
         this.dataSource.fetchData().then(data => {
             console.log('[ClientBalas.render] data:', data);
             clientAccount = data['account'];
