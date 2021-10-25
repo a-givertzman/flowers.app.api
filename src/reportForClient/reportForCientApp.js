@@ -1,20 +1,15 @@
 "use strict";
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-    let where = [{operator: 'where', field: 'deleted', cond: 'is null', value: null},];
     const mySqlParamsForClientBalans = {
         tableName: 'client', 
         keys: ['*'], 
         orderBy: 'id', 
         order: 'ASC', 
-        where: where, 
+        where: [{operator: 'where', field: 'deleted', cond: 'is null', value: null},], 
         limit: 0,
         url: domainPath + 'getData.php',
     };
-    let where = [
-        {operator: 'where', field: 'client/id', cond: '=', value: 7},
-        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-    ];
     const mySqlParamsForOrders = {
         url: 'getView.php',
         tableName: 'purchaseMemberView', 
@@ -22,7 +17,10 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         keys: ['*'],
         orderBy: 'purchase/id', 
         order: 'ASC', 
-        where: where, 
+        where: [
+            {operator: 'where', field: 'client/id', cond: '=', value: 7},
+            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+        ], 
         limit: 0,
     }
 
