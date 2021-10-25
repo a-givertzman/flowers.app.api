@@ -21,7 +21,7 @@ class BusyIndicator {
     }
     html() {
         return `
-            <div class="busy-indicator busy-indicator-hide">
+            <div class="">
                 <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
         `;
