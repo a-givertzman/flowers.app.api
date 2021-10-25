@@ -246,24 +246,24 @@ header{
 }
 
 /* client-selector */
-.client-selector{
+.client-select{
     padding: 10px 0 30px;
 }
 
-.client-selector-top{
+.client-select-top{
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.client-selector-title-box{
+.client-select-title-box{
     position: relative;
     /* max-width: 700px; */
     width: 100%;
     /* padding-left: 140px; */
 }
 
-.client-selector-title{
+.client-select-title{
     font-size: 18px;
     font-weight: 500;
     font-family: 'Rubik', serif;
@@ -271,7 +271,7 @@ header{
     color: var(--nero-color);
     margin-bottom: 10px;
 }
-.client-selector-title span{
+.client-select-title span{
     float: right;
     margin-right: 40px;
     font-size: 16px;    
@@ -296,14 +296,11 @@ header{
 /* .client-select:focus{
     outline: none;
 } */
-.search_term_hilite{
-    background-color: #ffc222;
-}
 
-.client-selector-btn-cover{
+.client-select-btn-cover{
     margin-top: 30px;
 }
-.client-selector-btn{
+.client-select-btn{
     font-family: 'Rubik', serif;
     line-height: 24px;
     letter-spacing: 0.25px;
@@ -313,12 +310,12 @@ header{
     border: solid 3px var(--whisper-color);
 }
 
-.client-selector-items{
+.client-select-items{
     display: flex;
     justify-content: space-between;
 }
 
-.client-selector-item{
+.client-select-item{
     position: relative;
     max-width: 360px;
     min-height: 375px;
@@ -335,6 +332,7 @@ table{
     border: none; 
     border-collapse: collapse;
     margin-top: 20px;
+    overflow-x: auto;
 }
 table tr{
     border-top: solid #5e5e5e  0.1px;
