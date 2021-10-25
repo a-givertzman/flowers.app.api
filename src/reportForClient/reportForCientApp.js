@@ -1,6 +1,6 @@
 "use strict";
 
-const selectr = require("../plugins/selectr/selectr");
+// const selectr = require("../plugins/selectr/selectr");
 
 const mySqlParamsForClientBalans = {
     url: 'getData.php',
