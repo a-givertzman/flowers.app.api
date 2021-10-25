@@ -109,7 +109,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         // console.log('selection id:', e.params.data);
         console.log('selection option:', option);
         
-        const selectedId = option.id;
+        const selectedId = option.value;
         
         cntentOfPage.clientBalans.render({id: selectedId});
         cntentOfPage.clientOrders.render({id: selectedId});
