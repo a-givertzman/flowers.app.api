@@ -11,7 +11,7 @@ const mySqlParamsForClientBalans = {
     ], 
     limit: 0,
 };
-const mySqlParamsForClientList = {
+const mySqlParamsForClientSelect = {
     url: 'getData.php',
     tableName: 'client', 
     keys: ['*'], 
@@ -22,6 +22,18 @@ const mySqlParamsForClientList = {
 }
 const mySqlParamsForOrders = {
     url: 'getView.php',
+    tableName: 'purchaseMemberView', 
+    params: '0', 
+    keys: ['*'],
+    orderBy: 'purchase/id', 
+    order: 'ASC', 
+    where: [
+        {operator: 'where', field: 'client/id', cond: '=', value: 7},
+        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+    ], 
+    limit: 0,
+}
+const mySqlParamsForTransactions = {
     tableName: 'purchaseMemberView', 
     params: '0', 
     keys: ['*'],
@@ -53,7 +65,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             obj: new Selector(
                 htmlSelectorOfClientSelect,
                 {placeholder: "Найди себя"},
-                new ApiRequest(mySqlParamsForClientList)
+                new ApiRequest(mySqlParamsForClientSelect)
             )
         },
         {
@@ -77,7 +89,9 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                     'client/id': '???',
                     'client/name': 'Пока нет имени клиента'
                 }),
-                new BodyForTransactions()
+                new BodyForTransactions(
+                    new ApiRequest(mySqlParamsForTransactions)
+                )
             )
         },
     ]);
@@ -199,7 +213,6 @@ class BodyForOrders {
         `;
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        // return this.ordersData.getRows().then(data => {
         return this.dataSource.fetchData().then(data => {
             console.log('[BodyForOrders.render] data:', data);
             for(var key in data) {
@@ -319,8 +332,19 @@ class BodyForTransactions {
             <tbody>
             </tbody>
         `;
-        var tbody = document.createElement('tbody');
+        const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
+        return this.dataSource.fetchData().then(data => {
+            console.log('[BodyForOrders.render] data:', data);
+            for(var key in data) {
+                var row = data[key];
+                var trow = new RowForTransactions(row).render();
+                tbody.appendChild(trow);
+            }
+            return tbody;
+        });
+
+
         return tbody;
     }
 }
