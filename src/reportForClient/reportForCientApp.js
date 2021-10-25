@@ -177,10 +177,11 @@ class HtmlTable {
 class ClientBalas {
     constructor(htmlSelector, dataSource) {
         console.log('[ClientBalas.constructor]');
+        this.emptyBalans = '-.--';
         this.htmlSelector = htmlSelector;
         this.dataSource = dataSource;
         this.elem = document.querySelector(this.htmlSelector);
-        if (this.elem) this.elem.innerHTML = `Баланс: -.-- RUB`;
+        if (this.elem) this.elem.innerHTML = `Баланс: ${this.emptyBalans} RUB`;
     }
     render(params) {
         console.log('[ClientBalas.render]');
@@ -194,14 +195,14 @@ class ClientBalas {
             try {
                 clientAccount = Object.values(data)[0]['account'];
             } catch (error) {
-                clientAccount = '-.--';
+                clientAccount = this.emptyBalans;
             }
             this.elem.innerHTML = `Баланс: ${clientAccount} RUB`;
         });
     }
     clear() {
         this.elem = document.querySelector(this.htmlSelector);
-        if (this.elem) this.elem.innerHTML = `Баланс: -.-- RUB`;
+        if (this.elem) this.elem.innerHTML = `Баланс: ${this.emptyBalans} RUB`;
     }
 }
 
