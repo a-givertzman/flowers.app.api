@@ -69,17 +69,17 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 )
             ),
         },
-        // {
-            // 'clientsTransactions',
-            // new HtmlTable(
-            //     htmlSelectorOfClientTransactions,
-            //     new HeaderForTransactions({
-            //         'client/id': '???',
-            //         'client/name': 'Пока нет имени клиента'
-            //     }),
-            //     new BodyForTransactions()
-            // )
-        // },
+        {
+            name: 'clientsTransactions',
+            obj: new HtmlTable(
+                htmlSelectorOfClientTransactions,
+                new HeaderForTransactions({
+                    'client/id': '???',
+                    'client/name': 'Пока нет имени клиента'
+                }),
+                new BodyForTransactions()
+            )
+        },
     ]);
     
     console.log('cntentOfPage', cntentOfPage);
