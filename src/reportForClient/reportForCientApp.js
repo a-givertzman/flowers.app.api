@@ -207,7 +207,7 @@ class Selector {
     render() {
         this.dataSource.fetchData().then(data => {
             console.log('[Selector.render] data:', data);
-            $(this.htmlSelector).val(null).trigger('change');
+            this.selectr.clear();
             for(var key in data) {
                 let item = data[key];
                 this.selectr.addOption({
