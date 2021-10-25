@@ -2,6 +2,10 @@
 
 require_once './libPHP/plog.php';
 plog("-> router.php");
+plog('_REQUEST: ', $_REQUEST);
+plog('_SERVER: ', $_SERVER);
+plog("url:", $_GET['url']);
+plog("url:", $_POST['url']);
 
 if (empty($_GET) || $_GET['url'] == '') {
     $html = require_once './clientOverview.php';
