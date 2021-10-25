@@ -100,8 +100,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.clientSelector.render();
     
-    
-    $(htmlSelectorOfClientSelect).on('select2:select', e => {
+    document.addEventListener('select2:select', e => {
+    // $(htmlSelectorOfClientSelect).on('select2:select', e => {
         console.log('selection id:', e.params.data);
         
         const selectedId = e.params.data.id;
