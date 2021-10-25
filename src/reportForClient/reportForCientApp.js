@@ -138,14 +138,15 @@ class ClientBalas {
         console.log('[ClientBalas.constructor]');
         this.htmlSelector = htmlSelector;
         this.dataSource = dataSource;
+        this.elem = document.querySelector(this.htmlSelector);
+        this.elem.innerHTML = `Баланс: -.-- RUB`;
     }
     render() {
         console.log('[ClientBalas.render]');
-        let elem = document.querySelector(this.htmlSelector);
         this.dataSource.fetchData().then(data => {
             console.log('[ClientBalas.render] data:', data);
-            clientAccount = data['account'];
-            elem.innerHTML = `Баланс: ${clientAccount} RUB`;
+            let clientAccount = data['account'];
+            this.elem.innerHTML = `Баланс: ${clientAccount} RUB`;
         });
     }
 }
