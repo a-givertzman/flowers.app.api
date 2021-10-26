@@ -261,11 +261,10 @@ class HtmlTableCaption {
         console.log('[HtmlTableCaption.render]');
         text = text ? text : this.text;
         const html = `
-            <tr class="${this.classString}">
                 <th colspan="100">${text}</th>
-            </tr>
         `;
         const elem = document.createElement('tr');
+        elem.classList.add(this.classString);
         elem.innerHTML = html.trim();
         return elem;
     }
