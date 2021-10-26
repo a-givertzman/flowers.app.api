@@ -186,7 +186,7 @@ class ClientBalas {
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ];
         this.dataSource.fetchData({where: where}).then(data => {
-            console.log('[ClientBalas.render] data:', data);
+            // console.log('[ClientBalas.render] data:', data);
             let clientAccount
             try {
                 clientAccount = Object.values(data)[0]['account'];
@@ -221,8 +221,9 @@ class Selector {
         );
     }
     render() {
+        console.log('[Selector.render]');
         this.dataSource.fetchData().then(data => {
-            console.log('[Selector.render] data:', data);
+            // console.log('[Selector.render] data:', data);
             this.selectr.clear();
             for(var key in data) {
                 let item = data[key];
@@ -254,7 +255,7 @@ class BodyForOrders {
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ];
         return this.dataSource.fetchData({where: where}).then(data => {
-            console.log('[BodyForOrders.render] data:', data);
+            // console.log('[BodyForOrders.render] data:', data);
             for(var key in data) {
                 var row = data[key];
                 var trow = new RowForOrders(row).render();
@@ -351,7 +352,7 @@ class BodyForTransactions {
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ];
         return this.dataSource.fetchData({where: where}).then(data => {
-            console.log('[BodyForTransactions.render] data:', data);
+            // console.log('[BodyForTransactions.render] data:', data);
             for(var key in data) {
                 var row = data[key];
                 var trow = new RowForTransactions(row).render();
@@ -468,15 +469,11 @@ class ApiRequest {
         console.log('[ApiRequest.parseResponse]');
         console.log('response.status:', response.status);
         const responseCode = response.status;
-        
         const jsonData = await response.json();
         // console.log('json data:', jsonData);
-        
         const parsedData = (typeof(jsonData) == 'object') ? jsonData : JSON.parse(jsonData);
-        
         const errCount = parsedData.errCount;
         console.log('errCount: ', errCount);
-    
         if (errCount > 0) {
             const errDump = parsedData.errDump;
             console.log('errDump: ', errDump);
@@ -502,7 +499,6 @@ class ApiRequest {
         const order = args.order ? args.order : 'ASC';
         const where = args.where ? args.where : [];
         const limit = args.limit ? args.limit : 0;
-    
         var body = new FormData();
         body.append( "procedureName", JSON.stringify(procedureName) );
         body.append( "tableName", JSON.stringify(tableName) );
