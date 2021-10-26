@@ -246,10 +246,6 @@ header{
 }
 
 /* client-selector */
-.client-select{
-    padding: 10px 0 30px;
-}
-
 .client-select-top{
     display: flex;
     justify-content: space-between;
@@ -280,7 +276,7 @@ header{
 .client-select-wrapper{
     /* letter-spacing: 0.1px; */
     border: none;
-    padding: 12px 38px;
+    padding: 10px 0 30px;
 }
 .client-select{
     /* height: 24; */
