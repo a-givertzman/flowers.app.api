@@ -1,6 +1,9 @@
 <?php
 
+error_log("\t Before plog", 0);
+
 require_once './libPHP/plog.php';
+error_log("\t After plog", 0);
 plog("-> router.php");
 plog('_REQUEST: ', $_REQUEST);
 plog('_SERVER: ', $_SERVER);
