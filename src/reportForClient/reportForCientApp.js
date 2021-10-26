@@ -74,7 +74,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         },
         {
             name: 'clientOrders',
-            obj: new HtmlTableGroupedBy(
+            obj: new HtmlTableGroupBy(
                 htmlSelectorOfClientOrders,
                 new ApiRequest(mySqlParamsForOrders),
                 new HeaderForOrders(),
@@ -166,7 +166,7 @@ class HtmlTable {
     }
 }
 
-class HtmlTableGroupedBy {
+class HtmlTableGroupBy {
     constructor(parentSelector, groupByDataSource, header, body, busy) {
         console.log('[HtmlTableGroupedBy.constructor]');
         this.parentSelector = parentSelector;
