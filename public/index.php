@@ -10,22 +10,22 @@ plog('_SERVER: ', $_SERVER);
 plog("url:", $_GET['url']);
 plog("url:", $_POST['url']);
 
-$query = trim($_SERVER['REQUEST_URI'], '/');
+$query = trim($_SERVER['QUERY_STRING'], '/');
 plog('query:', $query);
 
-if (empty($_GET) || $_GET['url'] == '') {
+if ($query == '') {
     $html = require_once './clientOverview.php';
     echo $html;
     exit;
 }
 
-if ($_GET['url'] == 'payment') {
+if ($query == 'payment') {
     $html = require_once './payment.php';
     echo $html;
     exit;
 }
 
-if ($_GET['url'] == 'client-report') {
+if ($query == 'client-report') {
     $html = require_once './reportForClient.php';
     echo $html;
     exit;
