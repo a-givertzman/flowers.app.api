@@ -194,6 +194,7 @@ class HtmlTableGroupBy {
             for(var key in data) {
                 var row = data[key];
                 if (purchaseId != row['purchase/id']) {
+                    purchaseId = row['purchase/id'];
                     var tHead = this.header.render(row);
                     this.elem.appendChild(tHead);
                     var tBody = this.body.render();
