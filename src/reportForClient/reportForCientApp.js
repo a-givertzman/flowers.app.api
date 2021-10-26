@@ -65,18 +65,18 @@ const mySqlParamsForTransactions = {
 // Константы для заголовков таблиц
 const HeaderForOrdersHtml = `
     <tr class="purchase-row">
-    <th>PrID</th>
-    <th>Группа</th>
-    <th>Нименование</th>
-    <th><span>Заказал</span></th>
-    <th><span>Получил</span></th>
-    <th>Цена закупки</th>
-    <th>Цена</th>
-    <th><span>Транспортные<br>расходы</span></th>
-    <th><span>Сумма к<br>оплате</span></th>
-    <th><span>Оплатил</span></th>
-    <th><span>Сумма к<br>возврату</span></th>
-    <th><span>Возвращено</span></th>
+        <th>PrID</th>
+        <th>Группа</th>
+        <th>Нименование</th>
+        <th><span>Заказал</span></th>
+        <th><span>Получил</span></th>
+        <th>Цена закупки</th>
+        <th>Цена</th>
+        <th><span>Транспортные<br>расходы</span></th>
+        <th><span>Сумма к<br>оплате</span></th>
+        <th><span>Оплатил</span></th>
+        <th><span>Сумма к<br>возврату</span></th>
+        <th><span>Возвращено</span></th>
     </tr>
 `;
 const HeaderForTransactionsHtml = `
@@ -247,8 +247,9 @@ class HtmlTableHeader {
         // `;
         const elem = document.createElement('thead');
         elem.innerHTML = this.html;
-        elem.appendChild(
-            this.caption.render()
+        elem.insertBefore(
+            this.caption.render(),
+            elem.firstChild
         );
         return elem;
     }
