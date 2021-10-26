@@ -61,7 +61,10 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             name: 'clientBalans',
             obj: new ClientBalas(
                 htmlSelectorOfClientBalans,
-                new ApiRequest(mySqlParamsForClientBalans)
+                new ApiRequest(
+                    mySqlParamsForClientBalans,
+                    new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+                )
             ), 
         },
         {
@@ -69,20 +72,29 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             obj: new Selector(
                 htmlSelectorOfClientSelect,
                 {placeholder: 'Найди себя'},
-                new ApiRequest(mySqlParamsForClientSelect)
+                new ApiRequest(
+                    mySqlParamsForClientSelect,
+                    new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+                )
             )
         },
         {
             name: 'clientOrders',
             obj: new HtmlTableGroupBy(
                 htmlSelectorOfClientOrders,
-                new ApiRequest(mySqlParamsForOrders),
+                new ApiRequest(
+                    mySqlParamsForOrders,
+                    new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+                ),
                 new HeaderForOrders(),
+                new CaptionForTable(),
                 new BodyForOrders(
                     new RowForOrders(),
-                    new ApiRequest(mySqlParamsForOrders)
+                    new ApiRequest(
+                        mySqlParamsForOrders,
+                        new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+                    )
                 ),
-                new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
             ),
         },
         {
@@ -94,9 +106,11 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                     'client/name': 'Пока нет имени клиента'
                 }),
                 new BodyForTransactions(
-                    new ApiRequest(mySqlParamsForTransactions)
+                    new ApiRequest(
+                        mySqlParamsForTransactions,
+                        new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+                    )
                 ),
-                new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
             )
         }
     ]);
@@ -141,16 +155,14 @@ class ContentOfPage {
 }
 
 class HtmlTable {
-    constructor(parentSelector, header, body, busy) {
+    constructor(parentSelector, header, body) {
         console.log('[HtmlTable.constructor]');
         this.parentSelector = parentSelector;
         this.header = header;
         this.body = body;
-        this.busy = busy;
     }
     async render(params = {}) {
         console.log('[HtmlTable.render]');
-        this.busy.show();
         const thead = this.header.render();
         const tbody = await this.body.render(params);
         this.elem = this.parentSelector 
@@ -159,7 +171,6 @@ class HtmlTable {
         this.elem.innerHTML = '';
         this.elem.appendChild(thead);
         this.elem.appendChild(tbody);
-        this.busy.hide();
         return this.elem;
     }
     clear() {
@@ -168,18 +179,16 @@ class HtmlTable {
 }
 
 class HtmlTableGroupBy {
-    constructor(parentSelector, groupByDataSource, header, body, busy) {
+    constructor(parentSelector, groupByDataSource, header, caption, body) {
         console.log('[HtmlTableGroupedBy.constructor]');
         this.parentSelector = parentSelector;
         this.groupByDataSource = groupByDataSource;
         this.header = header;
         this.body = body;
-        this.busy = busy;
     }
     async render(params = {}) {
         console.log('[HtmlTableGroupedBy.render]');
         console.log('[HtmlTableGroupedBy.render] params:', params);
-        this.busy.show();
         const where = [
             {operator: 'where', field: 'client/id', cond: '=', value: params.id},
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
@@ -215,7 +224,6 @@ class HtmlTableGroupBy {
             }
             var tRow = this.body.renderSubTotal(subTotal, subTotalPaid);
             if (tBody && subTotal) tBody.appendChild(tRow);
-            this.busy.hide();
             return this.elem;
         });
     }
@@ -323,6 +331,60 @@ class BodyForOrders {
                 }
             )
         }
+    }
+}
+
+class CaptionForTable {
+    constructor(captionText) {
+        console.log('[CaptionForTable.constructor]');
+        this.captionText = captionText;
+    }
+    render(captionText) {
+        console.log('[CaptionForTable.render]');
+        captionText = captionText ? captionText : this.captionText;
+        const html = `
+            <tr class="purchase-row-header">
+                <th colspan="100">${captionText}</th>
+            </tr>
+        `;
+        const elem = document.createElement('tr');
+        elem.innerHTML = html.trim();
+        return elem;
+    }
+}
+
+class HeaderForOrders {
+    constructor(row) {
+        console.log('[HeaderForOrders.constructor]');
+        this.row = row;
+    }
+    render(row) {
+        console.log('[HeaderForOrders.render]');
+        row = row ? row : this.row;
+        const theadHtml = `
+            <thead>
+                <tr class="purchase-row-header">
+                    <th colspan="100">Закупка [${row['purchase/id']}] ${row['purchase/name']}</th>
+                </tr>
+                <tr class="purchase-row">
+                    <th>PrID</th>
+                    <th>Группа</th>
+                    <th>Нименование</th>
+                    <th><span>Заказал</span></th>
+                    <th><span>Получил</span></th>
+                    <th>Цена закупки</th>
+                    <th>Цена</th>
+                    <th><span>Транспортные<br>расходы</span></th>
+                    <th><span>Сумма к<br>оплате</span></th>
+                    <th><span>Оплатил</span></th>
+                    <th><span>Сумма к<br>возврату</span></th>
+                    <th><span>Возвращено</span></th>
+                </tr>
+            </thead>
+        `;
+        const thead = document.createElement('thead');
+        thead.innerHTML = theadHtml.trim();
+        return thead;
     }
 }
 
@@ -467,41 +529,5 @@ class RowForTransactions {
         const newRow = document.createElement('tr');
         newRow.innerHTML = rowHtml.trim();
         return newRow;        
-    }
-}
-
-
-class HeaderForOrders {
-    constructor(row) {
-        console.log('[HeaderForOrders.constructor]');
-        this.row = row;
-    }
-    render(row) {
-        console.log('[HeaderForOrders.render]');
-        row = row ? row : this.row;
-        const theadHtml = `
-            <thead>
-                <tr class="purchase-row-header">
-                    <th colspan="100">Закупка [${row['purchase/id']}] ${row['purchase/name']}</th>
-                </tr>
-                <tr class="purchase-row">
-                    <th>PrID</th>
-                    <th>Группа</th>
-                    <th>Нименование</th>
-                    <th><span>Заказал</span></th>
-                    <th><span>Получил</span></th>
-                    <th>Цена закупки</th>
-                    <th>Цена</th>
-                    <th><span>Транспортные<br>расходы</span></th>
-                    <th><span>Сумма к<br>оплате</span></th>
-                    <th><span>Оплатил</span></th>
-                    <th><span>Сумма к<br>возврату</span></th>
-                    <th><span>Возвращено</span></th>
-                </tr>
-            </thead>
-        `;
-        const thead = document.createElement('thead');
-        thead.innerHTML = theadHtml.trim();
-        return thead;
     }
 }

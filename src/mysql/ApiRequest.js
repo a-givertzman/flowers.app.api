@@ -17,13 +17,15 @@
  * @returns Возвращает набор данных в объекте.
  */
 class ApiRequest {
-    constructor(mySqlParams) {
+    constructor(mySqlParams, busyIndicator) {
         console.log('[ApiRequest.constructor]');
         this.mySqlParams = mySqlParams;
+        this.busy = busyIndicator;
     }
 
     fetchData(newParams = {}) {
         console.log('[ApiRequest.fetch]');
+        this.busy.show();
         const args = this.mySqlParams;
         for (var key in newParams) {
             args[key] = newParams[key];
@@ -38,15 +40,18 @@ class ApiRequest {
                 return this.parseResponse(response)
                     .then(data => {
                         console.log('data: ', data);
+                        this.busy.hide();
                         return data;
                     })
                     .catch(error => {
                         console.error('error:', error);
+                        this.busy.hide();
                         return {}
                     });
             })
             .catch(error => {
                 console.error('error:', error);
+                this.busy.hide();
                 return {};
             });
     }
