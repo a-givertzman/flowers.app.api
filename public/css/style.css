@@ -249,7 +249,7 @@ header{
 .client-select-top{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin: 10px 0 10px;
 }
 
 .client-select-title-box{
@@ -276,10 +276,9 @@ header{
 .client-select-wrapper{
     /* letter-spacing: 0.1px; */
     border: none;
-    padding: 10px 0 30px;
+    padding: 0px 0 5px;
 }
 .client-select{
-    /* height: 24; */
     margin: 0;
     line-height: 18px;
     letter-spacing: 0.25px;
