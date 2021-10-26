@@ -294,13 +294,13 @@ class HtmlTableGroupBy {
                 );
                 lClause.value = purchaseId;
                 mySqlParamsForOrders.where = lWhere;
-                const tBody = new HtmlTableBody(
+                const tBody = await new HtmlTableBody(
                     new RowForOrders(),
                     new ApiRequest(
                         mySqlParamsForOrders,
                         new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
                     )
-                );
+                ).render();
                 this.elem = this.parentSelector 
                     ? document.querySelector(this.parentSelector)
                     : document.createElement('table');
