@@ -178,6 +178,7 @@ class HtmlTableGroupBy {
     }
     async render(params = {}) {
         console.log('[HtmlTableGroupedBy.render]');
+        console.log('[HtmlTableGroupedBy.render] params:', params);
         this.busy.show();
         const where = [
             {operator: 'where', field: 'client/id', cond: '=', value: params.id},
