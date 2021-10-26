@@ -293,8 +293,8 @@ class HtmlTableGroupBy {
                     HeaderForOrdersHtml,
                     new HtmlTableCaption(
                         `Закупка [${purchaseId}] ${row['purchase/name']}`
-                    ).render()
-                );
+                    )
+                ).render();
                 const body = new HtmlTableBody(
                     new RowForOrders(),
                     new ApiRequest(
