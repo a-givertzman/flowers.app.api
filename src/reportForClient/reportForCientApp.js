@@ -245,7 +245,9 @@ class HtmlTableHeader {
         `;
         const elem = document.createElement('thead');
         elem.innerHTML = html;
-        elem.appendChild(this.caption);
+        elem.appendChild(
+            this.caption.render()
+        );
         return elem;
     }
 }
