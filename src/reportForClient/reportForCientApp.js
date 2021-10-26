@@ -214,17 +214,17 @@ class HtmlTable {
         this.parentSelector = parentSelector;
         this.header = header;
         this.body = body;
+        this.elem = document.querySelector(this.parentSelector)
     }
     async render(params = {}) {
         console.log('[HtmlTable.render]');
-        const thead = this.header.render();
-        const tbody = await this.body.render(params);
-        this.elem = this.parentSelector 
-            ? document.querySelector(this.parentSelector)
-            : document.createElement('table');
         this.elem.innerHTML = '';
-        this.elem.appendChild(thead);
-        this.elem.appendChild(tbody);
+        const tbody = await this.body.render(params);
+        if (tbody) {
+            const thead = this.header.render();
+            this.elem.appendChild(thead);
+            this.elem.appendChild(tbody);
+        }
         return this.elem;
     }
     clear() {
