@@ -115,14 +115,10 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             cntentOfPage.clientOrders.render({id: selectedId});
             cntentOfPage.clientTransactions.render({id: selectedId});
         } else {
-            console.log('selection clear');
             cntentOfPage.clientBalans.clear();
             cntentOfPage.clientOrders.clear();
             cntentOfPage.clientTransactions.clear();
         }
-    });
-    
-    cntentOfPage.clientSelector.selectr.on('clear', e => {
     });
 });
 
