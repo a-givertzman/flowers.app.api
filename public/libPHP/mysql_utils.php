@@ -243,7 +243,7 @@ function selectData(
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        $data = false;
+        // $data = false;
     }
     // закрываем подключение
     $mySqli->close();
@@ -346,8 +346,7 @@ function selectJoinData(
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        
-        $data = false;
+        // $data = false;
     }
     // закрываем подключение
     $mySqli->close();
@@ -603,7 +602,7 @@ function callProcedure($procedureName, $params) {
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        $data = 'MySQL connection erroe';
+        // $data = 'MySQL connection erroe';
     }
     // закрываем подключение
     $mySqli->close();
@@ -702,7 +701,7 @@ function selectView(
         $timerEnd = microtime(true);
         plog('time elapsed: ' . ($timerEnd - $timerStart));
     } else {
-        $data = false;
+        // $data = false;
     }
     // закрываем подключение
     $mySqli->close();
