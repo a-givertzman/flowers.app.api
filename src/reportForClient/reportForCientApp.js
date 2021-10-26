@@ -313,7 +313,7 @@ class BodyForOrders {
     }
     renderSubTotal(subTotal) {
         if (subTotal) {
-            this.render(
+            return this.render(
                 {'product/name': 'Итог по закупке:', cost: subTotal}
             )
         }
