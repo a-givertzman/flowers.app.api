@@ -480,7 +480,6 @@ class RowForOrders {
     render(row) {
         console.log('[RowForOrders.render]');
         row = row ? row : this.row;
-
         let product_id = row['product/id'] ? row['product/id'] : '';
         let product_group = row['product/group'] ? row['product/group'] : '';
         let product_name = row['product/name'] ? row['product/name'] : '';
@@ -542,7 +541,7 @@ class HtmlTableBody {
             // console.log('[BodyForTransactions.render] data:', data);
             for(var key in data) {
                 var row = data[key];
-                var trow = this.tableRowFor(row).render();
+                var trow = this.tableRowFor.render(row);
                 tbody.appendChild(trow);
             }
             return tbody;
@@ -555,9 +554,9 @@ class RowForTransactions {
         console.log('[RowForTransactions.constructor]');
         this.row = row;
     }
-    render() {
+    render(row) {
         console.log('[RowForTransactions.render]');
-        const row = this.row;
+        row = row ? row : this.row;
         const purchaseMemberId = row['purchase_member/id'] ? row['purchase_member/id'] : '';
         const purchaseName = row['purchase/name'] ? row['purchase/name'] : '-';
         const productName = row['product/name'] ? row['product/name'] : '-';
