@@ -144,7 +144,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                     )
                 ),
                 new HtmlTableBody(
-                    RowForTransactions(),
+                    new RowForTransactions(),
                     new ApiRequest(
                         mySqlParamsForTransactions,
                         new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
