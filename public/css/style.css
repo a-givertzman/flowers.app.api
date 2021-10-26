@@ -246,6 +246,10 @@ header{
 }
 
 /* client-selector */
+.client-select-section{
+    padding: 0 0 20px;
+}
+
 .client-select-top{
     display: flex;
     justify-content: space-between;

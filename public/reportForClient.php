@@ -98,7 +98,7 @@
             </div>
         </div>
     </header>
-    <section class="client-select">
+    <section class="client-select-section">
         <div class="container">
             <div class="client-select-top">
                 <div class="client-select-title-box">
