@@ -417,17 +417,17 @@ class BodyForTransactions {
     }
     render(params) {
         console.log('[BodyForTransactions.render]');
-        const tbodyHtml = `
-            <tbody>
-            </tbody>
-        `;
-        const tbody = document.createElement('tbody');
-        tbody.innerHTML = tbodyHtml.trim();
-        const where = [
-            {operator: 'where', field: 'client/id', cond: '=', value: params.id},
-            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ];
         return this.dataSource.fetchData({where: where}).then(data => {
+            const tbodyHtml = `
+                <tbody>
+                </tbody>
+            `;
+            const tbody = document.createElement('tbody');
+            tbody.innerHTML = tbodyHtml.trim();
+            const where = [
+                {operator: 'where', field: 'client/id', cond: '=', value: params.id},
+                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            ];
             // console.log('[BodyForTransactions.render] data:', data);
             for(var key in data) {
                 var row = data[key];
