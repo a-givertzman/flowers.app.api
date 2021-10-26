@@ -309,7 +309,7 @@ class RowForOrders {
     }
     render(row) {
         console.log('[RowForOrders.render]');
-        let row = row ? row : this.row;
+        row = row ? row : this.row;
         let rowHtml = `
         <tr class="purchase-row">
             <td>${row['product/id']}</td>
