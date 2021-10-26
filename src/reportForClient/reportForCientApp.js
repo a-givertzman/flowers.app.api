@@ -312,8 +312,8 @@ class HtmlTableGroupBy {
                 this.elem.innerHTML = '';
                 this.elem.appendChild(tHead);
                 this.elem.appendChild(tBody);
-                return this.elem;
             }
+            return this.elem;
         });
     }
     clear() {
