@@ -191,17 +191,25 @@ class HtmlTableGroupBy {
                 : document.createElement('table');
             this.elem.innerHTML = '';
             var purchaseId = -1;
+            var subTotal;
             for(var key in data) {
                 var row = data[key];
                 if (purchaseId != row['purchase/id']) {
-                    purchaseId = row['purchase/id'];
+                    if (purchaseId > 0) {
+                        row = {'product/name': 'Итог по закупке:', cost: subTotal}
+                        var tRow = this.body.renderRow(row);
+                        tBody.appendChild(tRow);
+                    }
                     var tHead = this.header.render(row);
                     this.elem.appendChild(tHead);
                     var tBody = this.body.render();
                     this.elem.appendChild(tBody);
+                    purchaseId = row['purchase/id'];
+                    subTotal = 0;
                 }
                 var tRow = this.body.renderRow(row);
                 tBody.appendChild(tRow);
+                subTotal += row['cost']; 
             }
             this.busy.hide();
             return this.elem;
