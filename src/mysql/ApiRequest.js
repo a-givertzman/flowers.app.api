@@ -6,6 +6,7 @@
         url: 'getData.php',
         tableName: 'client', 
         keys: ['*'], 
+        groupBy: '', 
         orderBy: 'id', 
         order: 'ASC', 
         where: [
@@ -86,6 +87,7 @@ class ApiRequest {
         const tableName = args.tableName ? args.tableName : '';
         const params = args.params ? args.params : '0';
         const keys = args.keys ? args.keys : ['*'];
+        const groupBy = args.groupBy ? args.groupBy : '';
         const orderBy = args.orderBy ? args.orderBy : 'id';
         const order = args.order ? args.order : 'ASC';
         const where = args.where ? args.where : [];
@@ -95,6 +97,7 @@ class ApiRequest {
         body.append( "tableName", JSON.stringify(tableName) );
         body.append( "params", JSON.stringify(params) );
         body.append( "keys", JSON.stringify(keys) );
+        body.append( "groupBy", JSON.stringify(groupBy) );
         body.append( "orderBy", JSON.stringify(orderBy) );
         body.append( "order", order );
         body.append( "where", JSON.stringify(where) );
