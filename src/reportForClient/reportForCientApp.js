@@ -277,10 +277,14 @@ class HtmlTableGroupBy {
         console.log('[HtmlTableGroupedBy.constructor]');
         this.parentSelector = parentSelector;
         this.dataSource = dataSource;
+        this.elem = this.parentSelector 
+            ? document.querySelector(this.parentSelector)
+            : document.createElement('table');
     }
     async render(where) {
         console.log('[HtmlTableGroupBy.render]');
         console.log('[HtmlTableGroupBy.render] where:', where);
+        this.elem.innerHTML = '';
         return this.dataSource.fetchData({where: where}).then(async data => {
             console.log('[HtmlTableGroupBy.render] data:', data);
             var lWhere = [...where];
@@ -306,10 +310,6 @@ class HtmlTableGroupBy {
                 const tBody = await body.render(lWhere);
                 console.log('[HtmlTableGroupBy.render] tHead:', tHead);
                 console.log('[HtmlTableGroupBy.render] tBody:', tBody);
-                this.elem = this.parentSelector 
-                    ? document.querySelector(this.parentSelector)
-                    : document.createElement('table');
-                this.elem.innerHTML = '';
                 this.elem.appendChild(tHead);
                 this.elem.appendChild(tBody);
             }
