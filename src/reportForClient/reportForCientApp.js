@@ -98,7 +98,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 ),
                 new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
             )
-        },
+        }
     ]);
     
     console.log('cntentOfPage', cntentOfPage);
