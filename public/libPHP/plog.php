@@ -1,5 +1,8 @@
 <?php
 
+// настройки логирования ошибок php
+error_reporting(0); // Error engine - always E_ALL!
+
 // глубина трассировки стэка вызова функций
 $debug_backtrace_depth = 2;
 
@@ -13,8 +16,6 @@ error_log("\t [plog.php]\tphp log file:\t" .$logFilePath, 0);
 
 
 
-// настройки логирования ошибок php
-error_reporting(0); // Error engine - always E_ALL!
 // ini_set('ignore_repeated_errors', TRUE); // always TRUE
 // ini_set('display_errors', FALSE); // Error display - FALSE only in production environment or real server. TRUE in development environment
 // ini_set('log_errors', TRUE); // Error logging engine
