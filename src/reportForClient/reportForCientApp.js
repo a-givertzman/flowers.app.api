@@ -279,10 +279,10 @@ class HtmlTableGroupBy {
         this.dataSource = dataSource;
     }
     async render(where) {
-        console.log('[HtmlTableGroupedBy.render]');
-        console.log('[HtmlTableGroupedBy.render] where:', where);
+        console.log('[HtmlTableGroupBy.render]');
+        console.log('[HtmlTableGroupBy.render] where:', where);
         return this.dataSource.fetchData({where: where}).then(async data => {
-            console.log('[HtmlTableGroupedBy.render] data:', data);
+            console.log('[HtmlTableGroupBy.render] data:', data);
             var lWhere = [...where];
             var lClause = {operator: 'and', field: 'purchase/id', cond: '=', value: null};
             lWhere.push(lClause);
@@ -304,6 +304,8 @@ class HtmlTableGroupBy {
                 );
                 lClause.value = purchaseId;
                 const tBody = await body.render(lWhere);
+                console.log('[HtmlTableGroupBy.render] tHead:', tHead);
+                console.log('[HtmlTableGroupBy.render] tBody:', tBody);
                 this.elem = this.parentSelector 
                     ? document.querySelector(this.parentSelector)
                     : document.createElement('table');
