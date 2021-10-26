@@ -277,7 +277,7 @@ class HtmlTableGroupBy {
     }
     async render(where) {
         console.log('[HtmlTableGroupedBy.render]');
-        console.log('[HtmlTableGroupedBy.render] params:', params);
+        console.log('[HtmlTableGroupedBy.render] where:', where);
         return this.groupByDataSource.fetchData({where: where}).then(data => {
             console.log('[HtmlTableGroupedBy.render] data:', data);
             var lWhere = [...where];
