@@ -79,6 +79,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 new ApiRequest(mySqlParamsForOrders),
                 new HeaderForOrders(),
                 new BodyForOrders(
+                    new RowForOrders(),
                     new ApiRequest(mySqlParamsForOrders)
                 ),
                 new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
@@ -182,7 +183,7 @@ class HtmlTableGroupBy {
             {operator: 'where', field: 'client/id', cond: '=', value: params.id},
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ];
-        return this.dataSource.fetchData({where: where}).then(async data => {
+        return this.dataSource.fetchData({where: where}).then(data => {
             console.log('[HtmlTableGroupedBy.render] data:', data);
             this.elem = this.parentSelector 
                 ? document.querySelector(this.parentSelector)
@@ -192,11 +193,13 @@ class HtmlTableGroupBy {
             for(var key in data) {
                 var row = data[key];
                 if (purchaseId != row['purchase/id']) {
-                    const thead = this.header.render(row);
-                    this.elem.appendChild(thead);
+                    var tHead = this.header.render(row);
+                    this.elem.appendChild(tHead);
+                    var tBody = this.body.render();
+                    this.elem.appendChild(tBody);
                 }
-                const tbody = await this.body.render(params);
-                this.elem.appendChild(tbody);
+                var tRow = this.body.renderRow(row);
+                tBody.appendChild(tRow);
             }
             this.busy.hide();
             return this.elem;
@@ -275,12 +278,13 @@ class Selector {
 }
 
 class BodyForOrders {
-    constructor(dataSource) {
+    constructor(rowForOrders, dataSource) {
         console.log('[BodyForOrders.constructor]');
+        this.rowForOrders = rowForOrders;
         this.dataSource = dataSource;
         this.headerData = '--';
     }
-    render(params = {}) {
+    render() {
         console.log('[BodyForOrders.render]');
         const tbodyHtml = `
             <tbody>
@@ -288,22 +292,13 @@ class BodyForOrders {
         `;
         const tbody = document.createElement('tbody');
         tbody.innerHTML = tbodyHtml.trim();
-        const where = [
-            {operator: 'where', field: 'client/id', cond: '=', value: params.id},
-            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ];
-        return this.dataSource.fetchData({where: where}).then(data => {
-            // console.log('[BodyForOrders.render] data:', data);
-            for(var key in data) {
-                var row = data[key];
-                var trow = new RowForOrders(row).render();
-                tbody.appendChild(trow);
-            }
-            return tbody;
-        });
+        return tbody;
     }
-    headerData() {
-        return this.headerData;
+    renderRow() {
+        console.log('[BodyForOrders.renderRow]');
+        return tbody.appendChild(
+            this.rowForOrders.render(row)
+        );
     }
 }
 
