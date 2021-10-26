@@ -278,7 +278,7 @@ class HtmlTableGroupBy {
     async render(where) {
         console.log('[HtmlTableGroupedBy.render]');
         console.log('[HtmlTableGroupedBy.render] where:', where);
-        return this.dataSource.fetchData({where: where}).then(data => {
+        return this.dataSource.fetchData({where: where}).then(async data => {
             console.log('[HtmlTableGroupedBy.render] data:', data);
             var lWhere = [...where];
             var lClause = {operator: 'where', field: 'purchase/id', cond: '=', value: null};
