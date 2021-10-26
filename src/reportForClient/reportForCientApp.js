@@ -22,6 +22,20 @@ const mySqlParamsForClientSelect = {
     where: [{operator: 'where', field: 'deleted', cond: 'is null', value: null},], 
     limit: 0,
 }
+const mySqlParamsForOrdersGroups = {
+    url: 'getView.php',
+    tableName: 'purchaseMemberView', 
+    params: '0', 
+    keys: ['*'],
+    groupBy: 'purchase/id', 
+    orderBy: 'purchase/id', 
+    order: 'ASC', 
+    where: [
+        {operator: 'where', field: 'client/id', cond: '=', value: 7},
+        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+    ], 
+    limit: 0,
+}
 const mySqlParamsForOrders = {
     url: 'getView.php',
     tableName: 'purchaseMemberView', 
@@ -48,6 +62,37 @@ const mySqlParamsForTransactions = {
     ], 
     limit: 0,
 }
+// Константы для заголовков таблиц
+const HeaderForOrdersHtml = `
+    <tr class="purchase-row">
+    <th>PrID</th>
+    <th>Группа</th>
+    <th>Нименование</th>
+    <th><span>Заказал</span></th>
+    <th><span>Получил</span></th>
+    <th>Цена закупки</th>
+    <th>Цена</th>
+    <th><span>Транспортные<br>расходы</span></th>
+    <th><span>Сумма к<br>оплате</span></th>
+    <th><span>Оплатил</span></th>
+    <th><span>Сумма к<br>возврату</span></th>
+    <th><span>Возвращено</span></th>
+    </tr>
+`;
+const HeaderForTransactionsHtml = `
+    <tr class="transaction-row">
+        <th>id</th>
+        <th>Дата</th>
+        <th>Организатор</th>
+        <th><span>Сумма</span></th>
+        <th>PuM/id</th>
+        <th>Закупка</th>
+        <th>Товар</th>
+        <th>Комментарий</th>
+        <th><span>Баланс после<br>операции</span></th>
+    </tr>
+`;
+
 // Константы для поиска элементов в DOM
 const htmlSelectorOfClientBalans = '#client-account';
 const htmlSelectorOfClientSelect = 'select.client-select';
@@ -83,29 +128,22 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             obj: new HtmlTableGroupBy(
                 htmlSelectorOfClientOrders,
                 new ApiRequest(
-                    mySqlParamsForOrders,
+                    mySqlParamsForOrdersGroups,
                     new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
-                ),
-                new HeaderForOrders(),
-                new CaptionForTable(),
-                new BodyForOrders(
-                    new RowForOrders(),
-                    new ApiRequest(
-                        mySqlParamsForOrders,
-                        new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
-                    )
-                ),
-            ),
+                )
+            )
         },
         {
             name: 'clientTransactions',
             obj: new HtmlTable(
                 htmlSelectorOfClientTransactions,
-                new HeaderForTransactions({
-                    'client/id': '???',
-                    'client/name': 'Пока нет имени клиента'
-                }),
-                new BodyForTransactions(
+                new HtmlTableHeader(
+                    HeaderForTransactionsHtml,
+                    new HtmlTableCaption(
+                        'Выши транзакции'
+                    )
+                ),
+                new HtmlTableBody(
                     new ApiRequest(
                         mySqlParamsForTransactions,
                         new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
@@ -122,9 +160,23 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         console.log('selected id:', id);
         const selectedId = Number(id);
         if (!isNaN(selectedId) && selectedId != 0) {
-            cntentOfPage.clientBalans.render({id: selectedId});
+            var where = [
+                {operator: 'where', field: 'id', cond: '=', value: selectedId},
+                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            ];
+            cntentOfPage.clientBalans.render(where);
+
+            where = [
+                {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
+                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            ];
             cntentOfPage.clientOrders.render({id: selectedId});
-            cntentOfPage.clientTransactions.render({id: selectedId});
+
+            where = [
+                {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
+                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            ];
+            cntentOfPage.clientTransactions.render(where);
         } else {
             cntentOfPage.clientBalans.clear();
             cntentOfPage.clientOrders.clear();
@@ -178,53 +230,85 @@ class HtmlTable {
     }
 }
 
+class HtmlTableHeader {
+    constructor(html, caption) {
+        console.log('[HtmlTableHeader.constructor]');
+        this.html = html;
+        this.caption = caption;
+    }
+    render(caption) {
+        console.log('[HtmlTableHeader.render]');
+        caption = caption ? caption : this.caption;
+        const html = `
+            <thead>
+            </thead>
+        `;
+        const elem = document.createElement('thead');
+        elem.innerHTML = html;
+        elem.appendChild(this.caption);
+        return elem;
+    }
+}
+
+class HtmlTableCaption {
+    constructor(text) {
+        console.log('[HtmlTableCaption.constructor]');
+        this.text = text;
+    }
+    render(text) {
+        console.log('[HtmlTableCaption.render]');
+        text = text ? text : this.text;
+        const html = `
+            <tr class="transaction-row-header">
+                <th colspan="100">${text}</th>
+            </tr>
+        `;
+        const elem = document.createElement('tr');
+        elem.innerHTML = html.trim();
+        return elem;
+    }
+}
+
 class HtmlTableGroupBy {
-    constructor(parentSelector, groupByDataSource, header, caption, body) {
+    constructor(parentSelector, dataSource) {
         console.log('[HtmlTableGroupedBy.constructor]');
         this.parentSelector = parentSelector;
-        this.groupByDataSource = groupByDataSource;
-        this.header = header;
-        this.body = body;
+        this.dataSource = dataSource;
     }
-    async render(params = {}) {
+    async render(where) {
         console.log('[HtmlTableGroupedBy.render]');
         console.log('[HtmlTableGroupedBy.render] params:', params);
-        const where = [
-            {operator: 'where', field: 'client/id', cond: '=', value: params.id},
-            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ];
         return this.groupByDataSource.fetchData({where: where}).then(data => {
             console.log('[HtmlTableGroupedBy.render] data:', data);
-            this.elem = this.parentSelector 
-                ? document.querySelector(this.parentSelector)
-                : document.createElement('table');
-            this.elem.innerHTML = '';
-            var purchaseId = -1;
-            var subTotal, subTotalPaid;
-            var tBody;
+            var lWhere = [...where];
+            var lClause = {operator: 'where', field: 'purchase/id', cond: '=', value: null};
+            lWhere.push(lClause);
             for(var key in data) {
                 var row = data[key];
-                if (purchaseId != row['purchase/id']) {
-                    if (purchaseId > 0) {
-                        var tRow = this.body.renderSubTotal(subTotal, subTotalPaid);
-                        tBody.appendChild(tRow);
-                    }
-                    var tHead = this.header.render(row);
-                    this.elem.appendChild(tHead);
-                    tBody = this.body.render();
-                    this.elem.appendChild(tBody);
-                    purchaseId = row['purchase/id'];
-                    subTotal = 0;
-                    subTotalPaid = 0;
-                }
-                var tRow = this.body.renderRow(row);
-                tBody.appendChild(tRow);
-                subTotal += Number(row['cost']);
-                subTotalPaid += Number(row['paid']);
+                const purchaseId = row['purchase/id'];
+                const tHead = new HtmlTableHeader(
+                    HeaderForOrdersHtml,
+                    new HtmlTableCaption(
+                        `Закупка [${purchaseId}] ${row['purchase/name']}`
+                    )
+                );
+                lClause.value = purchaseId;
+                mySqlParamsForOrders.where = lWhere;
+                const tBody = new HtmlTableBody(
+                    new RowForOrders(),
+                    new ApiRequest(
+                        mySqlParamsForOrders,
+                        new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+                    )
+                );
+                this.elem = this.parentSelector 
+                    ? document.querySelector(this.parentSelector)
+                    : document.createElement('table');
+                this.elem.innerHTML = '';
+                this.elem.appendChild(tHead);
+                this.elem.appendChild(tBody);
+                return this.elem;
             }
-            var tRow = this.body.renderSubTotal(subTotal, subTotalPaid);
-            if (tBody && subTotal) tBody.appendChild(tRow);
-            return this.elem;
         });
     }
     clear() {
@@ -241,12 +325,8 @@ class ClientBalas {
         this.elem = document.querySelector(this.htmlSelector);
         if (this.elem) this.elem.innerHTML = `Баланс: ${this.emptyBalans} RUB`;
     }
-    render(params) {
+    render(where) {
         console.log('[ClientBalas.render]');
-        const where = [
-            {operator: 'where', field: 'id', cond: '=', value: params.id},
-            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ];
         this.dataSource.fetchData({where: where}).then(data => {
             // console.log('[ClientBalas.render] data:', data);
             let clientAccount
@@ -440,49 +520,14 @@ class RowForOrders {
     }
 }
 
-class HeaderForTransactions {
-    constructor(row) {
-        console.log('[HeaderForTransactions.constructor]');
-        this.row = row;
-    }
-    render() {
-        console.log('[HeaderForTransactions.render]');
-        const row = this.row;
-        const theadHtml = `
-            <thead>
-                <tr class="transaction-row-header">
-                    <th colspan="100">Ваши транзакции</th>
-                </tr>
-                <tr class="transaction-row">
-                    <th>id</th>
-                    <th>Дата</th>
-                    <th>Организатор</th>
-                    <th><span>Сумма</span></th>
-                    <th>PuM/id</th>
-                    <th>Закупка</th>
-                    <th>Товар</th>
-                    <th>Комментарий</th>
-                    <th><span>Баланс после<br>операции</span></th>
-                </tr>
-            </thead>
-        `;
-        const thead = document.createElement('thead');
-        thead.innerHTML = theadHtml.trim();
-        return thead;
-    }
-}
-
-class BodyForTransactions {
-    constructor(dataSource) {
+class HtmlTableBody {
+    constructor(tableRowFor, dataSource) {
         console.log('[BodyForTransactions.constructor]');
+        this.tableRowFor = tableRowFor;
         this.dataSource = dataSource;
     }
-    render(params) {
+    render(where) {
         console.log('[BodyForTransactions.render]');
-        const where = [
-            {operator: 'where', field: 'client/id', cond: '=', value: params.id},
-            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-        ];
         return this.dataSource.fetchData({where: where}).then(data => {
             const tbodyHtml = `
                 <tbody>
@@ -493,7 +538,7 @@ class BodyForTransactions {
             // console.log('[BodyForTransactions.render] data:', data);
             for(var key in data) {
                 var row = data[key];
-                var trow = new RowForTransactions(row).render();
+                var trow = this.tableRowFor(row).render();
                 tbody.appendChild(trow);
             }
             return tbody;
