@@ -140,7 +140,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 new HtmlTableHeader(
                     HeaderForTransactionsHtml,
                     new HtmlTableCaption(
-                        'Выши транзакции'
+                        'Выши транзакции',
+                        'transaction-row-header'
                     )
                 ),
                 new HtmlTableBody(
@@ -240,11 +241,6 @@ class HtmlTableHeader {
     render(caption) {
         console.log('[HtmlTableHeader.render]');
         caption = caption ? caption : this.caption;
-        // const html = `
-        //     <thead>
-        //         ${this.html}
-        //     </thead>
-        // `;
         const elem = document.createElement('thead');
         elem.innerHTML = this.html;
         elem.insertBefore(
@@ -256,15 +252,16 @@ class HtmlTableHeader {
 }
 
 class HtmlTableCaption {
-    constructor(text) {
+    constructor(text, classString) {
         console.log('[HtmlTableCaption.constructor]');
         this.text = text;
+        this.classString = classString;
     }
     render(text) {
         console.log('[HtmlTableCaption.render]');
         text = text ? text : this.text;
         const html = `
-            <tr class="transaction-row-header">
+            <tr class="${this.classString}">
                 <th colspan="100">${text}</th>
             </tr>
         `;
@@ -296,7 +293,8 @@ class HtmlTableGroupBy {
                 const tHead = new HtmlTableHeader(
                     HeaderForOrdersHtml,
                     new HtmlTableCaption(
-                        `Закупка [${purchaseId}] ${row['purchase/name']}`
+                        `Закупка [${purchaseId}] ${row['purchase/name']}`,
+                        'purchase-row-header'
                     )
                 ).render();
                 const body = new HtmlTableBody(
