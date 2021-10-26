@@ -157,7 +157,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.clientSelector.render();
-    
+    this.cntentOfPage = cntentOfPage;
     cntentOfPage.clientSelector.selectr.on('change', id => {
         console.log('selected id:', id);
         const selectedId = Number(id);
@@ -219,12 +219,10 @@ class HtmlTable {
     async render(params = {}) {
         console.log('[HtmlTable.render]');
         this.elem.innerHTML = '';
+        const thead = this.header.render();
         const tbody = await this.body.render(params);
-        if (tbody) {
-            const thead = this.header.render();
-            this.elem.appendChild(thead);
-            this.elem.appendChild(tbody);
-        }
+        this.elem.appendChild(thead);
+        this.elem.appendChild(tbody);
         return this.elem;
     }
     clear() {
@@ -308,6 +306,7 @@ class HtmlTableGroupBy {
                 this.elem.appendChild(tHead);
                 this.elem.appendChild(tBody);
             }
+            
             return this.elem;
         });
     }
@@ -439,13 +438,17 @@ class HtmlTableBody {
     render(where) {
         console.log('[HtmlTableBody.render]');
         return this.dataSource.fetchData({where: where}).then(data => {
+            console.log('[HtmlTableBody.render] data:', data);
+            let emptyMessage = typeof(data) == 'object' && Object.keys(data).length 
+                ? '' 
+                : `<th colspan="100">Нет записей</th>`;
             const tbodyHtml = `
                 <tbody>
+                    ${emptyMessage}
                 </tbody>
             `;
             const tbody = document.createElement('tbody');
             tbody.innerHTML = tbodyHtml.trim();
-            // console.log('[BodyForTransactions.render] data:', data);
             for(var key in data) {
                 var row = data[key];
                 var trow = this.tableRowFor.render(row);

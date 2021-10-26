@@ -70,7 +70,8 @@ class ApiRequest {
             const errDump = parsedData.errDump;
             console.log('errDump: ', errDump);
             alert('Ошибка сервера', errDump);
-            return {};
+            var data = parsedData.data;
+            return data;
         }
         if (responseCode >= 200 && responseCode < 400) {
             var data = parsedData.data;

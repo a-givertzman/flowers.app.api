@@ -5,10 +5,10 @@ error_log("\t Before plog", 0);
 require_once './libPHP/plog.php';
 error_log("\t After plog", 0);
 plog("-> router.php");
-plog('_REQUEST: ', $_REQUEST);
-plog('_SERVER: ', $_SERVER);
-plog("url:", $_GET['url']);
-plog("url:", $_POST['url']);
+// plog('_REQUEST: ', $_REQUEST);
+// plog('_SERVER: ', $_SERVER);
+// plog("url:", $_GET['url']);
+// plog("url:", $_POST['url']);
 
 $query = trim($_SERVER['QUERY_STRING'], '/');
 plog('query:', $query);
