@@ -3,7 +3,6 @@ class BusyIndicator {
     constructor(selector, hiddenClassName) {
         this.selector = selector;
         this.hiddenClassName = hiddenClassName;
-        // this.busyIndicator = document.querySelector(selector);
         this.busyIndicator = document.createElement('div');
         this.busyIndicator.innerHTML = this.html();
         let className = (selector.charAt(0) == '.') ? selector.slice(1) : selector;
@@ -22,7 +21,20 @@ class BusyIndicator {
     }
     html() {
         return `
-                <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
         `;
     }
 }
