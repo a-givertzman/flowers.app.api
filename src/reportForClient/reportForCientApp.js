@@ -212,7 +212,7 @@ class HtmlTableGroupBy {
                 subTotal += Number(row['cost']);
             }
             var tRow = this.body.renderSubTotal(subTotal);
-            tBody.appendChild(tRow);
+            if (tBody && subTotal) tBody.appendChild(tRow);
             this.busy.hide();
             return this.elem;
         });
