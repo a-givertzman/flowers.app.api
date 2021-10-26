@@ -46,7 +46,7 @@ body{
     line-height: 18px;
     margin: 0 auto;
     color: var(--granite-gray);
-    background-color: var(--nero-color);
+    /* background-color: var(--nero-color); */
 }
 
 /* HEADER */
