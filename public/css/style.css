@@ -332,7 +332,7 @@ table{
     width: 100%;
     border: none; 
     border-collapse: collapse;
-    padding: 5px 0 5px;
+    padding: 10px 0 10px;
 }
 table tr{
     border-top: solid #5e5e5e  0.1px;
