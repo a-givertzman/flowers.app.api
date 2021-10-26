@@ -9,7 +9,7 @@ $errCount = 0;
 $errDump = " | ";
 
 // Добавлять в отчет все ошибки PHP
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(0);
 
 require_once './libPHP/plog.php';
 // require_once './libPHP/cors.php';
@@ -24,8 +24,8 @@ plog("-> getData.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('php://input: ', file_get_contents( 'php://input' ));
-plog('_REQUEST: ', $_REQUEST);
+// plog('php://input: ', file_get_contents( 'php://input' ));
+// plog('_REQUEST: ', $_REQUEST);
 
 $data = ($_POST);
 plog('_POST: ', $data);

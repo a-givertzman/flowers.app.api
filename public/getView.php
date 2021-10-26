@@ -9,7 +9,7 @@ $errCount = 0;
 $errDump = " | ";
 
 // Добавлять в отчет все ошибки PHP
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(0);
 
 require_once './libPHP/plog.php';
 // require_once './libPHP/cors.php';
@@ -26,7 +26,7 @@ plog("-> getView.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('_POST:', $_POST);
+// plog('_POST:', $_POST);
 // получаем переданные параметры в формате json
 $params = $_POST['params'];                       // параметры в формате json
 $viewName = json_decode($_POST["tableName"]);        // название view

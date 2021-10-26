@@ -1,15 +1,16 @@
 <?php
 
 // настройки логирования ошибок php
-// error_reporting(0); // Error engine - always E_ALL!
+error_reporting(0); // Error engine - always E_ALL!
 
 // глубина трассировки стэка вызова функций
 $debug_backtrace_depth = 2;
 
 $logFile = 'php.log';
-$logFilePath = __DIR__ ."/../../logs/" .$logFile;
-if (!file_exists($logFilePath)) {
-    mkdir($logFilePath, 0777, true);
+$logPath = __DIR__ ."/../../logs/";
+$logFilePath = $logPath . $logFile;
+if (!file_exists($logPath)) {
+    mkdir($logPath, 0777, true);
 }
 error_log("\t [plog.php]\tphp log file:\t" .$logFilePath, 0);
 // error_log(date("[Y-m-d H:i:s]") ."\t [plog.php]\tphp log file:\t" .$logFilePath, 0);
