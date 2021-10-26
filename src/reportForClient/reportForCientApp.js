@@ -159,18 +159,17 @@ class HtmlTable {
         this.busy.show();
         const thead = this.header.render();
         const tbody = await this.body.render(params);
-        const elem = this.parentSelector 
+        this.elem = this.parentSelector 
             ? document.querySelector(this.parentSelector)
             : document.createElement('table');
-        elem.innerHTML = '';
-        elem.appendChild(thead);
-        elem.appendChild(tbody);
+        this.elem.innerHTML = '';
+        this.elem.appendChild(thead);
+        this.elem.appendChild(tbody);
         this.busy.hide();
-        return elem;
+        return this.elem;
     }
     clear() {
-        const elem = document.querySelector(this.parentSelector);
-        if (elem) elem.innerHTML = '';
+        if (this.elem) this.elem.innerHTML = '';
     }
 }
 
