@@ -166,7 +166,6 @@ class HtmlTable {
         return this.elem;
     }
     clear() {
-        console.log('table.elem:', this.elem);
         if (this.elem) this.elem.innerHTML = '';
     }
 }
