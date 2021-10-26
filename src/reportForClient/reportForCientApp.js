@@ -77,10 +77,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             obj: new HtmlTableGroupedBy(
                 htmlSelectorOfClientOrders,
                 new ApiRequest(mySqlParamsForOrders),
-                new HeaderForOrders({
-                    'purchase/id': '???',
-                    'purchase/name': 'Пока нет названия закупки'
-                }),
+                new HeaderForOrders(),
                 new BodyForOrders(
                     new ApiRequest(mySqlParamsForOrders)
                 ),
@@ -186,10 +183,10 @@ class HtmlTableGroupedBy {
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ];
         return this.dataSource.fetchData({where: where}).then(data => {
-            // console.log('[HtmlTableGroupedBy.render] data:', data);
+            console.log('[HtmlTableGroupedBy.render] data:', data);
             this.elem = this.parentSelector 
-            ? document.querySelector(this.parentSelector)
-            : document.createElement('table');
+                ? document.querySelector(this.parentSelector)
+                : document.createElement('table');
             this.elem.innerHTML = '';
             var purchaseId = -1;
             for(var key in data) {
