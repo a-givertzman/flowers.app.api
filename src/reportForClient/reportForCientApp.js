@@ -191,13 +191,13 @@ class HtmlTableGroupBy {
                 : document.createElement('table');
             this.elem.innerHTML = '';
             var purchaseId = -1;
-            var subTotal;
+            var subTotal, subTotalPaid;
             var tBody;
             for(var key in data) {
                 var row = data[key];
                 if (purchaseId != row['purchase/id']) {
                     if (purchaseId > 0) {
-                        var tRow = this.body.renderSubTotal(subTotal);
+                        var tRow = this.body.renderSubTotal(subTotal, subTotalPaid);
                         tBody.appendChild(tRow);
                     }
                     var tHead = this.header.render(row);
@@ -206,12 +206,14 @@ class HtmlTableGroupBy {
                     this.elem.appendChild(tBody);
                     purchaseId = row['purchase/id'];
                     subTotal = 0;
+                    subTotalPaid = 0;
                 }
                 var tRow = this.body.renderRow(row);
                 tBody.appendChild(tRow);
                 subTotal += Number(row['cost']);
+                subTotalPaid += Number(row['paid']);
             }
-            var tRow = this.body.renderSubTotal(subTotal);
+            var tRow = this.body.renderSubTotal(subTotal, subTotalPaid);
             if (tBody && subTotal) tBody.appendChild(tRow);
             this.busy.hide();
             return this.elem;
@@ -311,10 +313,14 @@ class BodyForOrders {
             this.rowForOrders.render(row)
         );
     }
-    renderSubTotal(subTotal) {
+    renderSubTotal(subTotal, subTotalPaid) {
         if (subTotal) {
             return this.renderRow(
-                {'product/name': 'Итог по закупке:', cost: subTotal}
+                {
+                    'product/name': 'Итог по закупке:', 
+                    cost: subTotal, 
+                    paid: subTotalPaid
+                }
             )
         }
     }
