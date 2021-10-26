@@ -170,7 +170,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
-            cntentOfPage.clientOrders.render({id: selectedId});
+            cntentOfPage.clientOrders.render(where);
 
             where = [
                 {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
