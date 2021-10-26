@@ -422,7 +422,7 @@ table td:last-child { border-right: solid #5e5e5e  0.1px; }
 .footer-box{
     /* min-height: 400px; */
     margin: 0 auto;
-    padding: 20px 0 30px;
+    padding: 10px 0 10px;
     display: flex;
     justify-content: space-between;
     color: var(--light-grey-color);
@@ -441,13 +441,13 @@ table td:last-child { border-right: solid #5e5e5e  0.1px; }
 }
 .footer-box-text{
     color: var(--granite-gray);
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 .footer-box-contacts{
-    padding-top: 10px;
+    padding-top: 5px;
 }
 .footer-box-contacts li{
-    margin-top: 10px;
+    margin-top: 5px;
 }
 .footer-box-contacts a{
     font-size: 16px;
