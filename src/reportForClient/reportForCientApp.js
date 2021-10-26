@@ -305,8 +305,6 @@ class HtmlTableGroupBy {
                 );
                 lClause.value = purchaseId;
                 const tBody = await body.render(lWhere);
-                console.log('[HtmlTableGroupBy.render] tHead:', tHead);
-                console.log('[HtmlTableGroupBy.render] tBody:', tBody);
                 this.elem.appendChild(tHead);
                 this.elem.appendChild(tBody);
             }
@@ -378,41 +376,6 @@ class Selector {
             }
         });
         return 0;
-    }
-}
-
-class BodyForOrders {
-    constructor(rowForOrders) {
-        console.log('[BodyForOrders.constructor]');
-        this.rowForOrders = rowForOrders;
-        this.headerData = '--';
-    }
-    render() {
-        console.log('[BodyForOrders.render]');
-        const tbodyHtml = `
-            <tbody>
-            </tbody>
-        `;
-        this.tbody = document.createElement('tbody');
-        this.tbody.innerHTML = tbodyHtml.trim();
-        return this.tbody;
-    }
-    renderRow(row) {
-        console.log('[BodyForOrders.renderRow]');
-        return this.tbody.appendChild(
-            this.rowForOrders.render(row)
-        );
-    }
-    renderSubTotal(subTotal, subTotalPaid) {
-        if (subTotal) {
-            return this.renderRow(
-                {
-                    'product/name': 'Итог по закупке:', 
-                    cost: subTotal, 
-                    paid: subTotalPaid
-                }
-            )
-        }
     }
 }
 
