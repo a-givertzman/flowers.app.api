@@ -143,7 +143,6 @@
                 <div class="footer-box-info">
                     <div class="footer-box-info-map">
                         <div style="position:relative;overflow:hidden;">
-                            </iframe>
                         </div>                        
                     </div>
                 </div>
