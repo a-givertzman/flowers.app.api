@@ -290,7 +290,7 @@ class HtmlTableGroupBy {
                     HeaderForOrdersHtml,
                     new HtmlTableCaption(
                         `Закупка [${purchaseId}] ${row['purchase/name']}`
-                    )
+                    ).render()
                 );
                 lClause.value = purchaseId;
                 mySqlParamsForOrders.where = lWhere;
