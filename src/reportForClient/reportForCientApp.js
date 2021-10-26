@@ -240,13 +240,13 @@ class HtmlTableHeader {
     render(caption) {
         console.log('[HtmlTableHeader.render]');
         caption = caption ? caption : this.caption;
-        const html = `
-            <thead>
-                ${this.html}
-            </thead>
-        `;
+        // const html = `
+        //     <thead>
+        //         ${this.html}
+        //     </thead>
+        // `;
         const elem = document.createElement('thead');
-        elem.innerHTML = html;
+        elem.innerHTML = this.html;
         elem.appendChild(
             this.caption.render()
         );
