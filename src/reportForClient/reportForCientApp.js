@@ -277,9 +277,7 @@ class HtmlTableGroupBy {
         console.log('[HtmlTableGroupedBy.constructor]');
         this.parentSelector = parentSelector;
         this.dataSource = dataSource;
-        this.elem = this.parentSelector 
-            ? document.querySelector(this.parentSelector)
-            : document.createElement('table');
+        this.elem = document.querySelector(this.parentSelector)
     }
     async render(where) {
         console.log('[HtmlTableGroupBy.render]');

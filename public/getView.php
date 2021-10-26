@@ -31,6 +31,7 @@ plog('_POST:', $_POST);
 $params = $_POST['params'];                       // параметры в формате json
 $viewName = json_decode($_POST["tableName"]);        // название view
 $keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
+$groupBy = json_decode($_POST["groupBy"]);          // название поля группировки
 $orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
 $order = $_POST["order"];                           // направление сортировки
 $where = json_decode($_POST["where"]);              // array, название полей покоторым делаем поиск
@@ -40,6 +41,7 @@ plog('Recived and extracted parameters:');
 plog('params: ', $params);
 plog('viewName: ', $viewName);
 plog('field keys: ', $keys);
+plog('order by: ', $groupBy);
 plog('order by: ', $orderBy);
 plog('order: ', $order);
 plog('where: ', $where);
@@ -50,6 +52,7 @@ $result = selectView(
     $viewName,          // string, название view
     $params,            // параметры в формате json
     $keys,              // array, запрашиваемые поля
+    $groupBy,           // string, поле по которому группируем
     $orderBy,           // string, поле по которому сортируем
     $order,             // направление сортировки
     $where,             // array, название полей покоторым делаем поиск

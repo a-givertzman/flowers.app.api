@@ -620,6 +620,7 @@ function selectView(
     $viewName,              // string, название view
     $params = '',           // параметры в формате json
     $field = [],            // array, запрашиваемые поля
+    $groupBy = '',          // string, поле по которому группируем
     $orderBy = 'id',        // string, поле по которому сортируем
     $order = 'ASC',         // направление сортировки
     $where = [],            // array, название полей покоторым делаем поиск
@@ -657,7 +658,12 @@ function selectView(
             // } else {
                 $query .= selectWhereExpression($where);
             // }
-
+            
+            // добавляем группировку к запросу
+            if (!empty($groupBy)) {
+                $query .= "\nGROUP BY `$groupBy`";
+            }
+            
             // добавляем сортировку к запросу
             $query .= "\nORDER BY `$orderBy` $order";
     
