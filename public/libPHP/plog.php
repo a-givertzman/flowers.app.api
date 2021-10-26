@@ -14,9 +14,9 @@ error_log("\t [plog.php]\tphp log file:\t" .$logFilePath, 0);
 
 
 // настройки логирования ошибок php
-error_reporting(E_ALL); // Error engine - always E_ALL!
-ini_set('ignore_repeated_errors', TRUE); // always TRUE
-ini_set('display_errors', FALSE); // Error display - FALSE only in production environment or real server. TRUE in development environment
+error_reporting(0); // Error engine - always E_ALL!
+// ini_set('ignore_repeated_errors', TRUE); // always TRUE
+// ini_set('display_errors', FALSE); // Error display - FALSE only in production environment or real server. TRUE in development environment
 ini_set('log_errors', TRUE); // Error logging engine
 ini_set('error_log', '../logs/php_errors.log'); // Logging file path
 ini_set('log_errors_max_len', 16384); // Logging file size
