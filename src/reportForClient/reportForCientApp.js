@@ -192,6 +192,7 @@ class HtmlTableGroupBy {
             this.elem.innerHTML = '';
             var purchaseId = -1;
             var subTotal;
+            var tBody;
             for(var key in data) {
                 var row = data[key];
                 if (purchaseId != row['purchase/id']) {
@@ -201,7 +202,7 @@ class HtmlTableGroupBy {
                     }
                     var tHead = this.header.render(row);
                     this.elem.appendChild(tHead);
-                    var tBody = this.body.render();
+                    tBody = this.body.render();
                     this.elem.appendChild(tBody);
                     purchaseId = row['purchase/id'];
                     subTotal = 0;
