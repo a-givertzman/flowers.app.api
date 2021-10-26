@@ -103,7 +103,7 @@
             <div class="client-select-top">
                 <div class="client-select-title-box">
                     <div class="client-select-title">
-                        Отчет по закупкам участника
+                        Отчет по закупкам
                         <span id="client-account"></span>
                     </div>
                     <div class="client-select-wrapper">

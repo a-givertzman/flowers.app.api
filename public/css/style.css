@@ -280,7 +280,7 @@ header{
 .client-select-wrapper{
     /* letter-spacing: 0.1px; */
     border: none;
-    padding: 0px 0 5px;
+    /* padding: 0px 0 5px; */
 }
 .client-select{
     margin: 0;
@@ -332,7 +332,7 @@ table{
     width: 100%;
     border: none; 
     border-collapse: collapse;
-    margin-top: 20px;
+    padding: 20px 0 20px;
 }
 table tr{
     border-top: solid #5e5e5e  0.1px;
