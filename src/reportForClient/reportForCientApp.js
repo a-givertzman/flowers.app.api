@@ -379,60 +379,6 @@ class Selector {
     }
 }
 
-class CaptionForTable {
-    constructor(captionText) {
-        console.log('[CaptionForTable.constructor]');
-        this.captionText = captionText;
-    }
-    render(captionText) {
-        console.log('[CaptionForTable.render]');
-        captionText = captionText ? captionText : this.captionText;
-        const html = `
-            <tr class="purchase-row-header">
-                <th colspan="100">${captionText}</th>
-            </tr>
-        `;
-        const elem = document.createElement('tr');
-        elem.innerHTML = html.trim();
-        return elem;
-    }
-}
-
-class HeaderForOrders {
-    constructor(row) {
-        console.log('[HeaderForOrders.constructor]');
-        this.row = row;
-    }
-    render(row) {
-        console.log('[HeaderForOrders.render]');
-        row = row ? row : this.row;
-        const theadHtml = `
-            <thead>
-                <tr class="purchase-row-header">
-                    <th colspan="100">Закупка [${row['purchase/id']}] ${row['purchase/name']}</th>
-                </tr>
-                <tr class="purchase-row">
-                    <th>PrID</th>
-                    <th>Группа</th>
-                    <th>Нименование</th>
-                    <th><span>Заказал</span></th>
-                    <th><span>Получил</span></th>
-                    <th>Цена закупки</th>
-                    <th>Цена</th>
-                    <th><span>Транспортные<br>расходы</span></th>
-                    <th><span>Сумма к<br>оплате</span></th>
-                    <th><span>Оплатил</span></th>
-                    <th><span>Сумма к<br>возврату</span></th>
-                    <th><span>Возвращено</span></th>
-                </tr>
-            </thead>
-        `;
-        const thead = document.createElement('thead');
-        thead.innerHTML = theadHtml.trim();
-        return thead;
-    }
-}
-
 class RowForOrders {
     constructor(row) {
         console.log('[RowForOrders.constructor]');
@@ -486,12 +432,12 @@ class RowForOrders {
 
 class HtmlTableBody {
     constructor(tableRowFor, dataSource) {
-        console.log('[BodyForTransactions.constructor]');
+        console.log('[HtmlTableBody.constructor]');
         this.tableRowFor = tableRowFor;
         this.dataSource = dataSource;
     }
     render(where) {
-        console.log('[BodyForTransactions.render]');
+        console.log('[HtmlTableBody.render]');
         return this.dataSource.fetchData({where: where}).then(data => {
             const tbodyHtml = `
                 <tbody>
