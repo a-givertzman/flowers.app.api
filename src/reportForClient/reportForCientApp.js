@@ -242,6 +242,7 @@ class HtmlTableHeader {
         caption = caption ? caption : this.caption;
         const html = `
             <thead>
+                ${this.html}
             </thead>
         `;
         const elem = document.createElement('thead');
