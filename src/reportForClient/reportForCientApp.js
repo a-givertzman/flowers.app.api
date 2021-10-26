@@ -55,8 +55,6 @@ const htmlSelectorOfClientOrders = 'table.purchase-items';
 const htmlSelectorOfClientTransactions = 'table.transaction-items';
 
 
-
-
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     const cntentOfPage = new ContentOfPage([
         {
@@ -76,8 +74,9 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         },
         {
             name: 'clientOrders',
-            obj: new HtmlTable(
+            obj: new HtmlTableGroupedBy(
                 htmlSelectorOfClientOrders,
+                new ApiRequest(mySqlParamsForOrders),
                 new HeaderForOrders({
                     'purchase/id': '???',
                     'purchase/name': 'Пока нет названия закупки'
@@ -170,6 +169,47 @@ class HtmlTable {
     }
 }
 
+class HtmlTableGroupedBy {
+    constructor(parentSelector, groupByDataSource, header, body, busy) {
+        console.log('[HtmlTableGroupedBy.constructor]');
+        this.parentSelector = parentSelector;
+        this.groupByDataSource = groupByDataSource;
+        this.header = header;
+        this.body = body;
+        this.busy = busy;
+    }
+    async render(params = {}) {
+        console.log('[HtmlTableGroupedBy.render]');
+        this.busy.show();
+        const where = [
+            {operator: 'where', field: 'client/id', cond: '=', value: params.id},
+            {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+        ];
+        return this.dataSource.fetchData({where: where}).then(data => {
+            // console.log('[HtmlTableGroupedBy.render] data:', data);
+            this.elem = this.parentSelector 
+            ? document.querySelector(this.parentSelector)
+            : document.createElement('table');
+            this.elem.innerHTML = '';
+            var purchaseId = -1;
+            for(var key in data) {
+                var row = data[key];
+                if (purchaseId != row['purchase/id']) {
+                    const thead = this.header.render(row);
+                    this.elem.appendChild(thead);
+                }
+                const tbody = await this.body.render(params);
+                this.elem.appendChild(tbody);
+            }
+            this.busy.hide();
+            return this.elem;
+        });
+    }
+    clear() {
+        if (this.elem) this.elem.innerHTML = '';
+    }
+}
+
 class ClientBalas {
     constructor(htmlSelector, dataSource) {
         console.log('[ClientBalas.constructor]');
@@ -241,6 +281,7 @@ class BodyForOrders {
     constructor(dataSource) {
         console.log('[BodyForOrders.constructor]');
         this.dataSource = dataSource;
+        this.headerData = '--';
     }
     render(params = {}) {
         console.log('[BodyForOrders.render]');
@@ -263,6 +304,9 @@ class BodyForOrders {
             }
             return tbody;
         });
+    }
+    headerData() {
+        return this.headerData;
     }
 }
 
@@ -400,9 +444,9 @@ class HeaderForOrders {
         console.log('[HeaderForOrders.constructor]');
         this.row = row;
     }
-    render() {
+    render(row) {
         console.log('[HeaderForOrders.render]');
-        const row = this.row;
+        row = row ? row : this.row;
         const theadHtml = `
             <thead>
                 <tr class="purchase-row-header">
