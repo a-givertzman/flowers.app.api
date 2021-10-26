@@ -184,7 +184,7 @@ class HtmlTableGroupBy {
             {operator: 'where', field: 'client/id', cond: '=', value: params.id},
             {operator: 'and', field: 'deleted', cond: 'is null', value: null},
         ];
-        return this.dataSource.fetchData({where: where}).then(data => {
+        return this.groupByDataSource.fetchData({where: where}).then(data => {
             console.log('[HtmlTableGroupedBy.render] data:', data);
             this.elem = this.parentSelector 
                 ? document.querySelector(this.parentSelector)
