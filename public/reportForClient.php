@@ -106,11 +106,11 @@
                         Отчет по закупкам участника
                         <span id="client-account"></span>
                     </div>
-                    <!-- <div class="client-select-cover"> -->
+                    <div class="client-select-wrapper">
                         <select class="client-select">
                             <!-- <option></option> -->
                         </select>                    
-                    <!-- </div> -->
+                    </div>
                 </div>
             </div>
             <!-- <div class="purchase-item">

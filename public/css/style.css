@@ -277,9 +277,10 @@ header{
     font-size: 16px;    
 }
 
-.client-select-cover{
+.client-select-wrapper{
     /* letter-spacing: 0.1px; */
     border: none;
+    padding: 12px 38px;
 }
 .client-select{
     /* height: 24; */
@@ -288,7 +289,6 @@ header{
     letter-spacing: 0.25px;
     /* width: 100%; */
     font-family: 'Rubik', serif;
-    /* padding: 12px 38px; */
     /* white-space: nowrap; */
     /* border: solid 3px var(--whisper-color); */
     outline: none;
