@@ -196,8 +196,9 @@ class HtmlTableGroupBy {
                 var row = data[key];
                 if (purchaseId != row['purchase/id']) {
                     if (purchaseId > 0) {
-                        row = {'product/name': 'Итог по закупке:', cost: subTotal}
-                        var tRow = this.body.renderRow(row);
+                        var tRow = this.body.renderRow(
+                            {'product/name': 'Итог по закупке:', cost: subTotal}
+                        );
                         tBody.appendChild(tRow);
                     }
                     var tHead = this.header.render(row);
@@ -319,26 +320,42 @@ class RowForOrders {
     render(row) {
         console.log('[RowForOrders.render]');
         row = row ? row : this.row;
+
+        let product_id = row['product/id'] ? row['product/id'] : '';
+        let product_group = row['product/group'] ? row['product/group'] : '';
+        let product_name = row['product/name'] ? row['product/name'] : '';
+        let count = row['count'] ? row['count'] : '';
+        let distributed = row['distributed'] ? row['distributed'] : '';
+        let product_primary_price = row['product/primary_price'] ? row['product/primary_price'] : '';
+        let product_primary_currency = row['product/primary_currency'] ? row['product/primary_currency'] : '';
+        let purchase_content_sale_price = row['purchase_content/sale_price'] ? row['purchase_content/sale_price'] : '';
+        let purchase_content_sale_currency = row['purchase_content/sale_currency'] ? row['purchase_content/sale_currency'] : '';
+        let purchase_content_shipping = row['purchase_content/shipping'] ? row['purchase_content/shipping'] : '';
+        let cost = row['cost'] ? row['cost'] : '';
+        let paid = row['paid'] ? row['paid'] : '';
+        let torefound = row['torefound'] ? row['torefound'] : '';
+        let refounded = row['refounded'] ? row['refounded'] : '';
+
         let rowHtml = `
         <tr class="purchase-row">
-            <td>${row['product/id']}</td>
-            <td>${row['product/group']}</td>
-            <td>${row['product/name']}</td>
-            <td>${row['count']}</td>
-            <td>${row['distributed']}</td>
+            <td>${product_id}</td>
+            <td>${product_group}</td>
+            <td>${product_name}</td>
+            <td>${count}</td>
+            <td>${distributed}</td>
             <td>
-                ${row['product/primary_price']}
-                ${row['product/primary_currency']}
+                ${product_primary_price}
+                ${product_primary_currency}
             </td>
             <td>
-                ${row['purchase_content/sale_price']}
-                ${row['purchase_content/sale_currency']}
+                ${purchase_content_sale_price}
+                ${purchase_content_sale_currency}
             </td>
-            <td>${row['purchase_content/shipping']}</td>
-            <td>${row['cost']}</td>
-            <td class="paid">${row['paid']}</td>
-            <td class="torefound">${row['torefound']}</td>
-            <td class="refounded">${row['refounded']}</td>
+            <td>${purchase_content_shipping}</td>
+            <td>${cost}</td>
+            <td class="paid">${paid}</td>
+            <td class="torefound">${torefound}</td>
+            <td class="refounded">${refounded}</td>
         </tr>
         `;
         let newRow = document.createElement('tr');
