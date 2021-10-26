@@ -284,7 +284,7 @@ class HtmlTableGroupBy {
         return this.dataSource.fetchData({where: where}).then(async data => {
             console.log('[HtmlTableGroupedBy.render] data:', data);
             var lWhere = [...where];
-            var lClause = {operator: 'where', field: 'purchase/id', cond: '=', value: null};
+            var lClause = {operator: 'and', field: 'purchase/id', cond: '=', value: null};
             lWhere.push(lClause);
             for(var key in data) {
                 var row = data[key];
@@ -295,8 +295,6 @@ class HtmlTableGroupBy {
                         `Закупка [${purchaseId}] ${row['purchase/name']}`
                     ).render()
                 );
-                lClause.value = purchaseId;
-                mySqlParamsForOrders.where = lWhere;
                 const body = new HtmlTableBody(
                     new RowForOrders(),
                     new ApiRequest(
@@ -304,7 +302,8 @@ class HtmlTableGroupBy {
                         new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
                     )
                 );
-                const tBody = await body.render();
+                lClause.value = purchaseId;
+                const tBody = await body.render(lWhere);
                 this.elem = this.parentSelector 
                     ? document.querySelector(this.parentSelector)
                     : document.createElement('table');
