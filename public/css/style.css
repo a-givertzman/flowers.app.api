@@ -416,7 +416,7 @@ table td:last-child { border-right: solid #5e5e5e  0.1px; }
     bottom: 0px;
     position: fixed;
     width: 100%;
-    height: var(--footer-height);
+    /* height: var(--footer-height); */
 }
 
 .footer-box{
