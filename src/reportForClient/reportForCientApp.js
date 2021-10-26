@@ -279,10 +279,9 @@ class Selector {
 }
 
 class BodyForOrders {
-    constructor(rowForOrders, dataSource) {
+    constructor(rowForOrders) {
         console.log('[BodyForOrders.constructor]');
         this.rowForOrders = rowForOrders;
-        this.dataSource = dataSource;
         this.headerData = '--';
     }
     render() {
@@ -291,13 +290,13 @@ class BodyForOrders {
             <tbody>
             </tbody>
         `;
-        const tbody = document.createElement('tbody');
-        tbody.innerHTML = tbodyHtml.trim();
-        return tbody;
+        this.tbody = document.createElement('tbody');
+        this.tbody.innerHTML = tbodyHtml.trim();
+        return this.tbody;
     }
-    renderRow() {
+    renderRow(row) {
         console.log('[BodyForOrders.renderRow]');
-        return tbody.appendChild(
+        return this.tbody.appendChild(
             this.rowForOrders.render(row)
         );
     }
