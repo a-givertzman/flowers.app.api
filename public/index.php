@@ -14,7 +14,8 @@ $query = trim($_SERVER['QUERY_STRING'], '/');
 plog('query:', $query);
 
 if ($query == '') {
-    $html = require_once './clientOverview.php';
+    // $html = require_once './clientOverview.php';
+    $html = require_once './reportForClient.php';
     echo $html;
     exit;
 }
