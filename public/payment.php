@@ -139,13 +139,13 @@
                         Краткая инфа о нас и чем мы полезны
                     </div>
                     <!-- <a class="footer-box-btn" href="#">Бесплатная консультация</a> -->
+                </div>
+                <div class="footer-box-info">
                     <ul class="footer-box-contacts">
                         <li><a class="footer-box-phone" href="tel:+7 (555) 555 55 55">+7 (555) 555 55 55</a></li>
                         <li><a class="footer-box-email" href="#">our_email@gmail.com</a></li>
                         <li><a class="footer-box-address" href="#">Казань, ул. Гороховая, 111</a></li>
                     </ul>
-                </div>
-                <div class="footer-box-info">
                     <div class="footer-box-info-map">
                         <div style="position:relative;overflow:hidden;">
                             </iframe>
