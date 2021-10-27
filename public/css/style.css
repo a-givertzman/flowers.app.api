@@ -430,7 +430,7 @@ table td:last-child { border-right: solid #5e5e5e  0.1px; }
 .footer-box-about{
     display: block;
     max-width: 360px;
-    /* margin-right: 30px; */
+    margin-right: 20px;
 }
 .footer-box-title{
     font-size: 16px;
