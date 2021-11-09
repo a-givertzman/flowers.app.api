@@ -23,7 +23,7 @@ const mySqlParamsForClientSelect = {
     limit: 0,
 }
 const mySqlParamsForOrdersGroups = {
-    url: 'getView.php',
+    url: 'get-view',
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
