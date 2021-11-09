@@ -10,7 +10,7 @@
     RewriteRule ^(.*)$ public/$1 [L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ public/index.php?$ [QSA,L]
+    RewriteRule ^(.*)$ public/index.php?$1 [QSA,L]
 </IfModule>
 
  # Запрет отображения содержимого каталогов
