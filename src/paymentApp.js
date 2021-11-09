@@ -1,24 +1,9 @@
 "use strict";
-// import { clearCookie, getCookie, setCookie } from './cookie';
-// import { getView, getData, getJoinData } from './mysql';
-// import { renderPurchaseHeader, renderPurchaseRow } from './renderPaymentPurchaseReport';
-// import { renderTransactionHeader, renderTransactionRow } from './renderPaymentPurchaseReport';
-
-// import {BusyIndicator} from '@plugins/busy-indicator/busy.js'
-
-// import '@plugins/jquery-form-styler/jquery.formstyler.css';
-// import '@plugins/jquery-form-styler/jquery.formstyler.theme.css';
-// import './css/style.css';
-// import './css/media.css';
-// import slider_1_background_img from '@img/slider-background.png';
-// import header_logo_img from '@img/header-logo.png';
-// import { User } from './user';
-// import { cli } from 'webpack';
 
 const domainPath = '';//'../../'; http://u1489690.isp.regruhosting.ru/
 
 var data = null;
-var purchaseMemberData = {};
+var orderData = {};
 var clientData = {};
 var purchaseData = {};
 var busyIndicator;
@@ -122,7 +107,7 @@ window.addEventListener(                                            // ON LOAD W
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
             getView({
-                tableName: 'purchaseMemberView', 
+                tableName: 'orderView', 
                 params: '0', 
                 keys: ['*'],
                 orderBy: 'purchase/id', 
@@ -130,7 +115,7 @@ window.addEventListener(                                            // ON LOAD W
                 where: where, 
                 limit: 0,
             }).then( responseData => {
-                purchaseMemberData = responseData;
+                orderData = responseData;
                 // console.log('responseData:', responseData);
                 var table = document.querySelector('table.purchase-items');
                 var tableBody;
@@ -155,7 +140,7 @@ window.addEventListener(                                            // ON LOAD W
                         row.querySelector(`#chbx${rowData['purchase_content/id']}`)?.addEventListener('change', (e) => {
                             onPurchaseListChanged(
                                 e.target,                   // чекбокс в позиции списка товаров закупки
-                                purchaseMemberData,
+                                orderData,
                                 clientData, 
                                 'table.purchase-clients'    // селектор таблицы клиентов
                             );
@@ -178,13 +163,13 @@ window.addEventListener(                                            // ON LOAD W
                     }   
                     
                     // обновляем сумму оплаты по всем позициям закупки для всех клиентов
-                    updateClientTotalCost(clientData, purchaseMemberData, 'table.purchase-clients');
+                    updateClientTotalCost(clientData, orderData, 'table.purchase-clients');
 
                     let submitPaymentBtn = document.querySelector('#purchase-selector-btn');
                     submitPaymentBtn.classList.remove('disabled');
                     submitPaymentBtn.addEventListener('click', e => {
                         e.preventDefault();
-                        onSubmitPaymentClicked(e, selectedId, purchaseMemberData);
+                        onSubmitPaymentClicked(e, selectedId, orderData);
                     });
                 }
                 busyIndicator.hide();
@@ -224,23 +209,23 @@ function objectRemoveDuplicated(data, keyField) {
 }
 
 
-function onPurchaseListChanged(purchaseMemberRowCheckBox, purchaseMemberData, 
+function onPurchaseListChanged(orderRowCheckBox, orderData, 
     clientData, clientTableSelector
 ) {
     console.log('[paymentApp.onPurchaseListChanged]');
-    // в purchaseMemberData помечаем неспользуемые записи
-    for (let key in purchaseMemberData) {
-        if (purchaseMemberData[key]['purchase_content/id'] == purchaseMemberRowCheckBox.name) {
-            purchaseMemberData[key]['notused'] = !purchaseMemberRowCheckBox.checked;
+    // в orderData помечаем неспользуемые записи
+    for (let key in orderData) {
+        if (orderData[key]['purchase_content/id'] == orderRowCheckBox.name) {
+            orderData[key]['notused'] = !orderRowCheckBox.checked;
         }
     }
 
     // обновляем сумму оплаты по всем позициям закупки для всех клиентов
-    updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector);
+    updateClientTotalCost(clientData, orderData, clientTableSelector);
 }
 
 // обновляет сумму оплаты по всем позициям закупки для всех клиентов
-function updateClientTotalCost(clientData, purchaseMemberData, clientTableSelector) {
+function updateClientTotalCost(clientData, orderData, clientTableSelector) {
     console.log('[paymentApp.updateClientTotalCost]');
     // перебираем клиентов
     for (var key in clientData) {
@@ -248,7 +233,7 @@ function updateClientTotalCost(clientData, purchaseMemberData, clientTableSelect
         let clientId = clientDataRow['client/id'];
         
         // получаем сумму оплаты по всем позициям закупки для данного клиента
-        var totalCost = getPurchaseMemberClientTotalCost(clientId, purchaseMemberData);
+        var totalCost = getOrderClientTotalCost(clientId, orderData);
 
         let totalValueSelector = `${clientTableSelector} #client-id-${clientId}`;
         let totalValueElement = document.querySelector(totalValueSelector);
@@ -258,16 +243,16 @@ function updateClientTotalCost(clientData, purchaseMemberData, clientTableSelect
 }
 
 // получаем сумму оплаты по всем позициям закупки для данного клиента
-function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
-    console.log('[paymentApp.getPurchaseMemberClientTotalCost]');
+function getOrderClientTotalCost(clientId, orderData) {
+    console.log('[paymentApp.getOrderClientTotalCost]');
     var totalCost = 0;
-    for (let key in purchaseMemberData) {
-        let purchaseMemberDataRow = purchaseMemberData[key];
-        // console.log('purchaseMemberDataRow:', purchaseMemberDataRow);
-        if (clientId == purchaseMemberDataRow['client/id']) {
-            // console.log('purchaseMemberTableRow:', purchaseMemberTableRow);
-            if (!purchaseMemberDataRow['notused']) {
-                let subCost = Number(purchaseMemberDataRow['cost']) - Number(purchaseMemberDataRow['paid']);
+    for (let key in orderData) {
+        let orderDataRow = orderData[key];
+        // console.log('orderDataRow:', orderDataRow);
+        if (clientId == orderDataRow['client/id']) {
+            // console.log('orderTableRow:', orderTableRow);
+            if (!orderDataRow['notused']) {
+                let subCost = Number(orderDataRow['cost']) - Number(orderDataRow['paid']);
                 totalCost += !isNaN(subCost) ? subCost : 0;
             }
         }
@@ -275,25 +260,25 @@ function getPurchaseMemberClientTotalCost(clientId, purchaseMemberData) {
     return totalCost;
 }
 
-function onSubmitPaymentClicked(e, purchaseId, purchaseMemberData) {
+function onSubmitPaymentClicked(e, purchaseId, orderData) {
     console.log('[paymentApp.onSubmitPaymentClicked]');
     busyIndicator.show();
-    console.log('payment submited with data:', purchaseMemberData);
+    console.log('payment submited with data:', orderData);
     
-    var purchaseMemberId = [];
-    for (let key in purchaseMemberData) {
-        let row = purchaseMemberData[key];
+    var orderId = [];
+    for (let key in orderData) {
+        let row = orderData[key];
         console.log('row:', row, 'notused', row['notused']);
-        if (!row['notused']) purchaseMemberId.push(Number(row['purchase_content/id']));
+        if (!row['notused']) orderId.push(Number(row['purchase_content/id']));
     }
-    console.log('purchaseMemberId:', purchaseMemberId);
+    console.log('orderId:', orderId);
 
-    if (purchaseMemberId.length > 0) {
+    if (orderId.length > 0) {
         callProcedure({
-            procedureName: 'transferPurchaseMemberPayment',
+            procedureName: 'transferOrderPayment',
             params: [
                 purchaseId,         // id закупки, для которой проводим оплату
-                JSON.stringify(purchaseMemberId),   // [] массив id позиций в purchase_member, подлежащих оплате
+                JSON.stringify(orderId),   // [] массив id позиций в order, подлежащих оплате
             ]
         })
             .then( responseData => {
