@@ -47,12 +47,10 @@ if ($query == 'get-view') {
     echo $html;
     exit;
 }
-if ($query == 'api-get-view') {
-    // plog('path:', getcwd());
-    require_once ('./getView.php');
-    // plog('html:', $html);
-    // echo $html;
-    // exit;
+if ($query == 'set-data') {
+    $html = require_once './setData.php';
+    echo $html;
+    exit;
 }
 
 plog("router.php ->");
