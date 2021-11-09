@@ -373,7 +373,7 @@ function insertData($tableName, &$data) {
         $timerStart = microtime(true);
 
         // готовим запрос
-        $query = "INSERT INTO $tableName (";
+        $query = "INSERT INTO `$tableName` (";
         
         // добавляем поля
         foreach($data as $fieldName => $value) {
@@ -441,7 +441,7 @@ function updateData($tableName, &$data) {
         $timerStart = microtime(true);
 
         // готовим запрос
-        $query = "UPDATE $tableName ";
+        $query = "UPDATE `$tableName` ";
         
         $query .= "\nSET ";
 
@@ -570,7 +570,7 @@ function callProcedure($procedureName, $params) {
         $timerStart = microtime(true);
 
         // готовим запрос
-        $query = "call $procedureName(";
+        $query = "call `$procedureName`(";
         
         // добавляем параметры
         foreach($params as $paramName => $value) {
