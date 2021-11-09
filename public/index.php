@@ -33,23 +33,19 @@ if ($query == 'client-report') {
 }
 
 if ($query == 'get-data') {
-    $html = require_once './getData.php';
-    echo $html;
+    require_once './getData.php';
     exit;
 }
 if ($query == 'get-join-data') {
-    $html = require_once './getJoinData.php';
-    echo $html;
+    require_once './getJoinData.php';
     exit;
 }
 if ($query == 'get-view') {
     require_once './getView.php';
-    // echo $html;
     exit;
 }
 if ($query == 'set-data') {
-    $html = require_once './setData.php';
-    echo $html;
+    require_once './setData.php';
     exit;
 }
 
