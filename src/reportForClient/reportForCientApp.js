@@ -24,7 +24,7 @@ const mySqlParamsForClientSelect = {
 }
 const mySqlParamsForOrdersGroups = {
     url: 'getView.php',
-    tableName: 'purchaseMemberView', 
+    tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
     groupBy: 'purchase/id', 
@@ -38,7 +38,7 @@ const mySqlParamsForOrdersGroups = {
 }
 const mySqlParamsForOrders = {
     url: 'getView.php',
-    tableName: 'purchaseMemberView', 
+    tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
     orderBy: 'purchase/id', 
@@ -467,7 +467,7 @@ class RowForTransactions {
     render(row) {
         console.log('[RowForTransactions.render]');
         row = row ? row : this.row;
-        const purchaseMemberId = row['purchase_member/id'] ? row['purchase_member/id'] : '';
+        const orderId = row['order/id'] ? row['order/id'] : '';
         const purchaseName = row['purchase/name'] ? row['purchase/name'] : '-';
         const productName = row['product/name'] ? row['product/name'] : '-';
         const rowHtml = `
@@ -476,7 +476,7 @@ class RowForTransactions {
                 <td>${row['date']}</td>
                 <td>${row['account_owner']}</td>
                 <td>${row['value']} RUB</td>
-                <td>${purchaseMemberId}</td>
+                <td>${orderId}</td>
                 <td>${purchaseName}</td>
                 <td>${productName}</td>
                 <td>${row['description']}</td>
