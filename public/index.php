@@ -49,7 +49,7 @@ if ($query == 'get-view') {
 }
 if ($query == 'api-get-view') {
     plog('path:', getcwd());
-    $html = require_once './api/getView.php';
+    $html = require_once etcwd() . '/api/getView.php';
     echo $html;
     exit;
 }
