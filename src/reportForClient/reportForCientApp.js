@@ -37,7 +37,7 @@ const mySqlParamsForOrdersGroups = {
     limit: 0,
 }
 const mySqlParamsForOrders = {
-    url: 'getView.php',
+    url: 'get-view',
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
@@ -50,7 +50,7 @@ const mySqlParamsForOrders = {
     limit: 0,
 }
 const mySqlParamsForTransactions = {
-    url: 'getView.php',
+    url: 'get-view',
     tableName: 'clientTransactionView', 
     params: '0', 
     keys: ['*'],
