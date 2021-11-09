@@ -43,8 +43,8 @@ if ($query == 'get-join-data') {
     exit;
 }
 if ($query == 'get-view') {
-    $html = require_once './getView.php';
-    echo $html;
+    require_once './getView.php';
+    // echo $html;
     exit;
 }
 if ($query == 'set-data') {
