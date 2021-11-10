@@ -1,7 +1,7 @@
 <?php
 
 // настройки логирования ошибок php
-error_reporting(0); // Error engine - always E_ALL!
+// error_reporting(0); // Error engine - always E_ALL!
 
 // глубина трассировки стэка вызова функций
 $debug_backtrace_depth = 2;

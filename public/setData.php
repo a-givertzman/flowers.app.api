@@ -9,7 +9,7 @@ $errCount = 0;
 $errDump = " | ";
 
 // Добавлять в отчет все ошибки PHP
-error_reporting(0);
+error_reporting(E_ALL);
 
 require_once './libPHP/plog.php';
 
