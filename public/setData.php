@@ -31,10 +31,10 @@ $tableName = json_decode($_POST['tableName']);
 $data = json_decode($_POST['data']);
 $keys = json_decode($_POST["keys"]);      // массив названий полей таблицы
 
-plog('tableName', $tableName);
-plog('field keys:', $keys);
-plog('type of data', gettype($data));
-plog('data:', $data);
+plog('tableName: ', $tableName);
+plog('field keys: ', $keys);
+plog('type of data: ', gettype($data));
+plog('data: ', $data);
 
 if (!empty($data)) {
     $data_id = [];
