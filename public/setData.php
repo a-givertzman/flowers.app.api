@@ -24,6 +24,7 @@ plog("-> setData.php");
 require_once './libPHP/mysql_utils.php';
 
 plog("json_decode(_POST)");
+plog('_POST', $_POST);
 $post = json_decode($_POST);
 plog('_POST', $post);
 
