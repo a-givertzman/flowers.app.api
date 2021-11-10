@@ -25,12 +25,12 @@ require_once './libPHP/mysql_utils.php';
 
 plog('_POST', $_POST);
 plog("json_decode(_POST)");
-$post = json_decode($_POST);
-plog('_POST', $post);
+// $post = json_decode($_POST);
+// plog('_POST', $post);
 
-$tableName = json_decode($post['tableName']);
-$data = json_decode($post['data']);
-$keys = json_decode($post["keys"]);      // массив названий полей таблицы
+$tableName = json_decode($_POST["tableName"]);
+$data = json_decode($_POST["data"]);
+$keys = json_decode($_POST["keys"]);      // массив названий полей таблицы
 
 plog('tableName: ', $tableName);
 plog('field keys: ', $keys);
