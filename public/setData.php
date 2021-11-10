@@ -23,6 +23,7 @@ plog("-> setData.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
+plog("json_decode(_POST)");
 $post = json_decode($_POST);
 plog('_POST', $post);
 
