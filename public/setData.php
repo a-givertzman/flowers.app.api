@@ -24,9 +24,6 @@ plog("-> setData.php");
 require_once './libPHP/mysql_utils.php';
 
 plog('_POST', $_POST);
-plog("json_decode(_POST)");
-// $post = json_decode($_POST);
-// plog('_POST', $post);
 
 $tableName = json_decode($_POST["tableName"]);
 $data = json_decode($_POST["data"]);
@@ -41,7 +38,7 @@ if (!empty($data)) {
     $data_id = [];
     foreach($data as $dataItem) {
         plog($dataItem);
-        if (!empty($dataItem)) {
+        if (isset($dataItem)) {
             if (is_object($dataItem)) {
                 $dataSet = (array) $dataItem;
             }    
