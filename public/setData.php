@@ -23,12 +23,12 @@ plog("-> setData.php");
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
+$post = json_decode($_POST);
+plog('_POST', $post);
 
-plog('_POST', json_decode($_POST));
-
-$tableName = json_decode($_POST['tableName']);
-$data = json_decode($_POST['data']);
-$keys = json_decode($_POST["keys"]);      // массив названий полей таблицы
+$tableName = json_decode($post['tableName']);
+$data = json_decode($post['data']);
+$keys = json_decode($post["keys"]);      // массив названий полей таблицы
 
 plog('tableName: ', $tableName);
 plog('field keys: ', $keys);
