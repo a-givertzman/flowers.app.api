@@ -27,9 +27,9 @@ plog($_POST);
 $tableName = json_decode($_POST["tableName"]);      // название таблицы
 $keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
 $orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
-$order = $_POST["order"];                           // направление сортировки
+$order = json_decode($_POST["order"]);              // направление сортировки
 $where = json_decode($_POST["where"]);              // array, название полей покоторым делаем поиск
-$limit = $_POST["limit"];                           // максиммальное количество записей в результате, 0 - не ограничено
+$limit = json_decode($_POST["limit"]);              // максиммальное количество записей в результате, 0 - не ограничено
 
 plog('tableName:', $tableName);
 plog('field keys: ', $keys);

@@ -23,7 +23,7 @@ require_once './libPHP/mysql_utils.php';
 
 plog('POST: ', $_POST);
 // получаем название таблицы
-$tableName = $_POST["tableName"];
+$tableName = json_decode($_POST["tableName"]);
 plog('tableName: ', $tableName);
 
 // делаем запрос SELECT в таблицу tableName
