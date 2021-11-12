@@ -53,7 +53,7 @@ function renderPurchaseRow(row) {
     return newRow;
 }
 
-// рендерит заголовок транзакций
+// рендерит заголовок Участники закупки
 function renderClientHeader(row) {
     var theadHtml = `
         <thead>
@@ -80,9 +80,13 @@ function renderClientHeader(row) {
     return {thead: thead, tbody: tbody};
 }
 
-// рендерит одну запись из таблицы transaction
+// рендерит одну запись для таблицы Участники закупки
 function renderClientRow(row) {
-    let clientTotal = row['client_total'] ? row['client_total'] : 0;
+    let clientTotal = row['client_total'] 
+        ? row['client_total'] >= 0
+            ? row['client_total']
+            : `${row['client_total']} (переплата)`
+        : 0;
     var rowHtml = `
         <tr class="transaction-row">
             <td>${row['client/id']}</td>
