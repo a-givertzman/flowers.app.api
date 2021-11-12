@@ -40,7 +40,7 @@ class ApiRequest {
                 // console.log('response:', response);
                 return this.parseResponse(response)
                     .then(data => {
-                        console.log('data: ', data);
+                        // console.log('data: ', data);
                         this.busy.hide();
                         return data;
                     })
