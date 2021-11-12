@@ -83,7 +83,7 @@ function renderClientHeader(row) {
 // рендерит одну запись для таблицы Участники закупки
 function renderClientRow(row) {
     let owerpay = '';
-    if (Number(row['client_total']) >= 0) {
+    if (Number(row['client_total']) < 0) {
         owerpay = ' (переплата)';
     }
     let clientTotal = row['client_total'] 
