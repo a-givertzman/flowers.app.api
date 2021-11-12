@@ -18,16 +18,15 @@ if ($query == '') {
     require_once './reportForClient.php';
     exit;
 }
+if ($query == 'admin-client-report') {
+    require_once './reportForClient.php';
+    exit;
+}
 
 if ($query == 'payment') {
     require_once './payment.php';
     exit;
-}
-
-if ($query == 'client-report') {
-    require_once './reportForClient.php';
-    exit;
-}
+}    
 
 if ($query == 'get-data') {
     require_once './getData.php';
