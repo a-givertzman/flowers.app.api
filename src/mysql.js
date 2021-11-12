@@ -16,13 +16,13 @@
  */
 function getData(args) {
     console.log('[mysql.getData]');
-    args.url = args.url ? args.url : domainPath + 'getData.php';
+    args.url = args.url ? args.url : domainPath + 'get-data';
     return apiRequest(args);
 }
 
 function getJoinData(args) {
   console.log('[musql.getJoinData]');
-  args.url = args.url ? args.url : domainPath + 'getJoinData.php';
+  args.url = args.url ? args.url : domainPath + 'get-join-data';
   return apiRequest(args);
 }
 
@@ -43,7 +43,7 @@ function getJoinData(args) {
  */
 function getView(args) {
     console.log('[mysql.getView]');
-    args.url = args.url ? args.url : domainPath + 'getView.php';
+    args.url = args.url ? args.url : domainPath + 'get-view';
     return apiRequest(args);
 }
 
@@ -59,7 +59,7 @@ function getView(args) {
  */
 function callProcedure(args) {
     console.log('[mysql.callProcedure]');
-    args.url = args.url ? args.url : domainPath + 'callProcedure.php';
+    args.url = args.url ? args.url : domainPath + 'call-procedure';
     return apiRequest(args);
 }
 
@@ -85,9 +85,9 @@ async function apiRequest(args) {
     body.append( "params", JSON.stringify(params) );
     body.append( "keys", JSON.stringify(keys) );
     body.append( "orderBy", JSON.stringify(orderBy) );
-    body.append( "order", order );
+    body.append( "order", JSON.stringify(order) );
     body.append( "where", JSON.stringify(where) );
-    body.append( "limit", limit );
+    body.append( "limit", JSON.stringify(limit) );
     console.log('body:', body);
     const options = {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.

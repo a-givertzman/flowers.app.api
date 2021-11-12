@@ -62,8 +62,6 @@ var signInWindow;
 var isValid = false;
 // submitBtn.disabled = true;
 let date = new Date();
-// dateInput.value = date;
-// timeInput.value = `${date.getHours()}:${date.getMinutes()}`;
 
 
 window.addEventListener(                                            // ON LOAD WINDOW

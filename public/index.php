@@ -36,6 +36,9 @@ if ($query == '') {
 } else if ($query == 'add-transaction') {
     $routePath = './api/addTransaction.php';
 
+} else if ($query == 'get-max-id') {
+    $routePath = './api/getMaxId.php';
+
 } else {
     $routePath = './reportForClient.php';
 }
