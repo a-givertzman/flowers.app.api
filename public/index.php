@@ -15,20 +15,17 @@ plog('query:', $query);
 
 if ($query == '') {
     // $html = require_once './clientOverview.php';
-    $html = require_once './reportForClient.php';
-    echo $html;
+    require_once './reportForClient.php';
     exit;
 }
 
 if ($query == 'payment') {
-    $html = require_once './payment.php';
-    echo $html;
+    require_once './payment.php';
     exit;
 }
 
 if ($query == 'client-report') {
-    $html = require_once './reportForClient.php';
-    echo $html;
+    require_once './reportForClient.php';
     exit;
 }
 
