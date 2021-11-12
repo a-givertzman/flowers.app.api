@@ -13,7 +13,7 @@ function renderPurchaseHeader(row) {
                 <th>Нименование</th>
                 <th>Цена закупки</th>
                 <th>Цена</th>
-                <th><span>Транспортные расходы</span></th>
+                <th><span>Транспортные<br>расходы</span></th>
             </tr>
         </thead>
         `;
@@ -65,7 +65,7 @@ function renderClientHeader(row) {
                 <th>ФИО</th>
                 <th>Контакт</th>
                 <th>Баланс</th>
-                <th><span>Сумма к оплате</span></th>
+                <th><span>Сумма<br>к оплате</span></th>
             </tr>
         </thead>
     `;
