@@ -48,6 +48,8 @@ if (!empty($data)) {
             array_push($data_id, $current_id);
         }
     }
+    $data_id = (object) $data_id;
+
 }
 
 // проверяем были ли ошибки и передаем данные вызвавшей форме
