@@ -82,10 +82,12 @@ function renderClientHeader(row) {
 
 // рендерит одну запись для таблицы Участники закупки
 function renderClientRow(row) {
+    let owerpay = '';
+    if (Number(row['client_total']) >= 0) {
+        owerpay = ' (переплата)';
+    }
     let clientTotal = row['client_total'] 
-        ? Number(row['client_total']) >= 0
-            ? row['client_total']
-            : `${row['client_total']} (переплата)`
+        ? row['client_total'] + owerpay
         : 0;
     var rowHtml = `
         <tr class="transaction-row">
