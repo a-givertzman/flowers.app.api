@@ -29,6 +29,13 @@ if ($query == '') {
 
 } else if ($query == 'set-data') {
     $routePath = './api/setData.php';
+    
+} else if ($query == 'call-procedure') {
+    $routePath = './api/callProcedure.php';
+
+} else if ($query == 'add-transaction') {
+    $routePath = './api/addTransaction.php';
+
 } else {
     $routePath = './reportForClient.php';
 }
