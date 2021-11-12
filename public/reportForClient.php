@@ -108,7 +108,7 @@
                         <span id="client-account"></span>
                     </div>
                     <div class="client-select-wrapper">
-                        <select class="client-select">
+                        <select class="client-select" hidden>
                             <!-- <option></option> -->
                         </select>                    
                     </div>
