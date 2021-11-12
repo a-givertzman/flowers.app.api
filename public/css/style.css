@@ -182,7 +182,7 @@ header{
 
 .default-btn-black{
     display: inline-block;
-    z-index: 2;
+    z-index: 0;
     font-size: 14px;
     font-weight: 500;
     font-family: 'Rubik', serif;
