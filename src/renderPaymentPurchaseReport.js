@@ -83,7 +83,7 @@ function renderClientHeader(row) {
 // рендерит одну запись для таблицы Участники закупки
 function renderClientRow(row) {
     let clientTotal = row['client_total'] 
-        ? row['client_total'] >= 0
+        ? Number(row['client_total']) >= 0
             ? row['client_total']
             : `${row['client_total']} (переплата)`
         : 0;
