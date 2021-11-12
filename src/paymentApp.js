@@ -255,7 +255,7 @@ function getOrderClientTotalCost(clientId, orderData) {
             }
         }
     }
-    return totalCost + (totalCost < 0 ? '(переплата)' : '');
+    return totalCost.toFixed(2) + (totalCost < 0 ? '(переплата)' : '');
 }
 
 function onSubmitPaymentClicked(e, purchaseId, orderData) {
