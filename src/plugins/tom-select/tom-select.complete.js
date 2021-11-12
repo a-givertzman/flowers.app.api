@@ -1,5 +1,5 @@
 /**
-* Tom Select v2.0.0-rc.4
+* Tom Select v2.0.0-rc.5
 * Licensed under the Apache License, Version 2.0 (the "License");
 */
 
@@ -1725,14 +1725,6 @@
 
 	      self.onClick();
 	      preventDefault(evt, true);
-	    }); // retain focus by preventing native handling. if the
-	    // event target is the input it should not be modified.
-	    // otherwise, text selection within the input won't work.
-
-	    addEvent(control_input, 'mousedown', e => {
-	      if (control_input.value !== '') {
-	        e.stopPropagation();
-	      }
 	    }); // keydown on focus_node for arrow_down/arrow_up
 
 	    addEvent(focus_node, 'keydown', e => self.onKeyDown(e)); // keypress and input/keyup
@@ -1756,10 +1748,17 @@
 
 	        self.inputState();
 	        return;
-	      } // clicking anywhere in the control should not blur the control_input & close the dropdown
+	      } // retain focus by preventing native handling. if the
+	      // event target is the input it should not be modified.
+	      // otherwise, text selection within the input won't work.
+	      // Fixes bug #212 which is no covered by tests
 
 
-	      preventDefault(evt, true);
+	      if (target == control_input && self.isOpen) {
+	        evt.stopPropagation(); // clicking anywhere in the control should not blur the control_input (which would close the dropdown)
+	      } else {
+	        preventDefault(evt, true);
+	      }
 	    };
 
 	    var win_scroll = () => {
@@ -2038,9 +2037,11 @@
 	      // ctrl+A: select all
 	      case KEY_A:
 	        if (isKeyDown(KEY_SHORTCUT, e)) {
-	          preventDefault(e);
-	          self.selectAll();
-	          return;
+	          if (self.control_input.value == '') {
+	            preventDefault(e);
+	            self.selectAll();
+	            return;
+	          }
 	        }
 
 	        break;
@@ -2079,7 +2080,7 @@
 	      // return: select active option
 
 	      case KEY_RETURN:
-	        if (self.isOpen && self.activeOption) {
+	        if (self.canSelect(self.activeOption)) {
 	          self.onOptionSelect(e, self.activeOption);
 	          preventDefault(e); // if the option_create=null, the dropdown might be closed
 	        } else if (self.settings.create && self.createItem()) {
@@ -2101,7 +2102,7 @@
 
 	      case KEY_TAB:
 	        if (self.settings.selectOnTab) {
-	          if (self.isOpen && self.activeOption) {
+	          if (self.canSelect(self.activeOption)) {
 	            self.onOptionSelect(e, self.activeOption); // prevent default [tab] behaviour of jump to the next field
 	            // if select isFull, then the dropdown won't be open and [tab] will work normally
 
@@ -2216,12 +2217,7 @@
 
 	  onOptionSelect(evt, option) {
 	    var value,
-	        self = this;
-
-	    if (!option) {
-	      return;
-	    } // should not be possible to trigger a option under a disabled optgroup
-
+	        self = this; // should not be possible to trigger a option under a disabled optgroup
 
 	    if (option.parentElement && option.parentElement.matches('[data-disabled]')) {
 	      return;
@@ -2249,6 +2245,19 @@
 	        }
 	      }
 	    }
+	  }
+	  /**
+	   * Return true if the given option can be selected
+	   *
+	   */
+
+
+	  canSelect(option) {
+	    if (this.isOpen && option && this.dropdown_content.contains(option)) {
+	      return true;
+	    }
+
+	    return false;
 	  }
 	  /**
 	   * Triggered when the user clicks on an item
@@ -3294,7 +3303,7 @@
 	        // otherwise setActiveOption() will be called by refreshOptions() with the wrong value
 
 
-	        if (!self.isPending) {
+	        if (!self.isPending && !self.settings.closeAfterSelect) {
 	          self.refreshOptions(self.isFocused && inputMode !== 'single');
 	        } // hide the menu if the maximum number of items have been selected or no options are left
 
@@ -3398,7 +3407,6 @@
 	      self.addOption(data, true);
 	      self.setCaret(caret);
 	      self.addItem(value);
-	      self.refreshOptions(triggerDropdown && self.settings.mode !== 'single');
 	      callback(data);
 	      created = true;
 	    };
@@ -4045,11 +4053,11 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('change_listener', function () {
+	function change_listener () {
 	  addEvent(this.input, 'change', () => {
 	    this.sync();
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "restore_on_backspace" (Tom Select)
@@ -4065,7 +4073,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('checkbox_options', function () {
+	function checkbox_options () {
 	  var self = this;
 	  var orig_onOptionSelect = self.onOptionSelect;
 	  self.settings.hideSelected = false; // update the checkbox for an option
@@ -4127,7 +4135,7 @@
 	    orig_onOptionSelect.call(self, evt, option);
 	    UpdateCheckbox(option);
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "dropdown_header" (Tom Select)
@@ -4143,7 +4151,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('clear_button', function (userOptions) {
+	function clear_button (userOptions) {
 	  const self = this;
 	  const options = Object.assign({
 	    className: 'clear-button',
@@ -4166,7 +4174,7 @@
 	    });
 	    self.control.appendChild(button);
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "drag_drop" (Tom Select)
@@ -4182,7 +4190,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('drag_drop', function () {
+	function drag_drop () {
 	  var self = this;
 	  if (!$.fn.sortable) throw new Error('The "drag_drop" plugin requires jQuery UI "sortable".');
 	  if (self.settings.mode !== 'multi') return;
@@ -4221,7 +4229,7 @@
 	      }
 	    });
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "dropdown_header" (Tom Select)
@@ -4237,7 +4245,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('dropdown_header', function (userOptions) {
+	function dropdown_header (userOptions) {
 	  const self = this;
 	  const options = Object.assign({
 	    title: 'Untitled',
@@ -4262,7 +4270,7 @@
 
 	    self.dropdown.insertBefore(header, self.dropdown.firstChild);
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "dropdown_input" (Tom Select)
@@ -4278,7 +4286,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('caret_position', function () {
+	function caret_position () {
 	  var self = this;
 	  /**
 	   * Moves the caret to the specified index.
@@ -4321,7 +4329,7 @@
 	      self.setCaret(self.caretPos + direction);
 	    }
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "dropdown_input" (Tom Select)
@@ -4337,7 +4345,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('dropdown_input', function () {
+	function dropdown_input () {
 	  var self = this;
 	  self.settings.shouldOpen = true; // make sure the input is shown even if there are no options to display in the dropdown
 
@@ -4389,7 +4397,7 @@
 	      self.focus_node.focus();
 	    });
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "input_autogrow" (Tom Select)
@@ -4404,7 +4412,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('input_autogrow', function () {
+	function input_autogrow () {
 	  var self = this;
 	  self.on('initialize', () => {
 	    var test_input = document.createElement('span');
@@ -4439,7 +4447,7 @@
 	    addEvent(control, 'blur', resize);
 	    addEvent(control, 'update', resize);
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "input_autogrow" (Tom Select)
@@ -4454,7 +4462,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('no_backspace_delete', function () {
+	function no_backspace_delete () {
 	  var self = this;
 	  var orig_deleteSelection = self.deleteSelection;
 	  this.hook('instead', 'deleteSelection', evt => {
@@ -4464,7 +4472,7 @@
 
 	    return false;
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "input_autogrow" (Tom Select)
@@ -4479,10 +4487,10 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('no_active_items', function () {
+	function no_active_items () {
 	  this.hook('instead', 'setActiveItem', () => {});
 	  this.hook('instead', 'selectAll', () => {});
-	});
+	}
 
 	/**
 	 * Plugin: "optgroup_columns" (Tom Select.js)
@@ -4498,7 +4506,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('optgroup_columns', function () {
+	function optgroup_columns () {
 	  var self = this;
 	  var orig_keydown = self.onKeyDown;
 	  self.hook('instead', 'onKeyDown', evt => {
@@ -4532,7 +4540,7 @@
 	      self.setActiveOption(option);
 	    }
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "remove_button" (Tom Select)
@@ -4548,7 +4556,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('remove_button', function (userOptions) {
+	function remove_button (userOptions) {
 	  const options = Object.assign({
 	    label: '&times;',
 	    title: 'Remove',
@@ -4584,7 +4592,7 @@
 	      return rendered;
 	    };
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "restore_on_backspace" (Tom Select)
@@ -4600,7 +4608,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('restore_on_backspace', function (userOptions) {
+	function restore_on_backspace (userOptions) {
 	  const self = this;
 	  const options = Object.assign({
 	    text: option => {
@@ -4616,7 +4624,7 @@
 	      }
 	    }
 	  });
-	});
+	}
 
 	/**
 	 * Plugin: "restore_on_backspace" (Tom Select)
@@ -4632,7 +4640,7 @@
 	 * governing permissions and limitations under the License.
 	 *
 	 */
-	TomSelect.define('virtual_scroll', function () {
+	function virtual_scroll () {
 	  const self = this;
 	  const orig_canLoad = self.canLoad;
 	  const orig_clearActiveOption = self.clearActiveOption;
@@ -4765,7 +4773,22 @@
 	      self.load.call(self, self.lastValue);
 	    });
 	  });
-	});
+	}
+
+	TomSelect.define('change_listener', change_listener);
+	TomSelect.define('checkbox_options', checkbox_options);
+	TomSelect.define('clear_button', clear_button);
+	TomSelect.define('drag_drop', drag_drop);
+	TomSelect.define('dropdown_header', dropdown_header);
+	TomSelect.define('caret_position', caret_position);
+	TomSelect.define('dropdown_input', dropdown_input);
+	TomSelect.define('input_autogrow', input_autogrow);
+	TomSelect.define('no_backspace_delete', no_backspace_delete);
+	TomSelect.define('no_active_items', no_active_items);
+	TomSelect.define('optgroup_columns', optgroup_columns);
+	TomSelect.define('remove_button', remove_button);
+	TomSelect.define('restore_on_backspace', restore_on_backspace);
+	TomSelect.define('virtual_scroll', virtual_scroll);
 
 	return TomSelect;
 
