@@ -46,15 +46,15 @@ if (!empty($data)) {
             $clientId = $dataSet['client/id'];
             $productId = $dataSet['product/id'];
             // делаем запрос для проверки существует ли запись с указанными id
-            $query = `SELECT 
+            $query = "SELECT 
             EXISTS(
                 SELECT 1 
-                    FROM \`$tableName\` 
-                    WHERE \`purchase/id\` = $purchaseId 
-                    and \`client/id\` = $clientId 
-                    and \`product/id\` = $productId 
+                    FROM `$tableName` 
+                    WHERE `purchase/id` = $purchaseId 
+                    and `client/id` = $clientId 
+                    and `product/id` = $productId 
                     LIMIT 1
-            )`;
+            );";
             // plog('updating');
             $current_id = insertOdkuData($tableName, $dataSet, $query);
             array_push($data_id, $current_id);
