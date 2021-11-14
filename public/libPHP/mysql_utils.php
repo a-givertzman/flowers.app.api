@@ -522,10 +522,10 @@ function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
             $row = $result->fetch_array(MYSQLI_ASSOC);                   // признак существования записи
             $result->close();
             $id = $row['id'];                              // признак существования записи
-            $exists = $row[0];                             // признак существования записи
+            $exists = empty($row[0]);                             // признак существования записи
             plog('row: ', $row);
 
-            if ($exists == 0) {         // если такой записи нет
+            if ($exists) {         // если такой записи нет
                 $data_id = insertData($tableName, $data);                   // делаем INSERT
             } else {                    // если такая запись есть
                 $data['id'] = $id;
