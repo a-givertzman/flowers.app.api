@@ -518,7 +518,8 @@ function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
 
         if ($result = $mySqli->query($query)) {
             
-            $row = $result->fetch_row();                   // признак существования записи
+            // $row = $result->fetch_row();                   // признак существования записи
+            $row = $result->fetch_array(MYSQLI_ASSOC);                   // признак существования записи
             $result->close();
             $id = $row['id'];                              // признак существования записи
             $exists = $row[0];                             // признак существования записи
