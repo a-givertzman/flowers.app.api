@@ -526,10 +526,10 @@ function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
             plog('row: ', $row);
 
             if ($exists) {         // если такой записи нет
-                $data_id = insertData($tableName, $data);                   // делаем INSERT
-            } else {                    // если такая запись есть
                 $data['id'] = $id;
                 $data_id = updateData($tableName, $data);                   // делаем UPDATE
+            } else {                    // если такая запись есть
+                $data_id = insertData($tableName, $data);                   // делаем INSERT
             }
         } else {
             // если были ошибки
