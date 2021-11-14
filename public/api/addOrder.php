@@ -35,7 +35,8 @@ plog('type of data: ', gettype($data));
 plog('data: ', $data);
 
 if (!empty($data)) {
-    $result = [];
+    $result = {};
+    $index = 0;
     foreach($data as $dataItem) {
         plog($dataItem);
         if (isset($dataItem)) {
@@ -54,17 +55,14 @@ if (!empty($data)) {
                     LIMIT 1;";
             // plog('updating');
             $current_id = insertOdkuData($tableName, $dataSet, $query);
-            array_push($result, $current_id);
+            $result[$index] = $current_id;
+            $index++;
             // plog("updated, id=$current_id");
         }
     }
-    $result = (object) $result;
 }
 
 plog('addOrder result:', $result);
-if (gettype($result) == 'object') {
-    $result = (array) $result;
-}
 // проверяем были ли ошибки и передаем данные вызвывающей форме
 $jsonText = [];                                                             // массив для передачи данных фронтенду
 if ($errCount == 0) {
