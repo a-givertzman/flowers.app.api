@@ -39,6 +39,9 @@ if ($query == '') {
 } else if ($query == 'get-max-id') {
     $routePath = './api/getMaxId.php';
 
+} else if ($query == 'add-order') {
+    $routePath = './api/addOrder.php';
+
 } else {
     $routePath = './reportForClient.php';
 }

@@ -493,7 +493,7 @@ function updateData($tableName, &$data) {
 // -------------------------------------------------------
 // Функция | Делает один запрос INSERT ON DUBLIKATE KEY UPDATE в таблицу tableName
 //
-function insertOdkuData($tableName, $data) {
+function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
     plog(" -> insertOdkuData");
     plog("data: ", $data);
     global $errCount;
@@ -511,7 +511,9 @@ function insertOdkuData($tableName, $data) {
         $id = $data['id'];
         
         // делаем запрос для проверки существует ли запись с указанным id
-        $query = "SELECT EXISTS(SELECT 1 FROM `$tableName` WHERE `id` = $id LIMIT 1)";
+        $query = empty($ifExistsQuery)
+            ? "SELECT EXISTS(SELECT 1 FROM `$tableName` WHERE `id` = $id LIMIT 1)"
+            : $ifExistsQuery;
         plog('query:', $query);
 
         if ($result = $mySqli->query($query)) {
