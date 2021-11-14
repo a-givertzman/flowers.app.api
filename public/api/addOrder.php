@@ -21,7 +21,7 @@ plog("-> addOrder.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
-require_once './libPHP/mysql_utils.php';
+// require_once './libPHP/mysql_utils.php';
 
 plog('_POST', $_POST);
 
