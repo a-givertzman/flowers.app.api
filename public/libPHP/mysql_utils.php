@@ -522,7 +522,7 @@ function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
             $result->close();
             $id = $row['id'];                              // признак существования записи
             $exists = $row[0];                             // признак существования записи
-            plog('row: ', $row)
+            plog('row: ', $row);
 
             if ($exists == 0) {         // если такой записи нет
                 $data_id = insertData($tableName, $data);                   // делаем INSERT
