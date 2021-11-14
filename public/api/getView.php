@@ -60,34 +60,25 @@ $result = selectView(
 );
 
 plog('selectView result:', $result);
-
 if (gettype($result) == 'object') {
     $result = (array) $result;
 }
-
 // проверяем были ли ошибки и передаем данные вызвывающей форме
 $jsonText = [];                                                             // массив для передачи данных фронтенду
 if ($errCount == 0) {
     // если все прошло без критичных ошибок
-    
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
         'data' => $result,
         'errCount' => $errCount,
         'errDump' => $errDump
     );
-
 } else {
     // если были критичные ошибки
-
     plog("Server reply error: $errDump");
-
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
         'errCount' => $errCount,
         'errDump' => $errDump
     );
 }
-
 echo json_encode($jsonText);                                                // передаем данные
-
-
 plog("getView.php ->");

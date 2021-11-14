@@ -35,7 +35,7 @@ plog('type of data: ', gettype($data));
 plog('data: ', $data);
 
 if (!empty($data)) {
-    $data_id = [];
+    $result = [];
     foreach($data as $dataItem) {
         plog($dataItem);
         if (isset($dataItem)) {
@@ -54,32 +54,32 @@ if (!empty($data)) {
                     LIMIT 1;";
             // plog('updating');
             $current_id = insertOdkuData($tableName, $dataSet, $query);
-            array_push($data_id, $current_id);
+            array_push($result, $current_id);
             // plog("updated, id=$current_id");
         }
     }
-    $data_id = (object) $data_id;
+    $result = (object) $result;
 }
 
-// проверяем были ли ошибки и передаем данные вызвавшей форме
+plog('addOrder result:', $result);
+if (gettype($result) == 'object') {
+    $result = (array) $result;
+}
+// проверяем были ли ошибки и передаем данные вызвывающей форме
+$jsonText = [];                                                             // массив для передачи данных фронтенду
 if ($errCount == 0) {
-    // plog("reporting:");
-    // plog($data_id);
-    // возвращаем id сохраненного элемента
+    // если все прошло без критичных ошибок
     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => $data_id, // массив id сохраненных записей
+        'data' => $result,
         'errCount' => $errCount,
         'errDump' => $errDump
     );
-    echo json_encode($jsonText);
 } else {
+    // если были критичные ошибки
     plog("Server reply error: $errDump");
-    // сообщаем информацию о технической проблеме
-    $jsonText = array(
+    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
         'errCount' => $errCount,
         'errDump' => $errDump
     );
-    echo json_encode($jsonText);
 }
-
-plog("addOrder.php ->");
+echo json_encode($jsonTplog("addOrder.php ->");
