@@ -42,9 +42,9 @@ if (!empty($data)) {
             if (is_object($dataItem)) {
                 $dataSet = (array) $dataItem;
             }
-            $purchaseId = $data['purchase/id'];
-            $clientId = $data['client/id'];
-            $productId = $data['product/id'];
+            $purchaseId = $dataSet['purchase/id'];
+            $clientId = $dataSet['client/id'];
+            $productId = $dataSet['product/id'];
             // делаем запрос для проверки существует ли запись с указанными id
             $query = "SELECT 
             EXISTS(
