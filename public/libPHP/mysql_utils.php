@@ -519,14 +519,13 @@ function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
         if ($result = $mySqli->query($query)) {
             
             // $row = $result->fetch_row();                   // признак существования записи
-            $row = $result->fetch_array(MYSQLI_ASSOC);                   // признак существования записи
+            $row = $result->fetch_array(MYSQLI_ASSOC);          // признак существования записи
             $result->close();
-            $id = $row['id'];                              // признак существования записи
             $exists = !empty($row);                             // признак существования записи
             plog('row: ', $row);
 
             if ($exists) {         // если такой записи нет
-                $data['id'] = $id;
+                $data['id'] = isset($row['id']) ? $row['id'] : 0;
                 $data_id = updateData($tableName, $data);                   // делаем UPDATE
             } else {                    // если такая запись есть
                 $data_id = insertData($tableName, $data);                   // делаем INSERT
