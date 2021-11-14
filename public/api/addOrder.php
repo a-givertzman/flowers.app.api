@@ -48,7 +48,7 @@ if (!empty($data)) {
             // делаем запрос для проверки существует ли запись с указанными id
             $query = "SELECT 
             EXISTS(
-                SELECT 1 
+                SELECT * 
                     FROM `$tableName` 
                     WHERE `purchase/id` = $purchaseId 
                     and `client/id` = $clientId 
