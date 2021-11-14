@@ -518,16 +518,16 @@ function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
 
         if ($result = $mySqli->query($query)) {
             
-            $exists = $result->fetch_row()[0];                              // признак существования записи
-
+            $row = $result->fetch_row();                   // признак существования записи
+            $id = $row['id'];                              // признак существования записи
+            $exists = $row[0];                             // признак существования записи
+            plog('row: ', $row)
             $result->close();
 
             if ($exists == 0) {         // если такой записи нет
-
-                // делаем INSERT
                 $data_id = insertData($tableName, $data);                   // делаем INSERT
             } else {                    // если такая запись есть
-                
+                $data['id'] = $id;
                 $data_id = updateData($tableName, $data);                   // делаем UPDATE
             }
         } else {
