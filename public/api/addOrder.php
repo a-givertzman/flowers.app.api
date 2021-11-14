@@ -82,4 +82,5 @@ if ($errCount == 0) {
         'errDump' => $errDump
     );
 }
-echo json_encode($jsonTplog("addOrder.php ->");
+echo json_encode($jsonText); 
+plog("addOrder.php ->");
