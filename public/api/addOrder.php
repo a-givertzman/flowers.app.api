@@ -35,7 +35,7 @@ plog('type of data: ', gettype($data));
 plog('data: ', $data);
 
 if (!empty($data)) {
-    $result = {};
+    $result = [];
     $index = 0;
     foreach($data as $dataItem) {
         plog($dataItem);
