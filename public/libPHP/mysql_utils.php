@@ -512,7 +512,7 @@ function insertOdkuData($tableName, $data, $ifExistsQuery = '') {
         
         // делаем запрос для проверки существует ли запись с указанным id
         $query = empty($ifExistsQuery)
-            ? "SELECT EXISTS(SELECT 1 FROM `$tableName` WHERE `id` = $id LIMIT 1)"
+            ? "SELECT EXISTS(SELECT * FROM `$tableName` WHERE `id` = $id LIMIT 1)"
             : $ifExistsQuery;
         plog('query:', $query);
 
