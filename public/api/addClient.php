@@ -51,10 +51,10 @@ $postParams = new PostParams([
 $inputParams = $postParams->getAll()->getData();
 plog($inputParams);
 $tableName = $postParams->get('tableName');
-$group = $inputParams['group'];
-$location = $inputParams['location'];
-$name = $inputParams['name'];
-$phone = $inputParams['phone'];
+$group = $inputParams['fieldData']['group'];
+$location = $inputParams['fieldData']['location'];
+$name = $inputParams['fieldData']['name'];
+$phone = $inputParams['fieldData']['phone'];
 // $clientId = 4;//$inputParams['client/id'];
 // $purchaseContentPurchaseId = 6;//$inputParams['purchase/id'];
 
