@@ -44,13 +44,12 @@ plog("-> getPurchaseProduct.php");
 
 // cors();
 
-$postParams = new PostParams([
+$input = (new PostParams([
     'client/id',
     'purchase/id'
-]);
-$inputParams = $postParams->getAll()->getData();
-$clientId = 4;//$inputParams['client/id'];
-$purchaseContentPurchaseId = 6;//$inputParams['purchase/id'];
+]))->getAll()->getData();
+$clientId = 4;//$input['client/id'];
+$purchaseContentPurchaseId = 6;//$input['purchase/id'];
 
 // получаем переданные параметры в формате json
 

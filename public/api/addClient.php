@@ -44,22 +44,18 @@ plog("-> addClient.php");
 
 // cors();
 
-$postParams = new PostParams([
+// извлекаем входные параметры из json
+$input = (new PostParams([
     'tableName',
     'fieldData',
-]);
-$inputParams = $postParams->getAll()->getData();
-$fieldData = $inputParams['fieldData'];
+]))->getAll()->getData();;
+$fieldData = $input['fieldData'];
 plog('fieldData:', $fieldData);
-$tableName = $postParams->get('tableName');
+$tableName = $fieldData['tableName'];
 $group = $fieldData['group'];
 $location = $fieldData['location'];
 $name = $fieldData['name'];
 $phone = $fieldData['phone'];
-// $clientId = 4;//$inputParams['client/id'];
-// $purchaseContentPurchaseId = 6;//$inputParams['purchase/id'];
-
-// получаем переданные параметры в формате json
 
 plog('Recived and extracted parameters:');
 plog('   tableName: ', $tableName);
