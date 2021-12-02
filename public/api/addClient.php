@@ -49,12 +49,13 @@ $postParams = new PostParams([
     'fieldData',
 ]);
 $inputParams = $postParams->getAll()->getData();
-plog($inputParams['fieldData']);
+$fieldData = $inputParams['fieldData'];
+plog('fieldData:', $fieldData['fieldData']);
 $tableName = $postParams->get('tableName');
-$group = $inputParams['fieldData']['group'];
-$location = $inputParams['fieldData']['location'];
-$name = $inputParams['fieldData']['name'];
-$phone = $inputParams['fieldData']['phone'];
+$group = $fieldData['group'];
+$location = $fieldData['location'];
+$name = $fieldData['name'];
+$phone = $fieldData['phone'];
 // $clientId = 4;//$inputParams['client/id'];
 // $purchaseContentPurchaseId = 6;//$inputParams['purchase/id'];
 
