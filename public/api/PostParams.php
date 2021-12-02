@@ -47,7 +47,7 @@ class PostParams {
             plog("Параметры в _POST:");
             foreach ($this->paramNames as $paramName) {
                 $postValue = isset($_POST[$paramName]) ? $_POST[$paramName] : '';
-                $param = json_decode($postValue);
+                $param = json_decode($postValue, true);
                 $this->params[$paramName] = $param;
                 plog("   $paramName: ", $param);
             }
