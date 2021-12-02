@@ -40,7 +40,7 @@ require_once './libPHP/mysql_settings.key';
 
 // plog_clear();
 plog("====================================");
-plog("-> getPurchaseProduct.php");
+plog("-> addClient.php");
 
 // cors();
 
@@ -49,6 +49,7 @@ $postParams = new PostParams([
     'fieldData',
 ]);
 $inputParams = $postParams->getParams()->getData();
+plog($inputParams);
 $tableName = $inputParams['tableName'];
 $group = $inputParams['group'];
 $location = $inputParams['location'];
@@ -90,4 +91,4 @@ $mySqlRequest = new MySqlRequest(
     );
 $response = $mySqlRequest->fetch();
 echo $response->toJson();                                                // передаем данные
-plog("getPurchaseProduct.php ->");
+plog("addClient.php ->");
