@@ -48,9 +48,9 @@ $postParams = new PostParams([
     'tableName',
     'fieldData',
 ]);
-$inputParams = $postParams->getParams()->getData();
+$inputParams = $postParams->getAll()->getData();
 plog($inputParams);
-$tableName = $inputParams['tableName'];
+$tableName = $postParams->get('tableName');
 $group = $inputParams['group'];
 $location = $inputParams['location'];
 $name = $inputParams['name'];

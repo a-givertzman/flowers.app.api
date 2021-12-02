@@ -33,9 +33,6 @@ include_once './api/SqlQuery.php';
 
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
-// 
-// Добавлять в отчет все ошибки PHP
-
 require_once './libPHP/plog.php';
 require_once './libPHP/cors.php';
 // загружаем настройки
@@ -51,7 +48,7 @@ $postParams = new PostParams([
     'client/id',
     'purchase/id'
 ]);
-$inputParams = $postParams->getParams()->getData();
+$inputParams = $postParams->getAll()->getData();
 $clientId = 4;//$inputParams['client/id'];
 $purchaseContentPurchaseId = 6;//$inputParams['purchase/id'];
 

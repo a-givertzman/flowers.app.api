@@ -39,7 +39,7 @@ class PostParams {
     ) {
         $this->paramNames = $paramNames;
     }
-    function getParams(): Response {
+    function getAll(): Response {
         $errCount = 0;
         $errDump = '';
         $this->params = [];
@@ -48,7 +48,7 @@ class PostParams {
             foreach ($this->paramNames as $paramName) {
                 $postValue = isset($_POST[$paramName]) ? $_POST[$paramName] : '';
                 $param = json_decode($postValue);
-                array_push($this->params, $param);
+                $this->params[$paramName] = $param;
                 plog("   $paramName: ", $param);
             }
         } catch (Exception $e) {
