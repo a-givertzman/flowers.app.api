@@ -71,7 +71,9 @@ function connect() {
     
     // используем глобальные настройки для подключения к БД
     global $db_host, $db_user, $db_pass, $db_name;
-    
+    global $errCount;
+    global $errDump;
+
     plog("connecting to the mySql server on $db_host");
 
     // линк к серверу mysql
@@ -597,7 +599,6 @@ function callProcedure($procedureName, $params) {
         } else {
             // если были ошибки
             $errCount++;
-            $errDump .= preg_replace("/[\r\n\']/m", "", $data) . " | ";
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Server reply error: $errDump \nIn query: $query");
         }

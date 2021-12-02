@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+
 require_once './libPHP/plog.php';
 plog("-> router.php");
 // plog('_REQUEST: ', $_REQUEST);
@@ -41,6 +43,12 @@ if ($query == '') {
 
 } else if ($query == 'add-order') {
     $routePath = './api/addOrder.php';
+
+} else if ($query == 'set-client') {
+    $routePath = './api/addClient.php';
+
+} else if ($query == 'get-purchase-product') {
+    $routePath = './api/getPurchaseProduct.php';
 
 } else {
     $routePath = './reportForClient.php';
