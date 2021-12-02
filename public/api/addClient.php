@@ -53,7 +53,7 @@ $input = (new PostParams([
 ]))->getAll()->getData();;
 $fieldData = $input['fieldData'];
 plog('fieldData:', $fieldData);
-$tableName = $fieldData['tableName'];
+$tableName = $input['tableName'];
 $group = $fieldData['group'];
 $location = $fieldData['location'];
 $name = $fieldData['name'];
