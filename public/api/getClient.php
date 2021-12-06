@@ -45,13 +45,13 @@ plog("-> getClient.php");
 // cors();
 
 $input = (new PostParams([
-    'client/phone',
+    'phoneNumber',
 ]))->getAll()->getData();
 
 // получаем переданные параметры в формате json
 
 plog('Recived and extracted parameters:');
-plog('   clientPhone: ', $clientPhone);
+plog('   phoneNumber: ', $phoneNumber);
 
 $query = "
     SELECT *
@@ -62,7 +62,7 @@ $query = "
 $mySqlRequest = new MySqlRequest(
         new SqlQueryWithParams(
             [
-                $clientPhone,
+                $phoneNumber,
             ],
             $query
         ),
