@@ -49,6 +49,7 @@ $input = (new PostParams([
 ]))->getAll()->getData();
 
 // получаем переданные параметры в формате json
+$phoneNumber = $input['phoneNumber'];
 
 plog('Recived and extracted parameters:');
 plog('   phoneNumber: ', $phoneNumber);
