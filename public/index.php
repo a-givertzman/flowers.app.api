@@ -44,6 +44,9 @@ if ($query == '') {
 } else if ($query == 'add-order') {
     $routePath = './api/addOrder.php';
 
+} else if ($query == 'get-client') {
+    $routePath = './api/getClient.php';
+
 } else if ($query == 'set-client') {
     $routePath = './api/addClient.php';
 
