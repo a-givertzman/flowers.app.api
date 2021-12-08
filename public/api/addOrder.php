@@ -34,7 +34,7 @@ $errCount = 0;
 $errDump = " | ";
 
 // Добавлять в отчет все ошибки PHP
-error_reporting(0); //E_ALL
+error_reporting(E_ALL); //E_ALL
 
 require_once './libPHP/plog.php';
 
@@ -85,7 +85,6 @@ if (!empty($data)) {
             // plog("updated, id=$current_id");
         }
     }
-    $result = (object) $result;
 }
 
 plog('addOrder result:', $result);
