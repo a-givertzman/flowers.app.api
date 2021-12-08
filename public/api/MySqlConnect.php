@@ -87,6 +87,7 @@ class MySqlConnect {
         plog("connect ->");
         return new Response(
             $mySqli,
+            $mySqli->connect_errno ? 0 : 1,
             $errCount,
             $errDump
         );

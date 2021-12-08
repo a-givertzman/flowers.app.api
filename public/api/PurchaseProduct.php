@@ -64,6 +64,7 @@ class PurchaseProduct {
         plog("fetch ->");
         return new Response(
             $data,
+            count($data),
             $errCount,
             $errDump,
         );

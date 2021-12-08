@@ -45,12 +45,14 @@ class API {
         if ($mySqli->hasErrors()) {
             return new Response(
                 [],
+                0,
                 $mySqli->errCount,
                 $mySqli->errDump,
             );
         }
         $response = new Response(
             $this->$mySqli->query(),
+            $this->$mySqli->affected_rows,
             $mySqli->errCount,
             $mySqli->errDump
         );
