@@ -126,10 +126,10 @@ function viewWhereExpression($where) {
     plog("-> viewWhereExpression");
     $query = '';
     foreach ($where as $index => $clauese) {
-        $operator = $clauese->operator;
-        $field = $clauese->field;
-        $cond = $clauese->cond;
-        $value = $clauese->value;
+        $operator = $clauese['operator'];
+        $field = $clauese['field'];
+        $cond = $clauese['cond'];
+        $value = $clauese['value'];
         $query .= "\n$operator `$field` $cond JSON_EXTRACT(viewParams(), '$.\"$field\"')";
     }
     plog("viewWhereExpression ->");
@@ -152,11 +152,11 @@ function selectWhereExpression($where) {
     $query = '';
     foreach ($where as $index => $clauese) {
         plog('clause: ', $clauese);
-        $operator = $clauese->operator;
-        $table = isset($clauese->table) ? ("`" . $clauese->table . "`.") : '';
-        $field = $clauese->field;
-        $cond = $clauese->cond;
-        $value = $clauese->value;
+        $operator = $clauese['operator'];
+        $table = isset($clauese['table']) ? ("`" . $clauese['table'] . "`.") : '';
+        $field = $clauese['field'];
+        $cond = $clauese['cond'];
+        $value = $clauese['value'];
         $query .= "\n$operator $table`$field` $cond";
         $query .= isset($value) ? " '$value'" : '';
     }
