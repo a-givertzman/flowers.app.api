@@ -40,7 +40,7 @@ class MySqlRequest {
         $this->query = $query;
         $this->mySqli = $mySqli;
     }
-    function fetch() {
+    function fetch(): Response {
         plog("-> fetch");
         $errCount = 0;
         $errDump = '';

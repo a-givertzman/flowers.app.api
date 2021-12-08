@@ -26,7 +26,11 @@
 declare(strict_types = 1);
 // Добавлять в отчет все ошибки PHP
 error_reporting(0); //E_ALL
-include_once './api/Response.php';
+use MySqlRequest;
+use PostParams;
+use SqlQueryWithParams;
+use MySqlConnect;
+// include_once './api/Response.php';
 include_once './api/PostParams.php';
 include_once './api/MySqlConnect.php';
 include_once './api/MySqlRequest.php';
@@ -67,27 +71,55 @@ plog('   name: ', $name);
 plog('   phone: ', $phone);
 
 // запрос для проверки существует ли запись с указанными id
-$query = "SELECT * 
-            FROM `$tableName` 
-            WHERE `phone` = $phone 
-            LIMIT 1;";
+// $query = "SELECT * 
+//             FROM `$tableName` 
+//             WHERE `phone` = $phone 
+//             LIMIT 1;";
 
+// $mySqlRequest = new MySqlRequest(
+//     new SqlQueryWithParams(
+//         [],
+//         $query
+//     ),
+//     new MySqlConnect(
+//         $db_host,
+//         $db_name,
+//         $db_user,
+//         $db_pass
+//     ),
+// );
+// $response = $mySqlRequest->fetch();
+$query = "
+    INSERT INTO `client`(
+        `group`,
+        `location`,
+        `name`,
+        `phone`
+    )
+    VALUES (
+        '$group',
+        '$location',
+        '$name',
+        '$phone'
+    )
+    ON DUPLICATE KEY UPDATE
+        `group` = '$group',
+        `location` = '$location',
+        `name` = '$name',
+        `phone` = '$phone';
+";
 $mySqlRequest = new MySqlRequest(
-        new SqlQueryWithParams(
-            [
-                $clientId,
-                $purchaseContentPurchaseId
-            ],
-            $query
-        ),
-        new MySqlConnect(
-            $db_host,
-            $db_name,
-            $db_user,
-            $db_pass
-        ),
-
-    );
+    new SqlQueryWithParams(
+        [],
+        $query
+    ),
+    new MySqlConnect(
+        $db_host,
+        $db_name,
+        $db_user,
+        $db_pass
+    ),
+);
 $response = $mySqlRequest->fetch();
-echo $response->toJson();                                                // передаем данные
+echo $response->toJson();                                      // передаем данные
 plog("addClient.php ->");
