@@ -121,5 +121,6 @@ $mySqlRequest = new MySqlRequest(
     ),
 );
 $response = $mySqlRequest->fetch();
+plog('addClient result:', $result);
 echo $response->toJson();                                      // передаем данные
 plog("addClient.php ->");
