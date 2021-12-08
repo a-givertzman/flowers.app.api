@@ -84,7 +84,7 @@ $query = "
         getRemains(`order`.`purchase/id`,
                 `order`.`purchase_content/id`,
                 `purchase_content`.`count`) AS `remains`,
-        `order`.`count` as 'odered_count'
+        `order`.`count` as 'ordered_count'
     FROM
         `order`
     LEFT JOIN `purchase_content` ON `order`.`purchase_content/id` = `purchase_content`.`id`
