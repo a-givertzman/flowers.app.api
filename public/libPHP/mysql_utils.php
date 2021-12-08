@@ -126,6 +126,7 @@ function viewWhereExpression($where) {
     plog("-> viewWhereExpression");
     $query = '';
     foreach ($where as $index => $clauese) {
+        $clauese = (array) $clauese;
         $operator = $clauese['operator'];
         $field = $clauese['field'];
         $cond = $clauese['cond'];
@@ -151,6 +152,7 @@ function selectWhereExpression($where) {
     plog("-> selectWhereExpression");
     $query = '';
     foreach ($where as $index => $clauese) {
+        $clauese = (array) $clauese;
         plog('clause: ', $clauese);
         $operator = $clauese['operator'];
         $table = isset($clauese['table']) ? ("`" . $clauese['table'] . "`.") : '';
