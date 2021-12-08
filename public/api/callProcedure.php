@@ -23,6 +23,9 @@
  * SOFTWARE.
  */
 
+declare(strict_types = 1);
+include_once './api/Response.php';
+
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
 // 
@@ -71,8 +74,6 @@ $result = callProcedure(
     $params,                // массив параметров
 );
 
-plog('callProcedure result:', $result);
-
 if ($result != 0) {
     $errCount++;
     $errDump .= preg_replace("/[\r\n\']/m", "", $result) . " | ";
@@ -80,24 +81,12 @@ if ($result != 0) {
     plog("Server reply error: $errDump \nIn query: $query");
 }
 
-// проверяем были ли ошибки и передаем данные вызвывающей форме
-$jsonText = [];                                                             // массив для передачи данных фронтенду
-if ($errCount == 0) {
-    // если все прошло без критичных ошибок
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => $result,
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-} else {
-    // если были критичные ошибки
-    plog("Server reply error: $errDump");
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-}
-
-echo json_encode($jsonText);                                                // передаем данные
-
+plog('callProcedure result:', $result);
+$response = new Response(
+    data: (object) $result,
+    dataCount: count($result),
+    errCount: $errCount,
+    errDump: $errDump
+);
+echo $response->toJson();                                                // передаем данные
 plog("callProcedure.php ->");

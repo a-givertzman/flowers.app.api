@@ -23,6 +23,9 @@
  * SOFTWARE.
  */
 
+declare(strict_types = 1);
+include_once './api/Response.php';
+
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
 // 
@@ -70,25 +73,12 @@ if (empty($data)) {
     $data = array_values($data)[0]['id'];
 }
 
-
-// проверяем были ли ошибки и передаем данные вызвывающей форме
-$jsonText = [];                                                             // массив для передачи данных фронтенду
-if ($errCount == 0) {
-    // если все прошло без критичных ошибок
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => $data,
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-} else {
-    // если были критичные ошибки
-    plog("Server reply error: $errDump");
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-}
-
-echo json_encode($jsonText);                                                // передаем данные
-
+plog('getMaxId result:', $data);
+$response = new Response(
+    data: (object) $data,
+    dataCount: count($data),
+    errCount: $errCount,
+    errDump: $errDump
+);
+echo $response->toJson();                                                // передаем данные
 plog("getMaxId.php ->");

@@ -23,7 +23,9 @@
  * SOFTWARE.
  */
 
- error_log("-> getData.php");
+declare(strict_types = 1);
+include_once './api/Response.php';
+
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
 // 
@@ -78,33 +80,12 @@ $data = selectData(
     $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
-if (is_object($data)) {
-    $data = (array) $data;
-}
-plog("data selected from $tableName:");
-plog('type of data: ', gettype($data));
-plog('data length: ', count($data));
-// plog('data: ', $data);
-
-
-// проверяем были ли ошибки и передаем данные вызвывающей форме
-$jsonText = [];                                                             // массив для передачи данных фронтенду
-if ($errCount == 0) {
-    // если все прошло ok
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => $data,
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-} else {
-    // если были критичные ошибки
-    plog("Server reply error: $errDump");
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-}
-
-echo json_encode($jsonText);                                                // передаем данные
-
+plog('selectData result:', $data);
+$response = new Response(
+    data: (object) $data,
+    dataCount: count($data),
+    errCount: $errCount,
+    errDump: $errDump
+);
+echo $response->toJson();                                                // передаем данные
 plog("getData.php ->");

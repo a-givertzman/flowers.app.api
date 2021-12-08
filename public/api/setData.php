@@ -23,6 +23,9 @@
  * SOFTWARE.
  */
 
+declare(strict_types = 1);
+include_once './api/Response.php';
+
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
 // 
@@ -35,8 +38,6 @@ $errDump = " | ";
 error_reporting(E_ALL);
 
 require_once './libPHP/plog.php';
-
-
 
 // plog_clear();
 plog("====================================");
@@ -72,28 +73,14 @@ if (!empty($data)) {
         }
     }
     $data_id = (object) $data_id;
-
 }
 
-// проверяем были ли ошибки и передаем данные вызвавшей форме
-if ($errCount == 0) {
-    // plog("reporting:");
-    // plog($data_id);
-    // возвращаем id сохраненного элемента
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => $data_id, // массив id сохраненных записей
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-    echo json_encode($jsonText);
-} else {
-    plog("Server reply error: $errDump");
-    // сообщаем информацию о технической проблеме
-    $jsonText = array(
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-    echo json_encode($jsonText);
-}
-
+plog('setData result:', $data_id);
+$response = new Response(
+    data: (object) $data_id,
+    dataCount: count($data_id),
+    errCount: $errCount,
+    errDump: $errDump
+);
+echo $response->toJson();                                                // передаем данные
 plog("setData.php ->");
