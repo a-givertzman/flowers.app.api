@@ -73,7 +73,7 @@ class MySqlRequest {
         plog("fetch ->");
         return new Response(
             $data,
-            $dataCount,
+            count($data),
             $errCount,
             $errDump,
         );

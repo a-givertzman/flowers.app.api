@@ -58,6 +58,7 @@ class PostParams {
         }
         return new Response(
             $this->params,
+            count($this->params),
             $errCount,
             $errDump
         );
