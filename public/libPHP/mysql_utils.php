@@ -156,7 +156,7 @@ function selectWhereExpression($where) {
         $table = isset($clauese['table']) ? ("`" . $clauese['table'] . "`.") : '';
         $field = $clauese['field'];
         $cond = $clauese['cond'];
-        $value = $clauese['value'];
+        $value = isset($clauese['value']) ? $clauese['value'] : null;
         $query .= "\n$operator $table`$field` $cond";
         $query .= isset($value) ? " '$value'" : '';
     }
