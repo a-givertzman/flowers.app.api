@@ -51,8 +51,10 @@ class MySqlRequest {
         // делаем запрос в БД
         if ($rows = $mySqli->query($query)) {
             // и запрос выполнен если успешно, перебираем записи
+            // if ()
+            plog('rows: ', $rows);
             plog('num_rows: ', $rows->num_rows);
-            while($row = $rows->fetch_array(MYSQLI_ASSOC)){
+            while ($row = $rows->fetch_array(MYSQLI_ASSOC)) {
                 // и кладем каждую в массив
                 $data[$row['id']] = $row;
             }
