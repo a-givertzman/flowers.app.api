@@ -73,10 +73,10 @@ if (empty($data)) {
     $data = array_values($data)[0]['id'];
 }
 
-plog('getMaxId result:', $data);
+plog('getMaxId result: ', $data);
 $response = new Response(
     data: (object) $data,
-    dataCount: count($data),
+    dataCount: 1,
     errCount: $errCount,
     errDump: $errDump
 );
