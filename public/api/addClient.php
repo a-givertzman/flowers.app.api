@@ -25,7 +25,7 @@
 
 declare(strict_types = 1);
 // Добавлять в отчет все ошибки PHP
-error_reporting(0); //E_ALL
+error_reporting(E_ALL); //E_ALL
 include_once './api/Response.php';
 include_once './api/PostParams.php';
 include_once './api/MySqlConnect.php';
