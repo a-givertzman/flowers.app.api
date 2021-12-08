@@ -64,12 +64,16 @@ class MySqlRequest {
             $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
             plog("Сервер вернул ошибку: $errDump");
         }
+        $dataCount = $mySqli->affected_rows;
+        $mySqli->close();
         plog("data: ", $data);
+        plog("dataCount: ", $dataCount);
         plog("errCount: ", $errCount);
         plog("errDump: ", $errDump);
         plog("fetch ->");
         return new Response(
             $data,
+            $dataCount,
             $errCount,
             $errDump,
         );

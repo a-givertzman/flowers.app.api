@@ -32,14 +32,17 @@ declare(strict_types = 1);
  */
 class Response {
     protected $data;
+    protected $dataCount;
     protected $errCount;
     protected $errDump;
     function __construct(
         $data,
+        int $dataCount,
         int $errCount,
         string $errDump
     ) {
         $this->data = $data;
+        $this->dataCount = $dataCount;
         $this->errCount = $errCount;
         $this->errDump = $errDump;
     }
@@ -47,7 +50,7 @@ class Response {
         return $this->data;
     }
     function hasData(): bool {
-        return isset($this->data);
+        return $this->dataCount > 0;
     }
     function hasErrors(): bool {
         return $this->errCount > 0;
@@ -59,6 +62,7 @@ class Response {
         return json_encode(
             array(
                 'data' => $this->data,
+                'dataCount' => $this->dataCount,
                 'errCount' => $this->errCount,
                 'errDump' => $this->errDump
             )
