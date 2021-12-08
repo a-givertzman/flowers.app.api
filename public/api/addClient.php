@@ -67,10 +67,10 @@ plog('   name: ', $name);
 plog('   phone: ', $phone);
 
 // запрос для проверки существует ли запись с указанными id
-$query = "SELECT * 
-            FROM `$tableName` 
-            WHERE `phone` = $phone 
-            LIMIT 1;";
+// $query = "SELECT * 
+//             FROM `$tableName` 
+//             WHERE `phone` = $phone 
+//             LIMIT 1;";
 
 // $mySqlRequest = new MySqlRequest(
 //     new SqlQueryWithParams(
@@ -85,25 +85,25 @@ $query = "SELECT *
 //     ),
 // );
 // $response = $mySqlRequest->fetch();
-// $query = "
-//     INSERT INTO `client`(
-//         `group`,
-//         `location`,
-//         `name`,
-//         `phone`
-//     )
-//     VALUES (
-//         '$group',
-//         '$location',
-//         '$name',
-//         '$phone'
-//     )
-//     ON DUPLICATE KEY UPDATE
-//         `group` = '$group',
-//         `location` = '$location',
-//         `name` = '$name',
-//         `phone` = '$phone';
-// ";
+$query = "
+    INSERT INTO `client`(
+        `group`,
+        `location`,
+        `name`,
+        `phone`
+    )
+    VALUES (
+        '$group',
+        '$location',
+        '$name',
+        '$phone'
+    )
+    ON DUPLICATE KEY UPDATE
+        `group` = '$group',
+        `location` = '$location',
+        `name` = '$name',
+        `phone` = '$phone';
+";
 $mySqlRequest = new MySqlRequest(
     new SqlQueryWithParams(
         [],
