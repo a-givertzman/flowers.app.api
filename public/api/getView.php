@@ -25,6 +25,7 @@
 
 declare(strict_types = 1);
 include_once './api/Response.php';
+include_once './api/PostParams.php';
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
 // 
@@ -50,15 +51,25 @@ plog("-> getView.php");
 require_once './libPHP/mysql_utils.php';
 
 plog('_POST:', $_POST);
+$input = (new PostParams([
+    'tableName',
+    'keys',
+    'groupBy',
+    'orderBy',
+    'order',
+    'where',
+    'limit',
+]))->getAll()->getData();;
+
 // получаем переданные параметры в формате json
 $params = $_POST['params'];                       // параметры в формате json
-$viewName = json_decode($_POST["tableName"]);        // название view
-$keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
-$groupBy = json_decode($_POST["groupBy"]);          // название поля группировки
-$orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
-$order = json_decode($_POST["order"]);                           // направление сортировки
-$where = json_decode($_POST["where"]);              // array, название полей покоторым делаем поиск
-$limit = json_decode($_POST["limit"]);                           // максиммальное количество записей в результате, 0 - не ограничено
+$viewName = $input["tableName"];        // название view
+$keys = $input["keys"];                // массив названий полей таблицы
+$groupBy = $input["groupBy"];          // название поля группировки
+$orderBy = $input["orderBy"];          // название поля сортировки
+$order = $input["order"];                           // направление сортировки
+$where = $input["where"];              // array, название полей покоторым делаем поиск
+$limit = $input["limit"];                           // максиммальное количество записей в результате, 0 - не ограничено
 
 plog('Recived and extracted parameters:');
 plog('params: ', $params);
