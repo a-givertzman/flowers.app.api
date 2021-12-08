@@ -46,55 +46,60 @@ plog("-> getPurchaseProduct.php");
 
 $input = (new PostParams([
     'client/id',
-    'purchase/id'
+    'purchase/id',
+    'purchase_content/id'
 ]))->getAll()->getData();
-$clientId = 4;//$input['client/id'];
-$purchaseContentPurchaseId = 6;//$input['purchase/id'];
+$clientId = $input['client/id'];
+$purchaseId = $input['purchase/id'];
+$purchaseContentId = $input['purchase_content/id'];
 
 // получаем переданные параметры в формате json
 
 plog('Recived and extracted parameters:');
 plog('   clientId: ', $clientId);
-plog('   purchaseContentPurchaseId: ', $purchaseContentPurchaseId);
+plog('   purchaseId: ', $purchaseId);
+plog('   purchaseContentId: ', $purchaseContentId);
 
 $query = "
     SELECT 
-            `purchase_content`.`purchase/id` AS `purchase/id`,
-            `purchase_content`.`id` AS `id`,
-            `purchase_content`.`sale_price` AS `sale_price`,
-            `purchase_content`.`sale_currency` AS `sale_currency`,
-            `purchase_content`.`shipping` AS `shipping`,
-            `purchase_content`.`count` AS `count`,
-            `purchase_content`.`created` AS `created`,
-            `purchase_content`.`updated` AS `updated`,
-            `purchase_content`.`deleted` AS `deleted`,
-            `product`.`id` AS `product/id`,
-            `product`.`group` AS `product/group`,
-            `product`.`name` AS `product/name`,
-            `product`.`detales` AS `product/detales`,
-            `product`.`description` AS `product/description`,
-            `product`.`primary_price` AS `product/primary_price`,
-            `product`.`primary_currency` AS `product/primary_currency`,
-            `product`.`primary_order_quantity` AS `product/primary_order_quantity`,
-            `product`.`order_quantity` AS `product/order_quantity`,
-            `product`.`picture` AS `product/picture`,
-            GETREMAINS(`purchase_content`.`purchase/id`,
-                    `purchase_content`.`id`,
-                    `purchase_content`.`count`) AS `remains`,
-            `order`.`count` as 'odere_count'
-        FROM
-            `purchase_content`
-            LEFT JOIN `product` ON `purchase_content`.`product/id` = `product`.`id`
-            LEFT JOIN `order` ON `client/id` = @1 AND `purchase_content`.`product/id` = `order`.`product/id`
-        WHERE `purchase_content`.`purchase/id` = @2
-        ORDER BY `purchase_content`.`id`
+        `purchase_content`.`purchase/id` AS `purchase/id`,
+        `purchase_content`.`id` AS `id`,
+        `purchase_content`.`sale_price` AS `sale_price`,
+        `purchase_content`.`sale_currency` AS `sale_currency`,
+        `purchase_content`.`shipping` AS `shipping`,
+        `purchase_content`.`count` AS `count`,
+        `purchase_content`.`created` AS `created`,
+        `purchase_content`.`updated` AS `updated`,
+        `purchase_content`.`deleted` AS `deleted`,
+        `product`.`id` AS `product/id`,
+        `product`.`group` AS `product/group`,
+        `product`.`name` AS `product/name`,
+        `product`.`detales` AS `product/detales`,
+        `product`.`description` AS `product/description`,
+        `product`.`primary_price` AS `product/primary_price`,
+        `product`.`primary_currency` AS `product/primary_currency`,
+        `product`.`primary_order_quantity` AS `product/primary_order_quantity`,
+        `product`.`order_quantity` AS `product/order_quantity`,
+        `product`.`picture` AS `product/picture`,
+        getRemains(`order`.`purchase/id`,
+                `order`.`purchase_content/id`,
+                `purchase_content`.`count`) AS `remains`,
+        `order`.`count` as 'odered_count'
+    FROM
+        `order`
+    LEFT JOIN `purchase_content` ON `order`.`purchase_content/id` = `purchase_content`.`id`
+    LEFT JOIN `product` ON `order`.`product/id` = `product`.`id`
+    WHERE `order`.`purchase/id` = @1
+        and `order`.`client/id` = @2
+        and `order`.`purchase_content/id` = @3
 ";
 
 $mySqlRequest = new MySqlRequest(
         new SqlQueryWithParams(
             [
+                $purchaseId,
                 $clientId,
-                $purchaseContentPurchaseId
+                $purchaseContentId
             ],
             $query
         ),
