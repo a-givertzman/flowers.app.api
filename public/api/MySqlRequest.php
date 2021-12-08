@@ -72,7 +72,7 @@ class MySqlRequest {
         plog("errDump: ", $errDump);
         plog("fetch ->");
         return new Response(
-            $data,
+            (object) $data,
             count($data),
             $errCount,
             $errDump,
