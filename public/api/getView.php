@@ -23,6 +23,8 @@
  * SOFTWARE.
  */
 
+declare(strict_types = 1);
+include_once './api/Response.php';
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
 // 
@@ -71,7 +73,7 @@ plog('where: ', $where);
 plog('limit: ', $limit);
 
 // Делаем вызов хранимой процедуры
-$result = selectView(
+$data = selectView(
     $viewName,          // string, название view
     $params,            // параметры в формате json
     $keys,              // array, запрашиваемые поля
@@ -82,26 +84,34 @@ $result = selectView(
     $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
-plog('selectView result:', $result);
-if (gettype($result) == 'object') {
-    $result = (array) $result;
-}
-// проверяем были ли ошибки и передаем данные вызвывающей форме
-$jsonText = [];                                                             // массив для передачи данных фронтенду
-if ($errCount == 0) {
-    // если все прошло без критичных ошибок
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'data' => $result,
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-} else {
-    // если были критичные ошибки
-    plog("Server reply error: $errDump");
-    $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
-        'errCount' => $errCount,
-        'errDump' => $errDump
-    );
-}
-echo json_encode($jsonText);                                                // передаем данные
+plog('selectView result:', $data);
+$response = new Response(
+    data: (object) $data,
+    dataCount: count($data),
+    errCount: $errCount,
+    errDump: $errDump
+);
+echo $response->toJson();                                                // передаем данные
 plog("getView.php ->");
+
+// if (gettype($result) == 'object') {
+//     $result = (array) $result;
+// }
+// // проверяем были ли ошибки и передаем данные вызвывающей форме
+// $jsonText = [];                                                             // массив для передачи данных фронтенду
+// if ($errCount == 0) {
+//     // если все прошло без критичных ошибок
+//     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
+//         'data' => $result,
+//         'errCount' => $errCount,
+//         'errDump' => $errDump
+//     );
+// } else {
+//     // если были критичные ошибки
+//     plog("Server reply error: $errDump");
+//     $jsonText = array(                                                      // формируем набор данных и информацию об ошибках
+//         'errCount' => $errCount,
+//         'errDump' => $errDump
+//     );
+// }
+// echo json_encode($jsonText);                                                // передаем данные
