@@ -59,7 +59,7 @@ $input = (new PostParams([
     'order',
     'where',
     'limit',
-]))->getAll()->getData();;
+]))->getAll()->getData();
 
 // получаем переданные параметры в формате json
 $params = $_POST['params'];                       // параметры в формате json

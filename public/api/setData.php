@@ -72,7 +72,6 @@ if (!empty($data)) {
             array_push($data_id, $current_id);
         }
     }
-    $data_id = (object) $data_id;
 }
 
 plog('setData result:', $data_id);
