@@ -58,6 +58,7 @@ $group = $fieldData['group'];
 $location = $fieldData['location'];
 $name = $fieldData['name'];
 $phone = $fieldData['phone'];
+$phone = $fieldData['pass'];
 
 plog('Recived and extracted parameters:');
 plog('   tableName: ', $tableName);
@@ -65,44 +66,29 @@ plog('   group: ', $group);
 plog('   location: ', $location);
 plog('   name: ', $name);
 plog('   phone: ', $phone);
+plog('   pass: ', $pass);
 
-// запрос для проверки существует ли запись с указанными id
-// $query = "SELECT * 
-//             FROM `$tableName` 
-//             WHERE `phone` = $phone 
-//             LIMIT 1;";
-
-// $mySqlRequest = new MySqlRequest(
-//     new SqlQueryWithParams(
-//         [],
-//         $query
-//     ),
-//     new MySqlConnect(
-//         $db_host,
-//         $db_name,
-//         $db_user,
-//         $db_pass
-//     ),
-// );
-// $response = $mySqlRequest->fetch();
 $query = "
     INSERT INTO `client`(
         `group`,
         `location`,
         `name`,
-        `phone`
+        `phone`,
+        `pass`
     )
     VALUES (
         '$group',
         '$location',
         '$name',
         '$phone'
+        '$pass'
     )
     ON DUPLICATE KEY UPDATE
         `group` = '$group',
         `location` = '$location',
         `name` = '$name',
         `phone` = '$phone';
+        `pass` = '$pass';
 ";
 $mySqlRequest = new MySqlRequest(
     new SqlQueryWithParams(
