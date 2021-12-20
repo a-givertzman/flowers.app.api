@@ -87,7 +87,7 @@ $query = "
         `group` = '$group',
         `location` = '$location',
         `name` = '$name',
-        `phone` = '$phone';
+        `phone` = '$phone',
         `pass` = '$pass';
 ";
 $mySqlRequest = new MySqlRequest(
