@@ -80,7 +80,7 @@ $query = "
         '$group',
         '$location',
         '$name',
-        '$phone'
+        '$phone',
         '$pass'
     )
     ON DUPLICATE KEY UPDATE
