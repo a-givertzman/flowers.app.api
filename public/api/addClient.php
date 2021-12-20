@@ -58,7 +58,7 @@ $group = $fieldData['group'];
 $location = $fieldData['location'];
 $name = $fieldData['name'];
 $phone = $fieldData['phone'];
-$phone = $fieldData['pass'];
+$pass = $fieldData['pass'];
 
 plog('Recived and extracted parameters:');
 plog('   tableName: ', $tableName);
