@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Отчет по закупкам участника</title>
+    <title>Отчет по клиенту</title>
     <script>
         function needsToBeBlacklisted(src, type) {
             console.log('[needsToBeBlacklisted] value:', src, 'type:', type);
@@ -104,7 +104,7 @@
             <div class="client-select-top">
                 <div class="client-select-title-box">
                     <div class="client-select-title">
-                        Отчет по закупкам
+                        Отчет по клиенту
                         <span id="client-account"></span>
                     </div>
                     <div class="client-select-wrapper">

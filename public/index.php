@@ -53,6 +53,9 @@ if ($query == '') {
 } else if ($query == 'get-purchase-product') {
     $routePath = './api/getPurchaseProduct.php';
 
+} else if ($query == 'main-menu') {
+    $routePath = './main_menu.php';
+
 } else {
     $routePath = './reportForClient.php';
 }

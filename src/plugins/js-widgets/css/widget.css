@@ -1,0 +1,90 @@
+/* Паддинги и бордеры всех элементов не изменяют размер элемента */
+*{
+    box-sizing: border-box;
+}
+
+html,
+body {
+    display: block;
+    margin: 0;
+}
+
+.container-widget {
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    width: 100%;
+    height: 100%;
+}
+
+.center-widget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.column-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.row-widget {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.list-view-widget {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    list-style-type: none;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+.text-button-widget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FF7800;
+    color: #ffffff;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    transition: color 100ms;
+    box-sizing: border-box;
+    line-height: 20px;
+    margin: 0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    border-style: none;
+    height: 40px;
+    padding: 10px 16px;
+}
+.text-button-widget:hover,
+.text-button-widget:focus {
+  background-color: #FF9A40;
+}
+.text-button-widget:active {
+    background-color: #BF7330;
+    box-shadow: none;
+}
