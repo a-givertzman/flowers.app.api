@@ -1,6 +1,12 @@
 "use strict";
+const appFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"';
+const menuHeaderTextStyle = new TextStyle({
+    fontFamily: appFontFamily,
+    fontSize: 14,
+    color: '#ffffff',
+});
 const menuButtonsTextStyle = new TextStyle({
-    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"',
+    fontFamily: appFontFamily,
     fontSize: 14
 });
 const menuLeftColumnItems = [
@@ -38,27 +44,21 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                         new Container({
                                             child: new Center({
                                                 child: new Text(
-                                                    `heder item 1`,{
-                                                    style: new TextStyle({
-                                                        color: '#ffffff',
-                                                        overflow: Text
-                                                    }),
+                                                    `Flowers<br/>App<br/>Казань`,{
+                                                    style: menuHeaderTextStyle,
                                                 }),
                                                 border: Border.all({width: 4, color: '#ff2020'}),
                                             }),
-                                            color: '#35C0CD', //'transparent',//,
-                                            width: 100,
-                                            height: 32,
+                                            width: 128,
+                                            height: 64,
                                             // padding: 4,
                                             // margin: 8,
                                         }),
                                         new Container({
                                             child: new Center({
                                                 child: new Text(
-                                                    `heder item 2`,{
-                                                    style: new TextStyle({
-                                                        color: '#ffffff',
-                                                    }),
+                                                    `Главное меню`,{
+                                                    style: menuHeaderTextStyle,
                                                 }),
                                                 // border: Border.all({width: 4, color: '#ff2020'}),
                                             }),
@@ -71,17 +71,13 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                         new Container({
                                             child: new Center({
                                                 child: new Text(
-                                                    `heder item 3`,{
-                                                    style: new TextStyle({
-                                                        color: '#ffffff',
-                                                    }),
+                                                    `Пользователь:<br/>Антон Лобанов`,{
+                                                    style: menuHeaderTextStyle,
+                                                    // style: {...menuHeaderTextStyle, ...{textAlign: TextAlign.right}},
                                                 }),
                                             }),
-                                            color: 'transparent',
-                                            width: 100,
-                                            height: 32,
-                                            // padding: 4,
-                                            // margin: 8,
+                                            width: 256,
+                                            height: 64,
                                         }),
                                     ],
                                 }),

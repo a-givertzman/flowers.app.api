@@ -18,3 +18,14 @@ const CrossAxisAlignment = {
     center: 'center', //2,
     stretch: 'stretch', //3,
 }
+
+const TextAlign = {
+    start: 'start',
+    end: 'end',
+    left: 'left',
+    right: 'right',
+    center: 'center',
+    justify: 'justify',
+    justifyAll: 'justify-all',
+    matchParent: 'match-parent',
+}

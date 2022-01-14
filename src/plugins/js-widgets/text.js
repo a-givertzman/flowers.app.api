@@ -22,6 +22,7 @@ class Text {
         this.widget.element.style.fontWeight = this.style?.fontWeight;
         this.widget.element.style.height = this.style?.height;
         this.widget.element.style.overflow = this.style?.overflow;
+        this.widget.element.style.textAlign = this.style?.textAlign;
     }
     get element() {
         return this.widget.element;
