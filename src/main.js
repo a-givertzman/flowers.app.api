@@ -1,19 +1,23 @@
 "use strict";
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-    var menuItems = [
+    var menuLeftColumnItems = [
         'Клиенты', 'Продукты', 'Закупки', 'Состав закупок', 'Заказы', 'Транзакции',
+    ];
+    var menuRightColumnItems = [
         'Отчет по клиенту', 'Перевод оплаты по закупкам', 'Перевод денег'
     ];
-    var menuActions = [
-        onClientsPressed, //'Клиенты',
-        onProductsPressed, //'Продукты',
-        onPurchasesPressed, //'Закупки',
-        onPurchaseContentPressed, //Состав закупок
-        onOrdersPressed, //'Заказы'
-        onTransactionsPressed,
-        onClientReportPressed,
-        onPaymentPressed,
-        onNewTransactionPressed,
+    var menuLeftColumnActions = [
+        onClientsPressed,           // Клиенты
+        onProductsPressed,          // Продукты
+        onPurchasesPressed,         // Закупки
+        onPurchaseContentPressed,   // Состав закупок
+        onOrdersPressed,            // Заказы
+        onTransactionsPressed,      // Транзакции
+    ];
+    var menuRightColumnActions = [
+        onClientReportPressed,      // Отчет по клиенту
+        onPaymentPressed,           // Перевод оплаты по закупкам
+        onNewTransactionPressed,    // Перевод денег (транзакция)
     ];
     var app = new App({
         child: new Container({
@@ -77,26 +81,57 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                     ],
                                 }),
                                 color: '#29497F',
-                                width: Number.POSITIVE_INFINITY,
+                                // width: Number.POSITIVE_INFINITY,
                                 height: 64,
                             }),
-                            new ListView({
-                                children: menuItems,
-                                itemBuilder: (index) => {
-                                    return new Container ({
-                                        child: new TextButton({
-                                            child: new Text(`${menuItems[index]}`),
-                                            style: new ButtonStyle({
-                                                backgroundColor: '#FF9B40',
-                                                foregroundColor: '#ffffff',
-                                            }),
-                                            onPressed: menuActions[index],
-                                        }),
-                                        width: 300,
-                                        padding: 5,
-                                    });
-                                },
+                            new SizedBox({height: Number.POSITIVE_INFINITY}),
+                            new Row({
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                    // new SizedBox({width: Number.POSITIVE_INFINITY}),
+                                    new ListView({
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: menuLeftColumnItems,
+                                        itemBuilder: (index) => {
+                                            return new Container ({
+                                                child: new TextButton({
+                                                    child: new Text(`${menuLeftColumnItems[index]}`),
+                                                    style: new ButtonStyle({
+                                                        backgroundColor: '#FF9B40',
+                                                        foregroundColor: '#ffffff',
+                                                    }),
+                                                    onPressed: menuLeftColumnActions[index],
+                                                }),
+                                                width: 250,
+                                                padding: 5,
+                                            });
+                                        },
+                                    }),
+                                    // new SizedBox({width: 10}),
+                                    new ListView({
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: menuRightColumnItems,
+                                        itemBuilder: (index) => {
+                                            return new Container ({
+                                                child: new TextButton({
+                                                    child: new Text(`${menuRightColumnItems[index]}`),
+                                                    style: new ButtonStyle({
+                                                        backgroundColor: '#FF9B40',
+                                                        foregroundColor: '#ffffff',
+                                                    }),
+                                                    onPressed: menuRightColumnActions[index],
+                                                }),
+                                                width: 250,
+                                                padding: 5,
+                                            });
+                                        },
+                                    }),
+                                    // new SizedBox({width: Number.POSITIVE_INFINITY}),
+                                ],
                             }),
+                            new SizedBox({height: Number.POSITIVE_INFINITY, width: Number.POSITIVE_INFINITY}),
                             new Container({
                                     child: new Center({
                                         child: new Text(`footer`),
@@ -108,10 +143,11 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                 // margin: 8,
                             }),
                         ],
-                    })
+                    }),
                 }),
             }),
             color: '#29497F',
+            // height: Number.POSITIVE_INFINITY,
         }),
     });
     app.run();

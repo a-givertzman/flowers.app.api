@@ -5,7 +5,7 @@
  * @param {Column<Widget>} children массив виджетов, которые будут внутри
  */
 class Column {
-    constructor({children = [], mainAxisAlignment = 'start', crossAxisAlignment = 'center'}={}) {
+    constructor({children = [], mainAxisAlignment = 'flex-start', crossAxisAlignment = 'center'}={}) {
         this.children = children;
         this.mainAxisAlignment = mainAxisAlignment;
         this.crossAxisAlignment = crossAxisAlignment;

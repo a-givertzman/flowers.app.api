@@ -16,6 +16,7 @@
     <script src="./src/plugins/js-widgets/textstyle.js"></script>
     <script src="./src/plugins/js-widgets/center.js"></script>
     <script src="./src/plugins/js-widgets/container.js"></script>
+    <script src="./src/plugins/js-widgets/sizedbox.js"></script>
     <script src="./src/plugins/js-widgets/column.js"></script>
     <script src="./src/plugins/js-widgets/row.js"></script>
     <script src="./src/plugins/js-widgets/alignment.js"></script>

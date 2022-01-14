@@ -1,8 +1,14 @@
 "use strict";
 /**
- * Помещает виджет внутрь себя
- *
- * @param {Widget} child виджет, который будет внутри
+ * Виджет имеющий размеры, цвет фона отступы внешние и внутренние, контур
+ * А также вложенный виджет
+ * @param {Widget} child вложенный виджет
+ * @param {Number} width ширина виджета
+ * @param {Number} height высота виджета
+ * @param {Color} color цвет фона виджета, по умолчанию прозрачный
+ * @param {Number} margin внешние отступы
+ * @param {Number} padding внутренние отступы
+ * @param {Border} border контур
  */
 class Container {
     constructor({child, width, height, color, margin, padding, border}={}) {

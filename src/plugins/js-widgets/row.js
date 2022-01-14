@@ -5,7 +5,7 @@
  * @param {Row<Widget>} children массив виджетов, которые будут внутри
  */
 class Row {
-    constructor({children = [], mainAxisAlignment = 'start', crossAxisAlignment = 'center'}={}) {
+    constructor({children = [], mainAxisAlignment = 'flex-start', crossAxisAlignment = 'center'}={}) {
         this.children = children;
         this.mainAxisAlignment = mainAxisAlignment;
         this.crossAxisAlignment = crossAxisAlignment;
