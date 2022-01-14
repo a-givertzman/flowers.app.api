@@ -7,7 +7,7 @@ const menuHeaderTextStyle = new TextStyle({
 });
 const menuFooterTextStyle = new TextStyle({
     fontFamily: appFontFamily,
-    fontSize: 14,
+    fontSize: 12,
     color: '#ffffff',
 });
 const menuButtonsTextStyle = new TextStyle({
