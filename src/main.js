@@ -5,6 +5,11 @@ const menuHeaderTextStyle = new TextStyle({
     fontSize: 14,
     color: '#ffffff',
 });
+const menuFooterTextStyle = new TextStyle({
+    fontFamily: appFontFamily,
+    fontSize: 14,
+    color: '#ffffff',
+});
 const menuButtonsTextStyle = new TextStyle({
     fontFamily: appFontFamily,
     fontSize: 14
@@ -140,12 +145,14 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                             new SizedBox({height: Number.POSITIVE_INFINITY, width: Number.POSITIVE_INFINITY}),
                             new Container({
                                     child: new Center({
-                                        child: new Text(`footer`),
+                                        child: new Text(`footer`,{
+                                            style: menuFooterTextStyle,
+                                        }),
                                     }),
-                                color: '#1E6D74',
+                                color: '#323232',
                                 width: Number.POSITIVE_INFINITY,
                                 height: 128,
-                                // padding: 10,
+                                padding: 4,
                                 // margin: 8,
                             }),
                         ],
