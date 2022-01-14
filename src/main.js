@@ -103,7 +103,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                                     }),
                                                     onPressed: menuLeftColumnActions[index],
                                                 }),
-                                                width: 250,
+                                                width: 220,
                                                 padding: 5,
                                             });
                                         },
@@ -123,7 +123,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                                     }),
                                                     onPressed: menuRightColumnActions[index],
                                                 }),
-                                                width: 250,
+                                                width: 220,
                                                 padding: 5,
                                             });
                                         },
