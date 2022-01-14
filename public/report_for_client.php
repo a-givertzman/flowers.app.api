@@ -85,7 +85,7 @@
     <script src="./src/mysql/ApiRequest.js"></script>
     <script src="./src/plugins/tom-select/tom-select.complete.js"></script>
     <script src="./src/plugins/busy-indicator/busy.js"></script>
-    <script src="./src/reportForClient/reportForCientApp.js"></script>
+    <script src="./src/report_for_cient/reportForCientApp.js"></script>
 </head>
 <body>
     <header class="header">

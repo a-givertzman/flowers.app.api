@@ -12,10 +12,10 @@ $query = trim($_SERVER['QUERY_STRING'], '/');
 plog('query:', $query);
 
 if ($query == '') {
-    $routePath = './reportForClient.php';
+    $routePath = './report_for_client.php';
 
 } else if ($query == 'admin-client-report') {
-    $routePath = './reportForClient.php';
+    $routePath = './report_for_client.php';
 
 } else if ($query == 'payment') {
     $routePath = './payment.php';
@@ -57,7 +57,7 @@ if ($query == '') {
     $routePath = './main_menu.php';
 
 } else {
-    $routePath = './reportForClient.php';
+    $routePath = './report_for_client.php';
 }
 
 plog('route to: ', $routePath);

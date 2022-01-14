@@ -24,8 +24,8 @@
     <script src="./src/plugins/js-widgets/textbutton.js"></script>
     <script src="./src/plugins/js-widgets/buttonstyle.js"></script>
     <script src="./src/plugins/js-widgets/app.js"></script>
-    <script src="./src/main_menu.js"></script>
-    <script src="./src/main.js"></script>
+    <script src="./src/main_menu/main_menu.js"></script>
+    <script src="./src/main_menu/main.js"></script>
 </head>
     <body>
     </body>
