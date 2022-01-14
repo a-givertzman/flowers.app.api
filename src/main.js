@@ -4,7 +4,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         'Клиенты', 'Продукты', 'Закупки', 'Состав закупок', 'Заказы', 'Транзакции',
     ];
     var menuRightColumnItems = [
-        'Отчет по клиенту', 'Перевод оплаты по закупкам', 'Перевод денег'
+        'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция'
     ];
     var menuLeftColumnActions = [
         onClientsPressed,           // Клиенты
@@ -17,7 +17,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     var menuRightColumnActions = [
         onClientReportPressed,      // Отчет по клиенту
         onPaymentPressed,           // Перевод оплаты по закупкам
-        onNewTransactionPressed,    // Перевод денег (транзакция)
+        onNewTransactionPressed,    // Новая транзакция
     ];
     var app = new App({
         child: new Container({
@@ -103,8 +103,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                                     }),
                                                     onPressed: menuLeftColumnActions[index],
                                                 }),
-                                                width: 220,
-                                                padding: 5,
+                                                width: 180,
+                                                padding: 4,
                                             });
                                         },
                                     }),
@@ -123,8 +123,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                                     }),
                                                     onPressed: menuRightColumnActions[index],
                                                 }),
-                                                width: 220,
-                                                padding: 5,
+                                                width: 180,
+                                                padding: 4,
                                             });
                                         },
                                     }),
