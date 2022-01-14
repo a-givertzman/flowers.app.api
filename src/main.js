@@ -2,7 +2,7 @@
 const appFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"';
 const menuHeaderTextStyle = new TextStyle({
     fontFamily: appFontFamily,
-    fontSize: 14,
+    fontSize: 12,
     color: '#ffffff',
 });
 const menuFooterTextStyle = new TextStyle({
@@ -63,7 +63,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                             child: new Center({
                                                 child: new Text(
                                                     `Главное меню`,{
-                                                    style: menuHeaderTextStyle,
+                                                    style: {...menuHeaderTextStyle, ...{fontSize: 16}},
                                                 }),
                                                 // border: Border.all({width: 4, color: '#ff2020'}),
                                             }),
@@ -77,8 +77,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                             child: new Center({
                                                 child: new Text(
                                                     `Пользователь:<br/>Антон Лобанов`,{
-                                                    style: menuHeaderTextStyle,
-                                                    // style: {...menuHeaderTextStyle, ...{textAlign: TextAlign.right}},
+                                                    style: {...menuHeaderTextStyle, ...{textAlign: TextAlign.right}},
                                                 }),
                                             }),
                                             width: 256,
