@@ -17,7 +17,7 @@ class Text {
         this.widget.element.innerHTML = this.data;
         this.widget.element.style.color = this.style?.color;
         this.widget.element.style.backgroundColor = this.style?.backgroundColor;
-        this.widget.element.style.fontSize = this.style?.fontSize;
+        this.widget.element.style.fontSize = this.style ? `${this.style.fontSize}px` : '';
         this.widget.element.style.fontFamily = this.style?.fontFamily;
         this.widget.element.style.fontWeight = this.style?.fontWeight;
         this.widget.element.style.height = this.style?.height;

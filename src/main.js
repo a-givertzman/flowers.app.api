@@ -1,24 +1,29 @@
 "use strict";
+const menuButtonsTextStyle = new TextStyle({
+    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"',
+    fontSize: 14
+});
+const menuLeftColumnItems = [
+    'Клиенты', 'Продукты', 'Закупки', 'Состав закупок', 'Заказы', 'Транзакции',
+];
+const menuRightColumnItems = [
+    'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция'
+];
+const menuLeftColumnActions = [
+    onClientsPressed,           // Клиенты
+    onProductsPressed,          // Продукты
+    onPurchasesPressed,         // Закупки
+    onPurchaseContentPressed,   // Состав закупок
+    onOrdersPressed,            // Заказы
+    onTransactionsPressed,      // Транзакции
+];
+const menuRightColumnActions = [
+    onClientReportPressed,      // Отчет по клиенту
+    onPaymentPressed,           // Перевод оплаты по закупкам
+    onNewTransactionPressed,    // Новая транзакция
+];
+
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-    var menuLeftColumnItems = [
-        'Клиенты', 'Продукты', 'Закупки', 'Состав закупок', 'Заказы', 'Транзакции',
-    ];
-    var menuRightColumnItems = [
-        'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция'
-    ];
-    var menuLeftColumnActions = [
-        onClientsPressed,           // Клиенты
-        onProductsPressed,          // Продукты
-        onPurchasesPressed,         // Закупки
-        onPurchaseContentPressed,   // Состав закупок
-        onOrdersPressed,            // Заказы
-        onTransactionsPressed,      // Транзакции
-    ];
-    var menuRightColumnActions = [
-        onClientReportPressed,      // Отчет по клиенту
-        onPaymentPressed,           // Перевод оплаты по закупкам
-        onNewTransactionPressed,    // Новая транзакция
-    ];
     var app = new App({
         child: new Container({
             child: new MainMenu({
@@ -96,7 +101,10 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                         itemBuilder: (index) => {
                                             return new Container ({
                                                 child: new TextButton({
-                                                    child: new Text(`${menuLeftColumnItems[index]}`),
+                                                    child: new Text(
+                                                        `${menuLeftColumnItems[index]}`, {
+                                                        style: menuButtonsTextStyle,
+                                                    }),
                                                     style: new ButtonStyle({
                                                         backgroundColor: '#FF9B40',
                                                         foregroundColor: '#ffffff',
@@ -116,7 +124,9 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                         itemBuilder: (index) => {
                                             return new Container ({
                                                 child: new TextButton({
-                                                    child: new Text(`${menuRightColumnItems[index]}`),
+                                                    child: new Text(`${menuRightColumnItems[index]}`, {
+                                                        style: menuButtonsTextStyle,
+                                                    }),
                                                     style: new ButtonStyle({
                                                         backgroundColor: '#FF9B40',
                                                         foregroundColor: '#ffffff',
