@@ -56,6 +56,9 @@ if ($query == '') {
 } else if ($query == 'main-menu') {
     $routePath = './main_menu.php';
 
+} else if ($query == 'auth') {
+    $routePath = './auth.php';
+
 } else {
     $routePath = './report_for_client.php';
 }

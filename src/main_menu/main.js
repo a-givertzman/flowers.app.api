@@ -18,7 +18,7 @@ const menuLeftColumnItems = [
     'Клиенты', 'Продукты', 'Закупки', 'Состав закупок', 'Заказы', 'Транзакции',
 ];
 const menuRightColumnItems = [
-    'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция', 'Сообщения по закупкам'
+    'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция', 'Уведомления по закупкам'
 ];
 const menuLeftColumnActions = [
     onClientsPressed,           // Клиенты
@@ -32,7 +32,7 @@ const menuRightColumnActions = [
     onClientReportPressed,      // Отчет по клиенту
     onPaymentPressed,           // Перевод оплаты по закупкам
     onNewTransactionPressed,    // Новая транзакция
-    onPurchaseMessagesPressed,  // Сообщения
+    onPurchaseNoticePressed,    // Уведомления/Сообщения по закупкам
 ];
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
@@ -203,8 +203,8 @@ function onNewTransactionPressed(e) {
     alert('Добавление транзакций в разработке');
     // window.open('');
 }
-function onPurchaseMessagesPressed(e) {
-    console.log('event onPurchaseMessagesPressed: ', e);
-    alert('Сообщения по закупкам в разработке');
+function onPurchaseNoticePressed(e) {
+    console.log('event onPurchaseNoticePressed: ', e);
+    alert('Уведомления по закупкам в разработке');
     // window.open('');
 }

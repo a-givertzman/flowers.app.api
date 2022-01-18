@@ -24,7 +24,10 @@ class ButtonStyle {
         visualDensity, //VisualDensity
         animationDuration, //Duration
         alignment, //AlignmentGeometry
-    }={}) {
+        fontFamily,
+        fontWeight,
+        fontSize,
+}={}) {
         this.backgroundColor = backgroundColor; 
         this.foregroundColor = foregroundColor; 
         this.overlayColor = overlayColor; 
@@ -40,5 +43,8 @@ class ButtonStyle {
         this.visualDensity = visualDensity; //VisualDensity
         this.animationDuration = animationDuration; //Duration
         this.alignment = alignment; //AlignmentGeometry
+        this.fontFamily = fontFamily;
+        this.fontWeight = fontWeight;
+        this.fontSize = fontSize;
     }
 }

@@ -29,3 +29,9 @@ const TextAlign = {
     justifyAll: 'justify-all',
     matchParent: 'match-parent',
 }
+
+const TextAlignVertical = {
+    top: 'start',
+    center: 'center',
+    bottom: 'end',
+}
