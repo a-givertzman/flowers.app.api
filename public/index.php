@@ -42,7 +42,10 @@ if ($query == '') {
     $routePath = './api/getMaxId.php';
 
 } else if ($query == 'add-order') {
-    $routePath = './api/addOrder.php';
+    $routePath = './api/add_order.php';
+
+} else if ($query == 'remove-order') {
+    $routePath = './api/remove_order.php';
 
 } else if ($query == 'get-client') {
     $routePath = './api/getClient.php';

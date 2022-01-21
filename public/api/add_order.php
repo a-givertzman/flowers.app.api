@@ -42,7 +42,7 @@ require_once './libPHP/plog.php';
 
 // plog_clear();
 plog("====================================");
-plog("-> addOrder.php");
+plog("-> add_order.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
@@ -79,6 +79,7 @@ if (!empty($data)) {
                     and `product/id` = $productId 
                     LIMIT 1;";
             // plog('updating');
+            $dataSet['deleted'] = 'null';
             $current_id = insertOdkuData($tableName, $dataSet, $query);
             $result[$index] = $current_id;
             $index++;
@@ -87,7 +88,7 @@ if (!empty($data)) {
     }
 }
 
-plog('addOrder result:', $result);
+plog('add_order result:', $result);
 $response = new Response(
     data: (object) $result,
     dataCount: count($result),
@@ -95,4 +96,4 @@ $response = new Response(
     errDump: $errDump
 );
 echo $response->toJson();                                                // передаем данные
-plog("addOrder.php ->");
+plog("add_order.php ->");
