@@ -77,7 +77,7 @@ if (!empty($data)) {
                     and `product/id` = $productId 
                     LIMIT 1;";
             // plog('updating');
-            $dataSet['deleted'] = 'CURRENT_TIMESTAMP';
+            $dataSet['deleted'] = date('Y-m-d H:i:s');
             $current_id = insertOdkuData($tableName, $dataSet, $query);
             $result[$index] = $current_id;
             $index++;
