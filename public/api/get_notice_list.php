@@ -29,6 +29,7 @@ include_once './api/PostParams.php';
 include_once './api/MySqlConnect.php';
 include_once './api/MySqlRequest.php';
 include_once './api/SqlQuery.php';
+include_once './api/WhereQueue';
 // include_once './api/api.php';
 
 // -------------------------------------------------------
@@ -40,24 +41,54 @@ require_once './libPHP/mysql_settings.key';
 
 // plog_clear();
 plog("====================================");
-plog("-> getClient.php");
+plog("-> get_client.php");
 
 // cors();
 
+// может быть задан хотя бы один идентификатор
+//  id - идентификатор записи одного оповещения
+//  purchase_id - идентификатор закупки для которой запрошены оповещения
+//  purchase_content_id - идентификатор позиции закупки для которой запрошены оповещения
 $input = (new PostParams([
-    'phoneNumber',
+    'id',
+    'purchase_id',
+    'purchase_content_id',
 ]))->getAll()->getData();
 
 // получаем переданные параметры в формате json
 $phoneNumber = $input['phoneNumber'];
 
 plog('Recived and extracted parameters:');
-plog('   phoneNumber: ', $phoneNumber);
+plog('   id: ', $id);
+plog('   purchase_id: ', $purchase_id);
+plog('   purchase_content_id: ', $purchase_content_id);
 
 $query = "
-    SELECT *
-        FROM `client`
-        where `phone` = @1;
+    SELECT
+        `id`,
+        `message`,
+        `created`,
+        `updated`,
+        `deleted`
+    FROM `notice`
+    WHERE `id` IN (
+        SELECT `notice_id`
+        FROM `notice_to_purchase_content`
+";
+$whereQueue = new WhereQueue(count: 3);
+if (isset($id)) {
+    $query .= "        {$whereQueue->next()} `id` = '$id'";
+}
+if (isset($purchase_id)) {
+    $query .= "        {$whereQueue->next()} `purchase_id` = '$purchase_id'";
+}
+if (isset($purchase_content_id)) {
+    $query .= "        {$whereQueue->next()} `purchase_content_id` = '$purchase_content_id'";
+}
+$query .= "        {$whereQueue->next()} `deleted` IS NULL";
+$query .= "
+    )
+    AND `deleted` IS NULL;
 ";
 
 $mySqlRequest = new MySqlRequest(
@@ -77,4 +108,4 @@ $mySqlRequest = new MySqlRequest(
     );
 $response = $mySqlRequest->fetch();
 echo $response->toJson();                                                // передаем данные
-plog("getClient.php ->");
+plog("get_client.php ->");

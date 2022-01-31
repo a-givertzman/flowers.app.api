@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  * 
- * Copyright (c) 2021 Anton Lobanov
+ * Copyright (c) 2019-2021 Anton Lobanov
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,47 +38,54 @@ $errDump = " | ";
 error_reporting(0);
 
 require_once './libPHP/plog.php';
+// require_once './libPHP/cors.php';
+
+// cors();
 
 // plog_clear();
 plog("====================================");
-plog("-> getMaxId.php");
+plog("-> get_data.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('POST: ', $_POST);
-// получаем название таблицы
-$tableName = json_decode($_POST["tableName"]);
-plog('tableName: ', $tableName);
+// plog('php://input: ', file_get_contents( 'php://input' ));
+// plog('_REQUEST: ', $_REQUEST);
 
-// делаем запрос SELECT в таблицу tableName
+$data = ($_POST);
+plog('_POST: ', $data);
+// получаем название таблицы
+$tableName = json_decode($_POST["tableName"]);      // название таблицы
+$keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
+$orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
+$order = json_decode($_POST["order"]);              // направление сортировки
+$where = json_decode($_POST["where"]);              // array, название полей покоторым делаем поиск
+$limit = json_decode($_POST["limit"]);              // максиммальное количество записей в результате, 0 - не ограничено
+
+plog('tableName:', $tableName);
+plog('field keys: ', $keys);
+plog('rder by: ', $orderBy);
+plog('order: ', $order);
+plog('where: ', $where);
+plog('limit: ', $limit);
+
+// делаем запрос SELECT JOIN в таблицу tableName
 $data = selectData(
-    $tableName,     // string, название таблицы
-    ['id'],         // array, запрашиваемые поля
-    'id',           // string, поле по которому сортируем
-    'DESC',         // направление сортировки
-    [],             // array, название полей покоторым делаем поиск
-    1               // максиммальное количество записей в результате, 0 - не ограничено
+    $tableName,         // string, название таблицы
+    $keys,              // array, запрашиваемые поля
+    $orderBy,           // string, поле по которому сортируем
+    $order,             // направление сортировки
+    $where,             // array of {operator: 'where'/'or'/'and', field: 'fieldNmae', cond: '=', value: value}
+    $limit              // максиммальное количество записей в результате, 0 - не ограничено
 );
 
-plog('data: ', $data);
-
-if (empty($data)) {
-    $data = 0;
-} else {
-    if (gettype($data) == 'object') {
-        $data = (array) $data;
-    }
-    $data = array_values($data)[0]['id'];
-}
-
-plog('getMaxId result: ', $data);
+plog('selectData result:', $data);
 $response = new Response(
     data: (object) $data,
-    dataCount: 1,
+    dataCount: count($data),
     errCount: $errCount,
     errDump: $errDump
 );
 echo $response->toJson();                                                // передаем данные
-plog("getMaxId.php ->");
+plog("get_data.php ->");

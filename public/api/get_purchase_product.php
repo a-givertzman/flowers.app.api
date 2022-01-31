@@ -40,7 +40,7 @@ require_once './libPHP/mysql_settings.key';
 
 // plog_clear();
 plog("====================================");
-plog("-> getPurchaseProduct.php");
+plog("-> get_purchase_product.php");
 
 // cors();
 
@@ -113,4 +113,4 @@ $mySqlRequest = new MySqlRequest(
     );
 $response = $mySqlRequest->fetch();
 echo $response->toJson();                                                // передаем данные
-plog("getPurchaseProduct.php ->");
+plog("get_purchase_product.php ->");

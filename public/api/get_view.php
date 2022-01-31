@@ -44,7 +44,7 @@ cors();
 
 // plog_clear();
 plog("====================================");
-plog("-> getView.php");
+plog("-> get_view.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
@@ -101,4 +101,4 @@ $response = new Response(
     errDump: $errDump
 );
 echo $response->toJson();                                                // передаем данные
-plog("getView.php ->");
+plog("get_view.php ->");

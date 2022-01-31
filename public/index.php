@@ -21,25 +21,25 @@ if ($query == '') {
     $routePath = './payment.php';
 
 } else if ($query == 'get-data') {
-    $routePath = './api/getData.php';
+    $routePath = './api/get_data.php';
 
 } else if ($query == 'get-join-data') {
-    $routePath = './api/getJoinData.php';
+    $routePath = './api/get_join_data.php';
 
 } else if ($query == 'get-view') {
-    $routePath = './api/getView.php';
+    $routePath = './api/get_view.php';
 
 } else if ($query == 'set-data') {
-    $routePath = './api/setData.php';
+    $routePath = './api/set_data.php';
     
 } else if ($query == 'call-procedure') {
-    $routePath = './api/callProcedure.php';
+    $routePath = './api/call_procedure.php';
 
 } else if ($query == 'add-transaction') {
-    $routePath = './api/addTransaction.php';
+    $routePath = './api/add_transaction.php';
 
 } else if ($query == 'get-max-id') {
-    $routePath = './api/getMaxId.php';
+    $routePath = './api/get_max_id.php';
 
 } else if ($query == 'add-order') {
     $routePath = './api/add_order.php';
@@ -47,14 +47,17 @@ if ($query == '') {
 } else if ($query == 'remove-order') {
     $routePath = './api/remove_order.php';
 
+} else if ($query == 'get-notice-list') {
+    $routePath = './api/get_notice_list.php';
+
 } else if ($query == 'get-client') {
-    $routePath = './api/getClient.php';
+    $routePath = './api/get_client.php';
 
 } else if ($query == 'set-client') {
-    $routePath = './api/addClient.php';
+    $routePath = './api/add_client.php';
 
 } else if ($query == 'get-purchase-product') {
-    $routePath = './api/getPurchaseProduct.php';
+    $routePath = './api/get_purchase_product.php';
 
 } else if ($query == 'main-menu') {
     $routePath = './main_menu.php';

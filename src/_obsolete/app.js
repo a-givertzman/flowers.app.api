@@ -116,7 +116,7 @@ window.addEventListener(                                            // ON LOAD W
             order: 'ASC', 
             where: where, 
             limit: 0,
-            url: domainPath + 'getData.php',
+            url: domainPath + 'get_data.php',
         }).then(responseData => {
             data = responseData;
             for(var key in data) {

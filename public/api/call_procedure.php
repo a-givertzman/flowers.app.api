@@ -2,7 +2,7 @@
 /**
  * The MIT License (MIT)
  * 
- * Copyright (c) 2019-2021 Anton Lobanov
+ * Copyright (c) 2021 Anton Lobanov
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,51 +35,58 @@ $errCount = 0;
 $errDump = " | ";
 
 // Добавлять в отчет все ошибки PHP
-error_reporting(E_ALL);
+error_reporting(0);
 
 require_once './libPHP/plog.php';
+// require_once './libPHP/cors.php';
+
+// cors();
 
 // plog_clear();
 plog("====================================");
-plog("-> setData.php");
+plog("-> call_procedure.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-plog('_POST', $_POST);
+// plog('php://input:');
+// plog(file_get_contents( 'php://input' ));
 
-$tableName = json_decode($_POST["tableName"]);
-$data = json_decode($_POST["data"]);
-$keys = json_decode($_POST["keys"]);      // массив названий полей таблицы
+// plog('_REQUEST:');
+// plog($_REQUEST);
 
-plog('tableName: ', $tableName);
-plog('field keys: ', $keys);
-plog('type of data: ', gettype($data));
-plog('data: ', $data);
+plog('_POST: ', $_POST);
 
-if (!empty($data)) {
-    $data_id = [];
-    foreach($data as $dataItem) {
-        plog($dataItem);
-        if (isset($dataItem)) {
-            if (is_object($dataItem)) {
-                $dataSet = (array) $dataItem;
-            }    
-            // plog('updating');
-            $current_id = insertOdkuData($tableName, $dataSet);
-            // plog("updated, id=$current_id");
-            array_push($data_id, $current_id);
-        }
-    }
+// получаем переданные параметры
+$procedureName = json_decode($_POST["procedureName"]);      // название процедурв
+$params = isset($_POST['params'])                           // массив параметров
+    ? json_decode($_POST['params'])
+    : null;
+
+plog('Recived and extracted parameters:');
+plog("procedureName: ", $procedureName);
+plog("params: ", $params);
+
+// Делаем вызов хранимой процедуры
+$result = callProcedure( 
+    $procedureName,         // Идентификатор счета организатора
+    $params,                // массив параметров
+);
+
+if ($result != 0) {
+    $errCount++;
+    $errDump .= preg_replace("/[\r\n\']/m", "", $result) . " | ";
+    $errDump .= preg_replace("/[\r\n\']/m", "", $mySqli->error) . " | ";
+    plog("Server reply error: $errDump \nIn query: $query");
 }
 
-plog('setData result:', $data_id);
+plog('callProcedure result:', $result);
 $response = new Response(
-    data: (object) $data_id,
-    dataCount: count($data_id),
+    data: (object) $result,
+    dataCount: count($result),
     errCount: $errCount,
     errDump: $errDump
 );
 echo $response->toJson();                                                // передаем данные
-plog("setData.php ->");
+plog("call_procedure.php ->");

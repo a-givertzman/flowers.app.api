@@ -35,57 +35,51 @@ $errCount = 0;
 $errDump = " | ";
 
 // Добавлять в отчет все ошибки PHP
-error_reporting(0);
+error_reporting(E_ALL);
 
 require_once './libPHP/plog.php';
-// require_once './libPHP/cors.php';
-
-// cors();
 
 // plog_clear();
 plog("====================================");
-plog("-> getData.php");
+plog("-> set_data.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
 require_once './libPHP/mysql_utils.php';
 
-// plog('php://input: ', file_get_contents( 'php://input' ));
-// plog('_REQUEST: ', $_REQUEST);
+plog('_POST', $_POST);
 
-$data = ($_POST);
-plog('_POST: ', $data);
-// получаем название таблицы
-$tableName = json_decode($_POST["tableName"]);      // название таблицы
-$keys = json_decode($_POST["keys"]);                // массив названий полей таблицы
-$orderBy = json_decode($_POST["orderBy"]);          // название поля сортировки
-$order = json_decode($_POST["order"]);              // направление сортировки
-$where = json_decode($_POST["where"]);              // array, название полей покоторым делаем поиск
-$limit = json_decode($_POST["limit"]);              // максиммальное количество записей в результате, 0 - не ограничено
+$tableName = json_decode($_POST["tableName"]);
+$data = json_decode($_POST["data"]);
+$keys = json_decode($_POST["keys"]);      // массив названий полей таблицы
 
-plog('tableName:', $tableName);
+plog('tableName: ', $tableName);
 plog('field keys: ', $keys);
-plog('rder by: ', $orderBy);
-plog('order: ', $order);
-plog('where: ', $where);
-plog('limit: ', $limit);
+plog('type of data: ', gettype($data));
+plog('data: ', $data);
 
-// делаем запрос SELECT JOIN в таблицу tableName
-$data = selectData(
-    $tableName,         // string, название таблицы
-    $keys,              // array, запрашиваемые поля
-    $orderBy,           // string, поле по которому сортируем
-    $order,             // направление сортировки
-    $where,             // array of {operator: 'where'/'or'/'and', field: 'fieldNmae', cond: '=', value: value}
-    $limit              // максиммальное количество записей в результате, 0 - не ограничено
-);
+if (!empty($data)) {
+    $data_id = [];
+    foreach($data as $dataItem) {
+        plog($dataItem);
+        if (isset($dataItem)) {
+            if (is_object($dataItem)) {
+                $dataSet = (array) $dataItem;
+            }    
+            // plog('updating');
+            $current_id = insertOdkuData($tableName, $dataSet);
+            // plog("updated, id=$current_id");
+            array_push($data_id, $current_id);
+        }
+    }
+}
 
-plog('selectData result:', $data);
+plog('setData result:', $data_id);
 $response = new Response(
-    data: (object) $data,
-    dataCount: count($data),
+    data: (object) $data_id,
+    dataCount: count($data_id),
     errCount: $errCount,
     errDump: $errDump
 );
 echo $response->toJson();                                                // передаем данные
-plog("getData.php ->");
+plog("set_data.php ->");

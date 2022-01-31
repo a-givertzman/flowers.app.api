@@ -3,7 +3,7 @@
  * Класс делает запрос в базу данных.
  * @mySqlParams параметры запроса в объекте
  * {
-        url: 'getData.php',
+        url: 'get_data.php',
         tableName: 'client', 
         keys: ['*'], 
         groupBy: '', 

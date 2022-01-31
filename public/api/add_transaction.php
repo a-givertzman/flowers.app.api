@@ -44,7 +44,7 @@ require_once './libPHP/plog.php';
 
 // plog_clear();
 plog("====================================");
-plog("-> callProcedure.php");
+plog("-> add_transaction.php");
 
 // загружаем настройки и
 // подключаемся к серверу mysql
@@ -57,22 +57,35 @@ require_once './libPHP/mysql_utils.php';
 // plog($_REQUEST);
 
 plog('_POST: ', $_POST);
-
+$data = json_decode($_POST['data']);
+if (gettype($data) == 'object') {
+    $data = (array) $data;
+}
+plog($data);
 // получаем переданные параметры
-$procedureName = json_decode($_POST["procedureName"]);      // название процедурв
-$params = isset($_POST['params'])                           // массив параметров
-    ? json_decode($_POST['params'])
-    : null;
+$account_owner = $data['account_owner'];      // Идентификатор счета организатора
+$value = $data['value'];                // Сумма транзакции
+$purchase_member_id = isset($data['purchase_member/id']) 
+    ? $data['purchase_member/id']
+    : null;  // Идентификатор записи таблицы Участники закупки
+$description = $data['description'];                           // Комментарий к транзакции
+$client_id = $data['client/id'];  // array, название полей покоторым делаем поиск
 
 plog('Recived and extracted parameters:');
-plog("procedureName: ", $procedureName);
-plog("params: ", $params);
+plog("account_owner: ", $account_owner);
+plog("value: ", $value);
+plog("purchase_member_id: ", $purchase_member_id);
+plog("description: ", $description);
+plog("client_id: ", $client_id);
 
 // Делаем вызов хранимой процедуры
-$result = callProcedure( 
-    $procedureName,         // Идентификатор счета организатора
-    $params,                // массив параметров
-);
+$result = callProcedure('addTransaction', [
+    $account_owner,         // Идентификатор счета организатора
+    $value,                 // Сумма транзакции
+    $purchase_member_id,    // Идентификатор записи таблицы Участники закупки
+    $description,           // Комментарий к транзакции
+    $client_id,             // array, название полей покоторым делаем поиск
+]);
 
 if ($result != 0) {
     $errCount++;
@@ -81,7 +94,7 @@ if ($result != 0) {
     plog("Server reply error: $errDump \nIn query: $query");
 }
 
-plog('callProcedure result:', $result);
+plog('addTransaction result:', $result);
 $response = new Response(
     data: (object) $result,
     dataCount: count($result),
@@ -89,4 +102,4 @@ $response = new Response(
     errDump: $errDump
 );
 echo $response->toJson();                                                // передаем данные
-plog("callProcedure.php ->");
+plog("add_transaction.php ->");

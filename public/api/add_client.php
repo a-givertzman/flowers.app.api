@@ -42,7 +42,7 @@ require_once './libPHP/mysql_settings.key';
 
 // plog_clear();
 plog("====================================");
-plog("-> addClient.php");
+plog("-> add_client.php");
 
 // cors();
 
@@ -105,4 +105,4 @@ $mySqlRequest = new MySqlRequest(
 $response = $mySqlRequest->fetch();
 plog('addClient result:', $response);
 echo $response->toJson();                                      // передаем данные
-plog("addClient.php ->");
+plog("add_client.php ->");
