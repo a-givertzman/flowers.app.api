@@ -29,8 +29,9 @@ declare(strict_types = 1);
  * @errDump строка с сообщениями об ошибках, разделитель |
  */
 class WhereQueue {
-    private $whereSt = array('WHERE');
+    private $whereSt = array();
     function __construct(
+        string $first = 'WHERE',
         int $count
     ) {
         for ($i = 0; $i < $count; $i++) {

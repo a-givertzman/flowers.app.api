@@ -41,7 +41,7 @@ require_once './libPHP/mysql_settings.key';
 
 // plog_clear();
 plog("====================================");
-plog("-> get_client.php");
+plog("-> get_notice_list.php");
 
 // cors();
 
@@ -50,52 +50,79 @@ plog("-> get_client.php");
 //  purchase_id - идентификатор закупки для которой запрошены оповещения
 //  purchase_content_id - идентификатор позиции закупки для которой запрошены оповещения
 $input = (new PostParams([
+    'client_id',
     'id',
     'purchase_id',
     'purchase_content_id',
 ]))->getAll()->getData();
 
 // получаем переданные параметры в формате json
-$phoneNumber = $input['phoneNumber'];
+$client_id = $input['client_id'];
+$id = $input['id'];
+$purchase_id = $input['purchase_id'];
+$purchase_content_id = $input['purchase_content_id'];
 
 plog('Recived and extracted parameters:');
+plog('   client_id: ', $client_id);
 plog('   id: ', $id);
 plog('   purchase_id: ', $purchase_id);
 plog('   purchase_content_id: ', $purchase_content_id);
 
-$query = "
-    SELECT
-        `id`,
-        `message`,
-        `created`,
-        `updated`,
-        `deleted`
-    FROM `notice`
-    WHERE `id` IN (
-        SELECT `notice_id`
-        FROM `notice_to_purchase_content`
-";
-$whereQueue = new WhereQueue(count: 3);
+$whereQueue = new WhereQueue(first: 'WHERE', count: 4);
+if (isset($client_id)) {
+    $query = "
+        SELECT
+            `notice`.`id` as `id`,
+            `purchase/id`,
+            `purchase_content/id`,
+            `notice`.`message` as `message`,
+            `notice_to_purchase_content`.`created` as `created`,
+            `notice_to_purchase_content`.`updated` as `updated`,
+            `notice_to_purchase_content`.`deleted` as `deleted`
+        FROM `notice`
+        LEFT JOIN `notice_to_purchase_content`
+            ON `notice_to_purchase_content`.`notice/id` = `notice`.`id`
+            AND `purchase_content/id` IN (
+                SELECT `purchase_content/id`
+                FROM `order`
+                WHERE `client/id` = $client_id
+                AND `deleted` IS NULL
+            )
+        WHERE `notice`.`deleted` IS NULL
+        AND `notice_to_purchase_content`.`deleted` IS NULL
+    ";
+} else {
+    $query = "
+        SELECT
+            `notice`.`id` as `id`,
+            `purchase/id`,
+            `purchase_content/id`,
+            `notice`.`message` as `message`,
+            `notice_to_purchase_content`.`created` as `created`,
+            `notice_to_purchase_content`.`updated` as `updated`,
+            `notice_to_purchase_content`.`deleted` as `deleted`
+        FROM `notice`
+        LEFT JOIN `notice_to_purchase_content`
+            ON `notice_to_purchase_content`.`notice/id` = `notice`.`id`
+        WHERE `notice`.`deleted` IS NULL
+        AND `notice_to_purchase_content`.`deleted` IS NULL
+    ";
+}
+
 if (isset($id)) {
-    $query .= "        {$whereQueue->next()} `id` = '$id'";
+    $query .= "    AND `id` = '$id'";
 }
 if (isset($purchase_id)) {
-    $query .= "        {$whereQueue->next()} `purchase_id` = '$purchase_id'";
+    $query .= "    AND `purchase_id` = '$purchase_id'";
 }
 if (isset($purchase_content_id)) {
-    $query .= "        {$whereQueue->next()} `purchase_content_id` = '$purchase_content_id'";
+    $query .= "    AND `purchase_content_id` = '$purchase_content_id'";
 }
-$query .= "        {$whereQueue->next()} `deleted` IS NULL";
-$query .= "
-    )
-    AND `deleted` IS NULL;
-";
+$query .= "    ORDER BY `updated`;";
 
 $mySqlRequest = new MySqlRequest(
         new SqlQueryWithParams(
-            [
-                $phoneNumber,
-            ],
+            [],
             $query
         ),
         new MySqlConnect(
@@ -108,4 +135,4 @@ $mySqlRequest = new MySqlRequest(
     );
 $response = $mySqlRequest->fetch();
 echo $response->toJson();                                                // передаем данные
-plog("get_client.php ->");
+plog("get_notice_list.php ->");
