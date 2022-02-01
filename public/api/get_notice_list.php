@@ -29,8 +29,6 @@ include_once './api/PostParams.php';
 include_once './api/MySqlConnect.php';
 include_once './api/MySqlRequest.php';
 include_once './api/SqlQuery.php';
-include_once './api/WhereQueue';
-// include_once './api/api.php';
 
 // -------------------------------------------------------
 // Логгер | Подключаем и настраиваем логгироавние
@@ -68,7 +66,7 @@ plog('   id: ', $id);
 plog('   purchase_id: ', $purchase_id);
 plog('   purchase_content_id: ', $purchase_content_id);
 
-$whereQueue = new WhereQueue(first: 'WHERE', count: 4);
+// $whereQueue = new WhereQueue(first: 'WHERE', count: 4);
 if (isset($client_id)) {
     $query = "
         SELECT
