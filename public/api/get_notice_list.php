@@ -92,7 +92,8 @@ if (isset($client_id)) {
 } else {
     $query = "
         SELECT
-            `notice`.`id` as `id`,
+            CONCAT_WS('.', `notice`.`id`, `purchase/id`, `purchase_content/id`) as `id`,
+            `notice`.`id` as `notice/id`,
             `purchase/id`,
             `purchase_content/id`,
             `notice`.`message` as `message`,
