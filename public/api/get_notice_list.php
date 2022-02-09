@@ -60,7 +60,7 @@ $client_id = $input['client_id'];
 $id = $input['id'];
 $purchase_id = $input['purchase_id'];
 $purchase_content_id = $input['purchase_content_id'];
-$order = isset($input['purchase_content_id']) ? $input['purchase_content_id'] : 'ASC';
+$order = isset($input['order']) ? $input['order'] : 'ASC';
 
 plog('Recived and extracted parameters:');
 plog('   client_id: ', $client_id);
