@@ -52,6 +52,7 @@ $input = (new PostParams([
     'id',
     'purchase_id',
     'purchase_content_id',
+    'order',
 ]))->getAll()->getData();
 
 // получаем переданные параметры в формате json
@@ -59,6 +60,7 @@ $client_id = $input['client_id'];
 $id = $input['id'];
 $purchase_id = $input['purchase_id'];
 $purchase_content_id = $input['purchase_content_id'];
+$order = isset($input['purchase_content_id']) ? $input['purchase_content_id'] : 'ASC';
 
 plog('Recived and extracted parameters:');
 plog('   client_id: ', $client_id);
@@ -118,7 +120,7 @@ if (isset($purchase_id)) {
 if (isset($purchase_content_id)) {
     $query .= "    AND `purchase_content_id` = '$purchase_content_id'";
 }
-$query .= "    ORDER BY `updated`;";
+$query .= "    ORDER BY `updated` $order;"; //  ASC/DESC
 
 $mySqlRequest = new MySqlRequest(
         new SqlQueryWithParams(
