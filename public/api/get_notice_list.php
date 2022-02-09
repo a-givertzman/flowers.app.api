@@ -115,10 +115,10 @@ if (isset($id)) {
     $query .= "    AND `id` = '$id'";
 }
 if (isset($purchase_id)) {
-    $query .= "    AND `purchase_id` = '$purchase_id'";
+    $query .= "    AND `purchase/id` = '$purchase_id'";
 }
 if (isset($purchase_content_id)) {
-    $query .= "    AND `purchase_content_id` = '$purchase_content_id'";
+    $query .= "    AND `purchase_content/id` = '$purchase_content_id'";
 }
 $query .= "    ORDER BY `updated` $order;"; //  ASC/DESC
 
