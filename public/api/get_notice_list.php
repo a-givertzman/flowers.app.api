@@ -72,7 +72,7 @@ plog('   purchase_content_id: ', $purchase_content_id);
 if (isset($client_id)) {
     $query = "
         SELECT
-            CONCAT_WS('.', `notice`.`id`, `purchase/id`, `purchase_content/id`) as `id`,
+            CONCAT_WS('.', `client/id`, `notice`.`id`, `purchase/id`, `purchase_content/id`) as `id`,
             `notice`.`id` as `notice/id`,
             `purchase/id`,
             `purchase_content/id`,
