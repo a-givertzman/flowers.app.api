@@ -74,6 +74,7 @@ if (isset($client_id)) {
         SELECT
             CONCAT_WS('.', `client/id`, `notice`.`id`, `purchase/id`, `purchase_content/id`) as `id`,
             `notice`.`id` as `notice/id`,
+            `client/id`,
             `purchase/id`,
             `purchase_content/id`,
             `notice`.`message` as `message`,
