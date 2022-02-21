@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 
 require_once './libPHP/plog.php';
+plog("");
+plog("--------------------------------------------");
 plog("-> router.php");
 // plog('_REQUEST: ', $_REQUEST);
 // plog('_SERVER: ', $_SERVER);
