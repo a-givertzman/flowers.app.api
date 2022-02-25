@@ -192,7 +192,7 @@ function onTransactionsPressed(e) {
 }
 function onClientReportPressed(e) {
     console.log('event onClientReportPressed: ', e);
-    window.open('https://u1489690.isp.regruhosting.ru');
+    window.open('https://u1489690.isp.regruhosting.ru/admin-client-report');
 }
 function onPaymentPressed(e) {
     console.log('event onPaymentPressed: ', e);
