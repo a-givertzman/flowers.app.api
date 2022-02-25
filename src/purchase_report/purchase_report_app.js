@@ -1,6 +1,6 @@
 "use strict";
-const baseUrl = '';
-// const baseUrl = 'https://u1489690.isp.regruhosting.ru/';
+const baseUrl = '';                                     // for production version
+// const baseUrl = 'https://u1489690.isp.regruhosting.ru/' // for local tests;
 // константы для доступа к API
 const mySqlParamsForPurchaseSelect = {
     url: `${baseUrl}get-view`,
@@ -15,33 +15,12 @@ const mySqlParamsForPurchaseSelect = {
     ], 
     limit: 0,
 };
-const mySqlParamsForClientBalans = {
-    url: `${baseUrl}get-data`,
-    tableName: 'client', 
-    keys: ['*'], 
-    orderBy: 'id', 
-    order: 'ASC', 
-    where: [
-        {operator: 'where', field: 'id', cond: '=', value: 7},
-        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-    ], 
-    limit: 0,
-};
-const mySqlParamsForClientSelect = {
-    url: `${baseUrl}get-data`,
-    tableName: 'client', 
-    keys: ['*'], 
-    orderBy: 'id', 
-    order: 'ASC', 
-    where: [{operator: 'where', field: 'deleted', cond: 'is null', value: null},], 
-    limit: 0,
-}
 const mySqlParamsForOrdersGroups = {
     url: `${baseUrl}get-view`,
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
-    groupBy: 'purchase/id', 
+    groupBy: 'client/id', 
     orderBy: 'client/id', 
     order: 'ASC', 
     where: [
@@ -55,7 +34,7 @@ const mySqlParamsForOrders = {
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
-    orderBy: 'client/id', 
+    orderBy: 'id', 
     order: 'ASC', 
     where: [
         // {operator: 'where', field: 'client/id', cond: '=', value: 7},
@@ -63,19 +42,19 @@ const mySqlParamsForOrders = {
     ], 
     limit: 0,
 }
-const mySqlParamsForTransactions = {
-    url: `${baseUrl}get-view`,
-    tableName: 'clientTransactionView', 
-    params: '0', 
-    keys: ['*'],
-    orderBy: 'date', 
-    order: 'ASC', 
-    where: [
-        {operator: 'where', field: 'client/id', cond: '=', value: 7},
-        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-    ], 
-    limit: 0,
-}
+// const mySqlParamsForTransactions = {
+//     url: `${baseUrl}get-view`,
+//     tableName: 'clientTransactionView', 
+//     params: '0', 
+//     keys: ['*'],
+//     orderBy: 'date', 
+//     order: 'ASC', 
+//     where: [
+//         {operator: 'where', field: 'client/id', cond: '=', value: 7},
+//         {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+//     ], 
+//     limit: 0,
+// }
 // Константы для заголовков таблиц
 const HeaderForOrdersHtml = `
     <tr class="purchase-row">
@@ -138,7 +117,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
             )
         },
         {
-            name: 'clientOrders',
+            name: 'clientOrdersGroupBy',
             obj: new HtmlTableGroupBy(
                 htmlSelectorOfClientOrders,
                 new ApiRequest(
@@ -176,27 +155,27 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         console.log('selected purchase_id:', id);
         const selectedId = Number(id);
         if (!isNaN(selectedId) && selectedId != 0) {
-            var where = [
-                {operator: 'where', field: 'id', cond: '=', value: selectedId},
-                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-            ];
+            // var where = [
+            //     {operator: 'where', field: 'id', cond: '=', value: selectedId},
+            //     {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            // ];
             // cntentOfPage.clientBalans.render(where);
 
-            where = [
+            var where = [
                 {operator: 'where', field: 'purchase/id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
-            cntentOfPage.clientOrders.render(where);
+            cntentOfPage.clientOrdersGroupBy.render(where);
 
-            where = [
-                {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
-                {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-            ];
+            // where = [
+            //     {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
+            //     {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+            // ];
             // cntentOfPage.clientTransactions.render(where);
         } else {
-            cntentOfPage.clientBalans.clear();
-            cntentOfPage.clientOrders.clear();
-            cntentOfPage.clientTransactions.clear();
+            // cntentOfPage.clientBalans.clear();
+            cntentOfPage.clientOrdersGroupBy.clear();
+            // cntentOfPage.clientTransactions.clear();
         }
     });
 });
@@ -290,21 +269,21 @@ class HtmlTableGroupBy {
         this.elem = document.querySelector(this.parentSelector)
     }
     async render(where) {
-        console.log('[HtmlTableGroupBy.render]');
         console.log('[HtmlTableGroupBy.render] where:', where);
         this.elem.innerHTML = '';
         return this.dataSource.fetchData({where: where}).then(async data => {
             console.log('[HtmlTableGroupBy.render] data:', data);
             var lWhere = [...where];
-            var lClause = {operator: 'and', field: 'purchase/id', cond: '=', value: null};
+            var lClause = {operator: 'and', field: 'client/id', cond: '=', value: null};
             lWhere.push(lClause);
             for(var key in data) {
                 var row = data[key];
                 const purchaseId = row['purchase/id'];
+                const clientId = row['client/id'];
                 const tHead = new HtmlTableHeader(
                     HeaderForOrdersHtml,
                     new HtmlTableCaption(
-                        `Закупка [${purchaseId}] ${row['purchase/name']}`,
+                        `[${clientId}] ${row['client/name']} | Закупка [${purchaseId}] ${row['purchase/name']}`,
                         'purchase-row-header'
                     )
                 ).render();
@@ -315,7 +294,7 @@ class HtmlTableGroupBy {
                         new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
                     )
                 );
-                lClause.value = purchaseId;
+                lClause.value = clientId;
                 const tBody = await body.render(lWhere);
                 this.elem.appendChild(tHead);
                 this.elem.appendChild(tBody);
