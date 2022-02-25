@@ -10,6 +10,79 @@
     <script nomodule>
         console.info(`Your browser doesn't support native JavaScript modules.`);
     </script>
+    <script>
+        function needsToBeBlacklisted(src, type) {
+            console.log('[needsToBeBlacklisted] value:', src, 'type:', type);
+            if (!src ||
+                src?.includes('mobilebanner') ||
+                src?.includes('yandex') ||
+                src?.includes('news') ||
+                src?.includes('truth') ||
+                src?.includes('delivery') ||
+                src?.includes('alfasense') ||
+                src?.includes('cdn') ||
+                src?.includes('base')
+                ) {
+                console.log('[needsToBeBlacklisted] bloced');
+                return true;
+            }
+            return false;
+        }
+        const createElementBackup = document.createElement;
+        document.createElement = function(...args) {
+            // If this is not a script tag, bypass
+            if(args[0].toLowerCase() !== 'script')
+                // Binding to document is essential
+                return createElementBackup.bind(document)(...args);
+
+            const scriptElt = createElementBackup.bind(document)(...args);
+
+            // Some magic, see below
+            // Backup the original setAttribute function
+            const originalSetAttribute = scriptElt.setAttribute.bind(scriptElt)
+
+            // Define getters / setters to ensure that the script type is properly set
+            Object.defineProperties(scriptElt, {
+                'src': {
+                    get() {
+                        return scriptElt.getAttribute('src')
+                    },
+                    set(value) {
+                        if(needsToBeBlacklisted(value, scriptElt.type)) {
+                            originalSetAttribute('type', 'javascript/blocked');
+                        }
+                        originalSetAttribute('src', value)
+                        return true
+                    }
+                },
+                'type': {
+                    set(value) {
+                        const typeValue = needsToBeBlacklisted(scriptElt.src, scriptElt.type) 
+                                ? 'javascript/blocked' 
+                                : value;
+                        originalSetAttribute('type', typeValue)
+                        return true
+                    }
+                }
+            })
+
+            // Monkey patch the setAttribute function so that the setter is called instead.
+            // Otherwise, setAttribute('type', 'whatever') will bypass our custom descriptors!
+            scriptElt.setAttribute = function(name, value) {
+                console.log('[scriptElt.setAttribute] name: ', name);
+                console.log('[scriptElt.setAttribute] value: ', value);
+                if(name === 'type' || name === 'src')
+                    if (name === 'src' && needsToBeBlacklisted(value, scriptElt.type)) {
+                        scriptElt[name] = 'blocked script';
+                    } else {
+                        scriptElt[name] = value;
+                    }
+                else
+                    HTMLScriptElement.protytope.setAttribute.call(scriptElt, name, value)
+            }
+            return scriptElt;
+        }        
+    </script>
     <script src="./src/plugins/js-widgets/widget.js"></script>
     <script src="./src/plugins/js-widgets/border.js"></script>
     <script src="./src/plugins/js-widgets/text.js"></script>
