@@ -16,6 +16,9 @@ plog('query:', $query);
 if ($query == '') {
     $routePath = './main_menu.php';
 
+} else if ($query == 'admin-purchase-report') {
+    $routePath = './purchase_report.php';
+
 } else if ($query == 'admin-client-report') {
     $routePath = './report_for_client.php';
 

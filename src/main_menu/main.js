@@ -190,6 +190,10 @@ function onTransactionsPressed(e) {
     console.log('event onTransactionsPressed: ', e);
     window.open('https://docs.google.com/spreadsheets/d/11MkKtzftMKyr7ARtCwxn9LSSEMQcqUlwznfun086VTo/edit?usp=sharing');
 }
+function onPurchaseReportPressed(e) {
+    console.log('event onPurchaseReportPressed: ', e);
+    window.open('https://u1489690.isp.regruhosting.ru/admin-purchase-report');
+}
 function onClientReportPressed(e) {
     console.log('event onClientReportPressed: ', e);
     window.open('https://u1489690.isp.regruhosting.ru/admin-client-report');
