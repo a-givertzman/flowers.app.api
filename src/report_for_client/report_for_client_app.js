@@ -353,7 +353,7 @@ class Selector {
         this.selectr = new TomSelect(
             this.element,
             {
-                placeholder: 'Найди себя',//this.params.placeholder,
+                placeholder: this.params.placeholder,
                 valueField: 'id',
                 labelField: 'title',
                 searchField: ['id', 'title'],

@@ -1,8 +1,22 @@
 "use strict";
-
+const baseUrl = '';
+// const baseUrl = 'https://u1489690.isp.regruhosting.ru/';
 // константы для доступа к API
+const mySqlParamsForPurchaseSelect = {
+    url: `${baseUrl}get-view`,
+    tableName: 'purchase_preview', 
+    params: '0', 
+    keys: ['*'], 
+    orderBy: 'id', 
+    order: 'ASC', 
+    where: [
+        // {operator: 'where', field: 'id', cond: '=', value: 7},
+        {operator: 'where', field: 'deleted', cond: 'is null', value: null},
+    ], 
+    limit: 0,
+};
 const mySqlParamsForClientBalans = {
-    url: 'get-data',
+    url: `${baseUrl}get-data`,
     tableName: 'client', 
     keys: ['*'], 
     orderBy: 'id', 
@@ -14,7 +28,7 @@ const mySqlParamsForClientBalans = {
     limit: 0,
 };
 const mySqlParamsForClientSelect = {
-    url: 'get-data',
+    url: `${baseUrl}get-data`,
     tableName: 'client', 
     keys: ['*'], 
     orderBy: 'id', 
@@ -23,34 +37,34 @@ const mySqlParamsForClientSelect = {
     limit: 0,
 }
 const mySqlParamsForOrdersGroups = {
-    url: 'get-view',
+    url: `${baseUrl}get-view`,
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
     groupBy: 'purchase/id', 
-    orderBy: 'purchase/id', 
+    orderBy: 'client/id', 
     order: 'ASC', 
     where: [
-        {operator: 'where', field: 'client/id', cond: '=', value: 7},
-        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+        // {operator: 'where', field: 'client/id', cond: '=', value: 916},
+        {operator: 'where', field: 'deleted', cond: 'is null', value: null},
     ], 
     limit: 0,
 }
 const mySqlParamsForOrders = {
-    url: 'get-view',
+    url: `${baseUrl}get-view`,
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
-    orderBy: 'purchase/id', 
+    orderBy: 'client/id', 
     order: 'ASC', 
     where: [
-        {operator: 'where', field: 'client/id', cond: '=', value: 7},
-        {operator: 'and', field: 'deleted', cond: 'is null', value: null},
+        // {operator: 'where', field: 'client/id', cond: '=', value: 7},
+        {operator: 'where', field: 'deleted', cond: 'is null', value: null},
     ], 
     limit: 0,
 }
 const mySqlParamsForTransactions = {
-    url: 'get-view',
+    url: `${baseUrl}get-view`,
     tableName: 'clientTransactionView', 
     params: '0', 
     keys: ['*'],
@@ -95,30 +109,30 @@ const HeaderForTransactionsHtml = `
 
 // Константы для поиска элементов в DOM
 const htmlSelectorOfClientBalans = '#client-account';
-const htmlSelectorOfClientSelect = 'select.client-select';
+const htmlSelectorOfPurchaseSelect = 'select.purchase-select';
 const htmlSelectorOfClientOrders = 'table.purchase-items';
 const htmlSelectorOfClientTransactions = 'table.transaction-items';
 
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     const cntentOfPage = new ContentOfPage([
+        // {
+        //     name: 'clientBalans',
+        //     obj: new ClientBalas(
+        //         htmlSelectorOfClientBalans,
+        //         new ApiRequest(
+        //             mySqlParamsForClientBalans,
+        //             new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+        //         )
+        //     ), 
+        // },
         {
-            name: 'clientBalans',
-            obj: new ClientBalas(
-                htmlSelectorOfClientBalans,
+            name: 'purchaseSelector',
+            obj: new PurchaseSelector(
+                htmlSelectorOfPurchaseSelect,
+                {placeholder: 'Выбери закупку'},
                 new ApiRequest(
-                    mySqlParamsForClientBalans,
-                    new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
-                )
-            ), 
-        },
-        {
-            name: 'clientSelector',
-            obj: new Selector(
-                htmlSelectorOfClientSelect,
-                {placeholder: 'Найди себя'},
-                new ApiRequest(
-                    mySqlParamsForClientSelect,
+                    mySqlParamsForPurchaseSelect,
                     new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
                 )
             )
@@ -133,43 +147,43 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 )
             )
         },
-        {
-            name: 'clientTransactions',
-            obj: new HtmlTable(
-                htmlSelectorOfClientTransactions,
-                new HtmlTableHeader(
-                    HeaderForTransactionsHtml,
-                    new HtmlTableCaption(
-                        'Выши транзакции',
-                        'transaction-row-header'
-                    )
-                ),
-                new HtmlTableBody(
-                    new RowForTransactions(),
-                    new ApiRequest(
-                        mySqlParamsForTransactions,
-                        new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
-                    )
-                ),
-            )
-        }
+        // {
+        //     name: 'clientTransactions',
+        //     obj: new HtmlTable(
+        //         htmlSelectorOfClientTransactions,
+        //         new HtmlTableHeader(
+        //             HeaderForTransactionsHtml,
+        //             new HtmlTableCaption(
+        //                 'Выши транзакции',
+        //                 'transaction-row-header'
+        //             )
+        //         ),
+        //         new HtmlTableBody(
+        //             new RowForTransactions(),
+        //             new ApiRequest(
+        //                 mySqlParamsForTransactions,
+        //                 new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+        //             )
+        //         ),
+        //     )
+        // }
     ]);
     
     console.log('cntentOfPage', cntentOfPage);
-    cntentOfPage.clientSelector.render();
+    cntentOfPage.purchaseSelector.render();
     this.cntentOfPage = cntentOfPage;
-    cntentOfPage.clientSelector.selectr.on('change', id => {
-        console.log('selected id:', id);
+    cntentOfPage.purchaseSelector.selector.on('change', id => {
+        console.log('selected purchase_id:', id);
         const selectedId = Number(id);
         if (!isNaN(selectedId) && selectedId != 0) {
             var where = [
                 {operator: 'where', field: 'id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
-            cntentOfPage.clientBalans.render(where);
+            // cntentOfPage.clientBalans.render(where);
 
             where = [
-                {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
+                {operator: 'where', field: 'purchase/id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
             cntentOfPage.clientOrders.render(where);
@@ -178,7 +192,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                 {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
-            cntentOfPage.clientTransactions.render(where);
+            // cntentOfPage.clientTransactions.render(where);
         } else {
             cntentOfPage.clientBalans.clear();
             cntentOfPage.clientOrders.clear();
@@ -343,17 +357,17 @@ class ClientBalas {
     }
 }
 
-class Selector {
+class PurchaseSelector {
     constructor(htmlSelector, params, dataSource) {
-        console.log('[Selector.constructor]');
+        console.log('[PurchaseSelector.constructor]');
         this.htmlSelector = htmlSelector;
         this.params = params;
         this.dataSource = dataSource;
         this.element = document.querySelector(this.htmlSelector);
-        this.selectr = new TomSelect(
+        this.selector = new TomSelect(
             this.element,
             {
-                placeholder: 'Найди себя',//this.params.placeholder,
+                placeholder: this.params.placeholder,
                 valueField: 'id',
                 labelField: 'title',
                 searchField: ['id', 'title'],
@@ -362,13 +376,13 @@ class Selector {
         );
     }
     render() {
-        console.log('[Selector.render]');
+        console.log('[PurchaseSelector.render]');
         this.dataSource.fetchData().then(data => {
-            // console.log('[Selector.render] data:', data);
-            this.selectr.clear();
+            console.log('[PurchaseSelector.render] data:', data);
+            this.selector.clear();
             for(var key in data) {
                 let item = data[key];
-                this.selectr.addOption({
+                this.selector.addOption({
                     id: item.id,
                     title: item.id + ' | ' + item.name
                 });

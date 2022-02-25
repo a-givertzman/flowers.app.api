@@ -37,10 +37,10 @@ class ApiRequest {
         const url = args.url ? args.url : '';
         return fetch(url, options)
             .then(response => {
-                // console.log('response:', response);
+                console.log('response:', response);
                 return this.parseResponse(response)
                     .then(data => {
-                        // console.log('data: ', data);
+                        console.log('data: ', data);
                         this.busy.hide();
                         return data;
                     })

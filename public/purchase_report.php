@@ -85,7 +85,7 @@
     <script src="./src/mysql/ApiRequest.js"></script>
     <script src="./src/plugins/tom-select/tom-select.complete.js"></script>
     <script src="./src/plugins/busy-indicator/busy.js"></script>
-    <script src="./src/report_for_client/report_for_client_app.js"></script>
+    <script src="./src/purchase_report/purchase_report_app.js"></script>
 </head>
 <body>
     <header class="header">
@@ -99,24 +99,21 @@
             </div>
         </div>
     </header>
-    <section class="client-select-section">
+    <section class="purchase-select-section">
         <div class="container">
-            <div class="client-select-top">
-                <div class="client-select-title-box">
-                    <div class="client-select-title">
+            <div class="purchase-select-top">
+                <div class="purchase-select-title-box">
+                    <div class="purchase-select-title">
                         Отчет по закупке
-                        <span id="client-account"></span>
+                        <span id="purchase-account"></span>
                     </div>
-                    <div class="client-select-wrapper">
-                        <select class="client-select" hidden>
+                    <div class="purchase-select-wrapper">
+                        <select class="purchase-select" hidden>
                             <!-- <option></option> -->
                         </select>                    
                     </div>
                 </div>
             </div>
-            <!-- <div class="purchase-item">
-                <span> Список закупок </span>
-            </div> -->
             <table class="purchase-items">
             </table>
             <table class="transaction-items">
