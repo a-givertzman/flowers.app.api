@@ -18,7 +18,7 @@ const menuLeftColumnItems = [
     'Клиенты', 'Продукты', 'Закупки', 'Состав закупок', 'Заказы', 'Транзакции',
 ];
 const menuRightColumnItems = [
-    'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция', 'Уведомления по закупкам'
+    'Отчет по закупке', 'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция', 'Уведомления по закупкам'
 ];
 const menuLeftColumnActions = [
     onClientsPressed,           // Клиенты
@@ -29,6 +29,7 @@ const menuLeftColumnActions = [
     onTransactionsPressed,      // Транзакции
 ];
 const menuRightColumnActions = [
+    onPurchaseReportPressed,    // Отчет по закупке
     onClientReportPressed,      // Отчет по клиенту
     onPaymentPressed,           // Перевод оплаты по закупкам
     onNewTransactionPressed,    // Новая транзакция
