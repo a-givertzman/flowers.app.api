@@ -82,10 +82,10 @@
     <link rel="stylesheet" href="./src/plugins/busy-indicator/busy.css">
     <link rel="stylesheet" href="./src/plugins/tom-select/tom-select.min.css">
     <link rel="stylesheet" href="./public/css/style.css">
-    <script src="./src/mysql/ApiRequest.js"></script>
+    <!-- <script src="./src/mysql/ApiRequest.js"></script> -->
     <script src="./src/plugins/tom-select/tom-select.complete.js"></script>
     <script src="./src/plugins/busy-indicator/busy.js"></script>
-    <script src="./src/report_for_client/report_for_client_app.js"></script>
+    <script src="./src/report_for_client/report_for_client_app.js" type="module"></script>
 </head>
 <body>
     <header class="header">

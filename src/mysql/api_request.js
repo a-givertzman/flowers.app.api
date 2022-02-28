@@ -17,7 +17,7 @@
    }
  * @returns Возвращает набор данных в объекте.
  */
-class ApiRequest {
+export class ApiRequest {
     constructor(mySqlParams, busyIndicator) {
         console.log('[ApiRequest.constructor]');
         this.mySqlParams = mySqlParams;

@@ -532,3 +532,22 @@ table td:last-child { border-right: solid #5e5e5e  0.1px; }
     font-weight: 400;
     text-align: center;
 }
+
+.generate-pdf-btn:before{
+    /* content: "\f095"; */
+    font-family: 'icomoon';
+    position: absolute;
+    left: 3px;
+    color: var(--akcent-color);
+}
+.generate-pdf-btn{
+    float: right;
+    position: relative;
+    text-align: center;
+    line-height: 35px;
+    font-family: 'Rubik', serif;
+    font-size: 16px;
+    color: var(--nero-color);
+    background-color: var(--akcent-color);
+    padding: 3px 15px 3px 15px;
+}

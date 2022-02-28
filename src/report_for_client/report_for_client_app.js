@@ -1,8 +1,12 @@
 "use strict";
+import { ApiRequest } from '../mysql/api_request.js';
+
+const baseUrl = '';                                     // for production version
+// const baseUrl = 'https://u1489690.isp.regruhosting.ru/' // for local tests;
 
 // константы для доступа к API
 const mySqlParamsForClientBalans = {
-    url: 'get-data',
+    url: `${baseUrl}get-data`,
     tableName: 'client', 
     keys: ['*'], 
     orderBy: 'id', 
@@ -14,7 +18,7 @@ const mySqlParamsForClientBalans = {
     limit: 0,
 };
 const mySqlParamsForClientSelect = {
-    url: 'get-data',
+    url: `${baseUrl}get-data`,
     tableName: 'client', 
     keys: ['*'], 
     orderBy: 'id', 
@@ -23,7 +27,7 @@ const mySqlParamsForClientSelect = {
     limit: 0,
 }
 const mySqlParamsForOrdersGroups = {
-    url: 'get-view',
+    url: `${baseUrl}get-view`,
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
@@ -37,7 +41,7 @@ const mySqlParamsForOrdersGroups = {
     limit: 0,
 }
 const mySqlParamsForOrders = {
-    url: 'get-view',
+    url: `${baseUrl}get-view`,
     tableName: 'orderView', 
     params: '0', 
     keys: ['*'],
@@ -50,7 +54,7 @@ const mySqlParamsForOrders = {
     limit: 0,
 }
 const mySqlParamsForTransactions = {
-    url: 'get-view',
+    url: `${baseUrl}get-view`,
     tableName: 'clientTransactionView', 
     params: '0', 
     keys: ['*'],
@@ -157,7 +161,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.clientSelector.render();
-    this.cntentOfPage = cntentOfPage;
+    // this.cntentOfPage = cntentOfPage;
+    window.cntentOfPage = cntentOfPage;
     cntentOfPage.clientSelector.selectr.on('change', id => {
         console.log('selected id:', id);
         const selectedId = Number(id);

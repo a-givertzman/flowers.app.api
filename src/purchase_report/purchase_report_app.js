@@ -1,4 +1,6 @@
 "use strict";
+import { ApiRequest } from '../mysql/api_request.js';
+window.html2canvas = html2canvas;
 const baseUrl = '';                                     // for production version
 // const baseUrl = 'https://u1489690.isp.regruhosting.ru/' // for local tests;
 // константы для доступа к API
@@ -89,22 +91,23 @@ const HeaderForTransactionsHtml = `
 // Константы для поиска элементов в DOM
 const htmlSelectorOfClientBalans = '#client-account';
 const htmlSelectorOfPurchaseSelect = 'select.purchase-select';
+const htmlSelectorOfGeneratePdf = '.generate-pdf-btn';
 const htmlSelectorOfClientOrders = 'table.purchase-items';
 const htmlSelectorOfClientTransactions = 'table.transaction-items';
 
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     const cntentOfPage = new ContentOfPage([
-        // {
-        //     name: 'clientBalans',
-        //     obj: new ClientBalas(
-        //         htmlSelectorOfClientBalans,
-        //         new ApiRequest(
-        //             mySqlParamsForClientBalans,
-        //             new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
-        //         )
-        //     ), 
-        // },
+        {
+            name: 'generatePdf',
+            obj: new GeneratePdf(
+                htmlSelectorOfGeneratePdf,
+                new ApiRequest(
+                    mySqlParamsForPurchaseSelect,
+                    new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
+                )
+            ), 
+        },
         {
             name: 'purchaseSelector',
             obj: new PurchaseSelector(
@@ -155,27 +158,13 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         console.log('selected purchase_id:', id);
         const selectedId = Number(id);
         if (!isNaN(selectedId) && selectedId != 0) {
-            // var where = [
-            //     {operator: 'where', field: 'id', cond: '=', value: selectedId},
-            //     {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-            // ];
-            // cntentOfPage.clientBalans.render(where);
-
             var where = [
                 {operator: 'where', field: 'purchase/id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
             cntentOfPage.clientOrdersGroupBy.render(where);
-
-            // where = [
-            //     {operator: 'where', field: 'client/id', cond: '=', value: selectedId},
-            //     {operator: 'and', field: 'deleted', cond: 'is null', value: null},
-            // ];
-            // cntentOfPage.clientTransactions.render(where);
         } else {
-            // cntentOfPage.clientBalans.clear();
             cntentOfPage.clientOrdersGroupBy.clear();
-            // cntentOfPage.clientTransactions.clear();
         }
     });
 });
@@ -308,19 +297,117 @@ class HtmlTableGroupBy {
     }
 }
 
-class ClientBalas {
+var specialElementHandlers = {
+    '#elementH': function (element, renderer) {
+        return true;
+    }
+}
+function convert_HTML_To_PDF() {
+    const _elem = document.querySelector('.purchase-items');
+  
+    html2canvas(_elem, {
+      useCORS: true,
+      onrendered: function(canvas) {
+        var pdf = new jsPDF('p', 'pt', 'a4');
+  
+        var pageHeight = 980;
+        var pageWidth = 900;
+        for (var i = 0; i <= _elem.clientHeight / pageHeight; i++) {
+          var srcImg = canvas;
+          var sX = 0;
+          var sY = pageHeight * i; // start 1 pageHeight down for every new page
+          var sWidth = pageWidth;
+          var sHeight = pageHeight;
+          var dX = 0;
+          var dY = 0;
+          var dWidth = pageWidth;
+          var dHeight = pageHeight;
+  
+          window.onePageCanvas = document.createElement("canvas");
+          onePageCanvas.setAttribute('width', pageWidth);
+          onePageCanvas.setAttribute('height', pageHeight);
+          var ctx = onePageCanvas.getContext('2d');
+          ctx.drawImage(srcImg, sX, sY, sWidth, sHeight, dX, dY, dWidth, dHeight);
+  
+          var canvasDataURL = onePageCanvas.toDataURL("image/png", 1.0);
+          var width = onePageCanvas.width;
+          var height = onePageCanvas.clientHeight;
+  
+          if (i > 0) // if we're on anything other than the first page, add another page
+            pdf.addPage(612, 864); // 8.5" x 12" in pts (inches*72)
+  
+          pdf.setPage(i + 1); // now we declare that we're working on that page
+          pdf.addImage(canvasDataURL, 'PNG', 20, 40, (width * .62), (height * .62)); // add content to the page
+        }
+              
+        // Save the PDF
+        pdf.save('report.pdf');
+      }
+    });
+  }
+class GeneratePdf {
     constructor(htmlSelector, dataSource) {
-        console.log('[ClientBalas.constructor]');
-        this.emptyBalans = '-.--';
+        console.log('[GeneratePdf.constructor]');
+        // this.emptyBalans = '-.--';
         this.htmlSelector = htmlSelector;
         this.dataSource = dataSource;
         this.elem = document.querySelector(this.htmlSelector);
-        if (this.elem) this.elem.innerHTML = `Баланс: ${this.emptyBalans} RUB`;
+        if (this.elem) {
+            this.elem.innerHTML = `PDF`;
+            this.elem.addEventListener('click', (event) => {
+                console.log('[GeneratePdf.render] clicked:', event);
+                const _elem = document.querySelector('.purchase-items');
+                const pdfDoc = new jsPDF(
+                    'p', 'mm', 'a4',//[_elem.offsetWidth * 2.1, 1500]
+                    // {filters: ['ASCIIHexEncode']},
+                );
+                console.log('[GeneratePdf.render] _elem.offsetWidth:', _elem.offsetWidth);
+
+                // convert_HTML_To_PDF();
+                // pdfDoc.addFileToVFS('../../public/css/fonts/Roboto-Regular.ttf', 'Roboto');
+                // pdfDoc.addFont('../../public/css/fonts/Roboto-Regular.ttf', 'Roboto', 'regular');
+                // pdfDoc.setFont('Roboto', 'regular');
+                const headers = [
+                    'PrID',
+                    'Группа',
+                    'Нименование',
+                    'Заказал',
+                    'Получил',
+                    'Цена закупки',
+                    'Цена',
+                    'Транспортные\nрасходы',
+                    'Сумма к\nоплате',
+                    'Оплатил',
+                    'Сумма к\nвозврату',
+                    'Возвращено',
+                ];
+                const data = [
+                    '44',
+                    'Однолетние цветы',
+                    'Анемона Whirlwind',
+                    '11',
+                    '0',
+                    '0.79 EUR',
+                    '71.10\nRUB',
+                    '6.00\nRUB',
+                    '848.10',
+                    '1619.10',
+                    '0.00',
+                    '0.00',
+                ];
+                pdfDoc.autoTable({ html: 'table.purchase-items' });
+                // pdfDoc.autoTable(10, 50,
+                //     data,
+                //     headers,
+                // );
+                pdfDoc.save('report.pdf');
+            });
+        }
     }
     render(where) {
-        console.log('[ClientBalas.render]');
+        console.log('[GeneratePdf.render]');
         this.dataSource.fetchData({where: where}).then(data => {
-            // console.log('[ClientBalas.render] data:', data);
+            // console.log('[GeneratePdf.render] data:', data);
             let clientAccount
             try {
                 clientAccount = Object.values(data)[0]['account'];
@@ -383,11 +470,14 @@ class RowForOrders {
         let product_group = row['product/group'] ? row['product/group'] : '';
         let product_name = row['product/name'] ? row['product/name'] : '';
         let count = row['count'] ? row['count'] : '';
-        let distributed = row['distributed'] ? row['distributed'] : '';
+        let distributed = row['distributed'] 
+            ? row['distributed'] == 0
+                ? ''
+                : row['distributed']
+            : '';
         let product_primary_price = row['product/primary_price'] ? row['product/primary_price'] : '';
         let product_primary_currency = row['product/primary_currency'] ? row['product/primary_currency'] : '';
         let purchase_content_sale_price = row['purchase_content/sale_price'] ? row['purchase_content/sale_price'] : '';
-        let purchase_content_sale_currency = row['purchase_content/sale_currency'] ? row['purchase_content/sale_currency'] : '';
         let purchase_content_shipping = row['purchase_content/shipping'] ? row['purchase_content/shipping'] : '';
         let cost = row['cost'] ? row['cost'] : '';
         let paid = row['paid'] ? row['paid'] : '';
@@ -407,7 +497,6 @@ class RowForOrders {
             </td>
             <td>
                 ${purchase_content_sale_price}
-                ${purchase_content_sale_currency}
             </td>
             <td>${purchase_content_shipping}</td>
             <td>${cost}</td>
