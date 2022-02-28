@@ -1,9 +1,12 @@
 "use strict";
 import { ApiRequest } from '../mysql/api_request.js';
-window.html2canvas = html2canvas;
+
 const baseUrl = '';                                     // for production version
 // const baseUrl = 'https://u1489690.isp.regruhosting.ru/' // for local tests;
 // константы для доступа к API
+
+window.html2canvas = html2canvas;
+
 const mySqlParamsForPurchaseSelect = {
     url: `${baseUrl}get-view`,
     tableName: 'purchase_preview', 
@@ -153,7 +156,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.purchaseSelector.render();
-    this.cntentOfPage = cntentOfPage;
+    // this.cntentOfPage = cntentOfPage;
+    window.cntentOfPage = cntentOfPage;
     cntentOfPage.purchaseSelector.selector.on('change', id => {
         console.log('selected purchase_id:', id);
         const selectedId = Number(id);
