@@ -1,11 +1,12 @@
 "use strict";
+import { Widget } from "../../plugins/js-widgets/widget.js";
 // import { Widget } from "./widget";
 /**
  * Текстовая кнопка
  *
  * @param {Widget} child елеиент, обычно текст выводимый на кнопке
  */
-class TextButton {
+export class TextButton {
     constructor({child, onPressed, onLongPress, onHover, onFocusChange, style, focusNode, autofocus = false}={}) {
         this.child = child;
         this.onPressed = onPressed;

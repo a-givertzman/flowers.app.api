@@ -3,7 +3,7 @@
  * Стиль текста
  *
  */
-class TextStyle {
+export class TextStyle {
     constructor({inherit = true, color, backgroundColor, fontSize, fontWeight, fontStyle, letterSpacing, wordSpacing, textBaseline, height, leadingDistribution, locale, foreground, background, shadows, fontFeatures, decoration, decorationColor, decorationStyle, decorationThickness, debugLabel, fontFamily, fontFamilyFallback, overflow}={}) {
         this.inherit = inherit, 
         this.color = color;

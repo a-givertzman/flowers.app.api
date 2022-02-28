@@ -1,4 +1,5 @@
 "use strict";
+import { Widget } from "../../plugins/js-widgets/widget.js";
 /**
  * Виджет для ввода текста
  *
@@ -22,7 +23,7 @@
  * @param {function} onFieldSubmitted 
  * @param {function} validator string function(string)
  */
-class TextFormField {
+export class TextFormField {
     constructor({
         key, initialValue, focusNode, keyboardType, style, textAlign, textAlignVertical,
         enabled, readOnly, obscuringCharacter, obscureText, 

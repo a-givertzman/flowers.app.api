@@ -4,7 +4,7 @@
  *
  * @param {Widget} child корневой виджет приложения
  */
-class App {
+export class App {
     constructor({child: child}={}) {
         this.child = child;
     }

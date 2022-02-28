@@ -1,5 +1,7 @@
 "use strict";
 import { ApiRequest } from '../mysql/api_request.js';
+import { ContentOfPage } from '../classes/content_of_page'
+import { HtmlTable } from '../classes/html_table.js'
 
 const baseUrl = '';                                     // for production version
 // const baseUrl = 'https://u1489690.isp.regruhosting.ru/' // for local tests;
@@ -153,11 +155,11 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
         //     )
         // }
     ]);
+    window.cntentOfPage = cntentOfPage;
     
     console.log('cntentOfPage', cntentOfPage);
     cntentOfPage.purchaseSelector.render();
     // this.cntentOfPage = cntentOfPage;
-    window.cntentOfPage = cntentOfPage;
     cntentOfPage.purchaseSelector.selector.on('change', id => {
         console.log('selected purchase_id:', id);
         const selectedId = Number(id);
@@ -178,62 +180,8 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
 
 
 // Классы
-class ContentOfPage {
-    constructor(arrayOfHmlSections = []) {
-        console.log('[ContentOfPage.constructor]');
-        arrayOfHmlSections.forEach(htmlSection => {
-            this[htmlSection.name] = htmlSection.obj;
-        });
-    }
-    render() {
-        console.log('[ContentOfPage.render]');
-        this.arrayOfHmlSections.forEach(htmlSection => {
-            htmlSection.render();
-        });
-        return 0;
-    }
-}
 
-class HtmlTable {
-    constructor(parentSelector, header, body) {
-        console.log('[HtmlTable.constructor]');
-        this.parentSelector = parentSelector;
-        this.header = header;
-        this.body = body;
-        this.elem = document.querySelector(this.parentSelector)
-    }
-    async render(params = {}) {
-        console.log('[HtmlTable.render]');
-        this.elem.innerHTML = '';
-        const thead = this.header.render();
-        const tbody = await this.body.render(params);
-        this.elem.appendChild(thead);
-        this.elem.appendChild(tbody);
-        return this.elem;
-    }
-    clear() {
-        if (this.elem) this.elem.innerHTML = '';
-    }
-}
 
-class HtmlTableHeader {
-    constructor(html, caption) {
-        console.log('[HtmlTableHeader.constructor]');
-        this.html = html;
-        this.caption = caption;
-    }
-    render(caption) {
-        console.log('[HtmlTableHeader.render]');
-        caption = caption ? caption : this.caption;
-        const elem = document.createElement('thead');
-        elem.innerHTML = this.html;
-        elem.insertBefore(
-            this.caption.render(),
-            elem.firstChild
-        );
-        return elem;
-    }
-}
 
 class HtmlTableCaption {
     constructor(text, classString) {

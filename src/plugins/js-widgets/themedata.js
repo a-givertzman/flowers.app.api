@@ -101,7 +101,7 @@ class ElevatedButtonThemeData {
     }
 }
 
-class TemeData {
+export class TemeData {
     constructor({
         backgroundColor, scaffoldBackgroundColor, textSelectionTheme, 
         dialogTheme, colorScheme, elevatedButtonTheme, textButtonTheme, 

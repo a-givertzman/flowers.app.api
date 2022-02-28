@@ -1,10 +1,11 @@
 "use strict";
+import { Widget } from "../../plugins/js-widgets/widget.js";
 /**
  * Список виджетов со скролом
  *
  * @param {List<Widget>} children виджет, который будет внутри
  */
-class ListView {
+export class ListView {
     constructor({children = [], itemBuilder: itemBuilder, mainAxisAlignment = 'flex-start', crossAxisAlignment = 'center'}={}) {
         this.children = children;
         this.itemBuilder = itemBuilder;

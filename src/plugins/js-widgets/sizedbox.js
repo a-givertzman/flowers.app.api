@@ -1,10 +1,11 @@
 "use strict";
+import { Widget } from "../../plugins/js-widgets/widget.js";
 /**
  * Помещает виджет внутрь себя
  *
  * @param {Widget} child виджет, который будет внутри
  */
-class SizedBox {
+export class SizedBox {
     constructor({child, width, height}={}) {
         this.child = child;
         this.width = width;

@@ -1,4 +1,5 @@
 "use strict";
+import { Widget } from "../../plugins/js-widgets/widget.js";
 /**
  * Виджет имеющий размеры, цвет фона отступы внешние и внутренние, контур
  * А также вложенный виджет
@@ -10,7 +11,7 @@
  * @param {Number} padding внутренние отступы
  * @param {Border} border контур
  */
-class Container {
+export class Container {
     constructor({child, width, height, color, margin, padding, border}={}) {
         this.child = child;
         this.width = width;

@@ -3,7 +3,7 @@
  * Выравнивание и распределение элементов в списках
  *
  */
-const MainAxisAlignment = {
+export const MainAxisAlignment = {
     start: 'flex-start', //0,
     end: 'flex-end', //1,
     center: 'center', //2,
@@ -12,14 +12,14 @@ const MainAxisAlignment = {
     spaceEvenly: 'space-evenly', //5,
 }
 
-const CrossAxisAlignment = {
+export const CrossAxisAlignment = {
     start: 'flex-start', //0,
     end: 'flex-end', //1,
     center: 'center', //2,
     stretch: 'stretch', //3,
 }
 
-const TextAlign = {
+export const TextAlign = {
     start: 'start',
     end: 'end',
     left: 'left',
@@ -30,7 +30,7 @@ const TextAlign = {
     matchParent: 'match-parent',
 }
 
-const TextAlignVertical = {
+export const TextAlignVertical = {
     top: 'start',
     center: 'center',
     bottom: 'end',

@@ -4,7 +4,7 @@
  *
  * @param {string} tag имя тега, которое будет создано, по умолчанию 'div'
  */
-class Widget {
+export class Widget {
     constructor({tagName: tagName = 'div', cssClass = []}={}) {
         this.tagName = tagName;
         this.cssClass = cssClass;

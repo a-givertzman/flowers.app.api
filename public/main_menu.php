@@ -5,6 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главное меню</title>
+    <!-- For IE 9 and below. ICO should be 32x32 pixels in size -->
+    <!--[if IE]><link rel="shortcut icon" href="path/to/favicon.ico"><![endif]-->
+
+    <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. --> 
+    <!-- <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png"> -->
+
+    <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 196x196 pixels in size. -->
+    <link rel="icon" href="./img/favicon.png">
     <link rel="stylesheet" href="./src/plugins/js-widgets/css/widget.css" media="none" onload="if(media!='all')media='all'">
     <noscript><link rel="stylesheet" href="./src/plugins/js-widgets/css/widget.css"></noscript>
     <script nomodule>
@@ -83,22 +91,7 @@
             return scriptElt;
         }        
     </script>
-    <script src="./src/plugins/js-widgets/widget.js"></script>
-    <script src="./src/plugins/js-widgets/border.js"></script>
-    <script src="./src/plugins/js-widgets/text.js"></script>
-    <script src="./src/plugins/js-widgets/textstyle.js"></script>
-    <script src="./src/plugins/js-widgets/center.js"></script>
-    <script src="./src/plugins/js-widgets/container.js"></script>
-    <script src="./src/plugins/js-widgets/sizedbox.js"></script>
-    <script src="./src/plugins/js-widgets/column.js"></script>
-    <script src="./src/plugins/js-widgets/row.js"></script>
-    <script src="./src/plugins/js-widgets/alignment.js"></script>
-    <script src="./src/plugins/js-widgets/listview.js"></script>
-    <script src="./src/plugins/js-widgets/textbutton.js"></script>
-    <script src="./src/plugins/js-widgets/buttonstyle.js"></script>
-    <script src="./src/plugins/js-widgets/app.js"></script>
-    <script src="./src/main_menu/main_menu.js"></script>
-    <script src="./src/main_menu/main.js"></script>
+    <script src="./src/main_menu/main.js" type="module"></script>
 </head>
     <body>
     </body>

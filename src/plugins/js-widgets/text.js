@@ -1,11 +1,12 @@
 "use strict";
+import { Widget } from "../../plugins/js-widgets/widget.js";
 // import { Widget } from "./widget";
 /**
  * Текстовый виджет
  *
  * @param {string} text текст выводимый виджетом в DOM
  */
-class Text {
+export class Text {
     constructor(data, {style}={}) {
         this.data = data;
         this.style = style;

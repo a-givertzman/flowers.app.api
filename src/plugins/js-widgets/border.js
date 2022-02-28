@@ -3,7 +3,7 @@
  * Бордюр элемента
  *
  */
-class Border {
+export class Border {
     constructor({color, width, radius}={}) {
         this.color = color;
         this.width = width;

@@ -1,4 +1,4 @@
-const FontWeight = {
+export const FontWeight = {
     normal: '',
     bold: '',
     lighter: '',

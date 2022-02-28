@@ -7,7 +7,7 @@
  * @param {string} foregroundColor цвет текста и иконки
  * @param {string} foregroundColor цвет состояний focused, hovered, pressed.
  */
-class ButtonStyle {
+export class ButtonStyle {
     constructor({
         backgroundColor, 
         foregroundColor, 

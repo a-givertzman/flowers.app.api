@@ -1,10 +1,11 @@
 "use strict";
+import { Widget } from "../../plugins/js-widgets/widget.js";
 /**
  * Вертикальный массив виджетов
  *
  * @param {Row<Widget>} children массив виджетов, которые будут внутри
  */
-class Row {
+export class Row {
     constructor({children = [], mainAxisAlignment = 'flex-start', crossAxisAlignment = 'center'}={}) {
         this.children = children;
         this.mainAxisAlignment = mainAxisAlignment;

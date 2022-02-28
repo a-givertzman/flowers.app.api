@@ -1,11 +1,12 @@
 "use strict";
-// import { Widget } from "./widget";
+import { Widget } from "../../plugins/js-widgets/widget.js";
+// import { Widget } from "../plugins/js-widgets/widget";
 /**
  * Центрирует child виджет
  *
  * @param {Widget} child виджет, который будет отцентрирован
  */
-class Center {
+export class Center {
     constructor({child}={}) {
         this.child = child;
         this.widget = new Widget({

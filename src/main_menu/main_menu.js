@@ -1,11 +1,12 @@
 "use strict";
+import { Container } from "../plugins/js-widgets/container.js";
 /**
  * Главное меню приложения
  *
  * @param {User} user пользователь
  * @param {Widget} child виджет, который будет отцентрирован
  */
-class MainMenu {
+export class MainMenu {
     constructor({user, child}={}) {
         this.user = user;
         this.child = child;
