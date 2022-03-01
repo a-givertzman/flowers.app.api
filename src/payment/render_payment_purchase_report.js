@@ -1,5 +1,5 @@
 "use strict";
-// рендерит заголовок закупки
+// гендерит заголовок закупки
 function renderPurchaseHeader(row) {
     var theadHtml = `
         <thead>

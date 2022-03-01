@@ -1,4 +1,9 @@
 "use strict";
+import './src/plugins/jquery/jquery-3.6.0.js';
+import './src/plugins/select2-4.1.0-rc.0/dist/js/select2.min.js';
+import './mysql.js';
+import './render_payment_purchase_report.js';
+import { BusyIndicator } from '../plugins/busy-indicator/busy.js';
 
 const domainPath = '';//'../../'; http://u1489690.isp.regruhosting.ru/
 
