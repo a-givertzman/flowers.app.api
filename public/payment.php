@@ -5,10 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оплата</title>
-    <link rel="icon" href="img/favicon.png">
-    <link rel="stylesheet" href="../src/plugins/select2-4.1.0-rc.0/dist/css/select2.min.css">
-    <link rel="stylesheet" href="../src/plugins/busy-indicator/busy.css">
-    <link rel="stylesheet" href="../public/css/style.css">
     <script>
         function needsToBeBlacklisted(src, type) {
             console.log('[needsToBeBlacklisted] value:', src, 'type:', type);
@@ -87,7 +83,11 @@
     <!-- <script src="../src/plugins/jquery/jquery-3.6.0.js"></script> -->
     <!-- <script src="../src/plugins/busy-indicator/busy.js"></script> -->
     <!-- <script src="../src/plugins/select2-4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-    <script src="../src/payment/payment_app.js" type="module"></script>
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="./src/plugins/select2-4.1.0-rc.0/dist/css/select2.min.css">
+    <link rel="stylesheet" href="./src/plugins/busy-indicator/busy.css">
+    <link rel="stylesheet" href="./public/css/style.css">
+    <script src="./src/payment/payment_app.js" type="module"></script>
 
 </head>
 <body>

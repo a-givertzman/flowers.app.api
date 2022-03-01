@@ -1,6 +1,6 @@
 "use strict";
 // гендерит заголовок закупки
-function renderPurchaseHeader(row) {
+export function renderPurchaseHeader() {
     var theadHtml = `
         <thead>
             <tr class="purchase-row-header">
@@ -29,7 +29,7 @@ function renderPurchaseHeader(row) {
 }
 
 // рендерит одну позицию из таблицы purchase_member
-function renderPurchaseRow(row) {
+export function renderPurchaseRow(row) {
     let purchase_content_id = row['purchase_content/id'];
     var rowHtml = `
         <tr class="purchase-row">
@@ -54,7 +54,7 @@ function renderPurchaseRow(row) {
 }
 
 // рендерит заголовок Участники закупки
-function renderClientHeader(row) {
+export function renderClientHeader(row) {
     var theadHtml = `
         <thead>
             <tr class="transaction-row-header">
@@ -81,7 +81,7 @@ function renderClientHeader(row) {
 }
 
 // рендерит одну запись для таблицы Участники закупки
-function renderClientRow(row) {
+export function renderClientRow(row) {
     let clientTotal = row['client_total'] 
         ? row['client_total'] + owerpay
         : 0;

@@ -14,13 +14,13 @@
  * }
  * @returns Promise<Response>
  */
-function getData(args) {
+export function getData(args) {
     console.log('[mysql.getData]');
     args.url = args.url ? args.url : domainPath + 'get-data';
     return apiRequest(args);
 }
 
-function getJoinData(args) {
+export function getJoinData(args) {
   console.log('[musql.getJoinData]');
   args.url = args.url ? args.url : domainPath + 'get-join-data';
   return apiRequest(args);
@@ -41,7 +41,7 @@ function getJoinData(args) {
  * }
  * @returns Promise<Response>
  */
-function getView(args) {
+export function getView(args) {
     console.log('[mysql.getView]');
     args.url = args.url ? args.url : domainPath + 'get-view';
     return apiRequest(args);
@@ -57,7 +57,7 @@ function getView(args) {
  * }
  * @returns Promise<Response>
  */
-function callProcedure(args) {
+export function callProcedure(args) {
     console.log('[mysql.callProcedure]');
     args.url = args.url ? args.url : domainPath + 'call-procedure';
     return apiRequest(args);
@@ -65,7 +65,7 @@ function callProcedure(args) {
 
 // export {getData, getJoinData, getView};
 
-async function apiRequest(args) {
+export async function apiRequest(args) {
     console.log('[mysql.apiRequest]');
     console.log('args:', args);
 

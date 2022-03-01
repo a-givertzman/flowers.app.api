@@ -1,11 +1,12 @@
 "use strict";
-import './src/plugins/jquery/jquery-3.6.0.js';
-import './src/plugins/select2-4.1.0-rc.0/dist/js/select2.min.js';
-import './mysql.js';
-import './render_payment_purchase_report.js';
+import '../plugins/jquery/jquery-3.6.0.js';
+import '../plugins/select2-4.1.0-rc.0/dist/js/select2.min.js';
+import * as mysql from './mysql.js';
+import * as render from './render_payment_purchase_report.js';
 import { BusyIndicator } from '../plugins/busy-indicator/busy.js';
 
-const domainPath = '';//'../../'; http://u1489690.isp.regruhosting.ru/
+const domainPath = '';
+// const domainPath = 'https://u1489690.isp.regruhosting.ru/';
 
 var data = null;
 var orderData = {};
@@ -77,7 +78,8 @@ window.addEventListener(                                            // ON LOAD W
         // загружаем список закупок
         busyIndicator.show();
         var where = [{operator: 'where', field: 'deleted', cond: 'is null', value: null},];
-        getData({
+        mysql.apiRequest({
+            url: domainPath + 'get-data',
             tableName: 'purchase', 
             keys: ['*'], 
             orderBy: 'id', 
@@ -109,7 +111,8 @@ window.addEventListener(                                            // ON LOAD W
                 {operator: 'where', field: 'purchase/id', cond: '=', value: selectedId},
                 {operator: 'and', field: 'deleted', cond: 'is null', value: null},
             ];
-            getView({
+            mysql.apiRequest({
+                url: domainPath + 'get-view',
                 tableName: 'orderView', 
                 params: '0', 
                 keys: ['*'],
@@ -130,7 +133,7 @@ window.addEventListener(                                            // ON LOAD W
                 console.log('purchaseData:', purchaseData);
                 if (Object.keys(purchaseData).length > 0) {
                     // добавляем в таблицу заголовок
-                    var newPurchase = renderPurchaseHeader({});
+                    var newPurchase = render.renderPurchaseHeader({});
                     table.append(newPurchase.thead);
                     table.append(newPurchase.tbody);
                     tableBody = newPurchase.tbody;
@@ -138,7 +141,7 @@ window.addEventListener(                                            // ON LOAD W
                     // перебираем позиции закупки
                     for (let key in purchaseData) {
                         let rowData = purchaseData[key];
-                        let row = renderPurchaseRow(rowData);
+                        let row = render.renderPurchaseRow(rowData);
                         tableBody.append(row);
                         row.querySelector(`#chbx${rowData['purchase_content/id']}`)?.addEventListener('change', (e) => {
                             onPurchaseListChanged(
@@ -152,7 +155,7 @@ window.addEventListener(                                            // ON LOAD W
 
                     // добавляем в таблицу заголовок спика клиентов
                     var table = document.querySelector('table.purchase-clients');
-                    var newClient = renderClientHeader({});
+                    var newClient = render.renderClientHeader({});
                     table.append(newClient.thead);
                     table.append(newClient.tbody);
                     tableBody = newClient.tbody;
@@ -160,7 +163,7 @@ window.addEventListener(                                            // ON LOAD W
                     // выводим данные клиентов в таблицу
                     for (let key in clientData) {
                         let rowData = clientData[key];
-                        let row = renderClientRow(rowData);
+                        let row = render.renderClientRow(rowData);
                         tableBody.append(row);
                         console.log('clientDataRow:', row);
                     }   
@@ -277,7 +280,8 @@ function onSubmitPaymentClicked(e, purchaseId, orderData) {
     console.log('orderId:', orderId);
 
     if (orderId.length > 0) {
-        callProcedure({
+        mysql.apiRequest({
+            url: domainPath + 'call-procedure',
             procedureName: 'transferOrderPayment',
             params: [
                 purchaseId,         // id закупки, для которой проводим оплату
