@@ -87,7 +87,7 @@
     <!-- <script src="../src/plugins/jquery/jquery-3.6.0.js"></script> -->
     <!-- <script src="../src/plugins/busy-indicator/busy.js"></script> -->
     <!-- <script src="../src/plugins/select2-4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-    <script src="../src/payment/payment_app.js"></script>
+    <script src="../src/payment/payment_app.js" type="module"></script>
 
 </head>
 <body>
