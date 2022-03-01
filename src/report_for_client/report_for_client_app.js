@@ -1,7 +1,12 @@
 "use strict";
+import { loadCss } from '../plugins/loader/load_css.js';
+loadCss({path: './src/plugins/busy-indicator/busy.css'});
+loadCss({path: './src/plugins/tom-select/tom-select.min.css'});
+import '../plugins/tom-select/tom-select.complete.js';
 import { ApiRequest } from '../mysql/api_request.js';
 import { ContentOfPage } from '../classes/content_of_page'
 import { HtmlTable } from '../classes/html_table.js'
+import { BusyIndicator } from '../plugins/busy-indicator/busy.js';
 
 const baseUrl = '';                                     // for production version
 // const baseUrl = 'https://u1489690.isp.regruhosting.ru/' // for local tests;
