@@ -1,4 +1,5 @@
 "use strict";
+import { FontWeight } from "./font_weight.js";
 /**
  * Стиль текста
  *
@@ -9,7 +10,7 @@ export class TextStyle {
         this.color = color;
         this.backgroundColor = backgroundColor;
         this.fontSize = fontSize;
-        this.fontWeight = fontWeight;
+        this.fontWeight = fontWeight ? fontWeight : FontWeight.normal;
         this.fontStyle = fontStyle;
         this.letterSpacing = letterSpacing;
         this.wordSpacing = wordSpacing;

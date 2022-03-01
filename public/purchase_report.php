@@ -40,14 +40,14 @@
             Object.defineProperties(scriptElt, {
                 'src': {
                     get() {
-                        return scriptElt.getAttribute('src')
+                        return scriptElt.getAttribute('src');
                     },
                     set(value) {
                         if(needsToBeBlacklisted(value, scriptElt.type)) {
                             originalSetAttribute('type', 'javascript/blocked');
                         }
-                        originalSetAttribute('src', value)
-                        return true
+                        originalSetAttribute('src', value);
+                        return true;
                     }
                 },
                 'type': {
@@ -55,11 +55,11 @@
                         const typeValue = needsToBeBlacklisted(scriptElt.src, scriptElt.type) 
                                 ? 'javascript/blocked' 
                                 : value;
-                        originalSetAttribute('type', typeValue)
-                        return true
+                        originalSetAttribute('type', typeValue);
+                        return true;
                     }
                 }
-            })
+            });
 
             // Monkey patch the setAttribute function so that the setter is called instead.
             // Otherwise, setAttribute('type', 'whatever') will bypass our custom descriptors!
@@ -79,16 +79,8 @@
         }        
     </script>
     <link rel="icon" href="img/favicon.png">
-    <link rel="stylesheet" href="./src/plugins/busy-indicator/busy.css">
-    <link rel="stylesheet" href="./src/plugins/tom-select/tom-select.min.css">
     <link rel="stylesheet" href="./public/css/style.css">
-    <!-- <script src="./src/mysql/api_request.js"></script> -->
-    <script src="./src/plugins/tom-select/tom-select.complete.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script> -->
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.js" integrity="sha512-P3z5YHtqjIxRAu1AjkWiIPWmMwO9jApnCMsa5s0UTgiDDEjTBjgEqRK0Wn0Uo8Ku3IDa1oer1CIBpTWAvqbmCA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-    <script src="./src/plugins/busy-indicator/busy.js"></script>
     <script src="./src/purchase_report/purchase_report_app.js" type="module"></script>
 </head>
 <body>

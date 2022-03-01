@@ -1,5 +1,6 @@
 "use strict";
 import { Widget } from "../../plugins/js-widgets/widget.js";
+import { TextAlign, TextAlignVertical } from "../../plugins/js-widgets/alignment.js";
 /**
  * Виджет для ввода текста
  *

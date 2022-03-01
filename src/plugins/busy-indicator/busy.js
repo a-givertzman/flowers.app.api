@@ -1,5 +1,5 @@
 "use strict";
-class BusyIndicator {
+export class BusyIndicator {
     constructor(selector, hiddenClassName) {
         this.selector = selector;
         this.hiddenClassName = hiddenClassName;

@@ -1,14 +1,25 @@
 "use strict";
+import { loadCss } from '../plugins/loader/load_css.js';
+loadCss({path: './src/plugins/busy-indicator/busy.css'});
+loadCss({path: './src/plugins/tom-select/tom-select.min.css'});
+import '../plugins/tom-select/tom-select.complete.js';
 import { ApiRequest } from '../mysql/api_request.js';
-import { ContentOfPage } from '../classes/content_of_page'
-import { HtmlTable } from '../classes/html_table.js'
+import { ContentOfPage } from '../classes/content_of_page.js';
+// import { HtmlTable } from '../classes/html_table.js';
+import { HtmlTableHeader } from '../classes/html_table_header.js';
+import { HtmlTableCaption } from '../classes/html_table_caption.js';
+import { BusyIndicator } from '../plugins/busy-indicator/busy.js';
+import '../plugins/jsPDF-2.5.1/dist/jspdf.min.js';
+// import '../plugins/jspdf-autotable/dist/jspdf.plugin.autotable.js';
+import '../plugins/jsPDF-2.5.1/dist/jspdf.auto-table.min.js';
+import '../plugins/jsPDF-2.5.1/pdf-fonts/Roboto-Regular-normal.js';
 
 const baseUrl = '';                                     // for production version
 // const baseUrl = 'https://u1489690.isp.regruhosting.ru/' // for local tests;
-// константы для доступа к API
 
 window.html2canvas = html2canvas;
 
+// константы для доступа к API
 const mySqlParamsForPurchaseSelect = {
     url: `${baseUrl}get-view`,
     tableName: 'purchase_preview', 
@@ -175,33 +186,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
     });
 });
 
-
-
-
-
 // Классы
-
-
-
-class HtmlTableCaption {
-    constructor(text, classString) {
-        console.log('[HtmlTableCaption.constructor]');
-        this.text = text;
-        this.classString = classString;
-    }
-    render(text) {
-        console.log('[HtmlTableCaption.render]');
-        text = text ? text : this.text;
-        const html = `
-                <th colspan="100">${text}</th>
-        `;
-        const elem = document.createElement('tr');
-        elem.classList.add(this.classString);
-        elem.innerHTML = html.trim();
-        return elem;
-    }
-}
-
 class HtmlTableGroupBy {
     constructor(parentSelector, dataSource) {
         console.log('[HtmlTableGroupedBy.constructor]');
@@ -225,15 +210,15 @@ class HtmlTableGroupBy {
                     HeaderForOrdersHtml,
                     new HtmlTableCaption(
                         `[${clientId}] ${row['client/name']} | Закупка [${purchaseId}] ${row['purchase/name']}`,
-                        'purchase-row-header'
-                    )
+                        'purchase-row-header',
+                    ),
                 ).render();
                 const body = new HtmlTableBody(
                     new RowForOrders(),
                     new ApiRequest(
                         mySqlParamsForOrders,
-                        new BusyIndicator('.busy-indicator', 'busy-indicator-hide')
-                    )
+                        new BusyIndicator('.busy-indicator', 'busy-indicator-hide'),
+                    ),
                 );
                 lClause.value = clientId;
                 const tBody = await body.render(lWhere);
@@ -260,7 +245,7 @@ function convert_HTML_To_PDF() {
     html2canvas(_elem, {
       useCORS: true,
       onrendered: function(canvas) {
-        var pdf = new jsPDF('p', 'pt', 'a4');
+        var pdf = jsPDF('p', 'pt', 'a4');
   
         var pageHeight = 980;
         var pageWidth = 900;
@@ -296,7 +281,7 @@ function convert_HTML_To_PDF() {
         pdf.save('report.pdf');
       }
     });
-  }
+}
 class GeneratePdf {
     constructor(htmlSelector, dataSource) {
         console.log('[GeneratePdf.constructor]');
@@ -309,23 +294,34 @@ class GeneratePdf {
             this.elem.addEventListener('click', (event) => {
                 console.log('[GeneratePdf.render] clicked:', event);
                 const _elem = document.querySelector('.purchase-items');
-                const pdfDoc = new jsPDF(
-                    'p', 'mm', 'a4',//[_elem.offsetWidth * 2.1, 1500]
+                const pdfDoc = jspdf.jsPDF(
+                    'p', 'pt', 'a4'// [_elem.offsetWidth * 2.1, 2500]
                     // {filters: ['ASCIIHexEncode']},
                 );
-                console.log('[GeneratePdf.render] _elem.offsetWidth:', _elem.offsetWidth);
 
+                // const myFont = ... // load the *.ttf font file as binary string
+                // doc.addFileToVFS("MyFont.ttf", myFont);
+                pdfDoc.addFont("Roboto-Regular-normal.ttf", "Roboto-Regular-normal", "normal");
+                console.log('pdf fonts: ', pdfDoc.getFontList());
+                pdfDoc.setFont("Roboto-Regular-normal");
+                // pdfDoc.setFont("Helvetica");
+                pdfDoc.setFontSize(10);
+
+                console.log('[GeneratePdf.render] _elem.offsetWidth:', _elem.offsetWidth);
+                // pdfDoc.setFont('Roboto', 'regular');
+                const now = Date.now();
+                pdfDoc.text(`Отчет report ${now.toString()}`, 10, 10);
                 // convert_HTML_To_PDF();
                 // pdfDoc.addFileToVFS('../../public/css/fonts/Roboto-Regular.ttf', 'Roboto');
                 // pdfDoc.addFont('../../public/css/fonts/Roboto-Regular.ttf', 'Roboto', 'regular');
-                // pdfDoc.setFont('Roboto', 'regular');
+
                 const headers = [
-                    'PrID',
+                    // 'PrID',
                     'Группа',
                     'Нименование',
                     'Заказал',
                     'Получил',
-                    'Цена закупки',
+                    // 'Цена закупки',
                     'Цена',
                     'Транспортные\nрасходы',
                     'Сумма к\nоплате',
@@ -333,21 +329,44 @@ class GeneratePdf {
                     'Сумма к\nвозврату',
                     'Возвращено',
                 ];
-                const data = [
-                    '44',
-                    'Однолетние цветы',
-                    'Анемона Whirlwind',
-                    '11',
-                    '0',
-                    '0.79 EUR',
-                    '71.10\nRUB',
-                    '6.00\nRUB',
-                    '848.10',
-                    '1619.10',
-                    '0.00',
-                    '0.00',
-                ];
-                pdfDoc.autoTable({ html: 'table.purchase-items' });
+                const data = [{
+                    // PrID: '44',
+                    group: 'Однолетние цветы',
+                    name: 'Анемона Whirlwind',
+                    ordered: '11',
+                    distributed: '0',
+                    // buyPrice: '0.79 EUR',
+                    salePrice: '71.10\nRUB',
+                    shipping: '6.00\nRUB',
+                    toPay: '848.10',
+                    payed: '1619.10',
+                    toRefound: '0.00',
+                    refounded: '0.00',
+                }];
+
+                // pdfDoc.autoTable({ html: 'table.purchase-items' });
+                pdfDoc.autoTable({
+                    columns:[
+                    //   { header: 'PrID', dataKey: 'PrID' },
+                      { header: 'Группа', dataKey: 'group' },
+                      { header: 'Нименование', dataKey: 'name' },
+                      { header: 'Заказал', dataKey: 'ordered' },
+                      { header: 'Получил', dataKey: 'distributed' },
+                    //   { header: 'Цена закупки', dataKey: 'buyPrice' },
+                      { header: 'Цена', dataKey: 'salePrice' },
+                      { header: 'Транспортные\nрасходы', dataKey: 'shipping' },
+                      { header: 'Сумма к\nоплате', dataKey: 'toPay' },
+                      { header: 'Оплатил', dataKey: 'payed' },
+                      { header: 'Сумма к\nвозврату', dataKey: 'toRefound' },
+                      { header: 'Возвращено', dataKey: 'refounded' },
+                    ],
+                    body: data,
+                    margin:{top:25, left: 15, right: 15, bottom: 10},
+                    styles: {font: 'Roboto-Regular-normal'},
+                    // didDrawPage:function(data){
+                    //  doc.text("TOLIST ARTICLES", 20, 30);
+                    // }
+                  });
                 // pdfDoc.autoTable(10, 50,
                 //     data,
                 //     headers,

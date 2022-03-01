@@ -1,5 +1,5 @@
 "use strict";
-import { Widget } from "../../plugins/js-widgets/widget.js";
+import { Widget } from "./widget.js";
 // import { Widget } from "./widget";
 /**
  * Текстовая кнопка

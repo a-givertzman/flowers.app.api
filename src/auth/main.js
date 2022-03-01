@@ -1,4 +1,18 @@
 "use strict";
+import { App } from "../plugins/js-widgets/app.js";
+import { ButtonStyle } from "../plugins/js-widgets/button_style.js";
+import { TextButton } from "../plugins/js-widgets/text_button.js";
+import { MainAxisAlignment, CrossAxisAlignment, TextAlign, TextAlignVertical } from "../plugins/js-widgets/alignment.js";
+import { Row } from "../plugins/js-widgets/row.js";
+import { Border } from "../plugins/js-widgets/border.js";
+import { TextFormField } from "../plugins/js-widgets/text_form_field.js";
+import { Text } from "../plugins/js-widgets/text.js";
+import { TextStyle } from "../plugins/js-widgets/text_style.js";
+import { Center } from "../plugins/js-widgets/center.js";
+import { Container } from "../plugins/js-widgets/container.js";
+import { SizedBox } from "../plugins/js-widgets/sizedbox.js";
+import { Column } from "../plugins/js-widgets/column.js";
+import { appThemeData } from "../core/app_themedata.js";
 
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     var app = new App({

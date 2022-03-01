@@ -1,5 +1,5 @@
 import { renderModalAfterAuth } from "../auth";
-import { closeModalWindow, createModalWindow, declOfHours } from "../ui-util";
+import { closeModalWindow, createModalWindow, declOfHours } from "../../ui-util";
 
 //
 export const bookingStatus = {

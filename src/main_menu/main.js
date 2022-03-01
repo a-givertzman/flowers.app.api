@@ -1,14 +1,14 @@
 "use strict";
 import { MainMenu } from "../main_menu/main_menu.js";
 import { App } from "../plugins/js-widgets/app.js";
-import { ButtonStyle } from "../plugins/js-widgets/buttonstyle.js";
-import { TextButton } from "../plugins/js-widgets/textbutton.js";
+import { ButtonStyle } from "../plugins/js-widgets/button_style.js";
+import { TextButton } from "../plugins/js-widgets/text_button.js";
 import { ListView } from "../plugins/js-widgets/listview.js";
 import { MainAxisAlignment, CrossAxisAlignment, TextAlign, TextAlignVertical } from "../plugins/js-widgets/alignment.js";
 import { Row } from "../plugins/js-widgets/row.js";
 import { Border } from "../plugins/js-widgets/border.js";
 import { Text } from "../plugins/js-widgets/text.js";
-import { TextStyle } from "../plugins/js-widgets/textstyle.js";
+import { TextStyle } from "../plugins/js-widgets/text_style.js";
 import { Center } from "../plugins/js-widgets/center.js";
 import { Container } from "../plugins/js-widgets/container.js";
 import { SizedBox } from "../plugins/js-widgets/sizedbox.js";
