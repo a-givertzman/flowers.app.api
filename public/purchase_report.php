@@ -78,9 +78,9 @@
             return scriptElt;
         }        
     </script>
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="./public/img/favicon.png">
     <link rel="stylesheet" href="./public/css/style.css">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> -->
     <script src="./src/purchase_report/purchase_report_app.js" type="module"></script>
 </head>
 <body>

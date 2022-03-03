@@ -78,14 +78,9 @@
             return scriptElt;
         }        
     </script>
-    <!-- <script src="../src/mysql.js"></script> -->
-    <!-- <script src="../src/render_payment_purchase_report.js"></script> -->
-    <!-- <script src="../src/plugins/jquery/jquery-3.6.0.js"></script> -->
-    <!-- <script src="../src/plugins/busy-indicator/busy.js"></script> -->
-    <!-- <script src="../src/plugins/select2-4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="./public/img/favicon.png">
     <link rel="stylesheet" href="./src/plugins/select2-4.1.0-rc.0/dist/css/select2.min.css">
-    <link rel="stylesheet" href="./src/plugins/busy-indicator/busy.css">
+    <!-- <link rel="stylesheet" href="./src/plugins/busy-indicator/busy.css"> -->
     <link rel="stylesheet" href="./public/css/style.css">
     <script src="./src/payment/payment_app.js" type="module"></script>
 

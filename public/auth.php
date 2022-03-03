@@ -12,7 +12,7 @@
     <!-- <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png"> -->
 
     <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 196x196 pixels in size. -->
-    <link rel="icon" href="./img/favicon.png">
+    <link rel="icon" href="./public/img/favicon.png">
     <link rel="stylesheet" href="./src/plugins/js-widgets/css/widget.css" media="none" onload="if(media!='all')media='all'">
     <noscript><link rel="stylesheet" href="./src/plugins/js-widgets/css/widget.css"></noscript>
     <script nomodule>

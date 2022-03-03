@@ -1,4 +1,7 @@
 "use strict";
+import { loadCss } from '../plugins/loader/load_css.js';
+loadCss({path: './src/plugins/busy-indicator/busy.css'});
+loadCss({path: './src/plugins/select2-4.1.0-rc.0/dist/css/select2.min.css'});
 import '../plugins/jquery/jquery-3.6.0.js';
 import '../plugins/select2-4.1.0-rc.0/dist/js/select2.min.js';
 import * as mysql from './mysql.js';

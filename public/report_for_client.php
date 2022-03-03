@@ -78,7 +78,7 @@
             return scriptElt;
         }        
     </script>
-    <link rel="icon" href="img/favicon.png">
+    <link rel="icon" href="./public/img/favicon.png">
     <link rel="stylesheet" href="./public/css/style.css">
     <script src="./src/report_for_client/report_for_client_app.js" type="module"></script>
 </head>
