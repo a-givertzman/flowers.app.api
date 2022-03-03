@@ -1,5 +1,32 @@
 "use strict";
-// гендерит заголовок закупки
+/**
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2021 Anton Lobanov
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+/**
+ * гендерит заголовок закупки
+ * @returns html string represents header of table Purchases
+ */
 export function renderPurchaseHeader() {
     var theadHtml = `
         <thead>
@@ -28,8 +55,12 @@ export function renderPurchaseHeader() {
     return {thead: thead, tbody: tbody};
 }
 
-// рендерит одну позицию из таблицы purchase_member
-export function renderPurchaseRow(row) {
+/**
+ * гендерит одну строку из таблицы purchase_member
+ * @param {string} row объект с данными для генерации строки таблицы
+ * @returns html string represents row of table Purchases
+ */
+ export function renderPurchaseRow(row) {
     let purchase_content_id = row['purchase_content/id'];
     var rowHtml = `
         <tr class="purchase-row">
@@ -53,8 +84,11 @@ export function renderPurchaseRow(row) {
     return newRow;
 }
 
-// рендерит заголовок Участники закупки
-export function renderClientHeader(row) {
+/**
+ * гендерит заголовок таблицы Участники закупки
+ * @returns html string represents header of table Clients
+ */
+ export function renderClientHeader() {
     var theadHtml = `
         <thead>
             <tr class="transaction-row-header">
@@ -80,8 +114,12 @@ export function renderClientHeader(row) {
     return {thead: thead, tbody: tbody};
 }
 
-// рендерит одну запись для таблицы Участники закупки
-export function renderClientRow(row) {
+/**
+ * гендерит одну запись для таблицы Участники закупки
+ * @param {string} row объект с данными для генерации строки таблицы
+ * @returns html string represents row of table Clients
+ */
+ export function renderClientRow(row) {
     let clientTotal = row['client_total'] 
         ? row['client_total'] + owerpay
         : 0;
