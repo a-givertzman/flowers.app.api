@@ -22,6 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import { loadCss } from '../plugins/loader/load_css.js';
 loadCss({path: './src/plugins/busy-indicator/busy.css'});
 loadCss({path: './src/plugins/tom-select/tom-select.min.css'});
@@ -33,6 +34,7 @@ import { ContentOfPage } from '../classes/content_of_page.js';
 import { HtmlTableHeader } from '../classes/html_table_header.js';
 import { HtmlTableCaption } from '../classes/html_table_caption.js';
 import { BusyIndicator } from '../plugins/busy-indicator/busy.js';
+import { PurchaseStatus } from '../domain/purchase_status.js';
 import '../plugins/jsPDF-2.5.1/dist/jspdf.min.js';
 // import '../plugins/jspdf-autotable/dist/jspdf.plugin.autotable.js';
 import '../plugins/jsPDF-2.5.1/dist/jspdf.auto-table.min.js';
@@ -443,9 +445,10 @@ class PurchaseSelector {
             this.selector.clear();
             for(var key in data) {
                 let item = data[key];
+                let itemStatus = (new PurchaseStatus(item.status)).text();
                 this.selector.addOption({
                     id: item.id,
-                    title: item.id + ' | ' + item.name
+                    title: item.id + ' | ' + item.name + ' | ' + item.details + ' | ' + itemStatus
                 });
             }
         });

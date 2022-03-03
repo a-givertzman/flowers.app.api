@@ -1,0 +1,24 @@
+{
+    "type": "module",
+    "scripts": {
+        "test": "jest"
+    },
+    "devDependencies": {
+        "jest": "^27.5.1"
+    },
+    "dependencies": {
+        "cd": "^0.3.3",
+        "jspdf": "^2.5.1",
+        "jspdf-autotable": "^3.5.23"
+    },
+    "jest": {
+        "roots": [
+            "<rootDir>/"
+        ],
+        "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.js?$",
+        "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "json", "node", "mjs"],
+        "moduleDirectories": [
+            "node_modules"
+        ]
+    }
+}

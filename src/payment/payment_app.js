@@ -22,6 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import { loadCss } from '../plugins/loader/load_css.js';
 loadCss({path: './src/plugins/busy-indicator/busy.css'});
 loadCss({path: './src/plugins/select2-4.1.0-rc.0/dist/css/select2.min.css'});
@@ -30,6 +31,7 @@ import '../plugins/select2-4.1.0-rc.0/dist/js/select2.min.js';
 import * as mysql from './mysql.js';
 import * as render from './render_payment_purchase_report.js';
 import { BusyIndicator } from '../plugins/busy-indicator/busy.js';
+import { PurchaseStatus } from '../domain/purchase_status.js';
 
 const domainPath = '';
 // const domainPath = 'https://u1489690.isp.regruhosting.ru/';
@@ -114,10 +116,12 @@ window.addEventListener(                                            // ON LOAD W
             limit: 0,
         }).then( responseData => {
             data = responseData;
+            console.log('[paymentApp.on PurchaseList Loaded] data: ', data);
             for(var key in data) {
                 let item = data[key];
+                let itemStatus = (new PurchaseStatus(item.status)).text();
                 $('.search-purchase-select')
-                    .append(new Option(item.id + ' | ' + item.name + ' | ' + item.detales + ' | ' + item.status, item.id, false))
+                    .append(new Option(item.id + ' | ' + item.name + ' | ' + item.details + ' | ' + itemStatus, item.id, false))
                     .trigger('change');
             }
             busyIndicator.hide();
