@@ -14,7 +14,7 @@ $query = trim($_SERVER['QUERY_STRING'], '/');
 plog('query:', $query);
 
 if ($query == '') {
-    $routePath = './main_menu.php';
+    $routePath = './auth.php';
 
 } else if ($query == 'admin-purchase-report') {
     $routePath = './purchase_report.php';

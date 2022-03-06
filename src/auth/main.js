@@ -190,9 +190,9 @@ function onSignInPressed(value) {
     console.log('Пароль: ', pass);
     auth.authenticateByPhoneNumber(userPhone, pass)
         .then((authResult) => {
-            if (authResult.authenticated) {
-                window.open("https://u1489690.isp.regruhosting.ru/","_self");
-                window.open("/","_self");
+            if (authResult.authenticated && (auth.getUser().group == 'admin' || auth.getUser().group == 'manager')) {
+                // window.open("https://u1489690.isp.regruhosting.ru/","_self");
+                window.open("/main-menu","_self");
             } else {
                 alert(authResult.message);
             }
