@@ -17,6 +17,7 @@ import { Authenticate } from "../domain/auth/authenticate.js";
 import { AppUser } from "../domain/auth/app_user.js";
 import { DataSet } from "../domain/core/data_set.js";
 import { ApiRequest } from "../mysql/api_request.js";
+import { MainMenuPage } from "../main_menu/main_menu_page.js";
 
 const appUser = new AppUser({
     remote: new DataSet({
@@ -122,6 +123,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                         })
                                     }),
                                     new TextFormField({
+                                        obscureText: true,
                                         style: new TextStyle({
                                             
                                         }),
@@ -192,7 +194,11 @@ function onSignInPressed(value) {
         .then((authResult) => {
             if (authResult.authenticated && (auth.getUser().group == 'admin' || auth.getUser().group == 'manager')) {
                 // window.open("https://u1489690.isp.regruhosting.ru/","_self");
-                window.open("/main-menu","_self");
+                // window.open("/main-menu","_self");
+                const mainMenuPage = new MainMenuPage({
+                    user: authResult.user,
+                });
+                mainMenuPage.build();
             } else {
                 alert(authResult.message);
             }

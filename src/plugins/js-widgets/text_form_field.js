@@ -81,7 +81,7 @@ export class TextFormField {
         });
     }
     build() {
-        this.widget.element.type = 'text';
+        this.widget.element.type = this.obscureText ? 'password' : 'text';
         this.widget.element.innerHTML = this.initialValue;
         this.widget.element.style.color = this.style?.color;
         this.widget.element.style.backgroundColor = this.style?.backgroundColor;
