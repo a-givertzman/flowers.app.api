@@ -72,7 +72,7 @@ export class DataSet {
     #fetch(apiRequest, params) {
         log(this.#debug, '[DataSet.#fetch] apiRequest: ', apiRequest);
         log(this.#debug, '[DataSet.#fetch] params: ', params);
-        apiRequest.fetchData(params)
+        return apiRequest.fetchData(params)
             .then(response => {
                 log(this.#debug, '[DataSet.#fetch] response: ', response);
                 return response;

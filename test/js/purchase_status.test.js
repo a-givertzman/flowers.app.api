@@ -23,35 +23,30 @@
  * SOFTWARE.
  */
 
-import { DataSet } from "./data_set.js";
-import { ApiRequest } from "../../mysql/api_request.js";
+import { PurchaseStatusList } from "../../src/domain/purchase_status.js";
+import { PurchaseStatus } from "../../src/domain/purchase_status.js";
 
-test('Test DataSet creating empty', () => {
-    expect(() => {
-        let dataSet = new DataSet({});
-    }).toThrowError(SyntaxError);
-    expect(() => {
-        let dataSet = new DataSet({apiRequest: {}});
-    }).toThrowError(SyntaxError);
-    expect(() => {
-        let dataSet = new DataSet({params: {}});
-    }).toThrowError(SyntaxError);
-    expect(() => {
-        let dataSet = new DataSet({apiRequest: {}, params: {}});
-    }).toThrowError(TypeError);
-    let dataSet = DataSet.empty();
-    expect(dataSet.isEmpty()).toBe(true);
-});
+const _statuses = {
+    prepare: 'Подготовка',
+    active: 'Сбор заказов',
+    purchase: 'Закупка товара',
+    distribute: 'Раздача товара',
+    archived: 'В архиве',
+    canceled: 'Отменена',
+    notsampled: 'Не определен',
+};
 
-test('Test DataSet creating', () => {
-    let dataSet = new DataSet({
-        params: {
-            'tableName': 'order',
-        },
-        apiRequest: new ApiRequest({
-            url: 'http://u1489690.isp.regruhosting.ru/set-data',
-        }),
+describe('PurchaseStatus', () => {
+    it('supporting all valid statuses', () => {
+        for(const status in PurchaseStatusList) {
+            var purchaseStatus = new PurchaseStatus(status);
+            expect(purchaseStatus.value()).toBe(status);
+        }
     });
-    expect(dataSet.isEmpty()).toBe(false);
-    expect(dataSet).toBeInstanceOf(DataSet);
+    it('supporting each statuses in PurchaseStatusList', () => {
+        for(const status in PurchaseStatusList) {
+            var purchaseStatus = new PurchaseStatus(status);
+            expect(purchaseStatus.text()).toBe(_statuses[status]);
+        }
+    });
 });

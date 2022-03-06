@@ -69,7 +69,7 @@ export class ApiRequest {
                 console.log('[ApiRequest.fetch] response: ', response);
                 return this.parseResponse(response)
                     .then(data => {
-                        console.log('data: ', data);
+                        console.log('[ApiRequest.fetch] data: ', data);
                         this._hideBusyIndicator();
                         return data;
                     })
@@ -100,14 +100,14 @@ export class ApiRequest {
         console.log('[ApiRequest.parseResponse] response.status: ', response.status);
         const responseCode = response.status;
         const jsonData = await response.json();
-        // console.log('json data:', jsonData);
+        // console.log('[ApiRequest.parseResponse] json data:', jsonData);
         const parsedData = (typeof(jsonData) == 'object') ? jsonData : JSON.parse(jsonData);
         const errCount = parsedData.errCount;
-        console.log('errCount: ', errCount);
+        console.log('[ApiRequest.parseResponse] errCount: ', errCount);
         if (errCount > 0) {
             const errDump = parsedData.errDump;
             console.log('[ApiRequest.parseResponse] errDump: ', errDump);
-            alert('Ошибка сервера', errDump);
+            alert('[ApiRequest.parseResponse] Ошибка сервера', errDump);
             var data = parsedData.data;
             return data;
         }
@@ -116,7 +116,7 @@ export class ApiRequest {
             return data;
         } else {
             const responseText = response.statusText;
-            alert('Ошибка', '[' + responseCode + '] ' + responseText);
+            alert('[ApiRequest.parseResponse] Ошибка', '[' + responseCode + '] ' + responseText);
         }        
     }
 

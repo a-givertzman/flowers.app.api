@@ -32,18 +32,20 @@ import { DataSet } from "../core/data_set.js";
  */
 export class AppUser extends DataObject {
   #debug = true;
+  #remote;
   constructor({
     remote, // DataSet<Map>
   }={}) {
     if (!remote) throw SyntaxError('[AppUser] parameter "remote" is required');
     if (!(remote instanceof DataSet)) throw new TypeError(`[AppUser] parameter "remote" is required, type of "DataSet", but recived ${remote.constructor.name}`);
     super({remote: remote});
+    this.#remote = remote;
     this.#init();
   }
   /// Метод возвращает новый экземпляр класса
   /// с прежним remote, но без данных
   clear() {
-    return new AppUser({remote: {}});
+    return new AppUser({remote: this.#remote});
   }
   #init() {
     this['id'] = ''; //ValueString('');

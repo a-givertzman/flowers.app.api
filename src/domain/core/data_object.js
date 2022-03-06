@@ -55,10 +55,17 @@ export class DataObject {
             });
     }
     fetchWith(params) {
+        log(this.#dedug, '[DataObject.fetchWith] params: ', params);
         return this.#remote
             .fetchWith(params)
             .then(response => {
                 log(this.#dedug, '[DataObject.fetchWith] response: ', response);
+                const data = response[Object.keys(response)[0]];
+                log(this.#dedug, '[DataObject.fetchWith] data: ', data);
+                for(const key in data) {
+                    const value = data[key];
+                    this[key] = value;
+                }
                 return response;
             });
     }

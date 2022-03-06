@@ -23,30 +23,31 @@
  * SOFTWARE.
  */
 
-import { DataObject } from "./data_object.js";
-import { DataSet } from "./data_set.js";
-import { ApiRequest } from "../../mysql/api_request.js";
+import { DataObject } from "../../src/domain/core/data_object.js";
+import { DataSet } from "../../src/domain/core/data_set.js";
+import { ApiRequest } from "../../src/mysql/api_request.js";
 
-test('Test DataObject creating empty', () => {
-    expect(() => {
-        let dataObject = new DataObject({});
-    }).toThrowError(SyntaxError);
-    expect(() => {
-        let dataObject = new DataObject({remote: {}});
-    }).toThrowError(TypeError);
-    let dataObject = DataObject.empty();
-    expect(dataObject.isEmpty()).toBe(true);
-});
-
-test('Test DataObject creating', () => {
-    let dataObject = new DataObject({
-        remote: new DataSet({
-            apiRequest: new ApiRequest(
-                {url: '#'},
-            ),
-            params: {},
-        })
+describe('DataObject', () => {
+    it('creating empty', () => {
+        expect(() => {
+            let dataObject = new DataObject({});
+        }).toThrowError(SyntaxError);
+        expect(() => {
+            let dataObject = new DataObject({remote: {}});
+        }).toThrowError(TypeError);
+        let dataObject = DataObject.empty();
+        expect(dataObject.isEmpty()).toBe(true);
     });
-    expect(dataObject.isEmpty()).toBe(false);
-    expect(dataObject).toBeInstanceOf(DataObject);
+    it('creating', () => {
+        let dataObject = new DataObject({
+            remote: new DataSet({
+                apiRequest: new ApiRequest(
+                    {url: '#'},
+                ),
+                params: {},
+            })
+        });
+        expect(dataObject.isEmpty()).toBe(false);
+        expect(dataObject).toBeInstanceOf(DataObject);
+    });
 });

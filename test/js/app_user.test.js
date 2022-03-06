@@ -27,7 +27,18 @@ import { AppUser } from "../../src/domain/auth/app_user.js";
 import { DataSet } from "../../src/domain/core/data_set.js";
 import { ApiRequest } from "../../src/mysql/api_request.js";
 
-describe('AppUser', () => {
+const newAppUser = () => new AppUser({
+  remote: new DataSet({
+    params: {
+      // 'tableName': 'client',
+    },
+    apiRequest: new ApiRequest({
+      url: 'https://u1489690.isp.regruhosting.ru/get-client',
+    },),
+  }),
+});
+
+describe('AppUser 1', () => {
   it('creating without parameters', () => {
     expect(() => {
       let appUser = new AppUser({});
@@ -44,43 +55,47 @@ describe('AppUser', () => {
   });
 });
 
-describe('AppUser', () => {
-  it('creating', () => {
-    let appUser = new AppUser({
-        remote: new DataSet({
-          params: {
-            'tableName': 'client',
-          },
-          apiRequest: new ApiRequest({
-            url: 'http://u1489690.isp.regruhosting.ru/get-client',
-          },),
-        })
-    });
+describe('AppUser 2', () => {
+  it('creating proper', () => {
+    let appUser = newAppUser();
     expect(appUser.isEmpty()).toBe(false);
     expect(appUser).toBeInstanceOf(AppUser);
   });
 });
 
-describe('AppUser', () => {
-  it('fetch', async () => {
-    var appUser = new AppUser({
-      remote: new DataSet({
-        params: {
-          // 'tableName': 'client',
-        },
-        apiRequest: new ApiRequest({
-          url: 'http://u1489690.isp.regruhosting.ru/get-client',
-        },),
-      }),
-    });
+describe('AppUser 3', () => {
+  const okAppUserResponse = {916: { id: '916', group: 'admin', location: 'СПб', name: 'Лобанов Антон', phone: '9615258088', pass: '3201,3202,3203,3185,3216,3187,3188,3189,3246,3190,3194,3192,3193,3247,3195', account: '0.00', created: '2021-12-23 19:57:52', updated: '2022-02-25 16:32:54', deleted: null }};
+  it('create', () => {
+    let appUser = newAppUser();
     expect(appUser.isEmpty()).toBe(false);
     expect(appUser).toBeInstanceOf(AppUser);
-    await appUser.fetchWith({'phoneNumber': '9615258088'})
-      .then(response => {// AppUser
-        console.log('AppUser.fetch response: ', response);
-      })
-      .catch(error => {
-        console.log('AppUser.fetch error: ', error);
-      });
+  });
+  it('fetch with correct param', () => {
+    let appUser = newAppUser();
+    return expectAsync(
+      appUser.fetchWith({'phoneNumber': '9615258088'})
+    ).toBeResolvedTo(okAppUserResponse);
+  });
+  it('fetch with fail param', () => {
+    let appUser = newAppUser();
+    return expectAsync(
+      appUser.fetchWith({'wrongParam': '9615258088'})
+    ).toBeResolvedTo({});
+  });
+  it('clearing', async () => {
+    let appUser = newAppUser();
+    let response = await appUser.fetchWith({'phoneNumber': '9615258088'});
+    expect(appUser.isEmpty()).toBe(false);
+    expect(appUser).toBeInstanceOf(AppUser);
+    expect(response).toEqual(okAppUserResponse);
+    appUser = appUser.clear();
+    expect(appUser.isEmpty()).toBe(false);
+    expect(appUser).toBeInstanceOf(AppUser);
+    expect(appUser.id).toBe('');
+    expect(appUser.name).toBe('');
+    expect(appUser.phone).toBe('');
+    expect(appUser.location).toBe('');
+    expect(appUser.account).toBe('');
+    // expect(appUser).toEqual(okAppUserResponse);
   });
 });
