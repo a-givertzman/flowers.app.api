@@ -34,145 +34,146 @@ const auth = new Authenticate({
 });
 var userPhone;
 var pass;
-window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-    const app = new App({
-        child: new Container({
-                child: new Center({
-                    child: new Column({
-                        children: [
-                            new Container({
-                                child: new Row({
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                        new Container({
-                                            child: new Center({
-                                                child: new Text(
-                                                    `Flowers<br/>App<br/>Казань`,{
-                                                    style: {
-                                                        ...appThemeData.textTheme.bodyText1,
-                                                        ...{color: '#ffffff'}
-                                                    },
-                                                }),
-                                                border: Border.all({width: 4, color: '#ff2020'}),
-                                            }),
-                                            width: 128,
-                                            height: 64,
-                                            // padding: 4,
-                                            // margin: 8,
-                                        }),
-                                        new Container({
-                                            child: new Center({
-                                                child: new Text(
-                                                    `Авторизация`,{
-                                                    style: {
-                                                        ...appThemeData.textTheme.subtitle1, 
-                                                        ...{fontSize: 16, color: '#ffffff'}
-                                                    },
-                                                }),
-                                                // border: Border.all({width: 4, color: '#ff2020'}),
-                                            }),
-                                            color: 'transparent',
-                                            width: Number.POSITIVE_INFINITY,
-                                            // height: 16,
-                                            // padding: 4,
-                                            // margin: 8,
-                                        }),
-                                        new Container({
-                                            child: new Center({
-                                                child: new Text(
-                                                    ``,{
-                                                    style: {
-                                                        ...appThemeData.textTheme.subtitle1, 
-                                                        ...{textAlign: TextAlign.right, color: '#ffffff'}
-                                                    },
-                                                }),
-                                            }),
-                                            width: 256,
-                                            height: 64,
-                                        }),
-                                    ],
-                                }),
-                                color: '#29497F',
-                                // width: Number.POSITIVE_INFINITY,
-                                height: 64,
-                            }),
-                            new SizedBox({height: Number.POSITIVE_INFINITY}),
-                            new Column({
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                    new Text('Номер телефона:', {
-                                        style: new TextStyle({
-
-                                        })
-                                    }),
-                                    new TextFormField({
-                                        style: new TextStyle({
-                                            
-                                        }),
-                                        onChanged: (value) => {
-                                            onLoginChanged(value);
-                                        },
-                                        onComplete: (value) => {
-                                            onLoginCompletted(value);
-                                        },
-                                    }),
-                                    new SizedBox({height: 24}),
-                                    new Text('Пароль:', {
-                                        style: new TextStyle({
-                                            
-                                        })
-                                    }),
-                                    new TextFormField({
-                                        obscureText: true,
-                                        style: new TextStyle({
-                                            
-                                        }),
-                                        onChanged: onPassChanged,
-                                        onComplete: onPassCompletted,
-                                    }),
-                                    new SizedBox({height: 24}),
-                                    new Container ({
-                                        child: new TextButton({
-                                            child: new Text(
-                                                'вход', {
-                                                // style: menuButtonsTextStyle,
-                                            }),
-                                            style: new ButtonStyle({
-                                                backgroundColor: '#FF9B40',
-                                                foregroundColor: '#ffffff',
-                                            }),
-                                            onPressed: (e) => {
-                                                onSignInPressed();
-                                            },
-                                        }),
-                                        width: 128,
-                                        height: 24,
-                                        padding: 4,
-                                    })                                ],
-                            }),
-                            new SizedBox({height: Number.POSITIVE_INFINITY, width: Number.POSITIVE_INFINITY}),
-                            new Container({
+const app = new App({
+    title: 'Авторизация',
+    child: new Container({
+        child: new Center({
+            child: new Column({
+                children: [
+                    new Container({
+                        child: new Row({
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                                new Container({
                                     child: new Center({
-                                        child: new Text(`footer`,{
+                                        child: new Text(
+                                            `Flowers<br/>App<br/>Казань`,{
                                             style: {
-                                                ...appThemeData.textTheme.bodyText1, 
+                                                ...appThemeData.textTheme.bodyText1,
                                                 ...{color: '#ffffff'}
                                             },
                                         }),
+                                        border: Border.all({width: 4, color: '#ff2020'}),
                                     }),
-                                color: '#323232',
-                                width: Number.POSITIVE_INFINITY,
-                                height: 128,
-                                padding: 4,
-                                // margin: 8,
-                            }),
-                        ],
+                                    width: 128,
+                                    height: 64,
+                                    // padding: 4,
+                                    // margin: 8,
+                                }),
+                                new Container({
+                                    child: new Center({
+                                        child: new Text(
+                                            `Авторизация`,{
+                                            style: {
+                                                ...appThemeData.textTheme.subtitle1, 
+                                                ...{fontSize: 16, color: '#ffffff'}
+                                            },
+                                        }),
+                                        // border: Border.all({width: 4, color: '#ff2020'}),
+                                    }),
+                                    color: 'transparent',
+                                    width: Number.POSITIVE_INFINITY,
+                                    // height: 16,
+                                    // padding: 4,
+                                    // margin: 8,
+                                }),
+                                new Container({
+                                    child: new Center({
+                                        child: new Text(
+                                            ``,{
+                                            style: {
+                                                ...appThemeData.textTheme.subtitle1, 
+                                                ...{textAlign: TextAlign.right, color: '#ffffff'}
+                                            },
+                                        }),
+                                    }),
+                                    width: 256,
+                                    height: 64,
+                                }),
+                            ],
+                        }),
+                        color: '#29497F',
+                        // width: Number.POSITIVE_INFINITY,
+                        height: 64,
                     }),
-                }),
+                    new SizedBox({height: Number.POSITIVE_INFINITY}),
+                    new Column({
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                            new Text('Номер телефона:', {
+                                style: new TextStyle({
+
+                                })
+                            }),
+                            new TextFormField({
+                                style: new TextStyle({
+                                    
+                                }),
+                                onChanged: (value) => {
+                                    onLoginChanged(value);
+                                },
+                                onComplete: (value) => {
+                                    onLoginCompletted(value);
+                                },
+                            }),
+                            new SizedBox({height: 24}),
+                            new Text('Пароль:', {
+                                style: new TextStyle({
+                                    
+                                })
+                            }),
+                            new TextFormField({
+                                obscureText: true,
+                                style: new TextStyle({
+                                    
+                                }),
+                                onChanged: onPassChanged,
+                                onComplete: onPassCompletted,
+                            }),
+                            new SizedBox({height: 24}),
+                            new Container ({
+                                child: new TextButton({
+                                    child: new Text(
+                                        'вход', {
+                                        // style: menuButtonsTextStyle,
+                                    }),
+                                    style: new ButtonStyle({
+                                        backgroundColor: '#FF9B40',
+                                        foregroundColor: '#ffffff',
+                                    }),
+                                    onPressed: (e) => {
+                                        onSignInPressed();
+                                    },
+                                }),
+                                width: 128,
+                                height: 24,
+                                padding: 4,
+                            })                                ],
+                    }),
+                    new SizedBox({height: Number.POSITIVE_INFINITY, width: Number.POSITIVE_INFINITY}),
+                    new Container({
+                            child: new Center({
+                                child: new Text(`footer`,{
+                                    style: {
+                                        ...appThemeData.textTheme.bodyText1, 
+                                        ...{color: '#ffffff'}
+                                    },
+                                }),
+                            }),
+                        color: '#323232',
+                        width: Number.POSITIVE_INFINITY,
+                        height: 128,
+                        padding: 4,
+                        // margin: 8,
+                    }),
+                ],
             }),
-            color: '#29497F',
-            // height: Number.POSITIVE_INFINITY,
-        });
+        }),
+    }),
+    color: '#29497F',
+    // height: Number.POSITIVE_INFINITY,
+});
+window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
     app.run();
 });
 

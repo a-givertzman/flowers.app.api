@@ -37,6 +37,7 @@ import { Container } from "../plugins/js-widgets/container.js";
 import { SizedBox } from "../plugins/js-widgets/sizedbox.js";
 import { Column } from "../plugins/js-widgets/column.js";
 import { log } from "../core/debug.js";
+import { AppUser } from "../domain/auth/app_user.js";
 
 const appFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"';
 const menuHeaderTextStyle = new TextStyle({
@@ -59,31 +60,32 @@ const menuLeftColumnItems = [
 const menuRightColumnItems = [
     'Отчет по закупке', 'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция', 'Уведомления по закупкам'
 ];
-const menuLeftColumnActions = [
-    onClientsPressed,           // Клиенты
-    onProductsPressed,          // Продукты
-    onPurchasesPressed,         // Закупки
-    onPurchaseContentPressed,   // Состав закупок
-    onOrdersPressed,            // Заказы
-    onTransactionsPressed,      // Транзакции
-];
-const menuRightColumnActions = [
-    onPurchaseReportPressed,    // Отчет по закупке
-    onClientReportPressed,      // Отчет по клиенту
-    onPaymentPressed,           // Перевод оплаты по закупкам
-    onNewTransactionPressed,    // Новая транзакция
-    onPurchaseNoticePressed,    // Уведомления/Сообщения по закупкам
-];
 
 export class MainMenuPage {
-    #debug = false;
+    #debug = true;
     #app;
     #user;
+    menuLeftColumnActions = [
+        this.#onClientsPressed,           // Клиенты
+        this.#onProductsPressed,          // Продукты
+        this.#onPurchasesPressed,         // Закупки
+        this.#onPurchaseContentPressed,   // Состав закупок
+        this.#onOrdersPressed,            // Заказы
+        this.#onTransactionsPressed,      // Транзакции
+    ];
+    menuRightColumnActions = [
+        this.#onPurchaseReportPressed,    // Отчет по закупке
+        this.#onClientReportPressed,      // Отчет по клиенту
+        this.#onPaymentPressed,           // Перевод оплаты по закупкам
+        this.#onNewTransactionPressed,    // Новая транзакция
+        this.#onPurchaseNoticePressed,    // Уведомления/Сообщения по закупкам
+    ];
     constructor({user}={}) {
         if (!user) throw SyntaxError('[Authenticate] parameter "user" is required');
         if (!(user instanceof AppUser)) throw new TypeError(`[Authenticate] parameter "user" is required, type of "AppUser", but recived ${user.constructor.name}`);
         this.#user = user;
         this.#app = new App({
+            title: 'Главное меню',
             child: new Container({
                 child: new MainMenu({
                     user: {},
@@ -157,7 +159,7 @@ export class MainMenuPage {
                                                             backgroundColor: '#FF9B40',
                                                             foregroundColor: '#ffffff',
                                                         }),
-                                                        onPressed: menuLeftColumnActions[index],
+                                                        onPressed: this.menuLeftColumnActions[index],
                                                     }),
                                                     width: 180,
                                                     padding: 4,
@@ -179,7 +181,7 @@ export class MainMenuPage {
                                                             backgroundColor: '#FF9B40',
                                                             foregroundColor: '#ffffff',
                                                         }),
-                                                        onPressed: menuRightColumnActions[index],
+                                                        onPressed: this.menuRightColumnActions[index],
                                                     }),
                                                     width: 180,
                                                     padding: 4,
@@ -214,54 +216,50 @@ export class MainMenuPage {
     build() {
         this.#app.run();
     }
-}
-window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-
-});
-
-function onClientsPressed(e) {
-    log(this.#debug, 'event onClientsPressed: ', e);
-    window.open('https://docs.google.com/spreadsheets/d/1upSq5wiEWr2uxuuTFrT3umHOFTDILxHtpOXqDPXP7cU/edit?usp=sharing');
-}
-function onProductsPressed(e) {
-    log(this.#debug, 'event onProductsPressed: ', e);
-    window.open('https://docs.google.com/spreadsheets/d/1KLYTlaEv3Ujfp5GT0zZoDBJuLGucCqnMZ9EBDBGrxHs/edit?usp=sharing');
-}
-function onPurchasesPressed(e) {
-    log(this.#debug, 'event onPurchasesPressed: ', e);
-    window.open('https://docs.google.com/spreadsheets/d/1TeSwNyv76Rbhug5ouEUmWMs8ij0nGklIBY3uTK1L83M/edit?usp=sharing');
-}
-function onOrdersPressed(e) {
-    log(this.#debug, 'event onOrdersPressed: ', e);
-    window.open('https://docs.google.com/spreadsheets/d/1goc22OHI7d7UfFlWU8DqtgY0c4-D30qBiJlVamcaZWM/edit?usp=sharing');
-}
-function onPurchaseContentPressed(e) {
-    log(this.#debug, 'event onPurchaseContentPressed: ', e);
-    window.open('https://docs.google.com/spreadsheets/d/12dfDYDNL7ch2PBxppSjnb6aurovn-pydtdCn2uxwmwg/edit?usp=sharing');
-}
-function onTransactionsPressed(e) {
-    log(this.#debug, 'event onTransactionsPressed: ', e);
-    window.open('https://docs.google.com/spreadsheets/d/11MkKtzftMKyr7ARtCwxn9LSSEMQcqUlwznfun086VTo/edit?usp=sharing');
-}
-function onPurchaseReportPressed(e) {
-    log(this.#debug, 'event onPurchaseReportPressed: ', e);
-    window.open('https://u1489690.isp.regruhosting.ru/admin-purchase-report');
-}
-function onClientReportPressed(e) {
-    log(this.#debug, 'event onClientReportPressed: ', e);
-    window.open('https://u1489690.isp.regruhosting.ru/admin-client-report');
-}
-function onPaymentPressed(e) {
-    log(this.#debug, 'event onPaymentPressed: ', e);
-    window.open('https://u1489690.isp.regruhosting.ru/payment');
-}
-function onNewTransactionPressed(e) {
-    log(this.#debug, 'event onNewTransactionPressed: ', e);
-    alert('Добавление транзакций в разработке');
-    // window.open('');
-}
-function onPurchaseNoticePressed(e) {
-    log(this.#debug, 'event onPurchaseNoticePressed: ', e);
-    alert('Уведомления по закупкам в разработке');
-    // window.open('');
+    #onClientsPressed(e) {
+        // log(this.#debug, 'event onClientsPressed: ', e);
+        window.open('https://docs.google.com/spreadsheets/d/1upSq5wiEWr2uxuuTFrT3umHOFTDILxHtpOXqDPXP7cU/edit?usp=sharing');
+    }
+    #onProductsPressed(e) {
+        // log(this.#debug, 'event onProductsPressed: ', e);
+        window.open('https://docs.google.com/spreadsheets/d/1KLYTlaEv3Ujfp5GT0zZoDBJuLGucCqnMZ9EBDBGrxHs/edit?usp=sharing');
+    }
+    #onPurchasesPressed(e) {
+        // log(this.#debug, 'event onPurchasesPressed: ', e);
+        window.open('https://docs.google.com/spreadsheets/d/1TeSwNyv76Rbhug5ouEUmWMs8ij0nGklIBY3uTK1L83M/edit?usp=sharing');
+    }
+    #onOrdersPressed(e) {
+        // log(this.#debug, 'event onOrdersPressed: ', e);
+        window.open('https://docs.google.com/spreadsheets/d/1goc22OHI7d7UfFlWU8DqtgY0c4-D30qBiJlVamcaZWM/edit?usp=sharing');
+    }
+    #onPurchaseContentPressed(e) {
+        // log(this.#debug, 'event onPurchaseContentPressed: ', e);
+        window.open('https://docs.google.com/spreadsheets/d/12dfDYDNL7ch2PBxppSjnb6aurovn-pydtdCn2uxwmwg/edit?usp=sharing');
+    }
+    #onTransactionsPressed(e) {
+        // log(this.#debug, 'event onTransactionsPressed: ', e);
+        window.open('https://docs.google.com/spreadsheets/d/11MkKtzftMKyr7ARtCwxn9LSSEMQcqUlwznfun086VTo/edit?usp=sharing');
+    }
+    #onPurchaseReportPressed(e) {
+        // log(this.#debug, 'event onPurchaseReportPressed: ', e);
+        window.open('https://u1489690.isp.regruhosting.ru/admin-purchase-report');
+    }
+    #onClientReportPressed(e) {
+        // log(this.#debug, 'event onClientReportPressed: ', e);
+        window.open('https://u1489690.isp.regruhosting.ru/admin-client-report');
+    }
+    #onPaymentPressed(e) {
+        // log(this.#debug, 'event onPaymentPressed: ', e);
+        window.open('https://u1489690.isp.regruhosting.ru/payment');
+    }
+    #onNewTransactionPressed(e) {
+        // log(this.#debug, 'event onNewTransactionPressed: ', e);
+        alert('Добавление транзакций в разработке');
+        // window.open('');
+    }
+    #onPurchaseNoticePressed(e) {
+        // log(this.#debug, 'event onPurchaseNoticePressed: ', e);
+        alert('Уведомления по закупкам в разработке');
+        // window.open('');
+    }
 }

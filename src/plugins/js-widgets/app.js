@@ -28,14 +28,23 @@
  * @param {Widget} child корневой виджет приложения
  */
 export class App {
-    constructor({child: child}={}) {
-        this.child = child;
+    #title;
+    #child;
+    #element;
+    constructor({
+        title,
+        child: child,
+    }={}) {
+        this.#child = child;
+        this.#title = title
     }
     run() {
-        this._element = document.body;
-        if (this.child) {
-            this._element.appendChild(this.child.element);
+        this.#element = document.body;
+        this.#element.innerHTML = '';
+        document.title = this.#title;
+        if (this.#child) {
+            this.#element.appendChild(this.#child.element);
         }
-        this.child.build();
+        this.#child.build();
     }
 }
