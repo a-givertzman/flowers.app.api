@@ -42,7 +42,7 @@ require_once './libPHP/mysql_settings.key';
 plog("====================================");
 plog("-> get_client.php");
 
-// cors();
+cors();
 
 $input = (new PostParams([
     'phoneNumber',

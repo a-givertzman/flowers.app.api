@@ -22,6 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 /**
  * Класс делает запрос в базу данных.
  * @mySqlParams параметры запроса в объекте
@@ -41,48 +42,62 @@
  * @returns Возвращает набор данных в объекте.
  */
 export class ApiRequest {
-    constructor(mySqlParams, busyIndicator) {
+    #isEmpty = true;
+    constructor(mySqlParams, busyIndicator, {empty = false}={}) {
         console.log('[ApiRequest.constructor]');
         this.mySqlParams = mySqlParams;
         this.busy = busyIndicator;
+        this.#isEmpty = empty;
     }
-
+    isEmpty = () => this.#isEmpty;
+    static empty() {
+        return new ApiRequest({empty: true});
+    }
     fetchData(newParams = {}) {
         console.log('[ApiRequest.fetch]');
-        this.busy.show();
+        this._showBusyIndicator();
         const args = this.mySqlParams;
         for (var key in newParams) {
             args[key] = newParams[key];
         }
-        console.log('args:', args);
+        console.log('[ApiRequest.fetch] args: ', args);
         const body = this.prepareFormData(args);
         const options = this.prepareFetchOptions(body);
         const url = args.url ? args.url : '';
         return fetch(url, options)
             .then(response => {
-                // console.log('response:', response);
+                console.log('[ApiRequest.fetch] response: ', response);
                 return this.parseResponse(response)
                     .then(data => {
                         console.log('data: ', data);
-                        this.busy.hide();
+                        this._hideBusyIndicator();
                         return data;
                     })
                     .catch(error => {
-                        console.error('error:', error);
-                        this.busy.hide();
+                        console.error('[ApiRequest.fetch] error: ', error);
+                        this._hideBusyIndicator();
                         return {}
                     });
             })
             .catch(error => {
-                console.error('error:', error);
-                this.busy.hide();
+                console.error('[ApiRequest.fetch] error: ', error);
+                this._hideBusyIndicator();
                 return {};
             });
     }
-
+    _showBusyIndicator() {
+        if (this.busy) {
+            this.busy.show();
+        }
+    }
+    _hideBusyIndicator() {
+        if (this.busy) {
+            this.busy.hide();
+        }
+    }
     async parseResponse(response) {
         console.log('[ApiRequest.parseResponse]');
-        console.log('response.status:', response.status);
+        console.log('[ApiRequest.parseResponse] response.status: ', response.status);
         const responseCode = response.status;
         const jsonData = await response.json();
         // console.log('json data:', jsonData);
@@ -91,7 +106,7 @@ export class ApiRequest {
         console.log('errCount: ', errCount);
         if (errCount > 0) {
             const errDump = parsedData.errDump;
-            console.log('errDump: ', errDump);
+            console.log('[ApiRequest.parseResponse] errDump: ', errDump);
             alert('Ошибка сервера', errDump);
             var data = parsedData.data;
             return data;
