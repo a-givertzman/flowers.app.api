@@ -121,26 +121,21 @@ export class ApiRequest {
     }
 
     prepareFormData(args) {
-        console.log('[ApiRequest.prepareFormData]');
-        const procedureName = args.procedureName ? args.procedureName : '';
-        const tableName = args.tableName ? args.tableName : '';
-        const params = args.params ? args.params : '0';
-        const keys = args.keys ? args.keys : ['*'];
-        const groupBy = args.groupBy ? args.groupBy : '';
-        const orderBy = args.orderBy ? args.orderBy : 'id';
-        const order = args.order ? args.order : 'ASC';
-        const where = args.where ? args.where : [];
-        const limit = args.limit ? args.limit : 0;
+        // args.procedureName = args.procedureName ? args.procedureName : '';
+        // args.tableName = args.tableName ? args.tableName : '';
+        // args.params = args.params ? args.params : '0';
+        // args.keys = args.keys ? args.keys : ['*'];
+        // args.groupBy = args.groupBy ? args.groupBy : '';
+        // args.orderBy = args.orderBy ? args.orderBy : 'id';
+        // args.order = args.order ? args.order : 'ASC';
+        // args.where = args.where ? args.where : [];
+        // args.limit = args.limit ? args.limit : 0;
         var body = new FormData();
-        body.append( "procedureName", JSON.stringify(procedureName) );
-        body.append( "tableName", JSON.stringify(tableName) );
-        body.append( "params", JSON.stringify(params) );
-        body.append( "keys", JSON.stringify(keys) );
-        body.append( "groupBy", JSON.stringify(groupBy) );
-        body.append( "orderBy", JSON.stringify(orderBy) );
-        body.append( "order", order );
-        body.append( "where", JSON.stringify(where) );
-        body.append( "limit", limit );
+        console.log('[ApiRequest.prepareFormData] args: ', args);
+        for (const key in args) {
+            let value = args[key];
+            body.append(key, JSON.stringify(value));
+        }
         return body;        
     }
 

@@ -66,7 +66,7 @@ describe('AppUser', () => {
     var appUser = new AppUser({
       remote: new DataSet({
         params: {
-          'tableName': 'client',
+          // 'tableName': 'client',
         },
         apiRequest: new ApiRequest({
           url: 'http://u1489690.isp.regruhosting.ru/get-client',
@@ -75,7 +75,7 @@ describe('AppUser', () => {
     });
     expect(appUser.isEmpty()).toBe(false);
     expect(appUser).toBeInstanceOf(AppUser);
-    await appUser.fetchWith()
+    await appUser.fetchWith({'phoneNumber': '9615258088'})
       .then(response => {// AppUser
         console.log('AppUser.fetch response: ', response);
       })
