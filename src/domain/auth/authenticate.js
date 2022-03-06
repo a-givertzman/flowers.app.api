@@ -23,11 +23,63 @@
  * SOFTWARE.
  */
 
-/**
+import { log } from "../../core/debug.js";
+import { AppUser } from "./app_user.js";
+import { AuthResult } from "./auth_result.js";
+import { encrypt } from "./user_pass.js";
+
+ /**
  * Константы статусов закупок и позиций в закупке
  */
-export class authenticate {
-    constructor({}) {
-
+export class Authenticate {
+    #debug = true;
+    #user;
+    constructor({user}={}) {
+        if (!user) throw SyntaxError('[Authenticate] parameter "user" is required');
+        if (!(user instanceof AppUser)) throw new TypeError(`[Authenticate] parameter "user" is required, type of "AppUser", but recived ${user.constructor.name}`);
+        this.#user = user;
+    }
+    getUser = () => this.#user
+    authenticated = () => this.#user.exists();
+    authenticateByPhoneNumber(phoneNumber, pass) {
+        log(this.#debug, '[Authenticate.authenticateByPhoneNumber] phoneNumber: ', phoneNumber);
+        return this.#user.fetchWith({phoneNumber: phoneNumber})
+            .then((user) => {
+                log(this.#debug, '[Authenticate.authenticateByPhoneNumber] response: ', user);
+                log(this.#debug, '[Authenticate.authenticateByPhoneNumber] user.exists: ', user.exists());
+                if (user.exists()) {
+                    log(this.#debug, '[Authenticate.authenticateByPhoneNumber] authenticated !!!');
+                    if (user.pass == encrypt(pass)) {
+                        return new AuthResult({
+                            authenticated: true,
+                            message: 'Авторизован успешно',
+                            user: user,
+                        });
+                    } else {
+                        log(this.#debug, '[Authenticate.authenticateByPhoneNumber] not authenticated !!!');
+                        return new AuthResult({
+                            authenticated: false,
+                            message: `Неверный пароль.`,
+                            user: user,
+                        });
+                    }
+                } else {
+                    log(this.#debug, '[Authenticate.authenticateByPhoneNumber] not authenticated !!!');
+                    return new AuthResult({
+                        authenticated: false,
+                        message: `Пользователь с номером ${phoneNumber} не найден.`,
+                        user: user,
+                    });
+                }
+            })
+            .catch((error) => {
+                log(this.#debug, `[Authenticate.authenticateByPhoneNumber] authentication error: ${error}`);
+                return new AuthResult({
+                    authenticated: false,
+                    message: `Не удалось авторизоваться, \nОшибка: ${error}.`,
+                    user: AppUser.empty(),
+                });
+                throw new Failure({message: `[Authenticate] error: ${error.message}`});
+            })
     }
 }

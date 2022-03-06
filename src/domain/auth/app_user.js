@@ -26,6 +26,7 @@
 import { log } from "../../core/debug.js";
 import { DataObject } from "../core/data_object.js";
 import { DataSet } from "../core/data_set.js";
+import { Failure } from "../failure/failure.js";
 
  /**
  * Константы статусов закупок и позиций в закупке
@@ -59,14 +60,16 @@ export class AppUser extends DataObject {
     this['updated'] = ''; //ValueString('');
     this['deleted'] = ''; //ValueString('');
   }
-  /// Возвращает true после загруз пользователя из базы
-  /// если пользователь в базе есть, false если его там нет
-  /// Возвращает null если еще не загружен
+  /**
+   * Возвращает true после загруз пользователя из базы
+   * если пользователь в базе есть, false если его там нет
+   * Возвращает null если еще не загружен
+   */
   exists() {
-    if (!valid()) {
+    if (!this.isValid()) {
       return false;
     }
-    if (valid() && '${this["id"]}' != '' && '${this["phone"]}' != '') {
+    if (this.isValid() && this.id != '' && this.phone != '') {
       return true;
     } else {
       return false;
@@ -80,13 +83,20 @@ export class AppUser extends DataObject {
    * @param {*} dynamic 
    * @returns Future<AppUser>
    */
-  // @override
-  // fetch({Map<String, dynamic> params = const {}}={}) {
-  //   // TODO: implement fetch
-  //   return super
-  //     .fetch(params: params)
-  //     .then((value) {
-  //       return value as AppUser;
-  //     });
-  // }
+  fetchWith(params) {
+    var self = this;
+    // log(this.#debug, '[AppUser.fetchWith] this: ', this);
+    return super
+      .fetchWith(params)
+      .then((user) => {
+        if (user.isValid()) {
+          return self; // AppUser;
+        } else {
+          throw new Failure({message: `[AppUser] error: не найден поьзователя по запросу: ${params}`});
+        }
+      })
+      .catch(error => {
+        throw new Failure({message: `[AppUser] error: ${error.message}`});
+      })
+}
 }

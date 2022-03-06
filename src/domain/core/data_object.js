@@ -35,6 +35,7 @@ export class DataObject {
     #dedug = true;
     #remote;
     #isEmpty;
+    #isValid = false;
     constructor({remote: remote}={}) {
         log(this.#dedug, '[DataObject] remote: ', remote);
         if (!remote) throw new SyntaxError('[DataObject] parameter "remote" is required');
@@ -44,6 +45,7 @@ export class DataObject {
         this.#isEmpty = remote.isEmpty();
     }
     isEmpty = () => this.#isEmpty;
+    isValid = () => this.#isValid;
     static empty() {
         return new DataObject({remote: DataSet.empty()});
     }
@@ -56,6 +58,7 @@ export class DataObject {
     }
     fetchWith(params) {
         log(this.#dedug, '[DataObject.fetchWith] params: ', params);
+        var self = this;
         return this.#remote
             .fetchWith(params)
             .then(response => {
@@ -66,7 +69,12 @@ export class DataObject {
                     const value = data[key];
                     this[key] = value;
                 }
-                return response;
+                this.#isValid = true;
+                return self;
+            })
+            .catch(error => {
+                this.#isValid = false;
+                throw new Failure({message: `[DataObject] error: ${error.message}`});
             });
     }
 }

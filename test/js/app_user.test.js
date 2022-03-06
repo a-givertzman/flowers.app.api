@@ -64,38 +64,65 @@ describe('AppUser 2', () => {
 });
 
 describe('AppUser 3', () => {
-  const okAppUserResponse = {916: { id: '916', group: 'admin', location: 'СПб', name: 'Лобанов Антон', phone: '9615258088', pass: '3201,3202,3203,3185,3216,3187,3188,3189,3246,3190,3194,3192,3193,3247,3195', account: '0.00', created: '2021-12-23 19:57:52', updated: '2022-02-25 16:32:54', deleted: null }};
+  const appUserEmpty = (user) => {
+    return user.id == '' &&
+      user.group == '' &&
+      user.location == '' &&
+      user.name == '' &&
+      user.phone == '' &&
+      user.pass == '' &&
+      user.account == '' &&
+      user.created == '' &&
+      user.updated == '' &&
+      user.deleted == '';
+  }
+  const appUserOk = (user) => {
+    return user.id == '916' &&
+      user.group == 'admin' &&
+      user.location == 'СПб' &&
+      user.name == 'Лобанов Антон' &&
+      user.phone == '9615258088' &&
+      user.pass == '3201,3202,3203,3185,3216,3187,3188,3189,3246,3190,3194,3192,3193,3247,3195' &&
+      user.account == '0.00' &&
+      user.created == '2021-12-23 19:57:52' &&
+      user.updated == '2022-02-25 16:32:54' &&
+      user.deleted == null;
+  }
   it('create', () => {
     let appUser = newAppUser();
-    expect(appUser.isEmpty()).toBe(false);
     expect(appUser).toBeInstanceOf(AppUser);
+    expect(appUser.isEmpty()).toBe(false);
+    expect(appUser.exists()).toBe(false);
   });
   it('fetch with correct param', () => {
     let appUser = newAppUser();
-    return expectAsync(
-      appUser.fetchWith({'phoneNumber': '9615258088'})
-    ).toBeResolvedTo(okAppUserResponse);
+    return appUser.fetchWith({'phoneNumber': '9615258088'})
+      .then((response) => {
+        // console.log('[test AppUser 3] response: ', response);
+        expect(response).toBeInstanceOf(AppUser);
+        expect(response.exists()).toBe(true);
+        expect(appUserOk(response)).toBe(true);
+      });
   });
   it('fetch with fail param', () => {
     let appUser = newAppUser();
-    return expectAsync(
-      appUser.fetchWith({'wrongParam': '9615258088'})
-    ).toBeResolvedTo({});
+    return appUser.fetchWith({'wrongParam': '9615258088'})
+      .then((response) => {
+        // console.log('[test AppUser 3] response: ', response);
+        expect(response).toBeInstanceOf(AppUser);
+        expect(response.exists()).toBe(false);
+        expect(appUserEmpty(response)).toBe(true);
+      });
   });
   it('clearing', async () => {
     let appUser = newAppUser();
     let response = await appUser.fetchWith({'phoneNumber': '9615258088'});
     expect(appUser.isEmpty()).toBe(false);
     expect(appUser).toBeInstanceOf(AppUser);
-    expect(response).toEqual(okAppUserResponse);
+    expect(appUserOk(response)).toBe(true);
     appUser = appUser.clear();
     expect(appUser.isEmpty()).toBe(false);
     expect(appUser).toBeInstanceOf(AppUser);
-    expect(appUser.id).toBe('');
-    expect(appUser.name).toBe('');
-    expect(appUser.phone).toBe('');
-    expect(appUser.location).toBe('');
-    expect(appUser.account).toBe('');
-    // expect(appUser).toEqual(okAppUserResponse);
+    expect(appUserEmpty(appUser)).toBe(true);
   });
 });

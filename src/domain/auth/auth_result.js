@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-import { AppUser } from "./app_user.js";
+// import { AppUser } from "./app_user.js";
 /**
  * Результат авторизации
  * @param {Object} params объект с параметрами
@@ -35,19 +35,19 @@ export class AuthResult {
   #authenticated;
   #message;
   #user;
-  AuthResult({
+  constructor({
     authenticated,
     message,
     user,
   }={}) {
-    if (!authenticated) throw Error('[AuthResult] parameter authenticated is required');
-    if (!message) throw Error('[AuthResult] parameter authenticated is required');
-    if (!user) throw Error('[AuthResult] parameter authenticated is required');
+    if (authenticated == null) throw Error('[AuthResult] parameter "authenticated" is required');
+    if (!message) throw Error('[AuthResult] parameter "message" is required');
+    if (!user) throw Error('[AuthResult] parameter "user" is required');
     this.#authenticated = authenticated, 
     this.#message = message,
     this.#user = user;
   }
-  authenticated = () => this.#authenticated;
-  message = () => this.#message;
-  user = () => this.#user;
+  get authenticated() {return this.#authenticated;}
+  get message() {return this.#message;}
+  get user() {return this.#user;}
 }

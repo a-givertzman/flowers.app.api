@@ -13,9 +13,28 @@ import { Container } from "../plugins/js-widgets/container.js";
 import { SizedBox } from "../plugins/js-widgets/sizedbox.js";
 import { Column } from "../plugins/js-widgets/column.js";
 import { appThemeData } from "../core/app_themedata.js";
+import { Authenticate } from "../domain/auth/authenticate.js";
+import { AppUser } from "../domain/auth/app_user.js";
+import { DataSet } from "../domain/core/data_set.js";
+import { ApiRequest } from "../mysql/api_request.js";
 
+const appUser = new AppUser({
+    remote: new DataSet({
+        params: {
+            // 'tableName': 'client',
+        },
+        apiRequest: new ApiRequest({
+            url: 'https://u1489690.isp.regruhosting.ru/get-client',
+        },),
+    }),
+});
+const auth = new Authenticate({
+    user: appUser,
+});
+var userPhone;
+var pass;
 window.addEventListener('load', (event) => {                       // ON LOAD WINDOW
-    var app = new App({
+    const app = new App({
         child: new Container({
                 child: new Center({
                     child: new Column({
@@ -90,7 +109,10 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                             
                                         }),
                                         onChanged: (value) => {
-                                            console.log('Номер телефона: ', value);
+                                            onLoginChanged(value);
+                                        },
+                                        onComplete: (value) => {
+                                            onLoginCompletted(value);
                                         },
                                     }),
                                     new SizedBox({height: 24}),
@@ -104,6 +126,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                             
                                         }),
                                         onChanged: onPassChanged,
+                                        onComplete: onPassCompletted,
                                     }),
                                     new SizedBox({height: 24}),
                                     new Container ({
@@ -117,7 +140,7 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
                                                 foregroundColor: '#ffffff',
                                             }),
                                             onPressed: (e) => {
-                                                console.log('TextButton cliced');
+                                                onSignInPressed();
                                             },
                                         }),
                                         width: 128,
@@ -152,9 +175,26 @@ window.addEventListener('load', (event) => {                       // ON LOAD WI
 });
 
 function onLoginChanged(value) {
-    console.log('Номер телефона: ', value);
 }
-
+function onLoginCompletted(value) {
+    userPhone = value;
+}
 function onPassChanged(value) {
-    console.log('Пароль: ', value);
+}
+function onPassCompletted(value) {
+    pass = value;
+}
+function onSignInPressed(value) {
+    console.log('TextButton cliced');
+    console.log('Номер телефона: ', userPhone);
+    console.log('Пароль: ', pass);
+    auth.authenticateByPhoneNumber(userPhone, pass)
+        .then((authResult) => {
+            if (authResult.authenticated) {
+                window.open("https://u1489690.isp.regruhosting.ru/","_self");
+                window.open("/","_self");
+            } else {
+                alert(authResult.message);
+            }
+        });
 }
