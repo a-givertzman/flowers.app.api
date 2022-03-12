@@ -32,13 +32,15 @@ import { ApiRequest } from "../api/api_request.js";
  * Константа с настройками для доступа к API, 
  * который умеет ходить в репозиторий remote и подгружать данные
  */
+const baseUrl = '';
+// const baseUrl = 'http://u1489690.isp.regruhosting.ru/';
 export const dataSource = new DataSource({
   'client': new DataSet({
     params: new ApiParams({
       'tableName': 'client',
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/get-client',
+      url: baseUrl + 'get-client',
     }),
   }),
   'purchase': new DataSet({
@@ -46,7 +48,7 @@ export const dataSource = new DataSource({
       'tableName': 'purchase_preview',
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/get-view',
+      url: baseUrl + 'get-view',
     }),
   }),
   'purchase_content': new DataSet({
@@ -55,7 +57,7 @@ export const dataSource = new DataSource({
       // where: [{'operator': 'where', 'field': 'id', 'cond': '=', 'value': 1}]
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/get-view',
+      url: baseUrl + 'get-view',
     }),
   }),
   'purchase_product': new DataSet({
@@ -64,7 +66,7 @@ export const dataSource = new DataSource({
       // where: [{'operator': 'where', 'field': 'id', 'cond': '=', 'value': 1}]
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/get-purchase-product',
+      url: baseUrl + 'get-purchase-product',
     }),
   }),
   ///
@@ -75,7 +77,7 @@ export const dataSource = new DataSource({
       // where: [{'operator': 'where', 'field': 'id', 'cond': '=', 'value': 1}]
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/get-view',
+      url: baseUrl + 'get-view',
     }),
   }),
   ///
@@ -94,7 +96,7 @@ export const dataSource = new DataSource({
       // 'order': 'ASC' // 'ASC'/'DESC',
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/get-notice-list',
+      url: baseUrl + 'get-notice-list',
     }),
   }),
   'set_order': new DataSet({
@@ -102,7 +104,7 @@ export const dataSource = new DataSource({
       'tableName': 'order',
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/set-data',
+      url: baseUrl + 'set-data',
     }),
   }),
   'remove_order': new DataSet({
@@ -110,7 +112,7 @@ export const dataSource = new DataSource({
       'tableName': 'order',
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/set-data',
+      url: baseUrl + 'set-data',
     }),
   }),
   'set_client': new DataSet({
@@ -118,7 +120,7 @@ export const dataSource = new DataSource({
       'tableName': 'client',
     }),
     apiRequest: new ApiRequest({
-      url: 'http://u1489690.isp.regruhosting.ru/set-client',
+      url: baseUrl + 'set-client',
     }),
   }),
 });
