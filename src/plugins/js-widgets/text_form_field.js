@@ -22,9 +22,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Widget } from "../../plugins/js-widgets/widget.js";
+
+import { Widget } from "./widget.js";
 import { TextAlign, TextAlignVertical } from "../../plugins/js-widgets/alignment.js";
 import { log } from "../../core/debug.js";
+
 /**
  * Виджет для ввода текста
  *
@@ -49,7 +51,7 @@ import { log } from "../../core/debug.js";
  * @param {function} validator string function(string)
  */
 export class TextFormField {
-    #debug = true;
+    #debug = false;
     constructor({
         key, initialValue, focusNode, keyboardType, style, textAlign, textAlignVertical,
         enabled, readOnly, obscuringCharacter, obscureText, 
@@ -81,22 +83,23 @@ export class TextFormField {
         });
     }
     build() {
-        this.widget.element.type = this.obscureText ? 'password' : 'text';
-        this.widget.element.innerHTML = this.initialValue;
-        this.widget.element.style.color = this.style?.color;
-        this.widget.element.style.backgroundColor = this.style?.backgroundColor;
-        this.widget.element.style.fontSize = this.style ? `${this.style.fontSize}px` : '';
-        this.widget.element.style.fontFamily = this.style?.fontFamily;
-        this.widget.element.style.fontWeight = this.style?.fontWeight;
-        this.widget.element.style.height = this.style?.height;
-        this.widget.element.style.overflow = this.style?.overflow;
-        this.widget.element.style.textAlign = this.textAlign;
-        this.widget.element.addEventListener('input', (e) => this.onInputListener(e));
-        this.widget.element.addEventListener('change', (e) => this.completedListener(e));
-        this.widget.build();
+        const element = this.widget.build().htmlElement;
+        element.type = this.obscureText ? 'password' : 'text';
+        element.innerHTML = this.initialValue;
+        element.style.color = this.style?.color;
+        element.style.backgroundColor = this.style?.backgroundColor;
+        element.style.fontSize = this.style ? `${this.style.fontSize}px` : '';
+        element.style.fontFamily = this.style?.fontFamily;
+        element.style.fontWeight = this.style?.fontWeight;
+        element.style.height = this.style?.height;
+        element.style.overflow = this.style?.overflow;
+        element.style.textAlign = this.textAlign;
+        element.addEventListener('input', (e) => this.onInputListener(e));
+        element.addEventListener('change', (e) => this.completedListener(e));
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.widget.htmlElement;
     }
     onInputListener(e) {
         if (typeof this.onChanged == 'function') {

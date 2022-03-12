@@ -22,34 +22,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Widget } from "../../plugins/js-widgets/widget.js";
+
+import { Widget } from "./widget.js";
+import { CrossAxisAlignment, MainAxisAlignment } from "./alignment.js";
+import { Axis } from "./orientation.js";
+import { MultiWidget } from "./multi_widget.js";
+import { log } from "../../core/debug.js";
+
 /**
  * Вертикальный массив виджетов
  *
  * @param {Row<Widget>} children массив виджетов, которые будут внутри
  */
 export class Row {
-    constructor({children = [], mainAxisAlignment = 'flex-start', crossAxisAlignment = 'center'}={}) {
-        this.children = children;
-        this.mainAxisAlignment = mainAxisAlignment;
-        this.crossAxisAlignment = crossAxisAlignment;
-        this.widget = new Widget({
+    #debug = false;
+    #widget;
+    #children;
+    #mainAxisAlignment;
+    #crossAxisAlignment;
+    constructor({
+        children = [], 
+        mainAxisAlignment = MainAxisAlignment.start,
+        crossAxisAlignment = CrossAxisAlignment.center,
+    }={}) {
+        this.#children = children;
+        this.#mainAxisAlignment = mainAxisAlignment;
+        this.#crossAxisAlignment = crossAxisAlignment;
+        this.#widget = new MultiWidget({
+            itemCount: this.#children.length,
+            itemBuilder: (index) => {
+                return this.#children[index];
+            },
             cssClass: [
                 'row-widget',
-            ]
+            ],
+            mainAxisAlignment: this.#mainAxisAlignment,
+            crossAxisAlignment: this.#crossAxisAlignment,
+            direction: Axis.horizontal, 
         });
     }
     build() {
-        this.widget.build();
-        this.widget.element.style.justifyContent = this.mainAxisAlignment;
-        this.widget.element.style.alignItems = this.crossAxisAlignment;
-        for (var index = 0; index < this.children.length; index++) {
-            let childElement = this.children[index].element;
-            this.children[index].build();
-            this.widget.element.appendChild(childElement);
-        }
+        log(this.#debug, '[Row.build] children: ', this.#children);
+        this.#widget.build();
+        // this.widget.htmlElement.style.justifyContent = this.mainAxisAlignment;
+        // this.widget.htmlElement.style.alignItems = this.crossAxisAlignment;
+        // for (var index = 0; index < this.#children.length; index++) {
+        //     let childElement = this.#children[index].element;
+        //     this.#children[index].build();
+        //     this.widget.htmlElement.appendChild(childElement);
+        // }
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
 }

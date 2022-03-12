@@ -23,61 +23,72 @@
  * SOFTWARE.
  */
 
+import { MainAxisAlignment, CrossAxisAlignment } from "./alignment.js";
+import { Axis } from "./orientation.js";
 import { log } from "../../core/debug.js";
 
- /**
+/**
  * Базовый классс 
  * Создает елемент в дерве DOM
  * @param {string} tag имя тега, которое будет создано, по умолчанию 'div'
  */
-export class Widget {
-    #debug = false;
-    #child;
+export class MultiWidget {
+    #debug = true;
+    #itemCount;
+    #itemBuilder;
     #tagName;
     #cssClass;
     #htmlElement;
+    #mainAxisAlignment;
+    #crossAxisAlignment;
+    #direction;
     constructor({
-        child = null, 
+        itemCount, 
+        itemBuilder, 
         tagName = 'div', 
         cssClass = [],
+        mainAxisAlignment = MainAxisAlignment.start,
+        crossAxisAlignment = CrossAxisAlignment.center,
+        direction = Axis.vertical,
     }={}) {
-        this.#child = child;
+        this.#itemCount = itemCount;
+        this.#itemBuilder = itemBuilder;
         this.#tagName = tagName;
         this.#cssClass = cssClass;
+        this.#mainAxisAlignment = mainAxisAlignment;
+        this.#crossAxisAlignment = crossAxisAlignment;
+        this.#direction = direction;
     }
     build() {
         this.#htmlElement = document.createElement(this.#tagName);
         if (!this.#htmlElement) {
-            throw new Error(`[Widget.build] error creating document element "${this.#tagName}"`);
+            throw new Error(`[Widget] error creating document element "${this.#tagName}"`);
         }
+        this.#htmlElement.style.flexDirection = this.#direction;
+        this.#htmlElement.style.justifyContent = this.#mainAxisAlignment;
+        this.#htmlElement.style.alignItems = this.#crossAxisAlignment;
         // TODO remove margin to the Margin class
         // this.#htmlElement.style.margin = this.margin ? `${this.margin}px` : '';
         // TODO remove border to the Border class
         // this.#htmlElement.style.border = this.border ? this.border.build() : '';
         if (this.#cssClass.length > 0) {
-            this.#htmlElement.classList.add(...this.#cssClass);
+            this.#htmlElement.classList.add([...this.#cssClass]);
         }
-        // log(this.#debug, '[Widget.build] child', this.#child);
-        if (this.#child) {
-            // throw new Error(`[Widget.build] error accessing child widget "${this.constructor.name}"`);
-            const childWidget = this.#child.build();
-            this.#htmlElement.appendChild(
-                childWidget.htmlElement
-            );
+        if (this.#itemBuilder) {
+            for(var index = 0; index < this.#itemCount; index++) {
+                const item = this.#itemBuilder(index);
+                log(this.#debug, '[MultyWidget] index: ', index, ' item: ', item);
+                const childWidget = item.build();
+                this.#htmlElement.appendChild(
+                    childWidget.htmlElement
+                );
+            }
         }
-        // log(this.#debug, '[Widget.build] this: ', this);
-        // log(this.#debug, '[Widget.build] child: ', this.#child);
-        log(this.#debug, '[Widget.build] child: ', this.htmlElement);
         return this;
-        // try {
-        // } catch (error) {
-        //     log(this.#debug, '[Widget.build] error: ', error);
-        //     throw new Error(`[Widget.build] error call method child.build()"; `, error);
-        // }
     }
     get htmlElement() {
         if (!this.#htmlElement) {
-            throw new Error(`[Widget] error access htmlElement befor it was created`);
+            throw new Error(`[MultyWidget] error access htmlElement befor it was created`);
         }
         return this.#htmlElement;
     }

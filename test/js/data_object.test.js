@@ -25,7 +25,7 @@
 
 import { DataObject } from "../../src/domain/core/data_object.js";
 import { DataSet } from "../../src/domain/core/data_set.js";
-import { ApiRequest } from "../../src/mysql/api_request.js";
+import { ApiRequest } from "../../src/infrastructure/api/api_request.js";
 
 describe('DataObject', () => {
     it('creating empty', () => {
@@ -41,9 +41,9 @@ describe('DataObject', () => {
     it('creating', () => {
         let dataObject = new DataObject({
             remote: new DataSet({
-                apiRequest: new ApiRequest(
-                    {url: '#'},
-                ),
+                apiRequest: new ApiRequest({
+                    url: '#',
+                },),
                 params: {},
             })
         });

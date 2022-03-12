@@ -22,37 +22,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import { Widget } from "./widget.js";
-// import { Widget } from "./widget";
+import { log } from "../../core/debug.js";
+
 /**
  * Текстовая кнопка
  *
  * @param {Widget} child елеиент, обычно текст выводимый на кнопке
  */
 export class TextButton {
-    constructor({child, onPressed, onLongPress, onHover, onFocusChange, style, focusNode, autofocus = false}={}) {
-        this.child = child;
-        this.onPressed = onPressed;
+    #debug = false;
+    #child;
+    #onPressed;
+    #style;
+    #widget;
+    constructor({
+        child, 
+        onPressed, 
+        onLongPress, 
+        onHover, 
+        onFocusChange, 
+        style, 
+        focusNode, 
+        autofocus = false
+    }={}) {
+        this.#child = child;
+        this.#onPressed = onPressed;
         this.onLongPress = onLongPress;
         this.onHover = onHover;
         this.onFocusChange = onFocusChange;
         this.focusNode = focusNode;
         this.autofocus = autofocus;
-        this.style = style;
-        this.widget = new Widget({
+        this.#style = style;
+        this.#widget = new Widget({
+            child: this.#child,
             cssClass: [
                 'text-button-widget',
-            ]
+            ],
         });
     }
     build() {
-        this.child.build();
-        this.widget.element.appendChild(this.child.element);
-        this.widget.element.addEventListener('click', this.onPressed);
-        this.widget.element.addEventListener('mouseover', this.onHover);
-        this.widget.build();
+        const element = this.#widget.build().htmlElement;
+        element.addEventListener('click', (e) => {
+            if (this.#onPressed && typeof this.#onPressed == 'function') {
+                this.#onPressed(e);
+            }
+        });
+        element.addEventListener('mouseover', (e) => {
+            if (this.onHover && typeof this.onHover == 'function') {
+                this.onHover(e);
+            }
+        });
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
 }

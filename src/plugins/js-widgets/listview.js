@@ -22,38 +22,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Widget } from "../../plugins/js-widgets/widget.js";
+
+import { CrossAxisAlignment, MainAxisAlignment } from "./alignment.js";
+import { MultiWidget } from "./multi_widget.js";
+import { Axis } from "./orientation.js";
+import { log } from "../../core/debug.js";
+
 /**
  * Список виджетов со скролом
  *
  * @param {List<Widget>} children виджет, который будет внутри
  */
 export class ListView {
-    constructor({children = [], itemBuilder: itemBuilder, mainAxisAlignment = 'flex-start', crossAxisAlignment = 'center'}={}) {
-        this.children = children;
-        this.itemBuilder = itemBuilder;
-        this.mainAxisAlignment = mainAxisAlignment;
-        this.crossAxisAlignment = crossAxisAlignment;
-        this.widget = new Widget({
+    #debug = false;
+    #children;
+    #itemBuilder;
+    #mainAxisAlignment;
+    #crossAxisAlignment;
+    #direction;
+    #widget;
+    constructor({
+        children = [], 
+        itemBuilder = () => {},
+        mainAxisAlignment = MainAxisAlignment.start, 
+        crossAxisAlignment = CrossAxisAlignment.center,
+        direction = Axis.vertical,
+    }={}) {
+        this.#children = children;
+        this.#itemBuilder = itemBuilder;
+        this.#mainAxisAlignment = mainAxisAlignment;
+        this.#crossAxisAlignment = crossAxisAlignment;
+        this.#direction = direction;
+        this.#widget = new MultiWidget({
             tagName: 'ul',
+            itemCount: this.#children.length,
+            itemBuilder: (index) => {
+                return this.#itemBuilder(index);
+                // return this.#children[index];
+            },
             cssClass: [
                 'list-view-widget',
-            ]
+            ],
+            mainAxisAlignment: this.#mainAxisAlignment,
+            crossAxisAlignment: this.#crossAxisAlignment,
+            direction: this.#direction,
         });
     }
     build() {
-        this.widget.build();
-        this.widget.element.style.justifyContent = this.mainAxisAlignment;
-        this.widget.element.style.alignItems = this.crossAxisAlignment;
-        for (var index = 0; index < this.children.length; index++) {
-            let childElement = document.createElement('li');
-            let childItem = this.itemBuilder(index);
-            childItem.build();
-            childElement.appendChild(childItem.element);
-            this.widget.element.appendChild(childElement);
-        }
+        log(this.#debug, '[ListView.build] children: ', this.#children);
+        this.#widget.build();
+        // this.widget.htmlElement.style.justifyContent = this.mainAxisAlignment;
+        // this.widget.htmlElement.style.alignItems = this.crossAxisAlignment;
+        // for (var index = 0; index < this.children.length; index++) {
+        //     let childElement = document.createElement('li');
+        //     let childItem = this.itemBuilder(index);
+        //     childItem.build();
+        //     childElement.appendChild(childItem.element);
+        //     this.widget.htmlElement.appendChild(childElement);
+        // }
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
 }

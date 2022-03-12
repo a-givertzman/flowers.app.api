@@ -1,5 +1,4 @@
 "use strict";
-
 /**
  * The MIT License (MIT)
  * 
@@ -24,27 +23,27 @@
  * SOFTWARE.
  */
 
+import { DataFailure } from '../../domain/failure/failure.js';
+
 /**
- * Класс ошибки
+ * Класс с данными, 
+ * который умеет ходить в репозиторий remote и подгружать данные
  */
-export class Failure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[Failure] : ', message);
-        this.#message = message;
+
+export class DataSource {
+  #dataSets; //Map<String, DataSet>
+  constructor(dataSets) {
+    if (!dataSets) throw SyntaxError('[DataSource] parameter "dataSets" is required');
+    this.#dataSets = dataSets;
+  }
+  dataSet(name) { //DataSet<T>
+    if (name in this.#dataSets) {
+      const dataSet = this.#dataSets[name];
+        return dataSet; // as DataSet<T>;
     }
-}
-export class DataFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[DataFailure] : ', message);
-        this.#message = message;
-    }
-}
-export class NetworkFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[NetworkFailure] : ', message);
-        this.#message = message;
-    }
+    throw DataFailure({
+      message: `Ошибка в методе $DataSource.dataSet(): ${name} - несуществующий DataSet`,
+      stackTrace: Error.stack,
+    });
+  }
 }

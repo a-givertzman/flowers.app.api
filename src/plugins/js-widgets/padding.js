@@ -23,56 +23,39 @@
  * SOFTWARE.
  */
 
-import { Widget } from "./widget.js";
+import { EdgeInsets } from "./edge_insets.js";
 
 /**
- * Текстовая кнопка
- *
- * @param {Widget} child елеиент, обычно текст выводимый на кнопке
+ * Виджет добавляет padding (внутренние отступы)
+ * @param {Widget} child дочерний элемент, которому добавляет отступы
  */
-export class ElevatedButton {
+export class Padding {
     #child;
-    #onPressed;
-    #onLongPress;
-    #onHover;
-    #onFocusChange;
-    #style;
-    #focusNode;
-    #autofocus;
+    #padding;
     constructor({
         child, 
-        onPressed, 
-        onLongPress, 
-        onHover, 
-        onFocusChange, 
-        style, 
-        focusNode, 
-        autofocus = false,
+        padding = EdgeInsets.all(0.0),
     }={}) {
+        if (!child) throw SyntaxError('[Padding] parameter "child" is required');
+        // if (!(child instanceof DataSet)) throw new TypeError(`[Padding] parameter "child" is required, type of "Widget", but recived ${child.constructor.name}`);
         this.#child = child;
-        this.#onPressed = onPressed;
-        this.#onLongPress = onLongPress;
-        this.#onHover = onHover;
-        this.#onFocusChange = onFocusChange;
-        this.#focusNode = focusNode;
-        this.#autofocus = autofocus;
-        this.#style = style;
-        this.#widget = new Widget({
-            child: this.#child,
-            cssClass: [
-                'text-button-widget',
-            ]
-        });
+        this.#padding = padding;
     }
     build() {
-        // this.child.build();
-        // this.widget.htmlElement.appendChild(this.child.element);
-        const element = this.#widget.build().htmlElement;
-        element.addEventListener('click', this.#onPressed);
-        element.addEventListener('mouseover', this.#onHover);
+        const element = this.#child.build().htmlElement;
+        if (!element) {
+            throw new Error(`[Padding] error building child "${this.#child.constructor.name}"`);
+        }
+        const insets = this.#padding.build();
+        element.style.padding = insets 
+            ? `${insets.top} ${insets.right} ${insets.bottom} ${insets.left}` 
+            : '';
         return this;
     }
     get htmlElement() {
-        return this.#widget.htmlElement;
+        if (!this.#child) {
+            throw new Error(`[Padding] error access child`);
+        }
+        return this.#child.htmlElement;
     }
 }

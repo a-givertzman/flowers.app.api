@@ -22,7 +22,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import { Container } from "../plugins/js-widgets/container.js";
+
 /**
  * Главное меню приложения
  *
@@ -30,22 +32,27 @@ import { Container } from "../plugins/js-widgets/container.js";
  * @param {Widget} child виджет, который будет отцентрирован
  */
 export class MainMenu {
-    constructor({user, child}={}) {
-        this.user = user;
-        this.child = child;
-        this.widget = new Container({
-            child: child
+    #user;
+    #child;
+    #widget;
+    constructor({
+        user, 
+        child,
+    }={}) {
+        this.#user = user;
+        this.#child = child;
+        this.#widget = new Container({
+            child: this.#child,
             // cssClass: [
                 // 'main-menu-widget',
             // ]
         });
     }
     build() {
-        // this.child.build();
-        // this.widget.element.appendChild(this.child.element);
-        this.widget.build();
+        this.#widget.build();
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
 }

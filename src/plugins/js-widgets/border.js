@@ -27,10 +27,13 @@
  *
  */
 export class Border {
+    #color;
+    #width;
+    #radius;
     constructor({color, width, radius}={}) {
-        this.color = color;
-        this.width = width;
-        this.radius = radius;
+        this.#color = color;
+        this.#width = width;
+        this.#radius = radius;
     }
     static all({color, width}={}) {
         return new Border({
@@ -40,6 +43,12 @@ export class Border {
         });
     }
     build() {
-        return `${this.width}px solid ${this.color}`;
+        return {
+            top: `${this.#width}px solid ${this.#color}`,
+            right: `${this.#width}px solid ${this.#color}`,
+            bottom: `${this.#width}px solid ${this.#color}`,
+            left: `${this.#width}px solid ${this.#color}`,
+            radius: `${this.#radius}px`,
+        };
     }
 }

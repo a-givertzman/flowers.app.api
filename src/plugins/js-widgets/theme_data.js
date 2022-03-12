@@ -22,6 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import { TextStyle } from "./text_style.js";
 import { FontWeight } from "./font_weight.js";
 import { ButtonStyle } from "./button_style.js";
@@ -109,10 +110,15 @@ export class ThemeData {
             }),
         }),
         this.textTheme = textTheme ? textTheme : new TextTheme({
-            // headline1
+            headline1: new TextStyle({
+                fontFamily: primaryFontFamily,
+                fontSize: baseFontSize + 18.0,
+                fontWeight: FontWeight.normal,
+                color: onBackground,
+            }),
             headline2: new TextStyle({
                 fontFamily: primaryFontFamily,
-                fontSize: baseFontSize + 12.0,
+                fontSize: baseFontSize + 16.0,
                 fontWeight: FontWeight.normal,
                 color: onBackground,
             }),
@@ -129,7 +135,12 @@ export class ThemeData {
                 color: onBackground,
             }),
             // headline5
-            // headline6
+            headline6: new TextStyle({
+                fontFamily: secondaryFontFamily,
+                fontSize: baseFontSize + 4.0,
+                fontWeight: FontWeight.normal,
+                color: onBackground,
+            }),
             subtitle1: new TextStyle({
                 fontFamily: secondaryFontFamily,
                 fontSize: baseFontSize + 2.0,

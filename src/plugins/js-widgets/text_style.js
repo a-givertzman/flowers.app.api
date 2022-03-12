@@ -22,13 +22,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import { FontWeight } from "./font_weight.js";
+
 /**
  * Стиль текста
  *
  */
 export class TextStyle {
-    constructor({inherit = true, color, backgroundColor, fontSize, fontWeight, fontStyle, letterSpacing, wordSpacing, textBaseline, height, leadingDistribution, locale, foreground, background, shadows, fontFeatures, decoration, decorationColor, decorationStyle, decorationThickness, debugLabel, fontFamily, fontFamilyFallback, overflow}={}) {
+    constructor({
+        inherit = true, 
+        color, 
+        backgroundColor, fontSize, fontWeight, fontStyle, letterSpacing, wordSpacing, textBaseline, height, leadingDistribution, locale, foreground, background, shadows, fontFeatures, decoration, decorationColor, decorationStyle, decorationThickness, debugLabel, fontFamily, fontFamilyFallback, overflow
+    }={}) {
         this.inherit = inherit, 
         this.color = color;
         this.backgroundColor = backgroundColor;
@@ -54,15 +60,7 @@ export class TextStyle {
         this.fontFamilyFallback = fontFamilyFallback;
         this.overflow = overflow;
     }
-    static all({color, width}={}) {
-        return new Border({
-            color: color,
-            width: width,
-            radius: 0,
-        });
-    }
     build() {
-        return `${this.width}px solid ${this.color}
-        `;
+        return this;
     }
 }

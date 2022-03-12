@@ -24,10 +24,10 @@
  */
 
 import { log } from "../../core/debug.js";
-import { ApiRequest } from "../../mysql/api_request.js";
+import { ApiRequest } from "../../infrastructure/api/api_request.js";
 import { NetworkFailure } from "../failure/failure.js";
 
- /**
+/**
  * Класс с данными, 
  * который умеет ходить в репозиторий remote и подгружать данные
  */
@@ -36,7 +36,11 @@ export class DataSet {
     #apiRequest;    // ApiRequest
     #params;        // ApiParams
     #isEmpty;
-    constructor({apiRequest, params, empty=false}={}) {
+    constructor({
+        apiRequest, 
+        params, 
+        empty = false
+    }={}) {
         if (!params) throw SyntaxError('[DataSet] parameter "params" is required');
         if (!apiRequest) throw SyntaxError('[DataSet] parameter "apiRequest" is required');
         if (!(apiRequest instanceof ApiRequest)) throw TypeError('[DataSet] parameter "apiRequest" is required, type of ApiRequest');

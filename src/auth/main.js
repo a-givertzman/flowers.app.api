@@ -16,7 +16,7 @@ import { appThemeData } from "../core/app_themedata.js";
 import { Authenticate } from "../domain/auth/authenticate.js";
 import { AppUser } from "../domain/auth/app_user.js";
 import { DataSet } from "../domain/core/data_set.js";
-import { ApiRequest } from "../mysql/api_request.js";
+import { ApiRequest } from "../infrastructure/api/api_request.js";
 import { MainMenuPage } from "../main_menu/main_menu_page.js";
 
 const appUser = new AppUser({

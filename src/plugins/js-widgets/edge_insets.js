@@ -1,5 +1,4 @@
 "use strict";
-
 /**
  * The MIT License (MIT)
  * 
@@ -25,26 +24,46 @@
  */
 
 /**
- * Класс ошибки
+ * Создает отступ со всех сторон для элемента
  */
-export class Failure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[Failure] : ', message);
-        this.#message = message;
+export class EdgeInsets {
+    #top;
+    #right;
+    #bottom;
+    #left;
+    /**
+     * Создает отступ со всех сторон 
+     * @param {Number} value
+     */
+     constructor({top = 0, right = 0, bottom = 0, left = 0}={}) {
+        this.#top = top;
+        this.#right = right;
+        this.#bottom = bottom;
+        this.#left = left;
     }
-}
-export class DataFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[DataFailure] : ', message);
-        this.#message = message;
+    /**
+     * Создает отступ одинаковый со всех сторон 
+     * @param {Number} value
+     * @returns {Number} EdgeInsets
+     */
+    static all(value) {
+        return new EdgeInsets({
+            top: value, 
+            right: value, 
+            bottom: value, 
+            left: value,
+        });
     }
-}
-export class NetworkFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[NetworkFailure] : ', message);
-        this.#message = message;
+    // get top() {return this.#top;} 
+    // get right() {return this.#right;} 
+    // get bottom() {return this.#bottom;} 
+    // get left() {return this.#left;} 
+    build() {
+        return {
+            top: `${this.#top}px`,
+            right: `${this.#right}px`,
+            bottom: `${this.#bottom}px`,
+            left: `${this.#left}px`,
+        };
     }
 }

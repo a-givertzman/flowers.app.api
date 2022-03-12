@@ -1,5 +1,4 @@
 "use strict";
-
 /**
  * The MIT License (MIT)
  * 
@@ -23,28 +22,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import { TextStyle } from "../../../../src/plugins/js-widgets/text_style.js";
 
-/**
- * Класс ошибки
- */
-export class Failure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[Failure] : ', message);
-        this.#message = message;
-    }
-}
-export class DataFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[DataFailure] : ', message);
-        this.#message = message;
-    }
-}
-export class NetworkFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[NetworkFailure] : ', message);
-        this.#message = message;
-    }
-}
+export const appFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"';
+export const menuHeaderTextStyle = new TextStyle({
+    fontFamily: appFontFamily,
+    fontSize: 12,
+    color: '#ffffff',
+});

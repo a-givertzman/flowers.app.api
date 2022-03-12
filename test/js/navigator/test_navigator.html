@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="icon" href="../../../public/img/favicon.png">
+    <link rel="stylesheet" href="../../../src/plugins/js-widgets/css/widget.css" media="none" onload="if(media!='all')media='all'">
+    <noscript><link rel="stylesheet" href="../../../src/plugins/js-widgets/css/widget.css"></noscript>
+    <script nomodule>
+        console.info(`Your browser doesn't support native JavaScript modules.`);
+    </script>
+    <script>
+        function load_js(src, type) {
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.src= src + `?v=${Date.now()}`;
+            script.type = type;
+            head.appendChild(script);
+        }
+        load_js("./main.js", "module");
+    </script>
+</head>
+    <body>
+    </body>
+</html>

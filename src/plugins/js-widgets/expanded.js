@@ -23,56 +23,36 @@
  * SOFTWARE.
  */
 
-import { Widget } from "./widget.js";
-
 /**
- * Текстовая кнопка
- *
- * @param {Widget} child елеиент, обычно текст выводимый на кнопке
+ * Растянет child на все доступное пространство
+ * @param {Widget} child дочерний элемент
  */
-export class ElevatedButton {
+export class Expanded {
     #child;
-    #onPressed;
-    #onLongPress;
-    #onHover;
-    #onFocusChange;
-    #style;
-    #focusNode;
-    #autofocus;
+    flex;
     constructor({
         child, 
-        onPressed, 
-        onLongPress, 
-        onHover, 
-        onFocusChange, 
-        style, 
-        focusNode, 
-        autofocus = false,
+        flex: flex = 1,
     }={}) {
+        if (!child) throw SyntaxError('[Expanded] parameter "child" is required');
+        // if (!(child instanceof DataSet)) throw new TypeError(`[Expanded] parameter "child" is required, type of "Widget", but recived ${child.constructor.name}`);
         this.#child = child;
-        this.#onPressed = onPressed;
-        this.#onLongPress = onLongPress;
-        this.#onHover = onHover;
-        this.#onFocusChange = onFocusChange;
-        this.#focusNode = focusNode;
-        this.#autofocus = autofocus;
-        this.#style = style;
-        this.#widget = new Widget({
-            child: this.#child,
-            cssClass: [
-                'text-button-widget',
-            ]
-        });
+        this.flex = flex;
     }
     build() {
-        // this.child.build();
-        // this.widget.htmlElement.appendChild(this.child.element);
-        const element = this.#widget.build().htmlElement;
-        element.addEventListener('click', this.#onPressed);
-        element.addEventListener('mouseover', this.#onHover);
+        const element = this.#child.build().htmlElement;
+        if (!element) {
+            throw new Error(`[Expanded] error building child "${this.#child.constructor.name}"`);
+        }
+        element.style.flexGrow = this.flex;
+        element.style.width = '100%';
+        element.style.height = '100%';
         return this;
     }
     get htmlElement() {
-        return this.#widget.htmlElement;
+        if (!this.#child) {
+            throw new Error(`[Expanded] error access child`);
+        }
+        return this.#child.htmlElement;
     }
 }

@@ -24,52 +24,54 @@
  */
 
 import { Widget } from "./widget.js";
+import { log } from "../../core/debug.js";
 
-/**
- * Текстовая кнопка
+ /**
+ * Создает объект приложение
  *
- * @param {Widget} child елеиент, обычно текст выводимый на кнопке
+ * @param {Widget} child корневой виджет приложения
  */
-export class ElevatedButton {
+export class Scaffold {
+    #debug = true;
+    #title;
     #child;
-    #onPressed;
-    #onLongPress;
-    #onHover;
-    #onFocusChange;
-    #style;
-    #focusNode;
-    #autofocus;
+    #widget;
+    #onCompleteCallback;
+    onComplete(callback) {
+        this.#onCompleteCallback = callback;
+    }
+    /**
+     * Закрывает текущий виджет
+     * Передает  
+     */
+    close(result) {
+        log(this.#debug, '[Scaffold.close] result: ', result);
+        this.#onCompleteCallback(result);
+    }
     constructor({
-        child, 
-        onPressed, 
-        onLongPress, 
-        onHover, 
-        onFocusChange, 
-        style, 
-        focusNode, 
-        autofocus = false,
+        title,
+        child: child,
     }={}) {
+        if (!child) throw SyntaxError('[Scaffold] parameter "child" is required');
+        // if (!(child instanceof Widget)) throw new TypeError(`[Scaffold] parameter "child" is required, type of "Widget", but recived ${child.constructor.name}`);
         this.#child = child;
-        this.#onPressed = onPressed;
-        this.#onLongPress = onLongPress;
-        this.#onHover = onHover;
-        this.#onFocusChange = onFocusChange;
-        this.#focusNode = focusNode;
-        this.#autofocus = autofocus;
-        this.#style = style;
+        this.#title = title
         this.#widget = new Widget({
             child: this.#child,
             cssClass: [
-                'text-button-widget',
+                'scaffold-widget',
+                'scaffold-widget-slide-in',
             ]
         });
     }
     build() {
-        // this.child.build();
-        // this.widget.htmlElement.appendChild(this.child.element);
         const element = this.#widget.build().htmlElement;
-        element.addEventListener('click', this.#onPressed);
-        element.addEventListener('mouseover', this.#onHover);
+        if (!element) {
+            throw new Error(`[Scaffold] error building child "${this.#widget.constructor.name}"`);
+        }
+        document.body.appendChild(element);
+        log(this.#debug, '[Scaffold.build] this: ', this);
+        log(this.#debug, '[Scaffold.build] element: ', element);
         return this;
     }
     get htmlElement() {

@@ -22,29 +22,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import { AppUser } from "./domain/auth/app_user.js";
+import { dataSource } from "./infrastructure/datasource/app_data_source.js";
+import { MaterialApp } from "./plugins/js-widgets/material_app.js";
+import { AuthPage } from "./auth/auth_page.js";
+
 /**
  * Создает объект приложение
- *
- * @param {Widget} child корневой виджет приложения
  */
-export class App {
-    #title;
-    #child;
-    #element;
-    constructor({
-        title,
-        child: child,
-    }={}) {
-        this.#child = child;
-        this.#title = title
-    }
-    run() {
-        this.#element = document.body;
-        this.#element.innerHTML = '';
-        document.title = this.#title;
-        if (this.#child) {
-            this.#element.appendChild(this.#child.element);
-        }
-        this.#child.build();
-    }
-}
+const app = new MaterialApp({
+    title: 'Авторизация',
+    home: new AuthPage({
+        user: new AppUser({
+            remote: dataSource.dataSet('client'),
+        }),
+    })
+});
+
+app.run();

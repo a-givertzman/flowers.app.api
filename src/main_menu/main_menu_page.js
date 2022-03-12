@@ -23,14 +23,14 @@
  * SOFTWARE.
  */
 import { MainMenu } from "../main_menu/main_menu.js";
-import { App } from "../plugins/js-widgets/app.js";
+import { Scaffold } from "../plugins/js-widgets/scaffold.js";
 import { ButtonStyle } from "../plugins/js-widgets/button_style.js";
 import { TextButton } from "../plugins/js-widgets/text_button.js";
 import { ListView } from "../plugins/js-widgets/listview.js";
 import { MainAxisAlignment, CrossAxisAlignment, TextAlign, TextAlignVertical } from "../plugins/js-widgets/alignment.js";
 import { Row } from "../plugins/js-widgets/row.js";
 import { Border } from "../plugins/js-widgets/border.js";
-import { Text } from "../plugins/js-widgets/text.js";
+import { TextWidget } from "../plugins/js-widgets/text.js";
 import { TextStyle } from "../plugins/js-widgets/text_style.js";
 import { Center } from "../plugins/js-widgets/center.js";
 import { Container } from "../plugins/js-widgets/container.js";
@@ -38,6 +38,8 @@ import { SizedBox } from "../plugins/js-widgets/sizedbox.js";
 import { Column } from "../plugins/js-widgets/column.js";
 import { log } from "../core/debug.js";
 import { AppUser } from "../domain/auth/app_user.js";
+import { EdgeInsets } from "../plugins/js-widgets/edge_insets.js";
+import { Expanded } from "../plugins/js-widgets/expanded.js";
 
 const appFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"';
 const menuHeaderTextStyle = new TextStyle({
@@ -55,7 +57,7 @@ const menuButtonsTextStyle = new TextStyle({
     fontSize: 14
 });
 const menuLeftColumnItems = [
-    'Клиенты', 'Продукты', 'Закупки', 'Состав закупок', 'Заказы', 'Транзакции',
+    'Клиенты', 'Продукты', 'Закупки', 'апыьврамфьвраиыьвапроифьвапрофибвориьфывиаьфвиаьвир', 'Заказы', 'Транзакции',
 ];
 const menuRightColumnItems = [
     'Отчет по закупке', 'Отчет по клиенту', 'Перевод оплаты', 'Новая транзакция', 'Уведомления по закупкам'
@@ -63,7 +65,7 @@ const menuRightColumnItems = [
 
 export class MainMenuPage {
     #debug = true;
-    #app;
+    #widget;
     #user;
     menuLeftColumnActions = [
         this.#onClientsPressed,           // Клиенты
@@ -84,137 +86,126 @@ export class MainMenuPage {
         if (!user) throw SyntaxError('[Authenticate] parameter "user" is required');
         if (!(user instanceof AppUser)) throw new TypeError(`[Authenticate] parameter "user" is required, type of "AppUser", but recived ${user.constructor.name}`);
         this.#user = user;
-        this.#app = new App({
+        this.#widget = new Scaffold({
             title: 'Главное меню',
-            child: new Container({
-                child: new MainMenu({
-                    user: {},
-                    child: new Center({
-                        child: new Column({
-                            children: [
-                                new Container({
-                                    child: new Row({
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                            new Container({
-                                                child: new Center({
-                                                    child: new Text(
-                                                        `Flowers<br/>App<br/>Казань`,{
-                                                        style: menuHeaderTextStyle,
-                                                    }),
-                                                    border: Border.all({width: 4, color: '#ff2020'}),
-                                                }),
-                                                width: 128,
-                                                height: 64,
-                                                // padding: 4,
-                                                // margin: 8,
-                                            }),
-                                            new Container({
-                                                child: new Center({
-                                                    child: new Text(
-                                                        `Главное меню`,{
-                                                        style: {...menuHeaderTextStyle, ...{fontSize: 16}},
-                                                    }),
-                                                    // border: Border.all({width: 4, color: '#ff2020'}),
-                                                }),
-                                                color: 'transparent',
-                                                width: Number.POSITIVE_INFINITY,
-                                                // height: 16,
-                                                // padding: 4,
-                                                // margin: 8,
-                                            }),
-                                            new Container({
-                                                child: new Center({
-                                                    child: new Text(
-                                                        `Пользователь:<br/>${this.#user.name}`,{
-                                                        style: {...menuHeaderTextStyle, ...{textAlign: TextAlign.right}},
-                                                    }),
-                                                }),
-                                                width: 256,
-                                                height: 64,
-                                            }),
-                                        ],
-                                    }),
-                                    color: '#29497F',
-                                    // width: Number.POSITIVE_INFINITY,
-                                    height: 64,
-                                }),
-                                new SizedBox({height: Number.POSITIVE_INFINITY}),
-                                new Row({
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                        // new SizedBox({width: Number.POSITIVE_INFINITY}),
-                                        new ListView({
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: menuLeftColumnItems,
-                                            itemBuilder: (index) => {
-                                                return new Container ({
-                                                    child: new TextButton({
-                                                        child: new Text(
-                                                            `${menuLeftColumnItems[index]}`, {
-                                                            style: menuButtonsTextStyle,
-                                                        }),
-                                                        style: new ButtonStyle({
-                                                            backgroundColor: '#FF9B40',
-                                                            foregroundColor: '#ffffff',
-                                                        }),
-                                                        onPressed: this.menuLeftColumnActions[index],
-                                                    }),
-                                                    width: 180,
-                                                    padding: 4,
-                                                });
-                                            },
-                                        }),
-                                        // new SizedBox({width: 10}),
-                                        new ListView({
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: menuRightColumnItems,
-                                            itemBuilder: (index) => {
-                                                return new Container ({
-                                                    child: new TextButton({
-                                                        child: new Text(`${menuRightColumnItems[index]}`, {
-                                                            style: menuButtonsTextStyle,
-                                                        }),
-                                                        style: new ButtonStyle({
-                                                            backgroundColor: '#FF9B40',
-                                                            foregroundColor: '#ffffff',
-                                                        }),
-                                                        onPressed: this.menuRightColumnActions[index],
-                                                    }),
-                                                    width: 180,
-                                                    padding: 4,
-                                                });
-                                            },
-                                        }),
-                                        // new SizedBox({width: Number.POSITIVE_INFINITY}),
-                                    ],
-                                }),
-                                new SizedBox({height: Number.POSITIVE_INFINITY, width: Number.POSITIVE_INFINITY}),
-                                new Container({
+            child: new Column({
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                    new Expanded({
+                        child: new Container({
+                            color: '#29497F',
+                            height: 64,
+                            child: new Row({
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                    new Container({
+                                        width: 128,
                                         child: new Center({
-                                            child: new Text(`footer`,{
-                                                style: menuFooterTextStyle,
+                                            child: new TextWidget(
+                                                `Flowers<br/>App<br/>Казань`,{
+                                                style: menuHeaderTextStyle,
+                                            }),
+                                            border: Border.all({width: 4, color: '#ff2020'}),
+                                        }),
+                                    }),
+                                    new Center({
+                                        child: new TextWidget(
+                                            `Главное меню`,{
+                                            style: {...menuHeaderTextStyle, ...{fontSize: 16}},
+                                        }),
+                                        // border: Border.all({width: 4, color: '#ff2020'}),
+                                    }),
+                                    new Container({
+                                        width: 256,
+                                        child: new Center({
+                                            child: new TextWidget(
+                                                `Пользователь:<br/>${this.#user.name}`,{
+                                                style: {...menuHeaderTextStyle, ...{textAlign: TextAlign.right}},
                                             }),
                                         }),
-                                    color: '#323232',
-                                    width: Number.POSITIVE_INFINITY,
-                                    height: 128,
-                                    padding: 4,
-                                    // margin: 8,
-                                }),
-                            ],
+                                    }),
+                                ],
+                            }),
                         }),
                     }),
-                }),
-                color: '#29497F',
-                // height: Number.POSITIVE_INFINITY,
+                    new Row({
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                            new Container({
+                                height: 300,
+                                child: new ListView({
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: menuLeftColumnItems,
+                                    itemBuilder: (index) => {
+                                        return new Container ({
+                                            width: 180,
+                                            child: new TextButton({
+                                                child: new TextWidget(
+                                                    `${menuLeftColumnItems[index]}`, {
+                                                    style: menuButtonsTextStyle,
+                                                }),
+                                                style: new ButtonStyle({
+                                                    backgroundColor: '#FF9B40',
+                                                    foregroundColor: '#ffffff',
+                                                }),
+                                                onPressed: this.menuLeftColumnActions[index],
+                                            }),
+                                            padding: EdgeInsets.all(4),
+                                        });
+                                    },
+                                }),
+                            }),
+                            // new SizedBox({width: 10}),
+                            new Container({
+                                height: 300,
+                                child: new ListView({
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: menuRightColumnItems,
+                                    itemBuilder: (index) => {
+                                        return new Container ({
+                                            width: 180,
+                                            padding: EdgeInsets.all(4),
+                                            child: new TextButton({
+                                                child: new TextWidget(`${menuRightColumnItems[index]}`, {
+                                                    style: menuButtonsTextStyle,
+                                                }),
+                                                style: new ButtonStyle({
+                                                    backgroundColor: '#FF9B40',
+                                                    foregroundColor: '#ffffff',
+                                                }),
+                                                onPressed: this.menuRightColumnActions[index],
+                                            }),
+                                        });
+                                    },
+                                }),
+                            }),
+                        ],
+                    }),
+                    new Expanded({
+                        child: new Container({
+                            color: '#323232',
+                            height: 64,
+                            child: new Center({
+                                child: new TextWidget(`footer`,{
+                                    style: menuFooterTextStyle,
+                                }),
+                            }),
+                        }),
+                    }),
+                ],
             }),
         });
     }
     build() {
-        this.#app.run();
+        this.#widget.build();
+        log(this.#debug, '[MainMenuPage.build] this: ', this);
+        return this;
+    }
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
     #onClientsPressed(e) {
         // log(this.#debug, 'event onClientsPressed: ', e);

@@ -22,35 +22,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Widget } from "../../plugins/js-widgets/widget.js";
+
+import { Widget } from "./widget.js";
+
 /**
  * Помещает виджет внутрь себя
  *
  * @param {Widget} child виджет, который будет внутри
  */
 export class SizedBox {
+    #child;
+    #width;
+    #height;
+    #widget;
     constructor({child, width, height}={}) {
-        this.child = child;
-        this.width = width;
-        this.height = height;
-        this.widget = new Widget({
+        this.#child = child;
+        this.#width = width;
+        this.#height = height;
+        this.#widget = new Widget({
+            child: this.#child,
             cssClass: [
                 'sized-box-widget',
             ]
         });
     }
     build() {
-        if (this.child) {
-            this.child.build();
-            this.widget.element.appendChild(this.child.element);
-        }
-        this.widget.build();
-        let el = this.element;
-        el.style.width = this.width ? `${this.width}px` : '';
-        el.style.height = this.height ? `${this.height}px` : '';
+        // if (this.child) {
+        //     this.child.build();
+        //     this.widget.htmlElement.appendChild(this.child.element);
+        // }
+        const el = this.#widget.build().htmlElement;
+        el.style.width = this.#width ? `${this.#width}px` : '';
+        el.style.height = this.#height ? `${this.#height}px` : '';
         // el.style.backgroundColor = 'transparent';
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
 }

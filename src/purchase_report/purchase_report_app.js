@@ -28,7 +28,7 @@ loadCss({path: './src/plugins/busy-indicator/busy.css'});
 loadCss({path: './src/plugins/tom-select/tom-select.min.css'});
 import '../plugins/tom-select/tom-select.complete.js';
 import 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
-import { ApiRequest } from '../mysql/api_request.js';
+import { ApiRequest } from '../infrastructure/api/api_request.js';
 import { ContentOfPage } from '../classes/content_of_page.js';
 // import { HtmlTable } from '../classes/html_table.js';
 import { HtmlTableHeader } from '../classes/html_table_header.js';

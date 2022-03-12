@@ -1,5 +1,4 @@
 "use strict";
-
 /**
  * The MIT License (MIT)
  * 
@@ -25,26 +24,12 @@
  */
 
 /**
- * Класс ошибки
+ * Направление Flex елемента
+ *
  */
-export class Failure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[Failure] : ', message);
-        this.#message = message;
-    }
-}
-export class DataFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[DataFailure] : ', message);
-        this.#message = message;
-    }
-}
-export class NetworkFailure extends Error {
-    #message;
-    constructor({message}={}) {
-        console.log('[NetworkFailure] : ', message);
-        this.#message = message;
-    }
+export const Axis = {
+    horizontal: 'row',
+    horizontalReverse: 'row-reverse',
+    vertical: 'column',
+    verticalReverse: 'column-reverse',
 }

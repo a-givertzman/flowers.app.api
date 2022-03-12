@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Widget } from "../../plugins/js-widgets/widget.js";
+import { Widget } from "./widget.js";
 
 /**
  * Центрирует child виджет
@@ -30,18 +30,22 @@ import { Widget } from "../../plugins/js-widgets/widget.js";
  * @param {Widget} child виджет, который будет отцентрирован
  */
 export class Center {
-    constructor({child}={}) {
-        this.child = child;
-        this.widget = new Widget({
-            cssClass: ['center-widget']
+    #child;
+    #widget;
+    constructor({
+        child,
+    }={}) {
+        this.#child = child;
+        this.#widget = new Widget({
+            child: this.#child,
+            cssClass: ['center-widget'],
         });
     }
     build() {
-        this.child.build();
-        this.widget.element.appendChild(this.child.element);
-        this.widget.build();
+        this.#widget.build();
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
 }

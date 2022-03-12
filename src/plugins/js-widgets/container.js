@@ -22,7 +22,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import { Widget } from "../../plugins/js-widgets/widget.js";
+
+import { Widget } from "./widget.js";
+import { Border } from "./border.js";
+import { EdgeInsets } from "./edge_insets.js";
+import { log } from "../../core/debug.js";
+
 /**
  * Виджет имеющий размеры, цвет фона отступы внешние и внутренние, контур
  * А также вложенный виджет
@@ -35,33 +40,66 @@ import { Widget } from "../../plugins/js-widgets/widget.js";
  * @param {Border} border контур
  */
 export class Container {
-    constructor({child, width, height, color, margin, padding, border}={}) {
-        this.child = child;
-        this.width = width;
-        this.height = height;
-        this.color = color;
-        this.margin = margin;
-        this.padding = padding;
-        this.border = border;
-        this.widget = new Widget({
+    #debug = true;
+    #child;
+    #widget;
+    #width;
+    #height;
+    #color;
+    #padding;
+    #border;
+    constructor({
+        child, 
+        width, 
+        height, 
+        color, 
+        // margin, 
+        padding = EdgeInsets.all(0.0),
+        border = new Border({
+            width: 0,
+            color: 'transparent',
+            radius: 0,
+        }),
+    }={}) {
+        this.#child = child;
+        this.#width = width;
+        this.#height = height;
+        this.#color = color;
+        this.#padding = padding;
+        // this.margin = margin;
+        this.#border = border;
+        this.#widget = new Widget({
+            child: this.#child,
             cssClass: [
                 'container-widget',
             ]
         });
     }
     build() {
-        this.child.build();
-        this.widget.element.appendChild(this.child.element);
-        this.widget.build();
-        let el = this.element;
-        el.style.padding = this.padding ? `${this.padding}px` : '';
-        el.style.margin = this.margin ? `${this.margin}px` : '';
-        el.style.width = this.width ? `${this.width}px` : '';
-        el.style.height = this.height ? `${this.height}px` : '';
-        el.style.border = this.border ? this.border.build() : '';
-        el.style.backgroundColor = this.color ? this.color : 'transparent';
+        const element = this.#widget.build().htmlElement;
+        if (!element) {
+            throw new Error(`[Container] error building child "${this.#widget.constructor.name}"`);
+        }
+        element.style.width = this.#width ? `${this.#width}px` : '';
+        element.style.height = this.#height ? `${this.#height}px` : '';
+        element.style.maxWidth = this.#width ? `${this.#width}px` : '';
+        element.style.maxHeight = this.#height ? `${this.#height}px` : '';
+        element.style.backgroundColor = this.#color ? this.#color : 'transparent';
+        const insets = this.#padding.build();
+        element.style.padding = insets 
+            ? `${insets.top} ${insets.right} ${insets.bottom} ${insets.left}` 
+            : '';
+        const border = this.#border.build();
+        element.style.borderTop = border ? `${border.top}` : '';
+        element.style.borderRight = border ? `${border.right}` : '';
+        element.style.borderBottom = border ? `${border.bottom}` : '';
+        element.style.borderLeft = border ? `${border.left}` : '';
+        // log(this.#debug, '[Container.build] this: ', this);
+        // log(this.#debug, '[Container.build] child: ', this.#child);
+        log(this.#debug, '[Container.build] child: ', this.htmlElement);
+        return this;
     }
-    get element() {
-        return this.widget.element;
+    get htmlElement() {
+        return this.#widget.htmlElement;
     }
 }
