@@ -167,13 +167,13 @@ export class AuthPage {
         });
     }
     build() {
-        this.#widget.build();
-        log(this.#debug, '[AuthPage.build] this: ', this);
-        log(this.#debug, '[AuthPage.build] widget: ', this.#widget);
-        log(this.#debug, '[AuthPage.build] element: ', this.htmlElement);
         this.#auth.authenticateIfStored()
-            .then((authResult) => this.#routeTo(authResult.user));
-        return this;
+            .then((authResult) => {
+                if (authResult.authenticated) {
+                    this.#routeTo(authResult.user)
+                }
+            });
+        return this.#widget.build();
     }
     get htmlElement() {
         return this.#widget.htmlElement;
@@ -183,11 +183,11 @@ export class AuthPage {
             path: '/mainMenu',
             widget: new MainMenuPage({
                 user: user,
-            })
-            .build()
-            .then((result) => {
-                log(this.#debug, '[AuthPage.build.then] result: ', result);
             }),
+        })
+        .build()
+        .then((result) => {
+            log(this.#debug, '[AuthPage.build.then] result: ', result);
         });
     }
     #onLoginChanged(value) {

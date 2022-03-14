@@ -45,6 +45,17 @@ export class Authenticate {
     authenticateIfStored() {
         const storedPhoneNumber = (new LocalStore({})).readStringDecoded('user');
         log(this.#debug, '[Authenticate.authenticateIfStored] storedPhoneNumber: ', storedPhoneNumber);
+        if (!storedPhoneNumber) {
+            return new Promise((resolve, reject) => {
+                resolve(
+                    new AuthResult({
+                        authenticated: false,
+                        message: `Сохраненный пользователь не найден.`,
+                        user: AppUser.empty(),
+                    })
+                );
+            });
+        }
         return this.#user.fetchWith({phoneNumber: storedPhoneNumber})
             .then((user) => {
                 log(this.#debug, '[Authenticate.authenticateIfStored] response: ', user);

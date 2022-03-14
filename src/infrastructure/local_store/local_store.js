@@ -142,6 +142,7 @@ export class LocalStore {
         return str;
     }
     #decode(value) {
+        if (!value) return '';
         log(this.#debug, `[LocalStore.#decode] value: ${value}`);
         const arr = value.split(',');
         log(this.#debug, `[LocalStore.#decode] arr: ${arr}`);

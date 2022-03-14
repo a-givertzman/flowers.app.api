@@ -201,9 +201,7 @@ export class MainMenuPage {
         });
     }
     build() {
-        this.#widget.build();
-        log(this.#debug, '[MainMenuPage.build] this: ', this);
-        return this;
+        return this.#widget.build();;
     }
     get htmlElement() {
         return this.#widget.htmlElement;
