@@ -33,7 +33,7 @@ import { ApiRequest } from "../api/api_request.js";
  * который умеет ходить в репозиторий remote и подгружать данные
  */
 const baseUrl = '';
-// const baseUrl = 'http://u1489690.isp.regruhosting.ru/';
+// const baseUrl = 'https://u1489690.isp.regruhosting.ru/';
 export const dataSource = new DataSource({
   'client': new DataSet({
     params: new ApiParams({

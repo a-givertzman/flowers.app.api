@@ -22,6 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import { MainMenu } from "../main_menu/main_menu.js";
 import { Scaffold } from "../plugins/js-widgets/scaffold.js";
 import { ButtonStyle } from "../plugins/js-widgets/button_style.js";
@@ -83,8 +84,8 @@ export class MainMenuPage {
         this.#onPurchaseNoticePressed,    // Уведомления/Сообщения по закупкам
     ];
     constructor({user}={}) {
-        if (!user) throw SyntaxError('[Authenticate] parameter "user" is required');
-        if (!(user instanceof AppUser)) throw new TypeError(`[Authenticate] parameter "user" is required, type of "AppUser", but recived ${user.constructor.name}`);
+        if (!user) throw SyntaxError('[MainMenuPage] parameter "user" is required');
+        if (!(user instanceof AppUser)) throw new TypeError(`[MainMenuPage] parameter "user" is required, type of "AppUser", but recived ${user.constructor.name}`);
         this.#user = user;
         this.#widget = new Scaffold({
             title: 'Главное меню',

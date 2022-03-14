@@ -171,10 +171,24 @@ export class AuthPage {
         log(this.#debug, '[AuthPage.build] this: ', this);
         log(this.#debug, '[AuthPage.build] widget: ', this.#widget);
         log(this.#debug, '[AuthPage.build] element: ', this.htmlElement);
+        this.#auth.authenticateIfStored()
+            .then((authResult) => this.#routeTo(authResult.user));
         return this;
     }
     get htmlElement() {
         return this.#widget.htmlElement;
+    }
+    #routeTo(user) {
+        new MaterialRoute({
+            path: '/mainMenu',
+            widget: new MainMenuPage({
+                user: user,
+            })
+            .build()
+            .then((result) => {
+                log(this.#debug, '[AuthPage.build.then] result: ', result);
+            }),
+        });
     }
     #onLoginChanged(value) {
     }
@@ -193,16 +207,7 @@ export class AuthPage {
         this.#auth.authenticateByPhoneNumber(this.#userPhone, this.#userPass)
             .then((authResult) => {
                 if (authResult.authenticated && (this.#auth.getUser().group == 'admin' || this.#auth.getUser().group == 'manager')) {
-                    new MaterialRoute({
-                        path: '/mainMenu',
-                        widget: new MainMenuPage({
-                            user: authResult.user,
-                        })
-                        .build()
-                        .then((result) => {
-                            log(this.#debug, '[AuthPage.build.then] result: ', result);
-                        }),
-                    });
+                    this.#routeTo(authResult.user);
                 } else {
                     alert(authResult.message);
                 }

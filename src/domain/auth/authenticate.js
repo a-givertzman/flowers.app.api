@@ -24,6 +24,7 @@
  */
 
 import { log } from "../../core/debug.js";
+import { LocalStore } from "../../infrastructure/local_store/local_store.js";
 import { AppUser } from "./app_user.js";
 import { AuthResult } from "./auth_result.js";
 import { encrypt } from "./user_pass.js";
@@ -41,6 +42,39 @@ export class Authenticate {
     }
     getUser = () => this.#user
     authenticated = () => this.#user.exists();
+    authenticateIfStored() {
+        const storedPhoneNumber = (new LocalStore({})).readStringDecoded('user');
+        log(this.#debug, '[Authenticate.authenticateIfStored] storedPhoneNumber: ', storedPhoneNumber);
+        return this.#user.fetchWith({phoneNumber: storedPhoneNumber})
+            .then((user) => {
+                log(this.#debug, '[Authenticate.authenticateIfStored] response: ', user);
+                log(this.#debug, '[Authenticate.authenticateIfStored] user.exists: ', user.exists());
+                if (user.exists()) {
+                    log(this.#debug, '[Authenticate.authenticateIfStored] authenticated !!!');
+                    return new AuthResult({
+                        authenticated: true,
+                        message: 'Авторизован успешно',
+                        user: user,
+                    });
+                } else {
+                    log(this.#debug, '[Authenticate.authenticateIfStored] not authenticated !!!');
+                    return new AuthResult({
+                        authenticated: false,
+                        message: `Сохраненный пользователь с номером ${phoneNumber} не найден.`,
+                        user: user,
+                    });
+                }
+            })
+            .catch((error) => {
+                log(this.#debug, `[Authenticate.authenticateIfStored] authentication error: ${error}`);
+                return new AuthResult({
+                    authenticated: false,
+                    message: `Не удалось авторизоваться, \nОшибка: ${error}.`,
+                    user: AppUser.empty(),
+                });
+                throw new Failure({message: `[Authenticate] error: ${error.message}`});
+            });
+    }
     authenticateByPhoneNumber(phoneNumber, pass) {
         log(this.#debug, '[Authenticate.authenticateByPhoneNumber] phoneNumber: ', phoneNumber);
         return this.#user.fetchWith({phoneNumber: phoneNumber})
@@ -50,6 +84,7 @@ export class Authenticate {
                 if (user.exists()) {
                     log(this.#debug, '[Authenticate.authenticateByPhoneNumber] authenticated !!!');
                     if (user.pass == encrypt(pass)) {
+                        new LocalStore({}).writeStringEncoded('user', user.phone);
                         return new AuthResult({
                             authenticated: true,
                             message: 'Авторизован успешно',
@@ -80,6 +115,6 @@ export class Authenticate {
                     user: AppUser.empty(),
                 });
                 throw new Failure({message: `[Authenticate] error: ${error.message}`});
-            })
+            });
     }
 }
