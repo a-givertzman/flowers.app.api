@@ -23,30 +23,29 @@
  * SOFTWARE.
  */
 
-/**
+ /**
  * Базовый классс 
  * Создает елемент в дерве DOM
  * @param {string} tag имя тега, которое будет создано, по умолчанию 'div'
  */
-export class Widget {
-    #debug = false;
-    #child;
-    #tagName;
+export class IFrame {
+    #debug = true;
+    #src;
     #cssClass;
     #htmlElement;
+    #name;
     constructor({
-        child = null, 
-        tagName = 'div', 
-        cssClass = [],
+        src = '',
+        cssClass = ['iframe-widget'],
     }={}) {
-        this.#child = child;
-        this.#tagName = tagName;
+        this.#src = src;
         this.#cssClass = cssClass;
+        this.#name = 'iframe_12345';
     }
     build() {
-        this.#htmlElement = document.createElement(this.#tagName);
+        this.#htmlElement = document.createElement('iframe');
         if (!this.#htmlElement) {
-            throw new Error(`[Widget.build] error creating document element "${this.#tagName}"`);
+            throw new Error(`[IFrame.build] error creating document element "iframe"`);
         }
         // TODO remove margin to the Margin class
         // this.#htmlElement.style.margin = this.margin ? `${this.margin}px` : '';
@@ -56,16 +55,30 @@ export class Widget {
             this.#htmlElement.classList.add(...this.#cssClass);
         }
         // log(this.#debug, '[Widget.build] child', this.#child);
-        if (this.#child) {
+        if (this.#src) {
             // throw new Error(`[Widget.build] error accessing child widget "${this.constructor.name}"`);
-            const childWidget = this.#child.build();
-            this.#htmlElement.appendChild(
-                childWidget.htmlElement
-            );
+            this.#htmlElement.src = this.#src;
+            this.#htmlElement.name = this.#name;
         }
+        // ifrm = (this.#htmlElement.contentWindow) 
+        //     ? this.#htmlElement.contentWindow 
+        //     : (this.#htmlElement.contentDocument.document) 
+        //         ? this.#htmlElement.contentDocument.document 
+        //         : this.#htmlElement.contentDocument;
+        setTimeout(() => {
+            log(this.#debug, '[IFrame.build] contentWindow: ', this.#htmlElement.contentWindow);
+            log(this.#debug, '[IFrame.build] contentDocument: ', this.#htmlElement.contentDocument);
+            this.#htmlElement.contentDocument.addEventListener('click', (e) => {
+                e.preventDefault();
+                log(this.#debug, '[IFrame.build] contentDocument event: ', e);
+                //doStuffHere
+                e.target.setAttribute('target', this.#name);
+                this.#htmlElement.contentWindow.location = e.target.href;
+            });
+        }, 1000);
         // log(this.#debug, '[Widget.build] this: ', this);
         // log(this.#debug, '[Widget.build] child: ', this.#child);
-        log(this.#debug, '[Widget.build] child: ', this.htmlElement);
+        log(this.#debug, '[IFrame.build] child: ', this.htmlElement);
         return this;
         // try {
         // } catch (error) {

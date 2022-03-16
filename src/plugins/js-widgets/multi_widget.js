@@ -25,7 +25,6 @@
 
 import { MainAxisAlignment, CrossAxisAlignment } from "./alignment.js";
 import { Axis } from "./orientation.js";
-import { log } from "../../core/debug.js";
 
 /**
  * Базовый классс 
@@ -33,7 +32,7 @@ import { log } from "../../core/debug.js";
  * @param {string} tag имя тега, которое будет создано, по умолчанию 'div'
  */
 export class MultiWidget {
-    #debug = true;
+    #debug = false;
     #itemCount;
     #itemBuilder;
     #tagName;

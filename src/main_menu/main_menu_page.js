@@ -37,10 +37,12 @@ import { Center } from "../plugins/js-widgets/center.js";
 import { Container } from "../plugins/js-widgets/container.js";
 import { SizedBox } from "../plugins/js-widgets/sizedbox.js";
 import { Column } from "../plugins/js-widgets/column.js";
-import { log } from "../core/debug.js";
+import { log } from "../plugins/debug/debug.js";
 import { AppUser } from "../domain/auth/app_user.js";
 import { EdgeInsets } from "../plugins/js-widgets/edge_insets.js";
 import { Expanded } from "../plugins/js-widgets/expanded.js";
+import { MaterialRoute } from "../plugins/js-widgets/material_route.js";
+import { ClientGtablePage } from "./client_gtable_page.js";
 
 const appFontFamily = '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"';
 const menuHeaderTextStyle = new TextStyle({
@@ -201,12 +203,23 @@ export class MainMenuPage {
         });
     }
     build() {
-        return this.#widget.build();;
+        return this.#widget.build();
     }
     get htmlElement() {
         return this.#widget.htmlElement;
     }
     #onClientsPressed(e) {
+        // const user = {};
+        // new MaterialRoute({
+        //     path: '/mainMenu',
+        //     widget: new ClientGtablePage({
+        //         user: user,
+        //     }),
+        // })
+        // .build()
+        // .then((result) => {
+        //     log(this.#debug, '[AuthPage.onClientsPressed.build.then] result: ', result);
+        // });
         // log(this.#debug, 'event onClientsPressed: ', e);
         window.open('https://docs.google.com/spreadsheets/d/1upSq5wiEWr2uxuuTFrT3umHOFTDILxHtpOXqDPXP7cU/edit?usp=sharing');
     }

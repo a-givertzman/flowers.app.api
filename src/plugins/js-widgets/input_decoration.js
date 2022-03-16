@@ -22,33 +22,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+import { Border } from "./border.js";
+
 /**
- * Бордюр элемента
- *
+ * 
  */
-export class Border {
-    #color;
-    #width;
-    #radius;
-    constructor({color, width, radius}={}) {
-        this.#color = color;
-        this.#width = width;
-        this.#radius = radius;
+export class InputDecoration {
+    #errorBorder;
+    #focusedBorder;
+    #focusedErrorBorder;
+    #disabledBorder;
+    #enabledBorder;
+    #border;
+    #enabled;
+    constructor({
+        errorBorder = Border.all({}),                // Border
+        focusedBorder = Border.all({}), 
+        focusedErrorBorder = Border.all({}), 
+        disabledBorder = Border.all({}), 
+        enabledBorder = Border.all({}), 
+        border = Border.all({color: '#333333'}), 
+        enabled = true,
+    }={}) {
+        this.#errorBorder = errorBorder;
+        this.#focusedBorder = focusedBorder;
+        this.#focusedErrorBorder = focusedErrorBorder;
+        this.#disabledBorder = disabledBorder;
+        this.#enabledBorder = enabledBorder;
+        this.#border = border;
+        this.#enabled = enabled;
     }
-    static all({color = 'transparent', width = 0}={}) {
-        return new Border({
-            color: color,
-            width: width,
-            radius: 0,
-        });
-    }
-    build() {
-        return {
-            top: `${this.#width}px solid ${this.#color}`,
-            right: `${this.#width}px solid ${this.#color}`,
-            bottom: `${this.#width}px solid ${this.#color}`,
-            left: `${this.#width}px solid ${this.#color}`,
-            radius: `${this.#radius}px`,
-        };
+    get border() {
+        return this.#border;
     }
 }

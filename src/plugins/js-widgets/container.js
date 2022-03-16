@@ -26,7 +26,6 @@
 import { Widget } from "./widget.js";
 import { Border } from "./border.js";
 import { EdgeInsets } from "./edge_insets.js";
-import { log } from "../../core/debug.js";
 
 /**
  * Виджет имеющий размеры, цвет фона отступы внешние и внутренние, контур

@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-import { log } from "../../core/debug.js";
+import { log } from "../../plugins/debug/debug.js";
 import { ApiRequest } from "../../infrastructure/api/api_request.js";
 import { NetworkFailure } from "../failure/failure.js";
 

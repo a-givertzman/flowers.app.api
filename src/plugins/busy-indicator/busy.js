@@ -31,7 +31,8 @@ export class BusyIndicator {
         let className = (selector.charAt(0) == '.') ? selector.slice(1) : selector;
         this.busyIndicator.classList.add(className);
         this.busyIndicator.classList.add(hiddenClassName);
-        document.body.appendChild(this.busyIndicator);
+        if (this.busyIndicator instanceof HTMLElement)
+            document.body.appendChild(this.busyIndicator);
     }
     show() {
         this.busyIndicator.classList.remove(this.hiddenClassName);

@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-import { log } from "../../core/debug.js";
+import { log } from "../../plugins/debug/debug.js";
 import { LocalStore } from "../../infrastructure/local_store/local_store.js";
 import { AppUser } from "./app_user.js";
 import { AuthResult } from "./auth_result.js";

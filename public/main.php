@@ -91,7 +91,9 @@
     <script nomodule>
         console.info(`Your browser doesn't support native JavaScript modules.`);
     </script>
-    <script>
+    <script type="module">
+        import { log } from "./src/plugins/debug/debug.js";
+        window.log = log;
         function load_js(src, type) {
             var head = document.getElementsByTagName('head')[0];
             var script = document.createElement('script');

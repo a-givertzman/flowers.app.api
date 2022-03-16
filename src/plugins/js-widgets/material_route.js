@@ -24,7 +24,6 @@
  */
 
 import { Widget } from "./widget.js";
-import { log } from "../../core/debug.js";
 
 /**
  * Путь к одной конкретной страничке приложения

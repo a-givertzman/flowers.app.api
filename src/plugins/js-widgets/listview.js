@@ -26,7 +26,6 @@
 import { CrossAxisAlignment, MainAxisAlignment } from "./alignment.js";
 import { MultiWidget } from "./multi_widget.js";
 import { Axis } from "./orientation.js";
-import { log } from "../../core/debug.js";
 
 /**
  * Список виджетов со скролом

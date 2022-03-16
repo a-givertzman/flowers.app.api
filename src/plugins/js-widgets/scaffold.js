@@ -24,7 +24,6 @@
  */
 
 import { Widget } from "./widget.js";
-import { log } from "../../core/debug.js";
 
  /**
  * Создает объект приложение

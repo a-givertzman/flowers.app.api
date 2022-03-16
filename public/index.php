@@ -71,7 +71,7 @@ if ($query == '') {
     $routePath = './auth.php';
 
 } else {
-    $routePath = './main_menu.php';
+    $routePath = './main.php';
 }
 
 plog('route to: ', $routePath);

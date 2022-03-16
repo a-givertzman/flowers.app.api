@@ -24,8 +24,8 @@
  */
 
 import { Widget } from "./widget.js";
-import { TextAlign, TextAlignVertical } from "../../plugins/js-widgets/alignment.js";
-import { log } from "../../core/debug.js";
+import { TextAlign, TextAlignVertical } from "./alignment.js";
+import { InputDecoration } from "./input_decoration.js";
 
 /**
  * Виджет для ввода текста
@@ -51,67 +51,108 @@ import { log } from "../../core/debug.js";
  * @param {function} validator string function(string)
  */
 export class TextFormField {
-    #debug = false;
+    #debug = true;
+    #key;
+    #initialValue;
+    #focusNode;
+    #decoration;
+    #keyboardType;
+    #style;
+    #textAlign;
+    #textAlignVertical;
+    #enabled;
+    #readOnly;
+    #obscuringCharacter;
+    #obscureText;
+    #maxLines;
+    #expands;
+    #maxLength;
+    #onChanged;
+    #onTap;
+    #onComplete;
+    #validator;
+    #widget;
     constructor({
-        key, initialValue, focusNode, keyboardType, style, textAlign, textAlignVertical,
-        enabled, readOnly, obscuringCharacter, obscureText, 
-        maxLines, expands, maxLength, onChanged, onTap,
-        onComplete, validator,
+        key, 
+        initialValue, 
+        focusNode, 
+        decoration = new InputDecoration(), 
+        keyboardType, 
+        style, 
+        textAlign, 
+        textAlignVertical,
+        enabled, 
+        readOnly, 
+        obscuringCharacter, 
+        obscureText, 
+        maxLines, 
+        expands, 
+        maxLength, 
+        onChanged, 
+        onTap,
+        onComplete, 
+        validator,
     }={}) {
         // log(this.#debug, '[TextFormField] onChanged', onChanged);
-        this.key = key;
-        this.initialValue = initialValue;
-        this.focusNode = focusNode;
-        this.keyboardType = keyboardType;
-        this.style = style;
-        this.textAlign = textAlign ? textAlign : TextAlign.center;
-        this.textAlignVertical = textAlignVertical ? textAlignVertical : TextAlignVertical.center;
-        this.enabled = enabled ? enabled : true;
-        this.readOnly = readOnly ? readOnly : false;
-        this.obscuringCharacter = obscuringCharacter ? obscuringCharacter : '•';
-        this.obscureText = obscureText ? obscureText : false;
-        this.maxLines = maxLines ? maxLines : 1;
-        this.expands = expands ? expands : false;
-        this.maxLength = maxLength ? maxLength : null;
-        this.onChanged = onChanged;
-        this.onTap = onTap;
-        this.onComplete = onComplete;
-        this.validator = validator;
-        this.widget = new Widget({
+        this.#key = key;
+        this.#initialValue = initialValue;
+        this.#focusNode = focusNode;
+        this.#decoration = decoration;
+        this.#keyboardType = keyboardType;
+        this.#style = style;
+        this.#textAlign = textAlign ? textAlign : TextAlign.center;
+        this.#textAlignVertical = textAlignVertical ? textAlignVertical : TextAlignVertical.center;
+        this.#enabled = enabled ? enabled : true;
+        this.#readOnly = readOnly ? readOnly : false;
+        this.#obscuringCharacter = obscuringCharacter ? obscuringCharacter : '•';
+        this.#obscureText = obscureText ? obscureText : false;
+        this.#maxLines = maxLines ? maxLines : 1;
+        this.#expands = expands ? expands : false;
+        this.#maxLength = maxLength ? maxLength : null;
+        this.#onChanged = onChanged;
+        this.#onTap = onTap;
+        this.#onComplete = onComplete;
+        this.#validator = validator;
+        this.#widget = new Widget({
             tagName: 'input',
             cssClass: ['text-form-field-widget'],
         });
     }
     build() {
-        const element = this.widget.build().htmlElement;
-        element.type = this.obscureText ? 'password' : 'text';
-        element.innerHTML = this.initialValue;
-        element.style.color = this.style?.color;
-        element.style.backgroundColor = this.style?.backgroundColor;
-        element.style.fontSize = this.style ? `${this.style.fontSize}px` : '';
-        element.style.fontFamily = this.style?.fontFamily;
-        element.style.fontWeight = this.style?.fontWeight;
-        element.style.height = this.style?.height;
-        element.style.overflow = this.style?.overflow;
-        element.style.textAlign = this.textAlign;
+        const element = this.#widget.build().htmlElement;
+        element.type = this.#obscureText ? 'password' : 'text';
+        element.innerHTML = this.#initialValue;
+        element.style.color = this.#style?.color;
+        element.style.backgroundColor = this.#style?.backgroundColor ?? 'transparent';
+        element.style.fontSize = this.#style ? `${this.#style.fontSize}px` : '';
+        element.style.fontFamily = this.#style?.fontFamily;
+        element.style.fontWeight = this.#style?.fontWeight;
+        element.style.height = this.#style?.height;
+        element.style.overflow = this.#style?.overflow;
+        element.style.textAlign = this.#textAlign;
+        const border = this.#decoration.border.build();
+        element.style.borderTop = border ? `${border.top}` : '';
+        element.style.borderRight = border ? `${border.right}` : '';
+        element.style.borderBottom = border ? `${border.bottom}` : '';
+        element.style.borderLeft = border ? `${border.left}` : '';
         element.addEventListener('input', (e) => this.onInputListener(e));
         element.addEventListener('change', (e) => this.completedListener(e));
         return this;
     }
     get htmlElement() {
-        return this.widget.htmlElement;
+        return this.#widget.htmlElement;
     }
     onInputListener(e) {
-        if (typeof this.onChanged == 'function') {
-            this.onChanged(e.target.value);
+        if (typeof this.#onChanged == 'function') {
+            this.#onChanged(e.target.value);
         }
-        if (typeof this.validator == 'function') {
-            this.validator(e.target.value);
+        if (typeof this.#validator == 'function') {
+            this.#validator(e.target.value);
         }
     }
     completedListener(e) {
-        if (typeof this.onComplete == 'function') {
-            this.onComplete(e.target.value);
+        if (typeof this.#onComplete == 'function') {
+            this.#onComplete(e.target.value);
         }
     }
 }

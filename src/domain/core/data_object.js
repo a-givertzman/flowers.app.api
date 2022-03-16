@@ -1,5 +1,4 @@
 "use strict";
-
 /**
  * The MIT License (MIT)
  * 
@@ -24,7 +23,7 @@
  * SOFTWARE.
  */
 
-import { log } from "../../core/debug.js";
+import { log } from "../../plugins/debug/debug.js";
 import { DataSet } from "./data_set.js";
 
 /**

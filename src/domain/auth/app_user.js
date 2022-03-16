@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-import { log } from "../../core/debug.js";
+import { log } from "../../plugins/debug/debug.js";
 import { DataObject } from "../core/data_object.js";
 import { DataSet } from "../core/data_set.js";
 import { Failure } from "../failure/failure.js";

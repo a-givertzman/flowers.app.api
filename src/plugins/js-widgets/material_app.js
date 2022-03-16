@@ -24,8 +24,6 @@
  */
 
 import { Widget } from "./widget.js";
-import { log } from "../../core/debug.js";
-import { MaterialRoute } from "./material_route.js";
 
 /**
  * Создает объект приложение
